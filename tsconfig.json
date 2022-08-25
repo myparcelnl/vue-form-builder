@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@myparcel/vue-form-builder-build-*": [
+        "./packages/build/*/src"
+      ],
+      "@myparcel/vue-form-builder-*": [
+        "./packages/*/src"
+      ],
+      "@myparcel/vue-form-builder": [
+        "./packages/core/src"
+      ]
+    },
+    "types": [
+      "vite/client"
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.vue"
+  ]
+}

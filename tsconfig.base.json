@@ -1,0 +1,14 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "importsNotUsedAsValues": "remove",
+    "keyofStringsOnly": true,
+    "preserveValueImports": false
+  }
+}

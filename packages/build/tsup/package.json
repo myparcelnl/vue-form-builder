@@ -1,0 +1,18 @@
+{
+  "name": "@myparcel/vue-form-builder-build-tsup",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsup --dts",
+    "buildOnly": "tsup",
+    "clean": "rimraf lib",
+    "serve": "tsup --watch"
+  },
+  "dependencies": {
+    "tsup": "^6.3.0"
+  }
+}

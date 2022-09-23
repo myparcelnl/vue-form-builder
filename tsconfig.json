@@ -1,15 +1,8 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "importsNotUsedAsValues": "remove",
-    "keyofStringsOnly": true,
-    "outDir": "lib",
-    "preserveSymlinks": true,
-    "preserveValueImports": false,
-    "types": [
-      "./types",
-      "node"
-    ]
-  }
+  "extends": "./tsconfig.base.json",
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ]
 }

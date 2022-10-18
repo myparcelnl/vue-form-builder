@@ -182,12 +182,15 @@ type FormInstancccc<T extends NewFieldObj = NewFieldObj> = {
 
 declare function defineMultiObj<T extends NewFieldObj = NewFieldObj>(obj: T[]): FormInstancccc<T>;
 
+// todo: PROBEER HET MET EEN ARRAY??
+
 const obj2 = defineSingleObj2({
   name: 'borp2',
-  component: 'TSelect',
-  // props: {},
+  component: TTextInput,
+  props: {disabled: true},
   attrs: {},
   ref: ref(124),
+
   sanitize: (_, value) => Math.ceil(value),
   validate: (_, value) => value > 0,
 });

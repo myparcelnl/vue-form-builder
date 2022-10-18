@@ -11,6 +11,18 @@ export const defineForm = <FC extends FormConfiguration<N>, N extends FieldName>
   return formBuilder.register(name, new Form(name, config));
 };
 
+// defineForm('tellAFriend', {
+//   fields: [
+//     {
+//       component: TTextInput,
+//       name: 'name',
+//     },
+//     {
+//       component: TSubmitButton,
+//     },
+//   ],
+// });
+
 // const A: FieldWithNameAndRef = {
 //   name: 'a',
 //   ref: ref('a'),

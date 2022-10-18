@@ -1,12 +1,11 @@
 import {FieldName, FieldOrElement, FieldWithNameAndRef} from '../../types';
 import {Form, FormInstance} from '../Form';
-import {HookManager, InputHookConfiguration} from '../../services';
 import {Ref, UnwrapRef, ref, watch} from 'vue';
 import {ComponentLifecycleHooks} from '../../services/hook-manager/componentHooks';
 import {ComponentOrHtmlElement} from '../plain-element';
+import {HookManager} from '../../services';
 import {NamedElement} from '../named-element';
 import {RequireOnly} from '@myparcel/vue-form-builder-shared';
-import component from '*.vue';
 
 const FIELD_HOOKS = [
   'beforeBlur',
@@ -25,10 +24,10 @@ const FIELD_HOOKS = [
 ] as const;
 
 export type FieldInstance<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends FieldName = FieldName,
   RT = unknown,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-> = Omit<FieldOrElement<N, C, RT>, 'form'> & {
+> = Omit<FieldOrElement<C, N, RT>, 'form'> & {
   hooks: HookManager<FieldHooks<FieldInstance, RT>>;
   form: FormInstance;
 
@@ -65,10 +64,10 @@ type FieldHooks<I, RT> = {
 } & ComponentLifecycleHooks<I>;
 
 export class Field<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends FieldName = FieldName,
   RT = unknown,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  FC extends FieldWithNameAndRef<N, RT, C> = FieldWithNameAndRef<N, RT, C>,
+  FC extends FieldWithNameAndRef<C, N, RT> = FieldWithNameAndRef<C, N, RT>,
 > extends NamedElement<N, C> {
   public focus;
 

@@ -3,8 +3,8 @@ import {FieldName, FieldWithName} from '../../types';
 import {Form} from '../Form';
 
 export class NamedElement<
-  N extends FieldName = FieldName,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends FieldName = FieldName,
 > extends PlainElement<C> {
   public readonly name: N;
 

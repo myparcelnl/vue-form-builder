@@ -3,7 +3,7 @@ import {Field, FieldInstance} from './field';
 import {FieldName, FieldOrElement, FieldWithNameAndRef} from '../types';
 import {HookManager, InputHookConfiguration} from '../services';
 import {PromiseOr, isOfType} from '@myparcel/vue-form-builder-shared';
-import {Ref, UnwrapRef, reactive} from 'vue';
+import {Ref, UnwrapNestedRefs, UnwrapRef, reactive} from 'vue';
 import {ComponentLifecycleHooks} from '../services/hook-manager/componentHooks';
 import {NamedElement} from './named-element';
 
@@ -32,7 +32,7 @@ export type FormConfiguration<N extends FieldName = FieldName> = {
 } & Partial<FormHooks<Form>>;
 
 export type FormInstance<FC extends FormConfiguration = FormConfiguration> = Omit<
-  Form<FieldName, any, ComponentOrHtmlElement, string, FC>,
+  Form<ComponentOrHtmlElement, FieldName, any, string, FC>,
   'fields'
 >;
 
@@ -47,9 +47,9 @@ type FieldsToModel<T extends FormConfiguration> = {
 };
 
 export class Form<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends FieldName = FieldName,
   RT = unknown,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   FN extends string = string,
   FC extends FormConfiguration<N> = FormConfiguration<N>,
   // eslint-disable-next-line no-invalid-this
@@ -57,7 +57,7 @@ export class Form<
 > {
   public readonly name: FN;
   public readonly config: Omit<FC & HC, 'fields'>;
-  public readonly fields: FieldInstance<N, RT, C>[] = [];
+  public readonly fields: UnwrapNestedRefs<FieldInstance<C, N, RT>>[] = [];
   public readonly hooks: HookManager<HC>;
   public readonly model = {} as N extends string ? FieldsToModel<FC> : never;
 
@@ -68,27 +68,53 @@ export class Form<
     this.name = name;
     this.config = config;
 
-    const formWithoutFields = {...this, fields: undefined};
+    const formInstance = this.createFormInstance();
 
     fields.forEach((field) => {
-      let instance: FieldInstance<N, RT, C>;
-
-      if (isOfType<FieldOrElement<NonNullable<N>, C, RT>>(field, 'name')) {
-        const name = field.name as string as NonNullable<N>;
-
-        if (isOfType<FieldWithNameAndRef>(field, 'ref')) {
-          instance = new Field<N, RT, C>(formWithoutFields, name, field);
-        } else {
-          instance = new NamedElement<N, C>(formWithoutFields, name, field);
-        }
-
-        this.model[name] = reactive(instance);
-      } else {
-        instance = new PlainElement<C>(formWithoutFields, field);
-      }
+      const instance = this.createFieldInstance(field, formInstance);
 
       this.fields.push(reactive(instance));
     });
+  }
+
+  private createFormInstance(): Form<C, N, RT, FN, FC, HC> & {fields: undefined} {
+    return {...this, fields: undefined};
+  }
+
+  private createFieldInstance(
+    field: FieldOrElement,
+    form: Form<C, N, RT, FN, FC, HC> & {fields: undefined},
+  ): FieldInstance<C, N, RT> {
+    let instance;
+
+    if (isOfType<FieldOrElement<C, NonNullable<N>, RT>>(field, 'name')) {
+      const name = field.name as string as NonNullable<N>;
+
+      if (isOfType<FieldWithNameAndRef>(field, 'ref')) {
+        instance = new Field<C, N, RT>(form, name, field);
+      } else {
+        instance = new NamedElement<C, N>(form, name, field);
+      }
+
+      this.model[name] = reactive(instance);
+      return instance;
+    }
+
+    return new PlainElement<C>(form, field);
+  }
+
+  public addField(newField: FieldOrElement, sibling: N, position: 'before' | 'after' = 'after'): void {
+    const siblingIndex = this.fields.findIndex((field) => field.name === sibling);
+
+    if (siblingIndex === -1) {
+      // eslint-disable-next-line no-console
+      console.error(`Field ${sibling} not found in form ${this.name}`);
+      return;
+    }
+
+    const index = position === 'after' ? siblingIndex + 1 : siblingIndex;
+
+    this.fields.splice(index, 0, this.createFieldInstance(newField, this.createFormInstance()));
   }
 
   public async submit() {
@@ -108,7 +134,7 @@ export class Form<
 
     await Promise.all(
       this.fields.map((field) => {
-        if (!isOfType<Field<N, RT, C>>(field, 'validateAll')) {
+        if (!isOfType<Field<C, N, RT>>(field, 'validateAll')) {
           return true;
         }
 

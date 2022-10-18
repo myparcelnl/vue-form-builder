@@ -12,6 +12,8 @@ export const useLifeCycleHooks = (hookManager: HookManager<ComponentLifecycleHoo
       return;
     }
 
+    if (hook === 'onCreated') return;
+
     Vue[hook](async () => {
       await hookManager.execute(hook, args);
     });

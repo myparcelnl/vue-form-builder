@@ -9,6 +9,9 @@ import TToggleSwitch from '../components/template/TToggleSwitch.vue';
 import {defineForm} from '@myparcel/vue-form-builder';
 import {ref} from 'vue';
 
+// todo: dynamically add more form parts, see BO -> canada -> project groups
+// todo: form groups?
+
 export const useShipmentOptionsForm = (): any => {
   return defineForm('shipmentOptions', {
     fieldClass: [
@@ -47,6 +50,10 @@ export const useShipmentOptionsForm = (): any => {
           level: 2,
         },
       },
+      // new HiddenInput({
+      //   name: 'orderId',
+      //   ref: ref(1),
+      // }),
       {
         name: 'orderId',
         component: THiddenInput,
@@ -60,6 +67,36 @@ export const useShipmentOptionsForm = (): any => {
         props: {
           min: 1,
           max: 10,
+        },
+
+        isVisible() {},
+
+        onCreated: () => {
+          console.warn('onCreated');
+        },
+        onActivated: () => {
+          console.warn('onActivated');
+        },
+        onBeforeMount: () => {
+          console.warn('onBeforeMount');
+        },
+        onBeforeUnmount: () => {
+          console.warn('onBeforeUnmount');
+        },
+        onBeforeUpdate: () => {
+          console.warn('onBeforeUpdate');
+        },
+        onDeactivated: () => {
+          console.warn('onDeactivated');
+        },
+        onMounted: () => {
+          console.warn('onMounted');
+        },
+        onUnmounted: () => {
+          console.warn('onUnmounted');
+        },
+        onUpdated: () => {
+          console.warn('onUpdated');
         },
       },
       {
@@ -112,7 +149,7 @@ export const useShipmentOptionsForm = (): any => {
         component: TSelect,
         ref: ref<string | null>(null),
 
-        beforeMount: async (field) => {
+        onBeforeMount: async (field) => {
           console.log('beforeMount', field);
           const sdk = createPublicSdk(new FetchClient(), [new GetCarriers()]);
           const carriers = await sdk.getCarriers();
@@ -126,7 +163,19 @@ export const useShipmentOptionsForm = (): any => {
           }));
 
           console.log(carriers);
-          field.ref = carriers[0].name;
+          console.log(field.form);
+
+          field.form.addField(
+            {
+              component: Heading,
+              props: {
+                text: 'randomly inserted field!!',
+              },
+            },
+            'carrier',
+          );
+
+          // field.ref = carriers[0].name;
         },
       },
       {

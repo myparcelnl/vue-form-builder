@@ -31,7 +31,7 @@ export type BaseField<C> = {
 };
 
 export type FieldOrElement<
-  N extends FieldName = FieldName,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends FieldName = FieldName,
   RT = unknown,
 > = FieldWithName<N> | FieldWithNameAndRef<C, N, RT> | BaseField<C>;

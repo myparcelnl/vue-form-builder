@@ -1,11 +1,9 @@
 /* eslint-disable no-invalid-this */
 import {COMPONENT_LIFECYCLE_HOOKS, ComponentLifecycleHooks} from '../../services/hook-manager/componentHooks';
 import {Component, ConcreteComponent, markRaw} from 'vue';
-import {ComponentProps, MakeOptional, PromiseOr} from '@myparcel/vue-form-builder-shared';
+import {ComponentProps, MakeOptional, PromiseOr, isOfType} from '@myparcel/vue-form-builder-shared';
 import {Form, FormInstance} from '../Form';
 import {HookManager, InputHookConfiguration} from '../../services';
-import {isOfType} from '@myparcel/vue-form-builder-shared/src/utils';
-import component from '*.vue';
 
 const AVAILABLE_HOOKS = ['click', 'focus', ...COMPONENT_LIFECYCLE_HOOKS] as const;
 

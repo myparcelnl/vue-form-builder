@@ -10,10 +10,10 @@
     "package.json": "npx sort-package-json"
   },
   "scripts": {
-    "build": "pnpm run -r --stream build",
-    "buildOnly": "pnpm run -r --stream buildOnly",
-    "typecheck": "pnpm run -r --stream typecheck",
-    "dev": "pnpm run -r --parallel dev"
+    "build": "pnpm exec nx run-many --target=build",
+    "buildOnly": "pnpm exec nx run-many --target=buildOnly",
+    "typecheck": "pnpm exec nx run-many --target=typecheck",
+    "dev": "pnpm exec nx run-many --target=dev"
   },
   "prettier": "@myparcel/prettier-config",
   "devDependencies": {
@@ -30,6 +30,8 @@
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "nx": "15.0.0",
+    "@nrwl/nx-cloud": "latest"
   }
 }

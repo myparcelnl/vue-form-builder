@@ -1,0 +1,27 @@
+name: 'Release 🚀'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: 'Run tests 🧪'
+    uses: ./.github/workflows/run-tests.yml
+
+  release:
+    name: 'Publish new release 🚀'
+    runs-on: ubuntu-22.04
+    needs:
+      - test
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: myparcelnl/actions/setup-git-credentials@v2
+        with:
+          token: ${{ secrets.GH_REPO_TOKEN }}
+
+      - uses: myparcelnl/actions/semantic-release@v2

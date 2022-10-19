@@ -13,12 +13,15 @@
     "build": "pnpm exec nx run-many --target=build",
     "buildOnly": "pnpm exec nx run-many --target=buildOnly",
     "typecheck": "pnpm exec nx run-many --target=typecheck",
-    "dev": "pnpm exec nx run-many --target=dev"
+    "dev": "pnpm exec nx run-many --target=dev",
+    "test": "pnpm exec nx run-many --target=test"
   },
   "prettier": "@myparcel/prettier-config",
   "devDependencies": {
     "@myparcel/eslint-config": "^3.6.2",
     "@myparcel/prettier-config": "^1.1.0",
+    "@nrwl/nx-cloud": "latest",
+    "@nrwl/workspace": "^15.0.0",
     "@tsconfig/recommended": "^1.0.1",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
@@ -29,9 +32,8 @@
     "eslint-plugin-vue": "^9.6.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "typescript": "^4.8.4",
     "nx": "15.0.0",
-    "@nrwl/nx-cloud": "latest"
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
   }
 }

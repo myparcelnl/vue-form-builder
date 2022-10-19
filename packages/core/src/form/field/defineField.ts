@@ -1,15 +1,11 @@
-import {Form} from './.';
-import {ComponentOrHtmlElement} from '../plain-element';
-import {reactive} from 'vue';
-import {Field, FieldInstance} from './Field';
 import {FieldName, FieldOrElement} from '../../types';
+import {ComponentOrHtmlElement} from '../plain-element';
 
-export const defineField = <N extends FieldName, RT, C extends ComponentOrHtmlElement>(
-  form: Form<N, RT, C>,
-  fieldName: N,
-  fieldConfig: FieldOrElement<N, C, RT>,
-): FieldInstance<N, RT, C> => {
-  const field = new Field<N, RT, C>(form, fieldName, fieldConfig);
-
-  return reactive(field);
-};
+export const defineField = <
+  C extends ComponentOrHtmlElement,
+  N extends FieldName,
+  RT,
+  FC extends FieldOrElement<C, N, RT>,
+>(
+  fieldConfig: FC,
+): FC => fieldConfig;

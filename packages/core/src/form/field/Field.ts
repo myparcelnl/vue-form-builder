@@ -23,25 +23,16 @@ const FIELD_HOOKS = [
   'afterValidate',
 ] as const;
 
+type BaseFieldInstance<RT = unknown> = {
+  hooks: HookManager<FieldHooks<FieldInstance, RT>>;
+  form: FormInstance;
+};
+
 export type FieldInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends FieldName = FieldName,
   RT = unknown,
-> = Omit<FieldOrElement<C, N, RT>, 'form'> & {
-  hooks: HookManager<FieldHooks<FieldInstance, RT>>;
-  form: FormInstance;
-
-  ref: Ref<RT>;
-  isDirty: UnwrapRef<boolean>;
-  isDisabled: UnwrapRef<boolean>;
-  isOptional: UnwrapRef<boolean>;
-  isSuspended: UnwrapRef<boolean>;
-  isTouched: UnwrapRef<boolean>;
-  isValid: UnwrapRef<boolean>;
-  isVisible: UnwrapRef<boolean>;
-
-  lazy: boolean;
-};
+> = Omit<FieldOrElement<C, N, RT>, 'form'> & BaseFieldInstance<RT>;
 
 type FieldHooks<I, RT> = {
   beforeBlur: (field: I, value: RT) => void;
@@ -68,7 +59,7 @@ export class Field<
   N extends FieldName = FieldName,
   RT = unknown,
   FC extends FieldWithNameAndRef<C, N, RT> = FieldWithNameAndRef<C, N, RT>,
-> extends NamedElement<N, C> {
+> extends NamedElement<C, N> {
   public focus;
 
   public isDirty = ref(false);
@@ -134,7 +125,7 @@ export class Field<
 
   // protected declare readonly config: FieldDefinition<N, RT>;
 
-  constructor(form: Form, name: N, config: FC & FieldHooks<typeof this, RT>) {
+  constructor(form: FormInstance, name: N, config: FC) {
     super(form, name, {...config, hookNames: FIELD_HOOKS});
 
     const fieldConfig = {
@@ -160,7 +151,7 @@ export class Field<
     });
   }
 
-  private getDefaultConfig(): RequireOnly<FC, 'sanitize' | 'validate'> {
+  private getDefaultConfig(): Partial<FC> {
     return {
       sanitize: (_, value) => value,
       validate: () => true,

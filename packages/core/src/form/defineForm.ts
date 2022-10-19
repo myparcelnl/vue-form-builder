@@ -1,8 +1,9 @@
 import {Form, FormConfiguration, FormInstance} from './Form';
 import {FieldName} from '../types';
 import {useFormBuilder} from '../composables';
+import {defineField} from './field/defineField';
 
-export const defineForm = <FC extends FormConfiguration<N>, N extends FieldName>(
+export const defineForm = <FC extends FormConfiguration, N extends FieldName>(
   name: string,
   config: FC,
 ): FormInstance<FC> => {
@@ -11,17 +12,19 @@ export const defineForm = <FC extends FormConfiguration<N>, N extends FieldName>
   return formBuilder.register(name, new Form(name, config));
 };
 
-// defineForm('tellAFriend', {
-//   fields: [
-//     {
-//       component: TTextInput,
-//       name: 'name',
-//     },
-//     {
-//       component: TSubmitButton,
-//     },
-//   ],
-// });
+const form = defineForm('tellAFriend', {
+  fields: [
+    defineField({
+      component: 'input',
+      name: 'name',
+      ref: 'name',
+    }),
+
+    defineField({
+      component: 'input',
+    }),
+  ],
+});
 
 // const A: FieldWithNameAndRef = {
 //   name: 'a',

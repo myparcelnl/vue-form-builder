@@ -2,8 +2,8 @@
 import {COMPONENT_LIFECYCLE_HOOKS, ComponentLifecycleHooks} from '../../services/hook-manager/componentHooks';
 import {Component, ConcreteComponent, markRaw} from 'vue';
 import {ComponentProps, MakeOptional, PromiseOr, isOfType} from '@myparcel/vue-form-builder-shared';
-import {Form, FormInstance} from '../Form';
 import {HookManager, InputHookConfiguration} from '../../services';
+import {FormInstance} from '../Form';
 
 const AVAILABLE_HOOKS = ['click', 'focus', ...COMPONENT_LIFECYCLE_HOOKS] as const;
 
@@ -28,7 +28,8 @@ type MagicFormProps<C extends Component> = {
 export type ElementDefinitionBase<C extends ComponentOrHtmlElement> = {
   component: C;
   hookNames?: string[];
-} & (C extends Component ? MagicFormProps<C> : never);
+  props?: C extends Component ? MagicFormProps<C> : never;
+};
 
 export type ElementConfig<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
@@ -48,7 +49,7 @@ export class PlainElement<
 
   protected readonly config: ElementConfig<C, typeof this> & Partial<HC>;
 
-  constructor(form: Form, config: ElementConfig<C> & Partial<HC>) {
+  constructor(form: FormInstance, config: ElementConfig<C> & Partial<HC>) {
     this.hooks = new HookManager<HC>({...config, hookNames: [...AVAILABLE_HOOKS, ...(config.hookNames ?? [])]});
 
     Object.keys(config)

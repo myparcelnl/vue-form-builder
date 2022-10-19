@@ -1,0 +1,38 @@
+{
+  "pluginsConfig": {
+    "@nrwl/js": {
+      "analyzeSourceFiles": true
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "buildOnly",
+          "test"
+        ],
+        "accessToken": "OGZiZjAzODMtYzZjNi00ODEwLTk1MzQtZjRmNjRiM2UyNDJmfHJlYWQtd3JpdGU="
+      }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "buildOnly": {
+      "dependsOn": [
+        "^buildOnly"
+      ]
+    },
+    "dev": {
+      "dependsOn": [
+        "^dev"
+      ]
+    }
+  },
+  "defaultBase": "main"
+}

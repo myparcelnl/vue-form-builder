@@ -1,23 +1,26 @@
-import {FieldName, FieldOrElement, FieldWithNameAndRef} from '../../types';
-import {Form, FormInstance} from '../Form';
-import {Ref, UnwrapRef, ref, watch} from 'vue';
+import {FieldIdentifier, FieldOrElement, FieldWithIdAndRef} from '../../types';
+import {Ref, ref, watch} from 'vue';
 import {ComponentLifecycleHooks} from '../../services/hook-manager/componentHooks';
 import {ComponentOrHtmlElement} from '../plain-element';
+import {FormInstance} from '../Form';
 import {HookManager} from '../../services';
 import {NamedElement} from '../named-element';
-import {RequireOnly} from '@myparcel/vue-form-builder-shared';
 
 const FIELD_HOOKS = [
   'beforeBlur',
   'afterBlur',
+
   'beforeFocus',
   'focus',
   'afterFocus',
+
   'beforeSanitize',
   'sanitize',
   'afterSanitize',
+
   'beforeUpdate',
   'afterUpdate',
+
   'beforeValidate',
   'validate',
   'afterValidate',
@@ -30,9 +33,9 @@ type BaseFieldInstance<RT = unknown> = {
 
 export type FieldInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  I extends FieldIdentifier = FieldIdentifier,
   RT = unknown,
-> = Omit<FieldOrElement<C, N, RT>, 'form'> & BaseFieldInstance<RT>;
+> = Omit<FieldOrElement<C, I, RT>, 'form'> & BaseFieldInstance<RT>;
 
 type FieldHooks<I, RT> = {
   beforeBlur: (field: I, value: RT) => void;
@@ -51,15 +54,15 @@ type FieldHooks<I, RT> = {
 
   beforeValidate: (field: I, value: RT) => void;
   validate: (field: I, value: RT) => boolean;
-  afterValidate: (field: I, value: RT) => void;
+  afterValidate: (field: I, value: RT, isValid: boolean) => void;
 } & ComponentLifecycleHooks<I>;
 
 export class Field<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  I extends FieldIdentifier = FieldIdentifier,
   RT = unknown,
-  FC extends FieldWithNameAndRef<C, N, RT> = FieldWithNameAndRef<C, N, RT>,
-> extends NamedElement<C, N> {
+  FC extends FieldWithIdAndRef<C, I, RT> = FieldWithIdAndRef<C, I, RT>,
+> extends NamedElement<C, I> {
   public focus;
 
   public isDirty = ref(false);
@@ -84,7 +87,7 @@ export class Field<
 
     if (this.hooks.has('sanitize')) {
       const sanitized = await this.hooks.execute('sanitize', this, this.ref.value);
-      this.ref.value = sanitized?.[0] ?? this.ref.value;
+      this.ref.value = sanitized ?? this.ref.value;
     }
 
     if (this.isDirty.value) {
@@ -115,6 +118,7 @@ export class Field<
       }
 
       const valid = await this.hooks.execute('validate', this, value);
+
       await this.hooks.execute('afterValidate', this, value, valid);
 
       this.validationCache[cacheKey] = valid;
@@ -123,9 +127,9 @@ export class Field<
     return this.validationCache[cacheKey];
   };
 
-  // protected declare readonly config: FieldDefinition<N, RT>;
+  // protected declare readonly config: FieldDefinition<I, RT>;
 
-  constructor(form: FormInstance, name: N, config: FC) {
+  constructor(form: FormInstance, name: I, config: FC & FieldHooks<Field<C, I, RT>, RT>) {
     super(form, name, {...config, hookNames: FIELD_HOOKS});
 
     const fieldConfig = {
@@ -151,7 +155,7 @@ export class Field<
     });
   }
 
-  private getDefaultConfig(): Partial<FC> {
+  private getDefaultConfig(): Partial<FieldHooks<I, RT>> {
     return {
       sanitize: (_, value) => value,
       validate: () => true,

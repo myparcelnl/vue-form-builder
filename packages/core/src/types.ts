@@ -1,42 +1,46 @@
 import {ComponentOrHtmlElement, ElementConfig, FieldInstance} from './form';
-import {PromiseOr} from '@myparcel/vue-form-builder-shared';
+import {PromiseOr} from '@myparcel/vue-form-builder-utils';
 import {Ref} from 'vue';
 
-export type FieldName = string | undefined;
+export type FieldIdentifier = string | undefined;
 
-export type ElementWithName<C extends ComponentOrHtmlElement, N extends FieldName = FieldName> = ElementConfig<C> & {
-  name: N;
+export type ElementWithId<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  I extends FieldIdentifier = FieldIdentifier,
+> = ElementConfig<C> & {
+  id: I;
+  ref?: never;
 };
 
-export type FieldWithNameAndRef<
+export type IPlainElement<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = ElementConfig<C> & {
+  id?: never;
+  ref?: never;
+};
+
+export type FieldWithIdAndRef<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  I extends FieldIdentifier = FieldIdentifier,
   RT = unknown,
 > = ElementConfig<C> & {
-  name: N;
+  id: I;
   ref: Ref<RT>;
-
-  sanitize?: (field: FieldInstance<C, N, RT>, value: RT) => PromiseOr<RT>;
-  validate?: (field: FieldInstance<C, N, RT>, value: RT) => PromiseOr<boolean>;
-
   label?: string;
+
   optional?: boolean;
   visible?: boolean;
-};
 
-export type PlainElement<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = ElementConfig<C> & {
-  name?: never;
-  ref?: never;
+  sanitize?: (field: FieldInstance<C, I, RT>, value: RT) => PromiseOr<RT>;
+  validate?: (field: FieldInstance<C, I, RT>, value: RT) => PromiseOr<boolean>;
 };
 
 export type NamedElementOrField<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  I extends FieldIdentifier = FieldIdentifier,
   RT = unknown,
-> = ElementWithName<C, N> | FieldWithNameAndRef<C, N, RT>;
+> = ElementWithId<C, I> | FieldWithIdAndRef<C, I, RT>;
 
 export type FieldOrElement<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  I extends FieldIdentifier = FieldIdentifier,
   RT = unknown,
-> = NamedElementOrField<C, N, RT> | PlainElement<C>;
+> = NamedElementOrField<C, I, RT> | IPlainElement<C>;

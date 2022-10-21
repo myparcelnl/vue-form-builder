@@ -2,20 +2,19 @@
   "name": "@myparcel/vue-form-builder",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "lib/vue-form-builder.umd.js",
-  "module": "lib/vue-form-builder.mjs",
+  "main": "lib/index.mjs",
   "types": "lib/main.d.ts",
   "scripts": {
-    "build": "pnpm run typecheck && pnpm run buildOnly",
-    "buildOnly": "vite build",
-    "typecheck": "vue-tsc --noEmit",
-    "preview": "vite preview",
-    "dev": "vite build --mode development --watch",
-    "test": "vitest"
+    "build": "yarn typecheck && yarn buildOnly",
+    "buildOnly": "tsup",
+    "clean": "rimraf lib",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@myparcel/vue-form-builder-shared": "workspace:*",
-    "@myparcel/vue-form-builder-vite": "workspace:*",
+    "@myparcel/vue-form-builder-build-tsup": "workspace:*",
+    "@myparcel/vue-form-builder-utils": "workspace:*",
     "@vue/devtools-api": "^6.4.4"
   },
   "devDependencies": {

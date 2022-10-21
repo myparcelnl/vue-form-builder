@@ -5,26 +5,31 @@
   "type": "module",
   "main": "lib/vue-form-builder.js",
   "types": "lib/src/index.d.ts",
+  "workspaces": [
+    "packages/**"
+  ],
+  "scripts": {
+    "build": "nx run-many --target=build",
+    "buildOnly": "nx run-many --target=buildOnly",
+    "clean": "nx run-many --target=clean",
+    "dev": "nx run-many --target=dev",
+    "test": "nx run-many --target=test",
+    "typecheck": "nx run-many --target=typecheck"
+  },
   "lint-staged": {
     "*.{ts,vue}": "eslint --fix",
     "package.json": "npx sort-package-json"
   },
-  "scripts": {
-    "build": "nx run-many --target=build",
-    "buildOnly": "nx run-many --target=buildOnly",
-    "typecheck": "nx run-many --target=typecheck",
-    "dev": "nx run-many --target=dev",
-    "test": "nx run-many --target=test"
-  },
+  "prettier": "@myparcel/prettier-config",
   "release": {
     "extends": "@myparcel/semantic-release-config/github-npm"
   },
-  "prettier": "@myparcel/prettier-config",
   "devDependencies": {
     "@myparcel/eslint-config": "^3.6.2",
     "@myparcel/prettier-config": "^1.1.0",
     "@myparcel/semantic-release-config": "^4.0.0",
     "@tsconfig/recommended": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
     "@vue/tsconfig": "^0.1.3",
@@ -34,8 +39,11 @@
     "eslint-plugin-vue": "^9.6.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "nx": "^15.0.0",
+    "nx": "15.0.0",
     "prettier": "^2.7.1",
+    "tsup": "^6.3.0",
     "typescript": "^4.8.4"
-  }
+  },
+  "packageManager": "yarn@3.2.4"
 }
+

@@ -3,6 +3,8 @@ lib/
 logs/
 node_modules/
 
+yarn.lock
+
 coverage
 lib
 dist
@@ -24,3 +26,15 @@ npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.yarn/*
+!.yarn/releases
+!.yarn/patches
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# and uncomment the following lines
+ .pnp.*
+
+

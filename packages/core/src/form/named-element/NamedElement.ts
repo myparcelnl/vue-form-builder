@@ -1,16 +1,16 @@
 import {ComponentOrHtmlElement, PlainElement} from '../plain-element';
-import {ElementWithName, FieldName} from '../../types';
+import {ElementWithId, FieldIdentifier} from '../../types';
 import {FormInstance} from '../Form';
 
 export class NamedElement<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  I extends FieldIdentifier = FieldIdentifier,
 > extends PlainElement<C> {
-  public readonly name: N;
+  public readonly id: I;
 
-  constructor(form: FormInstance, name: N, config: ElementWithName<C, N>) {
+  constructor(form: FormInstance, id: I, config: ElementWithId<C, I>) {
     super(form, config);
 
-    this.name = name;
+    this.id = id;
   }
 }

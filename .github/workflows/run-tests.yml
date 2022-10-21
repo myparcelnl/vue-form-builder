@@ -15,8 +15,13 @@ jobs:
 
       - uses: myparcelnl/actions/pnpm-install@v2
 
-      - run: pnpm run test
+      - run: yarn test
 
       - uses: myparcelnl/actions/update-coverage@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  docker:
+    container:
+      image: docker/docker:20.10.8
+    runs-on: ubuntu-22.04

@@ -2,7 +2,7 @@ import {UserConfigFn} from 'vitest/config';
 import dts from 'vite-plugin-dts';
 
 export const commonViteConfig: UserConfigFn = (env) => ({
-  plugins: [dts(/* {skipDiagnostics: env.mode === 'production', logDiagnostics: env.mode !== 'production'} */)],
+  plugins: [dts()],
 
   build: {
     outDir: 'lib',

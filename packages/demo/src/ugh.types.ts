@@ -1,9 +1,10 @@
 import {Component, EmitsOptions, HTMLAttributes, Ref, ref} from 'vue';
 import {ComponentProps, MakeOptional, PromiseOr} from '@myparcel/vue-form-builder-shared';
-import {FieldName, FieldOrElement} from '@myparcel/vue-form-builder/src/types';
+import {FieldIdentifier, FieldOrElement} from '@myparcel/vue-form-builder/src/types';
 import {ComponentOrHtmlElement} from '@myparcel/vue-form-builder/src/form';
-import TTextInput from './components/template/TTextInput.vue';
 import TSelect from './components/template/TSelect.vue';
+import TTextInput from './components/template/TTextInput.vue';
+import {defineField} from '@myparcel/vue-form-builder';
 
 type FieldsToModel<T extends {fields: NewFieldObj[]}> = {
   [K in T['fields'][number] as K['name'] extends string ? K['name'] : never]: K extends {ref: Ref<infer RT>}
@@ -36,13 +37,13 @@ interface Base<C extends ComponentOrHtmlElement> {
   props?: C extends Component ? FilteredComponentProps<C> : never;
 }
 
-interface Named<C extends ComponentOrHtmlElement, N extends FieldName> extends Base<C> {
+interface Named<C extends ComponentOrHtmlElement, N extends FieldIdentifier> extends Base<C> {
   name: N;
 }
 
 type OneOrMore<T> = T | T[];
 
-interface Reffed<C extends ComponentOrHtmlElement, N extends FieldName, RT = any> extends Named<C, N> {
+interface Reffed<C extends ComponentOrHtmlElement, N extends FieldIdentifier, RT = any> extends Named<C, N> {
   ref: Ref<RT>;
 
   sanitize?: (value: RT) => PromiseOr<RT>;
@@ -51,10 +52,11 @@ interface Reffed<C extends ComponentOrHtmlElement, N extends FieldName, RT = any
 
 type NoInfer<T> = [T][T extends any ? 0 : 1];
 
-type Obj<C extends ComponentOrHtmlElement = ComponentOrHtmlElement, N extends FieldName = FieldName, RT = any> =
-  | Base<C>
-  | Named<C, N>
-  | Reffed<C, N, RT>;
+type Obj<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends FieldIdentifier = FieldIdentifier,
+  RT = any,
+> = Base<C> | Named<C, N> | Reffed<C, N, RT>;
 
 const aa: Obj = {
   component: 'input',
@@ -88,7 +90,7 @@ const bb = defineObj({
 type FieldChecc<
   R extends Obj,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = string,
+  N extends FieldIdentifier = string,
 > = (Base<C> | Named<C, N>) &
   (R extends {ref: Ref<infer RT>}
     ? {
@@ -122,13 +124,13 @@ const boo = defineObj([
   },
 ]);
 
-declare function defineSingleObj<C extends ComponentOrHtmlElement, N extends FieldName, RT>(
+declare function defineSingleObj<C extends ComponentOrHtmlElement, N extends FieldIdentifier, RT>(
   obj: Base<C> | Named<C, N> | Reffed<C, N, RT>,
 ): Obj<C, N, RT>;
 
 declare function defineSingleObj2<
   C extends ComponentOrHtmlElement,
-  N extends FieldName,
+  N extends FieldIdentifier,
   RT,
   F extends NewFieldObj<C, N, RT> = NewFieldObj<C, N, RT>,
 >(field: F): F;
@@ -151,14 +153,14 @@ const obj = defineSingleObj({
   validate: (value) => value > 0,
 });
 
-type FieldHooks<C extends ComponentOrHtmlElement, N extends FieldName, RT = never> = {
+type FieldHooks<C extends ComponentOrHtmlElement, N extends FieldIdentifier, RT = never> = {
   sanitize?: (instance: NewFieldObj<C, N, RT>, value: RT) => PromiseOr<RT>;
   validate?: (instance: NewFieldObj<C, N, RT>, value: RT) => PromiseOr<boolean>;
 };
 
 type NewFieldObj<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  N extends FieldIdentifier = FieldIdentifier,
   RT = any,
 > = {
   component: C;
@@ -180,10 +182,12 @@ declare function defineMultiObj<F extends NewFieldObj[]>(obj: F): FormInstancccc
 
 declare function defineMultiObjArr<T extends NewFieldObj[] = NewFieldObj[]>(config: T): FormInstancccc<T>;
 
-const obj2 = defineSingleObj2({
+const obj2 = defineField({
   name: 'borp2',
   component: TTextInput,
-  props: {disabled: true},
+  props: {
+    disabled: true,
+  },
   attrs: {},
   ref: ref(124),
 
@@ -264,13 +268,13 @@ const named = defineSingleObj2({
   name: 'borp2',
 });
 
-// type Clorp<N extends FieldName = FieldName, C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
+// type Clorp<N extends FieldIdentifier = FieldIdentifier, C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
 //   name?: N;
 //   component?: C;
 //   props?: C extends Component ? FilteredComponentProps<C> : never;
 // };
 //
-// declare function defineClorp<N extends FieldName, Cnf extends Clorp<N>[], I extends number>(
+// declare function defineClorp<N extends FieldIdentifier, Cnf extends Clorp<N>[], I extends number>(
 //   config: Cnf,
 // ): {
 //   [K in N extends string ? N : never]: number;

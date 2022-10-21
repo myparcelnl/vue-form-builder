@@ -1,7 +1,7 @@
 import {ComponentOrHtmlElement, PlainElement} from './plain-element';
 import {Field, FieldInstance} from './field';
-import {FieldName, FieldOrElement, FieldWithNameAndRef, NamedElementOrField} from '../types';
-import {PromiseOr, isOfType} from '@myparcel/vue-form-builder-shared';
+import {FieldIdentifier, FieldOrElement, NamedElementOrField} from '../types';
+import {PromiseOr, isOfType} from '@myparcel/vue-form-builder-utils';
 import {UnwrapNestedRefs, markRaw, reactive} from 'vue';
 import {ComponentLifecycleHooks} from '../services/hook-manager/componentHooks';
 import {HookManager} from '../services';
@@ -31,7 +31,12 @@ export type FormConfiguration<F extends FieldOrElement[] = FieldOrElement[]> = {
   formClass?: string | string[] | Record<string, string>;
 } & Partial<FormHooks<Form>>;
 
-export type FormInstance<FC extends FormConfiguration = FormConfiguration> = Omit<FC, 'fields'>;
+export type FormInstance<
+  FC extends FormConfiguration = FormConfiguration,
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends FieldIdentifier = FieldIdentifier,
+  RT = unknown,
+> = Omit<Form<C, N, RT, any, FC>, 'fields'>;
 
 type FormHooks<I extends Form> = {
   [k in typeof FORM_HOOKS[number]]: (form: I) => PromiseOr<void>;
@@ -43,18 +48,18 @@ type FormHooks<I extends Form> = {
 //     : K;
 // };
 
-type FieldsToModel<
-  // FC extends FormConfiguration,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends NonNullable<FieldName> = NonNullable<FieldName>,
-  RT = unknown,
+export type FieldsToModel<
+  FC extends FormConfiguration,
+  // C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  // N extends NonNullable<FieldIdentifier> = NonNullable<FieldIdentifier>,
+  // RT = unknown,
 > = {
-  [K in N as K extends string ? K : never]: FieldInstance<C, K, RT>;
+  [K in FC['fields'][number] as K['name'] extends string ? K['name'] : never]: UnwrapNestedRefs<K>;
 };
 
 export class Form<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  N extends FieldIdentifier = FieldIdentifier,
   RT = unknown,
   FN extends string = string,
   FC extends FormConfiguration = FormConfiguration,
@@ -63,7 +68,7 @@ export class Form<
   public readonly fields: UnwrapNestedRefs<FieldInstance<C, N, RT>>[] = [];
   // eslint-disable-next-line no-invalid-this
   public readonly hooks: HookManager<FormHooks<typeof this>>;
-  public readonly model = {} as N extends string ? FieldsToModel<C, N, RT> : never;
+  public readonly model = {} as FieldsToModel<FC>;
   public readonly name: FN;
 
   constructor(name: FN, formConfig: FC) {
@@ -125,16 +130,16 @@ export class Form<
   }
 
   private createFieldInstance(
-    field: FieldOrElement,
+    field: FieldOrElement<C, N, RT>,
     form: Form<C, N, RT, FN> & {fields: undefined},
   ): UnwrapNestedRefs<FieldInstance<C, N, RT>> {
     let instance;
 
-    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'name')) {
-      if (isOfType<FieldWithNameAndRef<C, N, RT>>(field, 'ref')) {
-        instance = new Field<C, N, RT>(form, field.name, field);
+    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'id')) {
+      if (field.ref) {
+        instance = new Field<C, N, RT>(form, field.id, field);
       } else {
-        instance = new NamedElement<C, N>(form, field.name, field);
+        instance = new NamedElement<C, N>(form, field.id, field);
       }
     } else {
       instance = new PlainElement<C>(form, field);
@@ -146,10 +151,14 @@ export class Form<
       markRaw(reactiveInstance.component);
     }
 
-    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'name')) {
-      this.model[field.name as NonNullable<N>] = reactiveInstance;
+    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'id')) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.model[field.id] = reactiveInstance;
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     return reactiveInstance;
   }
 

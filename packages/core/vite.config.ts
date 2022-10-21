@@ -1,4 +1,4 @@
-import {createViteConfig} from '@myparcel/vue-form-builder-vite';
+import {createViteConfig} from '@myparcel/vue-form-builder-build-vite';
 import vue from '@vitejs/plugin-vue';
 
 export default createViteConfig({
@@ -7,11 +7,11 @@ export default createViteConfig({
   build: {
     lib: {
       name: 'VueFormBuilder',
-      entry: 'src/main.ts',
+      entry: 'src/index.ts',
     },
 
     rollupOptions: {
-      external: ['vue', '@myparcel/sdk'],
+      external: ['vue'],
       output: {
         globals: {
           vue: 'Vue',

@@ -1,0 +1,16 @@
+{
+  "name": "@myparcel/vue-form-builder-utils",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "yarn buildOnly",
+    "buildOnly": "tsup",
+    "clean": "rimraf dist",
+    "dev": "tsup --watch"
+  },
+  "devDependencies": {
+    "@myparcel/vue-form-builder-build-tsup": "workspace:*"
+  }
+}

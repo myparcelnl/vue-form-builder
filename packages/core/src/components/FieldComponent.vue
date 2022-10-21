@@ -42,15 +42,11 @@
 
 <script lang="ts">
 import {PropType, computed, defineComponent, toRefs} from 'vue';
-import {CodeBlock} from '@myparcel/vue-form-builder-shared';
 import {FieldInstance} from '../services';
 import {useLifeCycleHooks} from '../composables/useLifeCycleHooks';
 
 export default defineComponent({
   name: 'FieldComponent',
-  components: {
-    CodeBlock,
-  },
 
   props: {
     field: {

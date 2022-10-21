@@ -5,6 +5,7 @@ type CustomHookItem<HN extends string> = {
   callback: HookCallback;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type HookCallback = (...args: any[]) => any;
 
 export type InputHookConfiguration = {
@@ -27,6 +28,7 @@ export class HookManager<HC extends InputHookConfiguration = InputHookConfigurat
 
   public async execute<N extends HN>(name: N, ...args: Parameters<HC[N]>): Promise<ReturnType<HC[N]>> {
     if (this.has(name)) {
+      // eslint-disable-next-line no-console
       console.log(`%c@${name}`, 'color: yellow', ...args);
     }
 

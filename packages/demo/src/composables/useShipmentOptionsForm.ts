@@ -69,7 +69,9 @@ export const useShipmentOptionsForm = (): any => {
           max: 10,
         },
 
-        isVisible() {},
+        isVisible() {
+          return true;
+        },
 
         onCreated: () => {
           console.warn('onCreated');

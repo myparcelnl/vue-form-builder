@@ -1,7 +1,7 @@
 import {Component, EmitsOptions, HTMLAttributes, Ref, UnwrapNestedRefs, ref} from 'vue';
 import {ComponentOrHtmlElement, FormConfiguration} from '@myparcel/vue-form-builder/src/form';
 import {ComponentProps, MakeOptional, PromiseOr} from '@myparcel/vue-form-builder-utils';
-import {FieldIdentifier, FieldOrElement} from '@myparcel/vue-form-builder/src/types';
+import {FieldName, FieldOrElement} from '@myparcel/vue-form-builder/src/types';
 import TSelect from './components/template/TSelect.vue';
 import TTextInput from './components/template/TTextInput.vue';
 import {defineField} from '@myparcel/vue-form-builder';
@@ -37,13 +37,13 @@ interface Base<C extends ComponentOrHtmlElement> {
   props?: C extends Component ? FilteredComponentProps<C> : never;
 }
 
-interface Named<C extends ComponentOrHtmlElement, N extends FieldIdentifier> extends Base<C> {
+interface Named<C extends ComponentOrHtmlElement, N extends FieldName> extends Base<C> {
   name: N;
 }
 
 type OneOrMore<T> = T | T[];
 
-interface Reffed<C extends ComponentOrHtmlElement, N extends FieldIdentifier, RT = any> extends Named<C, N> {
+interface Reffed<C extends ComponentOrHtmlElement, N extends FieldName, RT = any> extends Named<C, N> {
   ref: Ref<RT>;
 
   sanitize?: (value: RT) => PromiseOr<RT>;
@@ -52,11 +52,10 @@ interface Reffed<C extends ComponentOrHtmlElement, N extends FieldIdentifier, RT
 
 type NoInfer<T> = [T][T extends any ? 0 : 1];
 
-type Obj<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldIdentifier = FieldIdentifier,
-  RT = any,
-> = Base<C> | Named<C, N> | Reffed<C, N, RT>;
+type Obj<C extends ComponentOrHtmlElement = ComponentOrHtmlElement, N extends FieldName = FieldName, RT = any> =
+  | Base<C>
+  | Named<C, N>
+  | Reffed<C, N, RT>;
 
 const aa: Obj = {
   component: 'input',
@@ -90,7 +89,7 @@ const bb = defineObj({
 type FieldChecc<
   R extends Obj,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldIdentifier = string,
+  N extends FieldName = string,
 > = (Base<C> | Named<C, N>) &
   (R extends {ref: Ref<infer RT>}
     ? {
@@ -124,13 +123,13 @@ const boo = defineObj([
   },
 ]);
 
-declare function defineSingleObj<C extends ComponentOrHtmlElement, N extends FieldIdentifier, RT>(
+declare function defineSingleObj<C extends ComponentOrHtmlElement, N extends FieldName, RT>(
   obj: Base<C> | Named<C, N> | Reffed<C, N, RT>,
 ): Obj<C, N, RT>;
 
 declare function defineSingleObj2<
   C extends ComponentOrHtmlElement,
-  N extends FieldIdentifier,
+  N extends FieldName,
   RT,
   F extends NewFieldObj<C, N, RT> = NewFieldObj<C, N, RT>,
 >(field: F): F;
@@ -153,14 +152,14 @@ const obj = defineSingleObj({
   validate: (value) => value > 0,
 });
 
-type FieldHooks<C extends ComponentOrHtmlElement, N extends FieldIdentifier, RT = never> = {
+type FieldHooks<C extends ComponentOrHtmlElement, N extends FieldName, RT = never> = {
   sanitize?: (instance: NewFieldObj<C, N, RT>, value: RT) => PromiseOr<RT>;
   validate?: (instance: NewFieldObj<C, N, RT>, value: RT) => PromiseOr<boolean>;
 };
 
 type NewFieldObj<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldIdentifier = FieldIdentifier,
+  N extends FieldName = FieldName,
   RT = any,
 > = {
   component: C;
@@ -268,13 +267,13 @@ const named = defineSingleObj2({
   name: 'borp2',
 });
 
-// type Clorp<N extends FieldIdentifier = FieldIdentifier, C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
+// type Clorp<N extends FieldName = FieldName, C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
 //   name?: N;
 //   component?: C;
 //   props?: C extends Component ? FilteredComponentProps<C> : never;
 // };
 //
-// declare function defineClorp<N extends FieldIdentifier, Cnf extends Clorp<N>[], I extends number>(
+// declare function defineClorp<N extends FieldName, Cnf extends Clorp<N>[], I extends number>(
 //   config: Cnf,
 // ): {
 //   [K in N extends string ? N : never]: number;
@@ -301,7 +300,7 @@ const named = defineSingleObj2({
 const form = defineForm('tellAFriend', {
   fields: [
     defineField({
-      id: 'name',
+      name: 'name',
       component: 'input',
       ref: ref(123),
       sanitize: (instance, value) => Math.round(value),
@@ -336,7 +335,7 @@ const foop = defineFoop({
   ],
 });
 
-// const A: FieldWithIdAndRef = {
+// const A: FieldWithNameAndRef = {
 //   name: 'a',
 //   ref: ref('a'),
 // };
@@ -357,7 +356,7 @@ const foop = defineFoop({
 //
 // form.model.firstName.ref = 'John';
 
-// export const defineForm = <FormName extends string, FE extends FormConfiguration<N>, N extends FieldIdentifier>(
+// export const defineForm = <FormName extends string, FE extends FormConfiguration<N>, N extends FieldName>(
 //   name: FormName,
 //   formConfig: FE,
 // ): FormInstance<FormName, FE, N> => {

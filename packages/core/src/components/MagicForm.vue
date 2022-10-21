@@ -1,5 +1,8 @@
 <template>
-  <form :class="form.config.formClass">
+  <form
+    :class="form.config.formClass"
+    @submit.prevent="form.submit"
+  >
     <template
       v-for="(field, index) in form.fields"
       :key="`field--${field.name ?? 'unnamed'}--${index}`">

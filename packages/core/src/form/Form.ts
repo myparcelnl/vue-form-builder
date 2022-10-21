@@ -54,7 +54,7 @@ export type FieldsToModel<
   // N extends NonNullable<FieldIdentifier> = NonNullable<FieldIdentifier>,
   // RT = unknown,
 > = {
-  [K in FC['fields'][number] as K['name'] extends string ? K['name'] : never]: UnwrapNestedRefs<K>;
+  [K in FC['fields'][number] as K['id'] extends string ? K['id'] : never]: UnwrapNestedRefs<K>;
 };
 
 export class Form<

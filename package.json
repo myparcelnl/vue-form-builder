@@ -24,9 +24,6 @@
     "*.{ts,vue}": "eslint --fix",
     "package.json": "npx sort-package-json"
   },
-  "release": {
-    "extends": "@myparcel/semantic-release-config/github-npm"
-  },
   "prettier": "@myparcel/prettier-config",
   "devDependencies": {
     "@myparcel/eslint-config": "^3.6.2",

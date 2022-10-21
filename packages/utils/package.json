@@ -5,10 +5,10 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
-    "build": "yarn buildOnly",
+    "build": "tsup --dts",
     "buildOnly": "tsup",
     "clean": "rimraf dist",
-    "dev": "tsup --watch"
+    "serve": "tsup --watch"
   },
   "devDependencies": {
     "@myparcel/vue-form-builder-build-tsup": "workspace:*"

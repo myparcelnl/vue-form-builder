@@ -2,9 +2,9 @@
   "name": "@myparcel/vue-form-builder-demo",
   "version": "0.0.0",
   "scripts": {
-    "build": "yarn typecheck && yarn buildOnly",
+    "build": "yarn buildOnly",
     "buildOnly": "vite build",
-    "dev": "vite",
+    "serve": "vite",
     "preview": "vite preview --port 4173",
     "typecheck": "vue-tsc --noEmit"
   },

@@ -41,8 +41,9 @@
 </template>
 
 <script lang="ts">
-import {PropType, computed, defineComponent, toRefs} from 'vue';
-import {FieldInstance} from '../services';
+import {PropType, computed, defineComponent, provide, toRefs} from 'vue';
+import {FieldInstance} from '../form';
+import {INJECT_FIELD} from '../services/provides';
 import {useLifeCycleHooks} from '../composables/useLifeCycleHooks';
 
 export default defineComponent({
@@ -56,6 +57,8 @@ export default defineComponent({
   },
 
   setup: (props) => {
+    provide(INJECT_FIELD, props.field);
+
     const propRefs = toRefs(props);
 
     useLifeCycleHooks(props.field.hooks, props.field);

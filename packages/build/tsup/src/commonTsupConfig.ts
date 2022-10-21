@@ -7,12 +7,6 @@ export const commonTsupConfig: Options = {
     js: banner?.length ? `/* ${banner} */` : '',
   },
   clean: true,
-  dts:
-    process.env.NODE_ENV === 'development'
-      ? {
-          entry: 'src/index.ts',
-        }
-      : false,
   entry: ['src/index.ts'],
   format: ['esm'],
   loader: {

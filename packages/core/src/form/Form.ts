@@ -67,14 +67,14 @@ export class Form<
   public readonly config: Omit<FC, 'fields'>;
   public readonly fields: UnwrapNestedRefs<FieldInstance<C, N, RT>>[] = [];
   // eslint-disable-next-line no-invalid-this
-  public readonly hooks: HookManager<FormHooks<typeof this>>;
+  public readonly hooks: HookManager<FormHooks<Form>>;
   public readonly model = {} as FieldsToModel<FC>;
   public readonly name: FN;
 
   constructor(name: FN, formConfig: FC) {
     const {fields, ...config} = formConfig;
 
-    this.hooks = new HookManager<FormHooks<typeof this>>({...formConfig, hookNames: FORM_HOOKS});
+    this.hooks = new HookManager<FormHooks<Form>>({...formConfig, hookNames: FORM_HOOKS});
     this.name = name;
     this.config = config;
 
@@ -88,7 +88,7 @@ export class Form<
   }
 
   public addField(newField: PlainElement, sibling: N, position: 'before' | 'after' = 'after'): void {
-    const siblingIndex = this.fields.findIndex((field) => field.name === sibling);
+    const siblingIndex = this.fields.findIndex((field) => field.id === sibling);
 
     if (siblingIndex === -1) {
       // eslint-disable-next-line no-console

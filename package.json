@@ -12,7 +12,7 @@
     "build": "nx run-many --target=build",
     "buildOnly": "nx run-many --target=buildOnly",
     "clean": "nx run-many --target=clean",
-    "dev": "nx run-many --target=dev",
+    "serve": "nx serve",
     "test": "nx run-many --target=test",
     "typecheck": "nx run-many --target=typecheck"
   },
@@ -46,4 +46,3 @@
   },
   "packageManager": "yarn@3.2.4"
 }
-

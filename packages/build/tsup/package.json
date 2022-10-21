@@ -7,10 +7,10 @@
   },
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "yarn buildOnly",
+    "build": "tsup --dts",
     "buildOnly": "tsup",
     "clean": "rimraf lib",
-    "dev": "tsup --watch"
+    "serve": "tsup --watch"
   },
   "dependencies": {
     "tsup": "^6.3.0"

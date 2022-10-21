@@ -3,8 +3,6 @@ lib/
 logs/
 node_modules/
 
-yarn.lock
-
 coverage
 lib
 dist

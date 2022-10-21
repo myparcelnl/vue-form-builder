@@ -24,10 +24,10 @@
     "*.{ts,vue}": "eslint --fix",
     "package.json": "npx sort-package-json"
   },
-  "prettier": "@myparcel/prettier-config",
   "release": {
-    "extends": "semantic-release-monorepo"
+    "extends": "@myparcel/semantic-release-config/github-npm"
   },
+  "prettier": "@myparcel/prettier-config",
   "devDependencies": {
     "@myparcel/eslint-config": "^3.6.2",
     "@myparcel/prettier-config": "^1.1.0",
@@ -43,10 +43,9 @@
     "eslint-plugin-vue": "^9.6.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
+    "multi-semantic-release": "^3.0.1",
     "nx": "15.0.0",
     "prettier": "^2.7.1",
-    "semantic-release": "^19.0.5",
-    "semantic-release-monorepo": "^7.0.5",
     "tsup": "^6.3.0",
     "typescript": "^4.8.4"
   },

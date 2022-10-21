@@ -1,5 +1,5 @@
 <template>
-  <FormGroup v-bind="{label, id}">
+  <FormGroup v-bind="{label, id, warnings}">
     <input
       :id="id"
       v-model="model"

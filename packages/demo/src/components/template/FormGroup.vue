@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 items-center justify-center w-full">
+  <div class="grid grid-cols-3 items-center justify-center w-full">
     <label
       v-if="label"
       :for="name"
@@ -7,6 +7,11 @@
     >
 
     <slot />
+    <ul v-if="warnings" >
+      <li v-for="warning in warnings" :key="warning">
+        {{ warning }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -24,6 +29,11 @@ export default defineComponent({
     label: {
       type: String,
       default: null,
+    },
+
+    warnings: {
+      type: Array,
+      default: () => [],
     },
   },
 });

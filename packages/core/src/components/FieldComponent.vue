@@ -124,6 +124,7 @@ export default defineComponent({
           name: props.field.name,
           disabled: props.field.isDisabled,
           valid: props.field.isValid,
+          warnings: props.field.errors,
         };
       }),
     };

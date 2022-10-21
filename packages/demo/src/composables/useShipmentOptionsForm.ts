@@ -57,10 +57,16 @@ export const useShipmentOptionsForm = (): any => {
         label: 'Name',
         validators: [
           {
-            validator: (field, value: string) => {
-              return value !== 'John';
+            validate: (field, value: string) => {
+              return !value.startsWith('John');
             },
             errorMessage: 'John is not allowed',
+          },
+          {
+            validate: (field, value: string) => {
+              return !value.includes('e')
+            },
+            errorMessage: 'E is not allowed',
           }
         ]
       },

@@ -39,7 +39,7 @@ export type FieldInstance<
 > = Omit<FieldOrElement<C, N, RT>, 'form'> & BaseFieldInstance<RT>;
 
 type Validator = {
-  validator: (value: unknown) => boolean;
+  validate: (value: unknown) => boolean;
   errorMessage: string;
 }
 
@@ -60,6 +60,7 @@ type FieldHooks<N, RT> = {
 
   beforeValidate: (field: N, value: RT) => void;
   validate: (field: N, value: RT) => boolean;
+  validators: Validator[];
   afterValidate: (field: N, value: RT, isValid: boolean) => void;
 } & ComponentLifecycleHooks<N>;
 
@@ -110,7 +111,6 @@ export class Field<
   private cachedValidate = async (value: RT): Promise<boolean> => {
     const cacheKey = String(`${value}${this.isOptional.value ? '_optional' : ''}`);
 
-    console.log('cached?', this.label, this.validationCache[cacheKey]);
     if (!this.validationCache[cacheKey]) {
       if (!this.isDirty.value) {
         return true;
@@ -122,12 +122,9 @@ export class Field<
         return false;
       }
 
-      console.log(this.label, 'validate');
-
+      this.errors.value = [];
       const valid = await this.hooks.execute('validate', this, value);
-
       await this.hooks.execute('afterValidate', this, value, valid);
-
       this.validationCache[cacheKey] = valid;
     }
 
@@ -138,13 +135,16 @@ export class Field<
 
   constructor(form: FormInstance, name: N, config: FC & FieldHooks<Field<C, N, RT>, RT>) {
     let sanitize = config.sanitize || ((_, value) => value);
-    let validate;
+    let validate = (field, value) => true;
+
     if (config.validate) {
+      // if only a validator is set, use it as the validate function
       validate = config.validate;
     } else if (config.validators) {
+      // if validators are set, use it to loop and validate
       validate = (field, value) => {
         config.validators.forEach((validator: Validator) => {
-          if (!validator.validate(value)) {
+          if (!validator.validate(field, value)) {
             this.errors.value.push(validator.errorMessage);
           }
         });
@@ -153,8 +153,6 @@ export class Field<
         }
         return true;
       }
-    } else {
-      validate = () => true;
     }
 
     const defaultConfig = {

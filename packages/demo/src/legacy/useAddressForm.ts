@@ -1,8 +1,8 @@
 import {Form, defineForm} from './index';
 import {reactive, ref} from 'vue';
-import CustomCheckbox from './CustomCheckbox.vue.js';
-import CustomInput from './CustomInput.vue.js';
-import CustomSelect from './CustomSelect.vue.js';
+import CustomCheckbox from './CustomCheckbox.vue';
+import CustomInput from './CustomInput.vue';
+import CustomSelect from './CustomSelect.vue';
 
 const postcodeHousenumberValidation = async (ctx: Form) => {
   ctx.fields.postcodeHousenumberValidation.visible = false;

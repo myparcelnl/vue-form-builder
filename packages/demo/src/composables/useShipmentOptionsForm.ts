@@ -50,6 +50,26 @@ export const useShipmentOptionsForm = (): any => {
           level: 2,
         },
       }),
+      {
+        name: 'name',
+        component: TTextInput,
+        ref: ref(''),
+        label: 'Name',
+        validators: [
+          {
+            validate: (field, value: string) => {
+              return !value.startsWith('John');
+            },
+            errorMessage: 'John is not allowed',
+          },
+          {
+            validate: (field, value: string) => {
+              return !value.includes('e')
+            },
+            errorMessage: 'E is not allowed',
+          }
+        ]
+      },
       // new HiddenInput({
       //   name: 'orderId',
       //   ref: ref(1),
@@ -69,37 +89,35 @@ export const useShipmentOptionsForm = (): any => {
           max: 10,
         },
 
-        isVisible() {
-          return true;
-        },
+        // isVisible() {},
 
-        onCreated: () => {
-          console.warn('onCreated');
-        },
-        onActivated: () => {
-          console.warn('onActivated');
-        },
-        onBeforeMount: () => {
-          console.warn('onBeforeMount');
-        },
-        onBeforeUnmount: () => {
-          console.warn('onBeforeUnmount');
-        },
-        onBeforeUpdate: () => {
-          console.warn('onBeforeUpdate');
-        },
-        onDeactivated: () => {
-          console.warn('onDeactivated');
-        },
-        onMounted: () => {
-          console.warn('onMounted');
-        },
-        onUnmounted: () => {
-          console.warn('onUnmounted');
-        },
-        onUpdated: () => {
-          console.warn('onUpdated');
-        },
+        // onCreated: () => {
+        //   console.warn('onCreated');
+        // },
+        // onActivated: () => {
+        //   console.warn('onActivated');
+        // },
+        // onBeforeMount: () => {
+        //   console.warn('onBeforeMount');
+        // },
+        // onBeforeUnmount: () => {
+        //   console.warn('onBeforeUnmount');
+        // },
+        // onBeforeUpdate: () => {
+        //   console.warn('onBeforeUpdate');
+        // },
+        // onDeactivated: () => {
+        //   console.warn('onDeactivated');
+        // },
+        // onMounted: () => {
+        //   console.warn('onMounted');
+        // },
+        // onUnmounted: () => {
+        //   console.warn('onUnmounted');
+        // },
+        // onUpdated: () => {
+        //   console.warn('onUpdated');
+        // },
       },
       {
         name: 'packageType',
@@ -152,7 +170,7 @@ export const useShipmentOptionsForm = (): any => {
         ref: ref<string | null>(null),
 
         onBeforeMount: async (field) => {
-          console.log('beforeMount', field);
+          // console.log('beforeMount', field);
           const sdk = createPublicSdk(new FetchClient(), [new GetCarriers()]);
           const carriers = await sdk.getCarriers();
 
@@ -164,19 +182,18 @@ export const useShipmentOptionsForm = (): any => {
             value: carrier.name,
           }));
 
-          console.log('carriers', carriers);
-          console.log('field.form', field.form);
-          console.log('field', field);
+          // console.log(carriers);
+          // console.log(field.form);
 
-          field.form.addField(
-            {
-              component: Heading,
-              props: {
-                text: 'randomly inserted field!!',
-              },
-            },
-            'carrier',
-          );
+          // field.form.addField(
+          //   {
+          //     component: Heading,
+          //     props: {
+          //       text: 'randomly inserted field!!',
+          //     },
+          //   },
+          //   'carrier',
+          // );
 
           // field.ref = carriers[0].name;
         },
@@ -216,6 +233,9 @@ export const useShipmentOptionsForm = (): any => {
         component: TTextInput,
         ref: ref(1000),
         label: 'Insurance',
+        validate: (field: any, value: any) => {
+          return value < 500;
+        }
       },
       {
         component: TSubmitButton,

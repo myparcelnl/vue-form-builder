@@ -104,7 +104,6 @@ export class Form<
   public async submit() {
     await this.hooks.execute('beforeSubmit', this);
     await this.validate();
-    console.log('submit form', this.name);
     await this.hooks.execute('afterSubmit', this);
   }
 
@@ -118,8 +117,15 @@ export class Form<
 
     await Promise.all(
       this.fields.map((field) => {
+
         if (!isOfType<Field<C, N, RT>>(field, 'validateAll')) {
           return true;
+        }
+
+        if (field.isDirty.value) {
+          field.isDirty.value = true;
+        } else {
+          (field.isDirty as boolean) = true;
         }
 
         return field.validateAll();

@@ -14,10 +14,8 @@ import {INJECT_FORM} from '@myparcel/vue-form-builder';
 export default defineComponent({
   name: 'TSubmitButton',
 
-  setup: () => {
-    const form = inject(INJECT_FORM);
-
-    return {form};
-  },
+  setup: () => ({
+    form: inject(INJECT_FORM),
+  }),
 });
 </script>

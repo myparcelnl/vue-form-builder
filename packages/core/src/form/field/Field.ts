@@ -23,6 +23,7 @@ const FIELD_HOOKS = [
 
   'beforeValidate',
   'validate',
+  'validators',
   'afterValidate',
 ] as const;
 
@@ -36,6 +37,11 @@ export type FieldInstance<
   N extends FieldName = FieldName,
   RT = unknown,
 > = Omit<FieldOrElement<C, N, RT>, 'form'> & BaseFieldInstance<RT>;
+
+type Validator = {
+  validate: (value: unknown) => boolean;
+  errorMessage: string;
+}
 
 type FieldHooks<N, RT> = {
   beforeBlur: (field: N, value: RT) => void;
@@ -54,6 +60,7 @@ type FieldHooks<N, RT> = {
 
   beforeValidate: (field: N, value: RT) => void;
   validate: (field: N, value: RT) => boolean;
+  validators: Validator[];
   afterValidate: (field: N, value: RT, isValid: boolean) => void;
 } & ComponentLifecycleHooks<N>;
 
@@ -72,6 +79,7 @@ export class Field<
   public isTouched = ref(false);
   public isValid = ref(true);
   public isVisible = ref(true);
+  public errors = ref([]);
   public label?: string;
   public lazy = false;
   public ref: Ref<RT>;
@@ -85,10 +93,7 @@ export class Field<
     await this.hooks.execute('beforeBlur', this, this.ref.value);
     this.isSuspended.value = true;
 
-    if (this.hooks.has('sanitize')) {
-      const sanitized = await this.hooks.execute('sanitize', this, this.ref.value);
-      this.ref.value = sanitized ?? this.ref.value;
-    }
+    this.ref.value = await this.hooks.execute('sanitize', this, this.ref.value);
 
     if (this.isDirty.value) {
       await this.validateAll();
@@ -117,10 +122,9 @@ export class Field<
         return false;
       }
 
+      this.errors.value = [];
       const valid = await this.hooks.execute('validate', this, value);
-
       await this.hooks.execute('afterValidate', this, value, valid);
-
       this.validationCache[cacheKey] = valid;
     }
 
@@ -130,17 +134,43 @@ export class Field<
   // protected declare readonly config: FieldDefinition<N, RT>;
 
   constructor(form: FormInstance, name: N, config: FC & FieldHooks<Field<C, N, RT>, RT>) {
-    super(form, name, {...config, hookNames: FIELD_HOOKS});
+    let sanitize = config.sanitize || ((_, value) => value);
+    let validate = (field, value) => true;
+
+    if (config.validate) {
+      // if only a validator is set, use it as the validate function
+      validate = config.validate;
+    } else if (config.validators) {
+      // if validators are set, use it to loop and validate
+      validate = (field, value) => {
+        config.validators.forEach((validator: Validator) => {
+          if (!validator.validate(field, value)) {
+            this.errors.value.push(validator.errorMessage);
+          }
+        });
+        if (this.errors.value.length) {
+          return false;
+        }
+        return true;
+      }
+    }
+
+    const defaultConfig = {
+      sanitize,
+      validate,
+    };
 
     const fieldConfig = {
-      ...this.getDefaultConfig(),
+      ...defaultConfig,
       ...config,
     };
 
-    this.label = fieldConfig.label;
+    super(form, name, {...fieldConfig, hookNames: FIELD_HOOKS});
 
+    this.label = fieldConfig.label;
     this.isOptional.value = fieldConfig.optional ?? false;
     this.isVisible.value = fieldConfig.visible ?? true;
+    this.isDisabled.value = fieldConfig.disabled ?? false;
 
     this.ref = fieldConfig.ref;
 
@@ -149,16 +179,9 @@ export class Field<
 
     watch(this.ref, async (value: RT, oldValue: RT) => {
       await this.hooks.execute('beforeUpdate', this, value, oldValue);
-      this.isDirty.value = true;
-      await this.validateAll();
+      // this.isDirty.value = true;
+      // await this.validateAll();
       await this.hooks.execute('afterUpdate', this, value, oldValue);
     });
-  }
-
-  private getDefaultConfig(): Partial<FieldHooks<N, RT>> {
-    return {
-      sanitize: (_, value) => value,
-      validate: () => true,
-    };
-  }
+  };
 }

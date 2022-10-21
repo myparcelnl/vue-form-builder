@@ -28,6 +28,9 @@
       ]
     },
     "serve": {
+      "dependsOn": [
+        "^build:dev"
+      ],
       "outputs": [
         "{projectRoot}/lib"
       ]

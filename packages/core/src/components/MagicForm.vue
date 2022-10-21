@@ -1,8 +1,8 @@
 <template>
-  <div :class="form.config.formClass">
+  <form :class="form.config.formClass">
     <template
-      v-for="field in form.fields"
-      :key="field.label">
+      v-for="(field, index) in form.fields"
+      :key="`field--${field.name ?? 'unnamed'}--${index}`">
       <Field
         v-if="field.hasOwnProperty('ref')"
         :field="field" />
@@ -11,7 +11,7 @@
         v-else
         :element="field" />
     </template>
-  </div>
+  </form>
 </template>
 
 <script lang="ts">

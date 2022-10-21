@@ -1,4 +1,4 @@
-import {FieldIdentifier, FieldOrElement, FieldWithIdAndRef} from '../../types';
+import {FieldName, FieldOrElement, FieldWithNameAndRef} from '../../types';
 import {Ref, ref, watch} from 'vue';
 import {ComponentLifecycleHooks} from '../../services/hook-manager/componentHooks';
 import {ComponentOrHtmlElement} from '../plain-element';
@@ -33,36 +33,36 @@ type BaseFieldInstance<RT = unknown> = {
 
 export type FieldInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  I extends FieldIdentifier = FieldIdentifier,
+  N extends FieldName = FieldName,
   RT = unknown,
-> = Omit<FieldOrElement<C, I, RT>, 'form'> & BaseFieldInstance<RT>;
+> = Omit<FieldOrElement<C, N, RT>, 'form'> & BaseFieldInstance<RT>;
 
-type FieldHooks<I, RT> = {
-  beforeBlur: (field: I, value: RT) => void;
-  afterBlur: (field: I, value: RT) => void;
+type FieldHooks<N, RT> = {
+  beforeBlur: (field: N, value: RT) => void;
+  afterBlur: (field: N, value: RT) => void;
 
-  beforeFocus: (field: I, event: FocusEvent) => void;
-  focus: (field: I, event: FocusEvent) => void;
-  afterFocus: (field: I, event: FocusEvent) => void;
+  beforeFocus: (field: N, event: FocusEvent) => void;
+  focus: (field: N, event: FocusEvent) => void;
+  afterFocus: (field: N, event: FocusEvent) => void;
 
-  beforeSanitize: (field: I, value: RT) => void;
-  sanitize: (field: I, value: RT) => RT;
-  afterSanitize: (field: I, value: RT) => void;
+  beforeSanitize: (field: N, value: RT) => void;
+  sanitize: (field: N, value: RT) => RT;
+  afterSanitize: (field: N, value: RT) => void;
 
-  beforeUpdate: (field: I, value: RT, oldValue: RT) => void;
-  afterUpdate: (field: I, value: RT, oldValueT: RT) => void;
+  beforeUpdate: (field: N, value: RT, oldValue: RT) => void;
+  afterUpdate: (field: N, value: RT, oldValueT: RT) => void;
 
-  beforeValidate: (field: I, value: RT) => void;
-  validate: (field: I, value: RT) => boolean;
-  afterValidate: (field: I, value: RT, isValid: boolean) => void;
-} & ComponentLifecycleHooks<I>;
+  beforeValidate: (field: N, value: RT) => void;
+  validate: (field: N, value: RT) => boolean;
+  afterValidate: (field: N, value: RT, isValid: boolean) => void;
+} & ComponentLifecycleHooks<N>;
 
 export class Field<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  I extends FieldIdentifier = FieldIdentifier,
+  N extends FieldName = FieldName,
   RT = unknown,
-  FC extends FieldWithIdAndRef<C, I, RT> = FieldWithIdAndRef<C, I, RT>,
-> extends NamedElement<C, I> {
+  FC extends FieldWithNameAndRef<C, N, RT> = FieldWithNameAndRef<C, N, RT>,
+> extends NamedElement<C, N> {
   public focus;
 
   public isDirty = ref(false);
@@ -127,9 +127,9 @@ export class Field<
     return this.validationCache[cacheKey];
   };
 
-  // protected declare readonly config: FieldDefinition<I, RT>;
+  // protected declare readonly config: FieldDefinition<N, RT>;
 
-  constructor(form: FormInstance, name: I, config: FC & FieldHooks<Field<C, I, RT>, RT>) {
+  constructor(form: FormInstance, name: N, config: FC & FieldHooks<Field<C, N, RT>, RT>) {
     super(form, name, {...config, hookNames: FIELD_HOOKS});
 
     const fieldConfig = {
@@ -155,7 +155,7 @@ export class Field<
     });
   }
 
-  private getDefaultConfig(): Partial<FieldHooks<I, RT>> {
+  private getDefaultConfig(): Partial<FieldHooks<N, RT>> {
     return {
       sanitize: (_, value) => value,
       validate: () => true,

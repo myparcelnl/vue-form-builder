@@ -15,9 +15,8 @@ export const MyParcelFormBuilderPlugin: MyParcelFormBuilderPlugin = {
     app._context.config.globalProperties.$formBuilder = useFormBuilder();
 
     useFormBuilder().defaults = options;
-    console.log('install', options, useFormBuilder());
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' || __VUE_PROD_DEVTOOLS__) {
       setupDevtools(app);
     }
   },

@@ -1,81 +1,74 @@
 import {FieldName, FieldOrElement, FieldWithNameAndRef} from '../../types';
-import {Form, FormInstance} from '../Form';
-import {Ref, UnwrapRef, ref, watch} from 'vue';
+import {Ref, ref, watch} from 'vue';
 import {ComponentLifecycleHooks} from '../../services/hook-manager/componentHooks';
 import {ComponentOrHtmlElement} from '../plain-element';
+import {FormInstance} from '../Form';
 import {HookManager} from '../../services';
 import {NamedElement} from '../named-element';
-import {RequireOnly} from '@myparcel/vue-form-builder-shared';
 
 const FIELD_HOOKS = [
   'beforeBlur',
   'afterBlur',
+
   'beforeFocus',
   'focus',
   'afterFocus',
+
   'beforeSanitize',
   'sanitize',
   'afterSanitize',
+
   'beforeUpdate',
   'afterUpdate',
+
   'beforeValidate',
   'validate',
   'validators',
   'afterValidate',
 ] as const;
 
+type BaseFieldInstance<RT = unknown> = {
+  hooks: HookManager<FieldHooks<FieldInstance, RT>>;
+  form: FormInstance;
+};
+
 export type FieldInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends FieldName = FieldName,
   RT = unknown,
-> = Omit<FieldOrElement<C, N, RT>, 'form'> & {
-  hooks: HookManager<FieldHooks<FieldInstance, RT>>;
-  form: FormInstance;
-
-  ref: Ref<RT>;
-  isDirty: UnwrapRef<boolean>;
-  isDisabled: UnwrapRef<boolean>;
-  isOptional: UnwrapRef<boolean>;
-  isSuspended: UnwrapRef<boolean>;
-  isTouched: UnwrapRef<boolean>;
-  isValid: UnwrapRef<boolean>;
-  isVisible: UnwrapRef<boolean>;
-
-  lazy: boolean;
-};
+> = Omit<FieldOrElement<C, N, RT>, 'form'> & BaseFieldInstance<RT>;
 
 type Validator = {
   validator: (value: unknown) => boolean;
   errorMessage: string;
 }
 
-type FieldHooks<I, RT> = {
-  beforeBlur: (field: I, value: RT) => void;
-  afterBlur: (field: I, value: RT) => void;
+type FieldHooks<N, RT> = {
+  beforeBlur: (field: N, value: RT) => void;
+  afterBlur: (field: N, value: RT) => void;
 
-  beforeFocus: (field: I, event: FocusEvent) => void;
-  focus: (field: I, event: FocusEvent) => void;
-  afterFocus: (field: I, event: FocusEvent) => void;
+  beforeFocus: (field: N, event: FocusEvent) => void;
+  focus: (field: N, event: FocusEvent) => void;
+  afterFocus: (field: N, event: FocusEvent) => void;
 
-  beforeSanitize: (field: I, value: RT) => void;
-  sanitize: (field: I, value: RT) => RT;
-  afterSanitize: (field: I, value: RT) => void;
+  beforeSanitize: (field: N, value: RT) => void;
+  sanitize: (field: N, value: RT) => RT;
+  afterSanitize: (field: N, value: RT) => void;
 
-  beforeUpdate: (field: I, value: RT, oldValue: RT) => void;
-  afterUpdate: (field: I, value: RT, oldValueT: RT) => void;
+  beforeUpdate: (field: N, value: RT, oldValue: RT) => void;
+  afterUpdate: (field: N, value: RT, oldValueT: RT) => void;
 
-  beforeValidate: (field: I, value: RT) => void;
-  validate: (field: I, value: RT) => boolean;
-  validators: Validator[];
-  afterValidate: (field: I, value: RT) => void;
-} & ComponentLifecycleHooks<I>;
+  beforeValidate: (field: N, value: RT) => void;
+  validate: (field: N, value: RT) => boolean;
+  afterValidate: (field: N, value: RT, isValid: boolean) => void;
+} & ComponentLifecycleHooks<N>;
 
 export class Field<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends FieldName = FieldName,
   RT = unknown,
   FC extends FieldWithNameAndRef<C, N, RT> = FieldWithNameAndRef<C, N, RT>,
-> extends NamedElement<N, C> {
+> extends NamedElement<C, N> {
   public focus;
 
   public isDirty = ref(false);
@@ -99,9 +92,7 @@ export class Field<
     await this.hooks.execute('beforeBlur', this, this.ref.value);
     this.isSuspended.value = true;
 
-    // if (this.hooks.has('sanitize')) {
     this.ref.value = await this.hooks.execute('sanitize', this, this.ref.value);
-    // }
 
     if (this.isDirty.value) {
       await this.validateAll();
@@ -134,6 +125,7 @@ export class Field<
       console.log(this.label, 'validate');
 
       const valid = await this.hooks.execute('validate', this, value);
+
       await this.hooks.execute('afterValidate', this, value, valid);
 
       this.validationCache[cacheKey] = valid;
@@ -144,7 +136,7 @@ export class Field<
 
   // protected declare readonly config: FieldDefinition<N, RT>;
 
-  constructor(form: Form, name: N, config: FC & FieldHooks<typeof this, RT>) {
+  constructor(form: FormInstance, name: N, config: FC & FieldHooks<Field<C, N, RT>, RT>) {
     let sanitize = config.sanitize || ((_, value) => value);
     let validate;
     if (config.validate) {

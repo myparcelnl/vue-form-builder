@@ -1,0 +1,27 @@
+name: 'Run tests 🧪'
+
+on:
+  pull_request:
+    branches:
+      - main
+
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: myparcelnl/actions/pnpm-install@v2
+
+      - run: yarn test
+
+      - uses: myparcelnl/actions/update-coverage@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  docker:
+    container:
+      image: docker/docker:20.10.8
+    runs-on: ubuntu-22.04

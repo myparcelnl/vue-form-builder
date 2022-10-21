@@ -1,0 +1,73 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "main",
+  "defaultProject": "@myparcel/vue-form-builder-demo",
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "sharedGlobals": [ ],
+    "production": [
+      "default"
+    ]
+  },
+  "targetDefaults": {
+    "build:dev": {
+      "dependsOn": [
+        "^build:dev"
+      ],
+      "outputs": [
+        "{projectRoot}/lib"
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/lib"
+      ]
+    },
+    "buildOnly": {
+      "dependsOn": [
+        "^buildOnly"
+      ],
+      "outputs": [
+        "{projectRoot}/lib"
+      ]
+    },
+    "serve": {
+      "dependsOn": [
+        "^build:dev"
+      ],
+      "outputs": [
+        "{projectRoot}/lib"
+      ]
+    },
+    "test": {
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    },
+    "clean": {
+      "outputs": [
+        "{projectRoot}/lib"
+      ]
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "buildOnly",
+          "clean",
+          "typecheck",
+          "test"
+        ]
+      }
+    }
+  }
+}

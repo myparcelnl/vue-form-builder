@@ -1,15 +1,40 @@
-import {Form} from './.';
-import {ComponentOrHtmlElement} from '../plain-element';
-import {reactive} from 'vue';
-import {Field, FieldInstance} from './Field';
 import {FieldName, FieldOrElement} from '../../types';
+import {ComponentOrHtmlElement} from '../plain-element';
+import {isOfType} from '@myparcel/vue-form-builder-utils';
+import {ref} from 'vue';
 
-export const defineField = <N extends FieldName, RT, C extends ComponentOrHtmlElement>(
-  form: Form<N, RT, C>,
-  fieldName: N,
-  fieldConfig: FieldOrElement<N, C, RT>,
-): FieldInstance<N, RT, C> => {
-  const field = new Field<N, RT, C>(form, fieldName, fieldConfig);
+type DefineField = {
+  <C extends ComponentOrHtmlElement, N extends FieldName, RT>(
+    name: N,
+    config: Omit<FieldOrElement<C, N, RT>, 'name'>,
+  ): typeof config;
 
-  return reactive(field);
+  <C extends ComponentOrHtmlElement, N extends FieldName, RT>(
+    config: FieldOrElement<C, N, RT>,
+    param2?: never,
+  ): typeof config;
 };
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+export const defineField: DefineField = (param1, param2) => {
+  if (isOfType<FieldOrElement>(param1, 'component')) {
+    return param1;
+  }
+
+  return {
+    name: param1,
+    ...param2,
+  };
+};
+
+defineField('boop', {
+  component: 'input',
+});
+
+defineField({
+  name: 'boop',
+  component: 'input',
+  ref: ref('hello'),
+  sanitize: (instance, value) => value.trim(),
+});

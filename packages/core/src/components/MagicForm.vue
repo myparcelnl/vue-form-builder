@@ -18,9 +18,9 @@
 import {PropType, defineComponent, provide} from 'vue';
 import Field from './FieldComponent.vue';
 import {FormInstance} from '../form';
+import {INJECT_FORM} from '../services/provides';
 import PlainElement from './BaseElementComponent.vue';
 import {useLifeCycleHooks} from '../composables/useLifeCycleHooks';
-import {INJECT_FORM} from '../provides';
 
 export default defineComponent({
   name: 'MagicForm',

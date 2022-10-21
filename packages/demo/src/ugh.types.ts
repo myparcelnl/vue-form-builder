@@ -1,10 +1,10 @@
-import {Component, ComponentOptions, EmitsOptions, HTMLAttributes, Ref, UnwrapRef, ref} from 'vue';
-import {ComponentProps, MakeOptional} from '@myparcel/vue-form-builder-shared/src/utils';
+import {Component, EmitsOptions, HTMLAttributes, Ref, UnwrapNestedRefs, ref} from 'vue';
+import {ComponentOrHtmlElement, FormConfiguration} from '@myparcel/vue-form-builder/src/form';
+import {ComponentProps, MakeOptional, PromiseOr} from '@myparcel/vue-form-builder-utils';
 import {FieldName, FieldOrElement} from '@myparcel/vue-form-builder/src/types';
-import {ComponentOrHtmlElement} from '@myparcel/vue-form-builder/src/form';
-import {PromiseOr} from '@myparcel/vue-form-builder-shared';
-import TTextInput from './components/template/TTextInput.vue';
 import TSelect from './components/template/TSelect.vue';
+import TTextInput from './components/template/TTextInput.vue';
+import {defineField} from '@myparcel/vue-form-builder';
 
 type FieldsToModel<T extends {fields: NewFieldObj[]}> = {
   [K in T['fields'][number] as K['name'] extends string ? K['name'] : never]: K extends {ref: Ref<infer RT>}
@@ -127,9 +127,12 @@ declare function defineSingleObj<C extends ComponentOrHtmlElement, N extends Fie
   obj: Base<C> | Named<C, N> | Reffed<C, N, RT>,
 ): Obj<C, N, RT>;
 
-declare function defineSingleObj2<C extends ComponentOrHtmlElement, N extends FieldName, RT>(
-  field: NewFieldObj<C, N, RT>,
-): NewFieldObj<C, N, RT>;
+declare function defineSingleObj2<
+  C extends ComponentOrHtmlElement,
+  N extends FieldName,
+  RT,
+  F extends NewFieldObj<C, N, RT> = NewFieldObj<C, N, RT>,
+>(field: F): F;
 
 type FilteredComponentProps<C extends Component> = Exclude<
   Omit<MakeOptional<ComponentProps<C>, 'label'>, 'name' | 'id' | 'modelValue'>,
@@ -137,12 +140,6 @@ type FilteredComponentProps<C extends Component> = Exclude<
 >;
 
 type A<C extends Component> = C extends abstract new (...args: any) => any ? InstanceType<C> : C;
-
-const b: A<typeof TTextInput> = {
-  $props: {
-    onChange: () => {},
-  },
-};
 
 const obj = defineSingleObj({
   name: 'borp2',
@@ -176,18 +173,20 @@ type NewFieldObj<
     } & FieldHooks<C, N, RT>
   : object);
 
-type FormInstancccc<T extends NewFieldObj = NewFieldObj> = {
-  model: FieldsToModel<{fields: T[]}>;
+type FormInstancccc<T extends NewFieldObj[] = NewFieldObj[]> = {
+  model: FieldsToModel<{fields: T}>;
 };
 
-declare function defineMultiObj<T extends NewFieldObj = NewFieldObj>(obj: T[]): FormInstancccc<T>;
+declare function defineMultiObj<F extends NewFieldObj[]>(obj: F): FormInstancccc<F>;
 
-// todo: PROBEER HET MET EEN ARRAY??
+declare function defineMultiObjArr<T extends NewFieldObj[] = NewFieldObj[]>(config: T): FormInstancccc<T>;
 
-const obj2 = defineSingleObj2({
+const obj2 = defineField({
   name: 'borp2',
   component: TTextInput,
-  props: {disabled: true},
+  props: {
+    disabled: true,
+  },
   attrs: {},
   ref: ref(124),
 
@@ -195,37 +194,52 @@ const obj2 = defineSingleObj2({
   validate: (_, value) => value > 0,
 });
 
-const obj3 = defineMultiObj([
-  {
+defineSingleObj2({
+  name: 'blorp',
+  component: TTextInput,
+  props: {},
+  ref: ref(124),
+  sanitize: (value) => Math.ceil(value),
+});
+
+const obj3 = defineMultiObjArr([
+  defineSingleObj2({
     name: 'borp2',
-    component: 'TSelect',
-    attrs: {},
-    ref: ref(124),
-    sanitize: (_, value) => Math.ceil(value),
-    validate: (_, value) => value > 0,
-  },
-  {
-    name: 'borp3',
-    component: 'TSelect',
-    ref: ref('124'),
-    sanitize: (_, value) => value.trim(),
-    validate: (_, value) => value.length > 0,
-  },
-  {
     component: TTextInput,
     props: {},
-  },
+  }),
+
+  // {
+  //   name: 'borp2',
+  //   component: 'TSelect',
+  //   attrs: {},
+  //   ref: ref(124),
+  //   sanitize: (_, value) => Math.ceil(value),
+  //   validate: (_, value) => value > 0,
+  // },
+  // {
+  //   name: 'borp3',
+  //   component: 'TSelect',
+  //   ref: ref('124'),
+  //   sanitize: (_, value) => value.trim(),
+  //   validate: (_, value) => value.length > 0,
+  // },
+  // {
+  //   component: TTextInput,
+  //   name: 'borp4',
+  //   props: {},
+  // },
 ]);
 
 const form = defineMultiObj([
-  defineSingleObj2({
-    name: 'borp2',
-    component: 'TSelect',
-    attrs: {},
-    ref: ref(124),
-    sanitize: (_, value) => Math.ceil(value),
-    validate: (_, value) => value > 0,
-  }),
+  // defineSingleObj2({
+  //   name: 'borp2',
+  //   ref: ref(124),
+  //   component: TSelect,
+  //   props: {
+  //     options: [],
+  //   },
+  // }),
   defineSingleObj2({
     name: 'borp3',
     component: 'TSelect',
@@ -252,3 +266,119 @@ const named = defineSingleObj2({
   component: TSelect,
   name: 'borp2',
 });
+
+// type Clorp<N extends FieldName = FieldName, C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
+//   name?: N;
+//   component?: C;
+//   props?: C extends Component ? FilteredComponentProps<C> : never;
+// };
+//
+// declare function defineClorp<N extends FieldName, Cnf extends Clorp<N>[], I extends number>(
+//   config: Cnf,
+// ): {
+//   [K in N extends string ? N : never]: number;
+// };
+//
+// const aaa = defineClorp([
+//   {
+//     name: 'borp',
+//     component: TTextInput,
+//     props: {
+//       disabled: true,
+//     },
+//   },
+//   {},
+//   {
+//     name: 'borp2',
+//     component: TSelect,
+//     props: {
+//       options: [],
+//     },
+//   },
+// ]);
+
+const form = defineForm('tellAFriend', {
+  fields: [
+    defineField({
+      name: 'name',
+      component: 'input',
+      ref: ref(123),
+      sanitize: (instance, value) => Math.round(value),
+    }),
+    {
+      component: 'input',
+    },
+  ],
+});
+
+form.model.name.ref = 123;
+
+declare function defineFoop<FC extends FormConfiguration>(
+  config: FC,
+): {
+  [K in FC['fields'][number] as K['name'] extends string ? K['name'] : never]: UnwrapNestedRefs<K>;
+};
+
+const foop = defineFoop({
+  fields: [
+    defineField({
+      name: 'name',
+      component: 'input',
+      ref: ref('amy'),
+    }),
+
+    defineField({
+      name: 'email',
+      component: 'input',
+      ref: ref('amy@lemon.com'),
+    }),
+  ],
+});
+
+// const A: FieldWithNameAndRef = {
+//   name: 'a',
+//   ref: ref('a'),
+// };
+//
+// const form = defineForm('myForm', {
+//   fields: [
+//     {
+//       name: 'firstName',
+//       label: 'First name',
+//       component: 'input',
+//       ref: ref(''),
+//       sanitize: (value) => {
+//         return value.trim();
+//       },
+//     },
+//   ],
+// });
+//
+// form.model.firstName.ref = 'John';
+
+// export const defineForm = <FormName extends string, FE extends FormConfiguration<N>, N extends FieldName>(
+//   name: FormName,
+//   formConfig: FE,
+// ): FormInstance<FormName, FE, N> => {
+//   const formBuilder = useFormBuilder();
+//
+//   return formBuilder.register(name, new Form(name, formConfig));
+// };
+
+// export const defineForm = <
+//   FE extends InitialFormConfiguration<N, RT, C>,
+//   N extends string,
+//   RT,
+//   C extends ComponentOrHtmlElement,
+// >(
+//   name: string,
+//   formConfig: FE,
+// ): FormInstance<N, RT, C> => {
+//   const formBuilder = useFormBuilder<N, RT>();
+//
+//   if (!formBuilder.forms[name]) {
+//     formBuilder.forms[name] = new Form<N, RT, C>(formConfig);
+//   }
+//
+//   return formBuilder.forms[name];
+// };

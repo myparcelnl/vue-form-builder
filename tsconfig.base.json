@@ -7,12 +7,8 @@
       "DOM",
       "DOM.Iterable"
     ],
-    //    "noImplicitAny": true,
-    //    "noImplicitReturns": true,
     "importsNotUsedAsValues": "remove",
     "keyofStringsOnly": true,
-    //    "keyofStringsOnly": true,
-    //    "outDir": "lib",
     "preserveValueImports": false
   }
 }

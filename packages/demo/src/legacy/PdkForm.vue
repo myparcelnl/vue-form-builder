@@ -12,7 +12,9 @@
     </div>
   -->
   <form @submit.prevent="submit">
-    <template v-for="(field, K) in form.fields" :key="`pre${key}`">
+    <template
+      v-for="(field, K) in form.fields"
+      :key="`pre${key}`">
       <!--      <div class="bg-rose-100 p-4 rounded-xl"> -->
       <!--        <h2 class="font-bold text-amber-800 text-lg">Field</h2> -->
       <!--        <pre -->
@@ -21,8 +23,12 @@
       <!--      </div> -->
 
       <template v-if="isField(field)">
-        <div v-if="field.isVisible" class="py-2">
-          <label v-if="field.label" class="inline-block pr-4 w-48"
+        <div
+          v-if="field.isVisible"
+          class="py-2">
+          <label
+            v-if="field.label"
+            class="inline-block pr-4 w-48"
             >{{ field.label }}:
 
             <!--            <template v-if="field.component.name !== 'CustomCheckbox'"> -->
@@ -35,8 +41,7 @@
               :validation-warnings="field.validationWarnings"
               :class="{
                 'border-red-600': !field.isValid,
-              }"
-            />
+              }" />
           </label>
           <!--            </template> -->
           <!--            <template v-if="field.component.name === 'CustomCheckbox'"> -->
@@ -52,28 +57,45 @@
           <!--              </label> -->
           <!--            </template> -->
 
-          <span v-if="field.isSuspended" class="px-4"> Loading... </span>
-          <span v-if="field.isOptional" class="px-4"> (optional) </span>
-          <div v-if="field.validationWarnings" class="flex flex-col">
-            <span v-for="warning in field.validationWarnings" :key="warning" class="pl-4 py-1 text-red-600">
+          <span
+            v-if="field.isSuspended"
+            class="px-4">
+            Loading...
+          </span>
+          <span
+            v-if="field.isOptional"
+            class="px-4">
+            (optional)
+          </span>
+          <div
+            v-if="field.validationWarnings"
+            class="flex flex-col">
+            <span
+              v-for="warning in field.validationWarnings"
+              :key="warning"
+              class="pl-4 py-1 text-red-600">
               {{ warning }}
             </span>
           </div>
         </div>
       </template>
     </template>
-    <button type="submit" class="border hover:bg-sky-100 my-4 px-4 py-2 rounded">Save</button>
+    <button
+      type="submit"
+      class="border hover:bg-sky-100 my-4 px-4 py-2 rounded">
+      Save
+    </button>
     <p class="py-8 text-3xl">Values</p>
     <pre>{{ form.state }}</pre>
   </form>
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent, ref } from "vue";
-import { Field, Form } from "./Field";
+import {PropType, defineComponent, ref} from 'vue';
+import {Field, Form} from './Field';
 
 export default defineComponent({
-  name: "PdkForm",
+  name: 'PdkForm',
 
   props: {
     form: {
@@ -138,9 +160,9 @@ export default defineComponent({
       formValid,
 
       submit() {
-        ctx.emit("beforeSubmit", props.form);
+        ctx.emit('beforeSubmit', props.form);
         props.form.submit();
-        ctx.emit("afterSubmit", props.form);
+        ctx.emit('afterSubmit', props.form);
       },
     };
   },

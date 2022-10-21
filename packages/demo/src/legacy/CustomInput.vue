@@ -4,17 +4,16 @@
     :value="modelValue"
     class="border w-64"
     @blur="$emit('blur')"
-    @input="$emit('update:modelValue', $event.target.value)"
-  />
+    @input="$emit('update:modelValue', $event.target.value)" />
 </template>
 
 <script lang="ts">
 export default {
-  name: "CustomInput",
+  name: 'CustomInput',
 };
 </script>
 
 <script setup lang="ts">
-defineProps(["modelValue"]);
-defineEmits(["update:modelValue", "blur"]);
+defineProps(['modelValue']);
+defineEmits(['update:modelValue', 'blur']);
 </script>

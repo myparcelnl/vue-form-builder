@@ -1,4 +1,4 @@
 declare const _default: {
-    name: string;
+  name: string;
 };
 export default _default;

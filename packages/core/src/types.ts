@@ -28,6 +28,7 @@ export type FieldWithNameAndRef<
 
   optional?: boolean;
   visible?: boolean;
+  disabled?: boolean;
 
   sanitize?: (field: FieldInstance<C, N, RT>, value: RT) => PromiseOr<RT>;
   validate?: (field: FieldInstance<C, N, RT>, value: RT) => PromiseOr<boolean>;

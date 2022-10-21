@@ -7,7 +7,9 @@
       type="number"
       :min="min"
       :max="max"
-      :disabled="disabled" />
+      :disabled="disabled"
+      :valid="valid"
+    />
   </FormGroup>
 </template>
 
@@ -55,10 +57,16 @@ export default defineComponent({
       type: Number,
       default: null,
     },
+
+    valid: {
+      type: Boolean,
+    }
   },
 
-  setup: (props) => ({
-    model: useVModel(props, 'modelValue'),
-  }),
+  setup: (props) => {
+    return {
+      model: useVModel(props, 'modelValue'),
+    }
+  },
 });
 </script>

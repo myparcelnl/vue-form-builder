@@ -23,6 +23,7 @@ export type FieldWithNameAndRef<
   label?: string;
   optional?: boolean;
   visible?: boolean;
+  disabled?: boolean;
 };
 
 export type BaseField<C> = {

@@ -8,13 +8,14 @@
 </template>
 
 <script lang="ts">
+import { INJECT_FORM } from '@myparcel/vue-form-builder';
 import {defineComponent, inject} from 'vue';
 
 export default defineComponent({
   name: 'TSubmitButton',
 
   setup: () => ({
-    form: inject('form'),
+    form: inject(INJECT_FORM),
   }),
 });
 </script>

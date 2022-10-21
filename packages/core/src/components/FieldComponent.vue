@@ -124,6 +124,7 @@ export default defineComponent({
           label: props.field.label,
           name: props.field.name,
           disabled: props.field.isDisabled,
+          valid: props.field.isValid,
         };
       }),
     };

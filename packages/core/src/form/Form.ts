@@ -1,6 +1,6 @@
 import {ComponentOrHtmlElement, PlainElement} from './plain-element';
 import {Field, FieldInstance} from './field';
-import {FieldIdentifier, FieldOrElement, NamedElementOrField} from '../types';
+import {FieldName, FieldOrElement, NamedElementOrField} from '../types';
 import {PromiseOr, isOfType} from '@myparcel/vue-form-builder-utils';
 import {UnwrapNestedRefs, markRaw, reactive} from 'vue';
 import {ComponentLifecycleHooks} from '../services/hook-manager/componentHooks';
@@ -34,7 +34,7 @@ export type FormConfiguration<F extends FieldOrElement[] = FieldOrElement[]> = {
 export type FormInstance<
   FC extends FormConfiguration = FormConfiguration,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldIdentifier = FieldIdentifier,
+  N extends FieldName = FieldName,
   RT = unknown,
 > = Omit<Form<C, N, RT, any, FC>, 'fields'>;
 
@@ -51,15 +51,15 @@ type FormHooks<I extends Form> = {
 export type FieldsToModel<
   FC extends FormConfiguration,
   // C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  // N extends NonNullable<FieldIdentifier> = NonNullable<FieldIdentifier>,
+  // N extends NonNullable<FieldName> = NonNullable<FieldName>,
   // RT = unknown,
 > = {
-  [K in FC['fields'][number] as K['id'] extends string ? K['id'] : never]: UnwrapNestedRefs<K>;
+  [K in FC['fields'][number] as K['name'] extends string ? K['name'] : never]: UnwrapNestedRefs<K>;
 };
 
 export class Form<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldIdentifier = FieldIdentifier,
+  N extends FieldName = FieldName,
   RT = unknown,
   FN extends string = string,
   FC extends FormConfiguration = FormConfiguration,
@@ -88,7 +88,7 @@ export class Form<
   }
 
   public addField(newField: PlainElement, sibling: N, position: 'before' | 'after' = 'after'): void {
-    const siblingIndex = this.fields.findIndex((field) => field.id === sibling);
+    const siblingIndex = this.fields.findIndex((field) => field.name === sibling);
 
     if (siblingIndex === -1) {
       // eslint-disable-next-line no-console
@@ -135,11 +135,11 @@ export class Form<
   ): UnwrapNestedRefs<FieldInstance<C, N, RT>> {
     let instance;
 
-    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'id')) {
+    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'name')) {
       if (field.ref) {
-        instance = new Field<C, N, RT>(form, field.id, field);
+        instance = new Field<C, N, RT>(form, field.name, field);
       } else {
-        instance = new NamedElement<C, N>(form, field.id, field);
+        instance = new NamedElement<C, N>(form, field.name, field);
       }
     } else {
       instance = new PlainElement<C>(form, field);
@@ -151,10 +151,10 @@ export class Form<
       markRaw(reactiveInstance.component);
     }
 
-    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'id')) {
+    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'name')) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      this.model[field.id] = reactiveInstance;
+      this.model[field.name] = reactiveInstance;
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

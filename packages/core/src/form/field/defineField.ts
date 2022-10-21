@@ -1,15 +1,15 @@
-import {FieldIdentifier, FieldOrElement} from '../../types';
+import {FieldName, FieldOrElement} from '../../types';
 import {ComponentOrHtmlElement} from '../plain-element';
 import {isOfType} from '@myparcel/vue-form-builder-utils';
 import {ref} from 'vue';
 
 type DefineField = {
-  <C extends ComponentOrHtmlElement, N extends FieldIdentifier, RT>(
-    id: N,
-    config: Omit<FieldOrElement<C, N, RT>, 'id'>,
+  <C extends ComponentOrHtmlElement, N extends FieldName, RT>(
+    name: N,
+    config: Omit<FieldOrElement<C, N, RT>, 'name'>,
   ): typeof config;
 
-  <C extends ComponentOrHtmlElement, N extends FieldIdentifier, RT>(
+  <C extends ComponentOrHtmlElement, N extends FieldName, RT>(
     config: FieldOrElement<C, N, RT>,
     param2?: never,
   ): typeof config;
@@ -33,7 +33,7 @@ defineField('boop', {
 });
 
 defineField({
-  id: 'boop',
+  name: 'boop',
   component: 'input',
   ref: ref('hello'),
   sanitize: (instance, value) => value.trim(),

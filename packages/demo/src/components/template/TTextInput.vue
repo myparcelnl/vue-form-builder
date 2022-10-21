@@ -1,11 +1,14 @@
 <template>
-  <FormGroup v-bind="{label, id}">
+  <FormGroup v-bind="{label, id, warnings}">
     <input
       :id="id"
       v-model="model"
       :name="name"
       v-bind="$attrs"
       :disabled="disabled"
+      :class="{
+        'border-red-500': !isValid(),
+      }"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
       @focusin="$emit('focusin', $event)"
@@ -49,12 +52,28 @@ export default defineComponent({
     disabled: {
       type: Boolean,
     },
+
+    valid: {
+      type: Boolean,
+    },
+
+    warnings: {
+      type: Array,
+    },
   },
 
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
 
-  setup: (props) => ({
-    model: useVModel(props, 'modelValue'),
-  }),
+  setup: (props) => {
+
+    const isValid = () => {
+      return props.valid !== undefined ? props.valid : true;
+    }
+
+    return {
+      model: useVModel(props, 'modelValue'),
+      isValid,
+    };
+  },
 });
 </script>

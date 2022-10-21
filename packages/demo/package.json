@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "build": "yarn buildOnly",
+    "build:dev": "yarn buildOnly --mode development",
     "buildOnly": "vite build",
-    "serve": "vite",
     "preview": "vite preview --port 4173",
+    "serve": "vite",
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {

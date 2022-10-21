@@ -8,6 +8,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "yarn buildOnly",
+    "build:dev": "yarn buildOnly --mode development",
     "buildOnly": "vite build",
     "clean": "rimraf lib",
     "serve": "tsup --watch",

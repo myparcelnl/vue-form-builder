@@ -1,9 +1,10 @@
 /* eslint-disable no-invalid-this */
 import {COMPONENT_LIFECYCLE_HOOKS, ComponentLifecycleHooks} from '../../services/hook-manager/componentHooks';
 import {Component, ConcreteComponent, markRaw} from 'vue';
-import {ComponentProps, MakeOptional, PromiseOr, isOfType} from '@myparcel/vue-form-builder-utils';
+import {PromiseOr, isOfType} from '@myparcel/vue-form-builder-utils';
 import {HookManager, InputHookConfiguration} from '../../services';
 import {FormInstance} from '../Form';
+import {MagicFormProps} from '../../types';
 
 const AVAILABLE_HOOKS = ['click', 'focus', ...COMPONENT_LIFECYCLE_HOOKS] as const;
 
@@ -18,13 +19,9 @@ type ElementHookName = typeof HOOKS[number];
 
 export type ComponentOrHtmlElement = string | Component;
 
-type ElementHooks<I> = {
+export type ElementHooks<I> = {
   [K in ElementHookName]: (element: I, ...args: never[]) => PromiseOr<void>;
 } & ComponentLifecycleHooks<I>;
-
-type MagicFormProps<C extends Component> = {
-  props?: Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>;
-};
 
 export type ElementDefinitionBase<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
   component: C;

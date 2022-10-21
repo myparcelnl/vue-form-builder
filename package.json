@@ -9,11 +9,13 @@
     "packages/**"
   ],
   "scripts": {
-    "build": "nx run-many --target=build",
-    "build:dev": "nx run-many --target=build:dev",
-    "buildOnly": "nx run-many --target=buildOnly",
+    "build": "nx build",
+    "build:dev": "nx build:dev",
+    "buildOnly": "nx buildOnly",
     "clean": "nx run-many --target=clean",
-    "serve": "nx serve",
+    "serve": "npx concurrently yarn:serve:demo yarn:serve:watch",
+    "serve:demo": "nx serve @myparcel/vue-form-builder-demo",
+    "serve:watch": "yarn build:dev --watch",
     "test": "nx run-many --target=test",
     "typecheck": "nx run-many --target=typecheck"
   },

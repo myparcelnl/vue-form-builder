@@ -1,4 +1,5 @@
 import {App, setupDevtoolsPlugin} from '@vue/devtools-api';
+import {createFormNode} from './createFormNode';
 import {useFormBuilder} from '../composables';
 
 export const setupDevtools = (app: App): void => {
@@ -33,6 +34,7 @@ export const setupDevtools = (app: App): void => {
           if (!activePayload) {
             return;
           }
+
           const payload = activePayload;
 
           const data = useFormBuilder();
@@ -40,28 +42,9 @@ export const setupDevtools = (app: App): void => {
           console.log(data.forms);
 
           console.log(payload);
-
           console.log(payload.rootNodes);
-          payload.rootNodes = Object.entries(data.forms).map(([name, form]) => {
-            console.log(name, form);
-            const aaaaa: {
-              id: string;
-              label: string;
-              tags: {backgroundColor: number; label: string; textColor: number}[];
-            } = {
-              id: name,
-              label: name,
-              tags: [
-                {
-                  label: name,
-                  textColor: 0,
-                  backgroundColor: ORANGE_400,
-                },
-              ],
-            };
-            console.log(aaaaa);
-            return aaaaa;
-          });
+
+          payload.rootNodes = Object.entries(data.forms).map(([name, form]) => createFormNode(name, form));
 
           // children routes will appear as nested
           // let routes = matcher.getRoutes().filter((route) => !route.parent);
@@ -81,15 +64,19 @@ export const setupDevtools = (app: App): void => {
           // routes.forEach((route) => markRouteRecordActive(route, router.currentRoute.value));
           // payload.rootNodes = routes.map(formatRouteRecordForInspector);
         }
+
+        api.on.inspectComponent((payload, ctx) => {
+          console.log(payload, ctx);
+        });
       });
     },
   );
 };
 
-const PINK_500 = 0xec4899;
-const BLUE_600 = 0x2563eb;
-const LIME_500 = 0x84cc16;
-const CYAN_400 = 0x22d3ee;
-const ORANGE_400 = 0xfb923c;
-// const GRAY_100 = 0xf4f4f5
-const DARK = 0x666666;
+export const PINK_500 = 0xec4899;
+export const BLUE_600 = 0x2563eb;
+export const LIME_500 = 0x84cc16;
+export const CYAN_400 = 0x22d3ee;
+export const ORANGE_400 = 0xfb923c;
+export const GRAY_100 = 0xf4f4f5;
+export const DARK = 0x666666;

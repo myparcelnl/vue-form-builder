@@ -6,7 +6,7 @@ import TSelect from '../components/template/TSelect.vue';
 import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TTextInput from '../components/template/TTextInput.vue';
 import TToggleSwitch from '../components/template/TToggleSwitch.vue';
-import {defineForm} from '@myparcel/vue-form-builder';
+import {defineField, defineForm} from '@myparcel/vue-form-builder';
 import {ref} from 'vue';
 
 // todo: dynamically add more form parts, see BO -> canada -> project groups
@@ -43,13 +43,13 @@ export const useShipmentOptionsForm = (): any => {
     // ),
 
     fields: [
-      {
+      defineField({
         component: Heading,
         props: {
           text: 'Edit order',
           level: 2,
         },
-      },
+      }),
       // new HiddenInput({
       //   name: 'orderId',
       //   ref: ref(1),
@@ -164,8 +164,9 @@ export const useShipmentOptionsForm = (): any => {
             value: carrier.name,
           }));
 
-          console.log(carriers);
-          console.log(field.form);
+          console.log('carriers', carriers);
+          console.log('field.form', field.form);
+          console.log('field', field);
 
           field.form.addField(
             {

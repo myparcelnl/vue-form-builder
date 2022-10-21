@@ -36,7 +36,7 @@ export type FormInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends FieldName = FieldName,
   RT = unknown,
-> = Omit<Form<C, N, RT, any, FC>, 'fields'>;
+> = Form<C, N, RT, any, FC>;
 
 type FormHooks<I extends Form> = {
   [k in typeof FORM_HOOKS[number]]: (form: I) => PromiseOr<void>;

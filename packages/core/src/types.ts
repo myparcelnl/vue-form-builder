@@ -1,6 +1,6 @@
 import {ComponentOrHtmlElement, ElementConfig, FieldInstance} from './form';
-import {PromiseOr} from '@myparcel/vue-form-builder-utils';
-import {Ref} from 'vue';
+import {Component, Ref} from 'vue';
+import {ComponentProps, MakeOptional, PromiseOr} from '@myparcel/vue-form-builder-utils';
 
 export type FieldName = string | undefined;
 
@@ -44,3 +44,7 @@ export type FieldOrElement<
   N extends FieldName = FieldName,
   RT = unknown,
 > = NamedElementOrField<C, N, RT> | IPlainElement<C>;
+
+export type MagicFormProps<C extends Component> = {
+  props?: Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>;
+};

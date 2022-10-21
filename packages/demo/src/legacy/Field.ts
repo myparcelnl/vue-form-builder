@@ -9,11 +9,13 @@ export type FieldHook<Ctx, A = never, R = void> =
   | ((ctx: Ctx, ...args: A[]) => R)
   | ((ctx: Ctx, ...args: A[]) => Promise<R>);
 
-export type ConstructorFieldProperties<State extends StateProps, Type, Comp extends ComponentOptions> = RequireOnly<FieldProperties<State, Type, Comp>,
-  'component'>;
+export type ConstructorFieldProperties<State extends StateProps, Type, Comp extends ComponentOptions> = RequireOnly<
+  FieldProperties<State, Type, Comp>,
+  'component'
+>;
 
 interface FieldConstructor<State extends StateProps, Type, C> {
-  new(options: ConstructorFieldProperties<State, Type, C>): FieldProperties<State, Type, C>;
+  new (options: ConstructorFieldProperties<State, Type, C>): FieldProperties<State, Type, C>;
 }
 
 interface FieldProperties<State extends StateProps, Type, Comp extends ComponentOptions> {
@@ -36,7 +38,7 @@ interface FieldProperties<State extends StateProps, Type, Comp extends Component
   setValue: FieldHook<Form<State, Type, Comp>>;
   validate: FieldHook<Form<State, Type, Comp>>;
   validationWarnings: string[];
-  validators?: { validator: FieldHook<Form<State, Type, Comp>, Type>; errorMessage: string }[];
+  validators?: {validator: FieldHook<Form<State, Type, Comp>, Type>; errorMessage: string}[];
 }
 
 export const createField = <State extends StateProps, Type, Comp>(
@@ -48,7 +50,8 @@ export const createField = <State extends StateProps, Type, Comp>(
 };
 
 export class Field<Ctx extends StateProps = Record<string, unknown>, T = unknown, C = unknown>
-  implements FieldProperties<Ctx, T, C> {
+  implements FieldProperties<Ctx, T, C>
+{
   public onBlur;
   public component;
   public isDirty = false;
@@ -110,7 +113,7 @@ export class Field<Ctx extends StateProps = Record<string, unknown>, T = unknown
       () => {
         console.warn(this.ref, this.ref.value);
       },
-      { immediate: true },
+      {immediate: true},
     );
   }
 
@@ -167,7 +170,7 @@ export class Field<Ctx extends StateProps = Record<string, unknown>, T = unknown
     }
 
     await Promise.all(
-      this.validators.map(async ({ validator, errorMessage }) => {
+      this.validators.map(async ({validator, errorMessage}) => {
         console.log(this.ref, this.ref.value);
         if (!(await validator?.(this.ctx, this.ref.value))) {
           valid = false;

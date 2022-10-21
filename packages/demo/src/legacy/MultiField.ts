@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { ConstructorFieldProperties, Field } from "./Field";
+import {ConstructorFieldProperties, Field} from './Field';
 
 export interface MultiFieldConstructor<T, C> extends ConstructorFieldProperties<T, C> {
   fields: never[];
@@ -10,7 +10,7 @@ export class MultiField<T, C> extends Field<T, C> {
   fields: Field<T, C>[];
 
   // @ts-ignore
-  constructor({ fields, ...rest }) {
+  constructor({fields, ...rest}) {
     // @ts-ignore
     super(rest);
     this.fields = fields;

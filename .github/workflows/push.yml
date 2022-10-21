@@ -40,5 +40,4 @@ jobs:
           token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: 'Run semantic release'
-        run: npx semantic-release ${{ inputs.semantic-release-args }}
-        shell: bash
+        run: npx multi-semantic-release

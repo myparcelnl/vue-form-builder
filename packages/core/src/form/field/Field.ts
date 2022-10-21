@@ -20,6 +20,7 @@ const FIELD_HOOKS = [
   'afterUpdate',
   'beforeValidate',
   'validate',
+  'validators',
   'afterValidate',
 ] as const;
 
@@ -43,6 +44,11 @@ export type FieldInstance<
   lazy: boolean;
 };
 
+type Validator = {
+  validator: (value: unknown) => boolean;
+  errorMessage: string;
+}
+
 type FieldHooks<I, RT> = {
   beforeBlur: (field: I, value: RT) => void;
   afterBlur: (field: I, value: RT) => void;
@@ -60,6 +66,7 @@ type FieldHooks<I, RT> = {
 
   beforeValidate: (field: I, value: RT) => void;
   validate: (field: I, value: RT) => boolean;
+  validators: Validator[];
   afterValidate: (field: I, value: RT) => void;
 } & ComponentLifecycleHooks<I>;
 
@@ -78,6 +85,7 @@ export class Field<
   public isTouched = ref(false);
   public isValid = ref(true);
   public isVisible = ref(true);
+  public errors = ref([]);
   public label?: string;
   public lazy = false;
   public ref: Ref<RT>;
@@ -91,10 +99,9 @@ export class Field<
     await this.hooks.execute('beforeBlur', this, this.ref.value);
     this.isSuspended.value = true;
 
-    if (this.hooks.has('sanitize')) {
-      const sanitized = await this.hooks.execute('sanitize', this, this.ref.value);
-      this.ref.value = sanitized?.[0] ?? this.ref.value;
-    }
+    // if (this.hooks.has('sanitize')) {
+    this.ref.value = await this.hooks.execute('sanitize', this, this.ref.value);
+    // }
 
     if (this.isDirty.value) {
       await this.validateAll();
@@ -112,6 +119,7 @@ export class Field<
   private cachedValidate = async (value: RT): Promise<boolean> => {
     const cacheKey = String(`${value}${this.isOptional.value ? '_optional' : ''}`);
 
+    console.log('cached?', this.label, this.validationCache[cacheKey]);
     if (!this.validationCache[cacheKey]) {
       if (!this.isDirty.value) {
         return true;
@@ -122,6 +130,8 @@ export class Field<
       if (!this.isOptional.value && !value) {
         return false;
       }
+
+      console.log(this.label, 'validate');
 
       const valid = await this.hooks.execute('validate', this, value);
       await this.hooks.execute('afterValidate', this, value, valid);
@@ -135,17 +145,42 @@ export class Field<
   // protected declare readonly config: FieldDefinition<N, RT>;
 
   constructor(form: Form, name: N, config: FC & FieldHooks<typeof this, RT>) {
-    super(form, name, {...config, hookNames: FIELD_HOOKS});
+    let sanitize = config.sanitize || ((_, value) => value);
+    let validate;
+    if (config.validate) {
+      validate = config.validate;
+    } else if (config.validators) {
+      validate = (field, value) => {
+        config.validators.forEach((validator: Validator) => {
+          if (!validator.validate(value)) {
+            this.errors.value.push(validator.errorMessage);
+          }
+        });
+        if (this.errors.value.length) {
+          return false;
+        }
+        return true;
+      }
+    } else {
+      validate = () => true;
+    }
+
+    const defaultConfig = {
+      sanitize,
+      validate,
+    };
 
     const fieldConfig = {
-      ...this.getDefaultConfig(),
+      ...defaultConfig,
       ...config,
     };
 
-    this.label = fieldConfig.label;
+    super(form, name, {...fieldConfig, hookNames: FIELD_HOOKS});
 
+    this.label = fieldConfig.label;
     this.isOptional.value = fieldConfig.optional ?? false;
     this.isVisible.value = fieldConfig.visible ?? true;
+    this.isDisabled.value = fieldConfig.disabled ?? false;
 
     this.ref = fieldConfig.ref;
 
@@ -154,16 +189,9 @@ export class Field<
 
     watch(this.ref, async (value: RT, oldValue: RT) => {
       await this.hooks.execute('beforeUpdate', this, value, oldValue);
-      this.isDirty.value = true;
-      await this.validateAll();
+      // this.isDirty.value = true;
+      // await this.validateAll();
       await this.hooks.execute('afterUpdate', this, value, oldValue);
     });
-  }
-
-  private getDefaultConfig(): RequireOnly<FC, 'sanitize' | 'validate'> {
-    return {
-      sanitize: (_, value) => value,
-      validate: () => true,
-    };
-  }
+  };
 }

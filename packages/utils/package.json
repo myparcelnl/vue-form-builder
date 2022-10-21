@@ -6,6 +6,7 @@
   "types": "./lib/index.d.ts",
   "scripts": {
     "build": "tsup --dts",
+    "build:dev": "tsup --dts --sourcemap",
     "buildOnly": "tsup",
     "clean": "rimraf dist",
     "serve": "tsup --watch"

@@ -13,6 +13,14 @@
     ]
   },
   "targetDefaults": {
+    "build:dev": {
+      "dependsOn": [
+        "^build:dev"
+      ],
+      "outputs": [
+        "{projectRoot}/lib"
+      ]
+    },
     "build": {
       "dependsOn": [
         "^build"
@@ -31,7 +39,10 @@
     },
     "serve": {
       "dependsOn": [
-        "^buildOnly"
+        "^build:dev"
+      ],
+      "outputs": [
+        "{projectRoot}/lib"
       ]
     },
     "test": {

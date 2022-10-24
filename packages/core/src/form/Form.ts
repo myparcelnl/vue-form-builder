@@ -1,6 +1,6 @@
 import {ComponentOrHtmlElement, PlainElement} from './plain-element';
 import {Field, FieldInstance} from './field';
-import {FieldName, FieldOrElement, NamedElementOrField} from '../types';
+import {FieldName, FieldOrElement, FieldWithNameAndRef, NamedElementOrField} from '../types';
 import {PromiseOr, isOfType} from '@myparcel/vue-form-builder-utils';
 import {UnwrapNestedRefs, markRaw, reactive} from 'vue';
 import {ComponentLifecycleHooks} from '../services/hook-manager/componentHooks';
@@ -133,6 +133,12 @@ export class Form<
     );
 
     await this.hooks.execute('afterValidate', this);
+  }
+
+  public isValid(): boolean {
+    return this.fields
+    .filter((field) => isOfType<FieldWithNameAndRef>(field, 'ref'))
+    .every((field) => field.isValid);
   }
 
   private createFieldInstance(

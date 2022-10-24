@@ -1,4 +1,5 @@
 import {FetchClient, GetCarriers, createPublicSdk} from '@myparcel/sdk';
+import {defineField, defineForm} from '@myparcel/vue-form-builder';
 import Heading from '../components/Heading.vue';
 import THiddenInput from '../components/template/THiddenInput.vue';
 import TNumberInput from '../components/template/TNumberInput.vue';
@@ -6,7 +7,6 @@ import TSelect from '../components/template/TSelect.vue';
 import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TTextInput from '../components/template/TTextInput.vue';
 import TToggleSwitch from '../components/template/TToggleSwitch.vue';
-import {defineField, defineForm} from '@myparcel/vue-form-builder';
 import {ref} from 'vue';
 
 // todo: dynamically add more form parts, see BO -> canada -> project groups
@@ -64,11 +64,11 @@ export const useShipmentOptionsForm = (): any => {
           },
           {
             validate: (field, value: string) => {
-              return !value.includes('e')
+              return !value.includes('e');
             },
             errorMessage: 'E is not allowed',
-          }
-        ]
+          },
+        ],
       },
       // new HiddenInput({
       //   name: 'orderId',
@@ -235,7 +235,7 @@ export const useShipmentOptionsForm = (): any => {
         label: 'Insurance',
         validate: (field: any, value: any) => {
           return value < 500;
-        }
+        },
       },
       {
         component: TSubmitButton,

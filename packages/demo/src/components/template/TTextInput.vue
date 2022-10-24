@@ -65,10 +65,9 @@ export default defineComponent({
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
 
   setup: (props) => {
-
     const isValid = () => {
       return props.valid !== undefined ? props.valid : true;
-    }
+    };
 
     return {
       model: useVModel(props, 'modelValue'),

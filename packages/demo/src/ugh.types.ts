@@ -1,10 +1,9 @@
 import {Component, EmitsOptions, HTMLAttributes, Ref, UnwrapNestedRefs, ref} from 'vue';
 import {ComponentOrHtmlElement, FormConfiguration} from '@myparcel/vue-form-builder/src/form';
 import {ComponentProps, MakeOptional, PromiseOr} from '@myparcel/vue-form-builder-utils';
-import {FieldName, FieldOrElement} from '@myparcel/vue-form-builder/src/types';
+import {FieldName, FieldOrElement, defineField} from '@myparcel/vue-form-builder';
 import TSelect from './components/template/TSelect.vue';
 import TTextInput from './components/template/TTextInput.vue';
-import {defineField} from '@myparcel/vue-form-builder';
 
 type FieldsToModel<T extends {fields: NewFieldObj[]}> = {
   [K in T['fields'][number] as K['name'] extends string ? K['name'] : never]: K extends {ref: Ref<infer RT>}

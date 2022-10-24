@@ -2,7 +2,7 @@ import {Field, defineForm} from '../form';
 import {FunctionalComponent, h, ref} from 'vue';
 import {describe, expect, it} from 'vitest';
 
-describe('form builder', () => {
+describe.skip('form builder', () => {
   it('works', () => {
     const TextInput: FunctionalComponent<{modelValue: string}> = (props, ctx) => {
       return h('input', {

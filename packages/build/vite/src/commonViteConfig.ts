@@ -20,7 +20,8 @@ export const commonViteConfig: UserConfigFn = (env) => ({
   },
 
   test: {
-    dir: 'packages',
+    dir: 'src',
+
     coverage: {
       reporter: ['text', 'clover'],
     },

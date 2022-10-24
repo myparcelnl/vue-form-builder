@@ -1,10 +1,19 @@
-import {FieldName, FieldOrElement, FieldWithNameAndRef} from '../../types';
+import {
+  FieldName,
+  FieldOrElement,
+  FieldWithNameAndRef,
+  ObjectWithMultipleValidators,
+  ObjectWithSingleValidator,
+  ValidateFunction,
+  Validator,
+} from '../../types';
 import {Ref, ref, watch} from 'vue';
 import {ComponentLifecycleHooks} from '../../services/hook-manager/componentHooks';
 import {ComponentOrHtmlElement} from '../plain-element';
 import {FormInstance} from '../Form';
 import {HookManager} from '../../services';
 import {NamedElement} from '../named-element';
+import {isOfType} from '@myparcel/vue-form-builder-utils';
 
 const FIELD_HOOKS = [
   'beforeBlur',
@@ -38,11 +47,6 @@ export type FieldInstance<
   RT = unknown,
 > = Omit<FieldOrElement<C, N, RT>, 'form'> & BaseFieldInstance<RT>;
 
-type Validator = {
-  validate: (value: unknown) => boolean;
-  errorMessage: string;
-}
-
 type FieldHooks<N, RT> = {
   beforeBlur: (field: N, value: RT) => void;
   afterBlur: (field: N, value: RT) => void;
@@ -59,8 +63,7 @@ type FieldHooks<N, RT> = {
   afterUpdate: (field: N, value: RT, oldValueT: RT) => void;
 
   beforeValidate: (field: N, value: RT) => void;
-  validate: (field: N, value: RT) => boolean;
-  validators: Validator[];
+  validate: ValidateFunction;
   afterValidate: (field: N, value: RT, isValid: boolean) => void;
 } & ComponentLifecycleHooks<N>;
 
@@ -79,10 +82,12 @@ export class Field<
   public isTouched = ref(false);
   public isValid = ref(true);
   public isVisible = ref(true);
-  public errors = ref([]);
+  public errors: Ref<string[]> = ref([]);
   public label?: string;
   public lazy = false;
   public ref: Ref<RT>;
+
+  public validators: Validator<C, N, RT>[] = [];
 
   // eslint-disable-next-line no-invalid-this
   public declare hooks: HookManager<FieldHooks<typeof this, RT>>;
@@ -133,36 +138,34 @@ export class Field<
 
   // protected declare readonly config: FieldDefinition<N, RT>;
 
-  constructor(form: FormInstance, name: N, config: FC & FieldHooks<Field<C, N, RT>, RT>) {
-    let sanitize = config.sanitize || ((_, value) => value);
-    let validate = (field, value) => true;
+  public constructor(form: FormInstance, name: N, config: FC & FieldHooks<Field<C, N, RT>, RT>) {
+    const sanitize = config.sanitize || ((_, value) => value);
+    let validate: ValidateFunction = () => true;
 
-    if (config.validate) {
-      // if only a validator is set, use it as the validate function
+    if (isOfType<ObjectWithSingleValidator>(config, 'validate')) {
       validate = config.validate;
-    } else if (config.validators) {
-      // if validators are set, use it to loop and validate
-      validate = (field, value) => {
-        config.validators.forEach((validator: Validator) => {
-          if (!validator.validate(field, value)) {
-            this.errors.value.push(validator.errorMessage);
-          }
-        });
-        if (this.errors.value.length) {
-          return false;
-        }
-        return true;
-      }
     }
 
-    const defaultConfig = {
-      sanitize,
-      validate,
-    };
+    if (isOfType<ObjectWithMultipleValidators>(config, 'validators')) {
+      validate = async (field, value) => {
+        const result = await Promise.all(
+          config.validators.map(async (validator) => {
+            if (await validator.validate(field, value)) {
+              this.errors.value.push(validator.errorMessage);
+            }
+
+            return !this.errors.value.length;
+          }),
+        );
+
+        return result.every(Boolean);
+      };
+    }
 
     const fieldConfig = {
-      ...defaultConfig,
       ...config,
+      sanitize,
+      validate,
     };
 
     super(form, name, {...fieldConfig, hookNames: FIELD_HOOKS});
@@ -183,5 +186,5 @@ export class Field<
       // await this.validateAll();
       await this.hooks.execute('afterUpdate', this, value, oldValue);
     });
-  };
+  }
 }

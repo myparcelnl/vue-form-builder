@@ -19,6 +19,8 @@ jobs:
           fetch-depth: 0
 
       - uses: myparcelnl/actions/yarn2-install@v2
+        with:
+          yarn-args: --no-immutable
 
       - name: 'Handle build cache'
         uses: actions/cache@v3
@@ -35,9 +37,9 @@ jobs:
         id: cache-nx
         with:
           path: node_modules/.cache/nx
-          key: cache-nx-${{ hashFiles('yarn.lock') }}-${{ github.sha }}
+          key: cache-nx-${{ hashFiles('package.json') }}-${{ github.sha }}
           restore-keys: |
-            cache-nx-${{ hashFiles('yarn.lock') }}-
+            cache-nx-${{ hashFiles('package.json') }}-
 
       - name: 'Build packages'
         run: |
@@ -45,7 +47,7 @@ jobs:
 
       - uses: myparcelnl/actions/setup-git-credentials@v2
         with:
-          token: ${{ secrets.GH_REPO_TOKEN }}
+          token: ${{ env.GITHUB_TOKEN }}
 
-      - name: 'Run semantic release'
-        run: npx multi-semantic-release
+      - name: 'Run monodeploy'
+        run: yarn monodeploy --config-file monodeploy.config.cjs

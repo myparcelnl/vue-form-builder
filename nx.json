@@ -34,11 +34,6 @@
       "outputs": [
         "{projectRoot}/lib"
       ]
-    },
-    "test": {
-      "outputs": [
-        "{projectRoot}/coverage"
-      ]
     }
   },
   "tasksRunnerOptions": {
@@ -49,7 +44,6 @@
           "build",
           "build:dev",
           "buildOnly",
-          "test",
           "typecheck"
         ]
       }

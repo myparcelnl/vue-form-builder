@@ -16,8 +16,8 @@
     "serve": "npx concurrently yarn:serve:demo yarn:serve:watch",
     "serve:demo": "nx serve @myparcel/vue-form-builder-demo",
     "serve:watch": "yarn build:dev --watch",
-    "test": "nx run-many --target=test",
-    "test:serve": "nx run-many --target=test:serve",
+    "test": "vitest run",
+    "test:serve": "vitest",
     "typecheck": "nx run-many --target=typecheck",
     "postinstall": "husky install"
   },

@@ -18,7 +18,6 @@
     "buildOnly": "vite build",
     "clean": "rimraf lib",
     "serve": "tsup --watch",
-    "test": "vitest",
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {

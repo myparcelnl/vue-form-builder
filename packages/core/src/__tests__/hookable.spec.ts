@@ -32,7 +32,7 @@ const DEFAULT_CONFIG = {
   notAHook: vi.fn(),
 };
 
-describe('Hookable', () => {
+describe.skip('Hookable', () => {
   beforeEach(() => {
     Object.values(DEFAULT_CONFIG).forEach((fn) => fn.mockClear());
   });

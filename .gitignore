@@ -2,7 +2,6 @@ lib/
 .idea/
 logs/
 node_modules/
-yarn.lock
 
 coverage
 lib

@@ -111,6 +111,7 @@ export class Field<
   private cachedValidate = async (value: RT): Promise<boolean> => {
     const cacheKey = String(`${value}${this.isOptional.value ? '_optional' : ''}`);
 
+    this.errors.value = [];
     if (!this.validationCache[cacheKey]) {
       if (!this.isDirty.value) {
         return true;
@@ -122,7 +123,6 @@ export class Field<
         return false;
       }
 
-      this.errors.value = [];
       const valid = await this.hooks.execute('validate', this, value);
       await this.hooks.execute('afterValidate', this, value, valid);
       this.validationCache[cacheKey] = valid;

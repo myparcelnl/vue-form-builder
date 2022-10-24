@@ -19,8 +19,6 @@ jobs:
           fetch-depth: 0
 
       - uses: myparcelnl/actions/yarn2-install@v2
-        with:
-          yarn-args: --no-immutable
 
       - name: 'Handle build cache'
         uses: actions/cache@v3

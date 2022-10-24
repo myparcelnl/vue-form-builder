@@ -46,7 +46,8 @@
     "nx": "15.0.0",
     "prettier": "^2.7.1",
     "tsup": "^6.3.0",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "vitest": "^0.24.3"
   },
   "packageManager": "yarn@3.2.4"
 }

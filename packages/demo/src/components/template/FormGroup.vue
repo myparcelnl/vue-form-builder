@@ -7,8 +7,10 @@
     >
 
     <slot />
-    <ul v-if="warnings" >
-      <li v-for="warning in warnings" :key="warning">
+    <ul v-if="warnings">
+      <li
+        v-for="warning in warnings"
+        :key="warning">
         {{ warning }}
       </li>
     </ul>

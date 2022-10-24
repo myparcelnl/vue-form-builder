@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-build-
 
       - name: 'Handle Nx cache'
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: cache-nx
         with:
           path: node_modules/.cache/nx
@@ -49,3 +49,5 @@ jobs:
 
       - name: 'Run monodeploy'
         run: yarn monodeploy --config-file monodeploy.config.cjs
+        env:
+          GH_TOKEN: ${{ env.GITHUB_TOKEN }}

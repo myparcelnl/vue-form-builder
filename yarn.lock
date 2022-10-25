@@ -543,7 +543,7 @@ __metadata:
     husky: ^8.0.1
     lint-staged: ^13.0.3
     monodeploy: ^3.3.1
-    nx: 15.0.0
+    nx: 15.0.2
     prettier: ^2.7.1
     tsup: ^6.3.0
     typescript: ^4.8.4
@@ -828,23 +828,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/cli@npm:15.0.0":
-  version: 15.0.0
-  resolution: "@nrwl/cli@npm:15.0.0"
+"@nrwl/cli@npm:15.0.2":
+  version: 15.0.2
+  resolution: "@nrwl/cli@npm:15.0.2"
   dependencies:
-    nx: 15.0.0
-  checksum: a6d0f490c93e687f8d502d560efff0adcf8103be96b1d8fed45ea06cdbd51dea57fdb7b25c51883b25295e80d623850c81a45aba43c9af2158e202fa98c3171c
+    nx: 15.0.2
+  checksum: 9e10d08ce334d6f668ad948720af75de156f63d346d7eb01b482fb310705dcaa1ece9a28d8427b514c9fb30b6279b778bff67e96ebbe52adc68cd1d97dd3cdaa
   languageName: node
   linkType: hard
 
-"@nrwl/tao@npm:15.0.0":
-  version: 15.0.0
-  resolution: "@nrwl/tao@npm:15.0.0"
+"@nrwl/tao@npm:15.0.2":
+  version: 15.0.2
+  resolution: "@nrwl/tao@npm:15.0.2"
   dependencies:
-    nx: 15.0.0
+    nx: 15.0.2
   bin:
     tao: index.js
-  checksum: e4ffcf05ae05bc95751c4f4236cb202fc4ef953ba88fc4fb198461583101220210705e946ae317f156d917df13798248c774f85e362fe23a5cf2a8b6e891bb13
+  checksum: 159231a290e45d118cd9087d31c534917be9dac21e9a60987971369706ecb14b6d7aab291fccddef8f140741ae44d8ba3939f3eb1cd0495f85719d2db1b9db27
   languageName: node
   linkType: hard
 
@@ -7484,12 +7484,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:15.0.0":
-  version: 15.0.0
-  resolution: "nx@npm:15.0.0"
+"nx@npm:15.0.2":
+  version: 15.0.2
+  resolution: "nx@npm:15.0.2"
   dependencies:
-    "@nrwl/cli": 15.0.0
-    "@nrwl/tao": 15.0.0
+    "@nrwl/cli": 15.0.2
+    "@nrwl/tao": 15.0.2
     "@parcel/watcher": 2.0.4
     "@yarnpkg/lockfile": ^1.1.0
     "@yarnpkg/parsers": ^3.0.0-rc.18
@@ -7533,7 +7533,7 @@ __metadata:
       optional: true
   bin:
     nx: bin/nx.js
-  checksum: 8f890d58ba23b664e457d91cc5b22d2b1ee72ab54449f7854c5ebd6929194da8c9d14a9832469f50b51475f873b42416839e0ff51d31b516867ff435f9ed0379
+  checksum: ca4094eeab1de558256993762d2bfc9cdcdfe9aebe6da5c6c88c275b317718f05a118a836db1f079788796baa5adcb357977d5ca1dc7067e2c44ebfb63dda107
   languageName: node
   linkType: hard
 

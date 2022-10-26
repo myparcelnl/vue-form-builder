@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@myparcel/sdk": "^2.8.0",
-    "@vitejs/plugin-vue": "^3.1.2",
+    "@vitejs/plugin-vue": "^3.2.0",
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.18",
     "sass": "^1.55.0",

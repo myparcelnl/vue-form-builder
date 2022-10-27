@@ -1,6 +1,8 @@
-import {ComponentOrHtmlElement, PlainElement} from '../plain-element';
-import {ElementWithName, FieldName} from '../../types';
-import {FormInstance} from '../Form';
+import {ComponentOrHtmlElement, FieldName} from '../../types';
+import {FormInstance} from '../Form.types';
+import {HookManagerInput} from '@myparcel/vue-form-builder-hook-manager';
+import {NamedElementConfiguration} from './NamedElement.types';
+import {PlainElement} from '../plain-element';
 
 export class NamedElement<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
@@ -8,7 +10,7 @@ export class NamedElement<
 > extends PlainElement<C> {
   public readonly name: N;
 
-  constructor(form: FormInstance, name: N, config: ElementWithName<C, N>) {
+  constructor(form: FormInstance, name: N, config: NamedElementConfiguration<C, N> & HookManagerInput<any, any>) {
     super(form, config);
 
     this.name = name;

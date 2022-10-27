@@ -1,14 +1,13 @@
 <template>
   <form
     :class="form.config.formClass"
-    @submit.prevent="form.submit"
-  >
+    @submit.prevent="form.submit">
     <template
       v-for="(field, index) in form.fields"
       :key="`field--${field.name ?? 'unnamed'}--${index}`">
-      <Field
-        v-if="field.hasOwnProperty('ref')"
-        :field="field" />
+      <InteractiveElement
+        v-if="isOfType(field, 'ref')"
+        :element="field" />
 
       <PlainElement
         v-else
@@ -19,17 +18,18 @@
 
 <script lang="ts">
 import {PropType, defineComponent, provide} from 'vue';
-import Field from './FieldComponent.vue';
 import {FormInstance} from '../form';
-import {INJECT_FORM} from '../services/provides';
-import PlainElement from './BaseElementComponent.vue';
-import {useLifeCycleHooks} from '../composables/useLifeCycleHooks';
+import {INJECT_FORM} from '../services';
+import InteractiveElement from './InteractiveElement.vue';
+import PlainElement from './BaseElement.vue';
+import {isOfType} from '@myparcel/vue-form-builder-utils';
+import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'MagicForm',
   components: {
+    InteractiveElement,
     PlainElement,
-    Field,
   },
 
   props: {
@@ -42,7 +42,11 @@ export default defineComponent({
   setup: (props) => {
     provide(INJECT_FORM, props.form);
 
-    useLifeCycleHooks(props.form.hooks, props.form);
+    useLifeCycleHooks(props.form.hooks as any, props.form);
+
+    return {
+      isOfType,
+    };
   },
 });
 </script>

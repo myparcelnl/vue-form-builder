@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,no-underscore-dangle */
+// noinspection JSUnusedGlobalSymbols
 
 declare module '*.vue' {
   import {DefineComponent} from 'vue';

@@ -1,5 +1,5 @@
 <template>
-  <span
+  <div
     v-show="element.isVisible"
     :class="element.isVisible ? element.form.config.fieldClass : null">
     <component
@@ -15,7 +15,7 @@
       v-model="/* eslint-disable vue/no-mutating-props */ element.ref"
       v-bind="bindData"
       v-on="hooks" />
-  </span>
+  </div>
 </template>
 
 <script lang="ts">

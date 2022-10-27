@@ -13,7 +13,7 @@
       :key="`field--${field.name ?? 'unnamed'}--${index}`">
       <InteractiveElement
         v-if="isOfType(field, 'ref')"
-        :field="field" />
+        :element="field" />
 
       <PlainElement
         v-else

@@ -1,13 +1,19 @@
 <template>
   <form
-    :class="form.config.formClass"
-    @submit.prevent="form.submit">
+    :id="form.name"
+    :class="[
+      form.config.formClass,
+      { valid: form.isValid },
+      { invalid: !form.isValid },
+    ]"
+    @submit.prevent="form.submit"
+  >
     <template
       v-for="(field, index) in form.fields"
       :key="`field--${field.name ?? 'unnamed'}--${index}`">
       <InteractiveElement
         v-if="isOfType(field, 'ref')"
-        :element="field" />
+        :field="field" />
 
       <PlainElement
         v-else

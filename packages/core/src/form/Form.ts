@@ -24,6 +24,11 @@ export class Form<
   public readonly model = {} as FieldsToModel<C, N, RT>;
 
   /**
+   * Whether all fields in the form are valid.
+   */
+  public isValid: ComputedRef<boolean>;
+
+  /**
    * Filtered array of fields that have a name and a ref.
    */
   protected fieldsWithNamesAndRefs: ComputedRef<InteractiveElementInstance<C, N, RT>[]>;
@@ -53,6 +58,10 @@ export class Form<
         return isOfType<InteractiveElementInstance<C, N, RT>>(field, 'ref');
       });
     }) as any;
+
+    this.isValid = computed(() => {
+      return this.fieldsWithNamesAndRefs.value.every((field) => field.isValid);
+    });
   }
 
   public addField(newField: PlainElement, sibling: N, position: 'before' | 'after' = 'after'): void {
@@ -99,21 +108,11 @@ export class Form<
 
     await this.hooks.execute('afterValidate', this);
 
-    return this.isValid;
+    return this.isValid.value;
   }
 
-  /**
-   * Resets all fields to their initial values.
-   */
   public async reset(): Promise<void> {
     await Promise.all(this.fieldsWithNamesAndRefs.value.map((field) => field.reset()));
-  }
-
-  /**
-   * Whether all fields in the form are valid.
-   */
-  public get isValid(): boolean {
-    return this.fieldsWithNamesAndRefs.value.every((field) => field.isValid);
   }
 
   private createFieldInstance(

@@ -1,82 +1,48 @@
-import {ComponentOrHtmlElement, PlainElement} from './plain-element';
-import {Field, FieldInstance} from './field';
-import {FieldName, FieldOrElement, FieldWithNameAndRef, NamedElementOrField} from '../types';
-import {PromiseOr, isOfType} from '@myparcel/vue-form-builder-utils';
-import {UnwrapNestedRefs, markRaw, reactive} from 'vue';
-import {ComponentLifecycleHooks} from '../services/hook-manager/componentHooks';
-import {HookManager} from '../services';
-import {NamedElement} from './named-element';
+import {AnyElementInstance, ComponentOrHtmlElement, FieldConfiguration, FieldName, FieldsToModel} from '../types';
+import {ComputedRef, computed, markRaw, reactive} from 'vue';
+import {FormConfiguration, FormHooks, FormInstance} from './Form.types';
+import {HookManager, HookManagerInput, createHookManager} from '@myparcel/vue-form-builder-hook-manager';
+import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
+import {NamedElement, NamedElementConfiguration} from './named-element';
+import {PlainElement} from './plain-element';
+import {isOfType} from '@myparcel/vue-form-builder-utils';
 
 export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'] as const;
-
-export type FormConfiguration<F extends FieldOrElement[] = FieldOrElement[]> = {
-  /**
-   * Fields in the form.
-   */
-  fields: F;
-
-  /**
-   * Function executed when any label is rendered.
-   */
-  renderLabel?: (input: string) => string;
-
-  /**
-   * Classes that are applied to each field.
-   */
-  fieldClass?: string | string[] | Record<string, string>;
-
-  /**
-   * Classes that are applied to the form.
-   */
-  formClass?: string | string[] | Record<string, string>;
-} & Partial<FormHooks<Form>>;
-
-export type FormInstance<
-  FC extends FormConfiguration = FormConfiguration,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
-  RT = unknown,
-> = Form<C, N, RT, any, FC>;
-
-type FormHooks<I extends Form> = {
-  [k in typeof FORM_HOOKS[number]]: (form: I) => PromiseOr<void>;
-} & ComponentLifecycleHooks<I>;
-
-// type FieldsToModel<T extends FormConfiguration, I extends number = number> = {
-//   [K in T['fields'][I] as K['name'] extends string ? K['name'] : never]: K extends {ref: Ref}
-//     ? Omit<K, 'ref'> & {ref: UnwrapRef<K['ref']>}
-//     : K;
-// };
-
-export type FieldsToModel<
-  FC extends FormConfiguration,
-  // C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  // N extends NonNullable<FieldName> = NonNullable<FieldName>,
-  // RT = unknown,
-> = {
-  [K in FC['fields'][number] as K['name'] extends string ? K['name'] : never]: UnwrapNestedRefs<K>;
-};
 
 export class Form<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends FieldName = FieldName,
   RT = unknown,
-  FN extends string = string,
   FC extends FormConfiguration = FormConfiguration,
+  FN extends string = string,
 > {
-  public readonly config: Omit<FC, 'fields'>;
-  public readonly fields: UnwrapNestedRefs<FieldInstance<C, N, RT>>[] = [];
-  // eslint-disable-next-line no-invalid-this
-  public readonly hooks: HookManager<FormHooks<Form>>;
-  public readonly model = {} as FieldsToModel<FC>;
   public readonly name: FN;
+
+  public readonly config: Omit<FC, 'fields'>;
+  public readonly fields: AnyElementInstance<C, N, RT>[] = [];
+  public readonly hooks: HookManager<HookManagerInput<typeof FORM_HOOKS, FormHooks>>;
+  public readonly model = {} as FieldsToModel<C, N, RT>;
+
+  /**
+   * Whether all fields in the form are valid.
+   */
+  public isValid: ComputedRef<boolean>;
+
+  /**
+   * Filtered array of fields that have a name and a ref.
+   */
+  protected fieldsWithNamesAndRefs: ComputedRef<InteractiveElementInstance<C, N, RT>[]>;
 
   constructor(name: FN, formConfig: FC) {
     const {fields, ...config} = formConfig;
 
-    this.hooks = new HookManager<FormHooks<Form>>({...formConfig, hookNames: FORM_HOOKS});
+    formConfig.hookNames = [...FORM_HOOKS, ...(formConfig.hookNames ?? [])];
+
     this.name = name;
     this.config = config;
+
+    // TODO: fix types
+    this.hooks = createHookManager(formConfig as any) as any;
 
     const formInstance = this.createFormInstance();
 
@@ -84,6 +50,17 @@ export class Form<
       const instance = this.createFieldInstance(field, formInstance);
 
       this.fields.push(instance);
+    });
+
+    // TODO: fix types
+    this.fieldsWithNamesAndRefs = computed(() => {
+      return this.fields.filter((field) => {
+        return isOfType<InteractiveElementInstance<C, N, RT>>(field, 'ref');
+      });
+    }) as any;
+
+    this.isValid = computed(() => {
+      return this.fieldsWithNamesAndRefs.value.every((field) => field.isValid);
     });
   }
 
@@ -117,44 +94,42 @@ export class Form<
 
     await Promise.all(
       this.fields.map((field) => {
-
-        if (!isOfType<Field<C, N, RT>>(field, 'validateAll')) {
+        if (!isOfType<InteractiveElement<C, N, RT>>(field, 'isValid')) {
           return true;
         }
 
         if (field.isDirty.value) {
           field.isDirty.value = true;
-        } else {
-          (field.isDirty as boolean) = true;
         }
 
-        return field.validateAll();
+        return field.validate();
       }),
     );
 
     await this.hooks.execute('afterValidate', this);
+
+    return this.isValid.value;
   }
 
-  public isValid(): boolean {
-    return this.fields
-    .filter((field) => isOfType<FieldWithNameAndRef>(field, 'ref'))
-    .every((field) => field.isValid);
+  public async reset() {
+    await Promise.all(this.fieldsWithNamesAndRefs.value.map((field) => field.reset()));
   }
 
   private createFieldInstance(
-    field: FieldOrElement<C, N, RT>,
-    form: Form<C, N, RT, FN> & {fields: undefined},
-  ): UnwrapNestedRefs<FieldInstance<C, N, RT>> {
+    field: FieldConfiguration<C, N, RT> | FieldConfiguration,
+    form: FormInstance<FC, C, N, RT> & {fields: undefined},
+  ): InteractiveElementInstance<C, N, RT> {
     let instance;
 
-    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'name')) {
+    if (isOfType<NamedElementConfiguration<C, N> | InteractiveElementConfiguration<C, N, RT>>(field, 'name')) {
       if (field.ref) {
-        instance = new Field<C, N, RT>(form, field.name, field);
+        instance = new InteractiveElement<C, N, RT>(form, field.name, field);
       } else {
         instance = new NamedElement<C, N>(form, field.name, field);
       }
     } else {
-      instance = new PlainElement<C>(form, field);
+      // TODO: fix types
+      instance = new PlainElement<C>(form, field as any);
     }
 
     const reactiveInstance = reactive(instance);
@@ -163,7 +138,7 @@ export class Form<
       markRaw(reactiveInstance.component);
     }
 
-    if (isOfType<NamedElementOrField<C, N, RT>>(field, 'name')) {
+    if (isOfType<NamedElementConfiguration<C, N> | InteractiveElementConfiguration<C, N, RT>>(field, 'name')) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       this.model[field.name] = reactiveInstance;
@@ -174,7 +149,7 @@ export class Form<
     return reactiveInstance;
   }
 
-  private createFormInstance(): Form<C, N, RT, FN> & {fields: undefined} {
+  private createFormInstance(): FormInstance<FC, C, N, RT> & {fields: undefined} {
     return {...this, fields: undefined};
   }
 }

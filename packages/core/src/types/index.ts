@@ -1,2 +1,3 @@
+export * from './element.types';
 export * from './field.types';
-export * from './validator.types';
+export * from './other.types';

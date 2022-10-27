@@ -1,9 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
 import {Form, SelectOption, defineForm} from '@myparcel/vue-form-builder';
-import TSelect from '../components/template/TSelect.vue';
-import TSubmitButton from '../components/template/TSubmitButton.vue';
-import TTextInput from '../components/template/TTextInput.vue';
-import TToggleSwitch from '../components/template/TToggleSwitch.vue';
-import {ref} from 'vue';
 
 const postcodeHousenumberValidation = async (form: Form) => {
   console.log(form);
@@ -195,101 +192,17 @@ export const useAddressForm = () => {
       // },
       //
       // // postcodeHousenumberValidation: new Text({
-      // //   text: 'This appears to be an unknown address. Please make sure the postal code and housenumber are correct.',
-      // // }),
-      //
-      // {
-      //   name: 'postcode',
-      //   component: TTextInput,
-      //   ref: ref(),
-      //   label: 'Postcode',
-      //   sanitize: (_, value) => value.toUpperCase().replace(/\s/g, ''),
-      //
-      //   // validators: [
-      //   //   {
-      //   //     validator: (ctx, value) => {
-      //   //       if (ctx.state.country === 'NL') {
-      //   //         const re = new RegExp(/^[1-9][0-9]{3} ?(?!SA|SD|SS)[A-Z]{2}$/);
-      //   //         return re.test(value);
-      //   //       }
-      //   //       return true;
-      //   //     },
-      //   //     errorMessage: 'Postcode must be in the format 1234 AB',
-      //   //   },
-      //   //   {
-      //   //     validator: (ctx, value) => {
-      //   //       if (ctx.state.country === 'US') {
-      //   //         const re = new RegExp(/^[0-9]{5}(?:-[0-9]{4})?$/);
-      //   //         return re.test(value);
-      //   //       }
-      //   //       return true;
-      //   //     },
-      //   //     errorMessage: 'Postcode must be in the format 12345',
-      //   //   },
-      //   // ],
-      //   onBlur: postcodeHousenumberValidation,
-      // },
-      //
-      // {
-      //   name: 'housenumber',
-      //   component: TTextInput,
-      //   label: 'House number',
-      //   isVisible: (ctx) => ctx.state.country === 'NL',
-      //   ref: ref(),
-      //   onBlur: postcodeHousenumberValidation,
-      // },
-      //
-      // {
-      //   name: 'street',
-      //   component: TTextInput,
-      //   label: 'Street',
-      //   ref: ref(),
-      // },
-      // {
-      //   name: 'street2',
-      //   component: TTextInput,
-      //   label: 'Extra street field',
-      //   ref: ref(),
-      //   isOptional: true,
-      // },
-      // {
-      //   name: 'city',
-      //   component: TTextInput,
-      //   label: 'Town/city',
-      //   ref: ref(),
-      // },
-      // {
-      //   name: 'email',
-      //   component: TTextInput,
-      //   label: 'Email',
-      //   ref: ref(),
-      //   isOptional: true,
-      //   // validators: [
-      //   //   {
-      //   //     validator: (ctx, value: string) => {
-      //   //       if (value.length > 0) {
-      //   //         const regExp = new RegExp(
-      //   //           /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      //   //         );
-      //   //
-      //   //         return regExp.test(value);
-      //   //       }
-      //   //       return true;
-      //   //     },
-      //   //     errorMessage: 'It looks like this is not an email address',
-      //   //   },
-      //   // ],
-      // },
-      // {
-      //   name: 'phone',
-      //   component: TTextInput,
-      //   label: 'Telephone number',
-      //   ref: ref(),
-      //   isOptional: true,
-      // },
-      // {
-      //   component: TSubmitButton,
-      // },
+      // //   text: 'This appears to be an unknown address. Please make sure the postal code and housenumber are
+      // correct.', // }),  { name: 'postcode', component: TTextInput, ref: ref(), label: 'Postcode', sanitize: (_,
+      // value) => value.toUpperCase().replace(/\s/g, ''),  // validators: [ //   { //     validator: (ctx, value) => {
+      // //       if (ctx.state.country === 'NL') { //         const re = new RegExp(/^[1-9][0-9]{3}
+      // ?(?!SA|SD|SS)[A-Z]{2}$/); //         return re.test(value); //       } //       return true; //     }, //
+      // errorMessage: 'Postcode must be in the format 1234 AB', //   }, //   { //     validator: (ctx, value) => { //
+      //      if (ctx.state.country === 'US') { //         const re = new RegExp(/^[0-9]{5}(?:-[0-9]{4})?$/); //
+      //  return re.test(value); //       } //       return true; //     }, //     errorMessage: 'Postcode must be in
+      // the format 12345', //   }, // ], onBlur: postcodeHousenumberValidation, },  { name: 'housenumber', component:
+      // TTextInput, label: 'House number', isVisible: (ctx) => ctx.state.country === 'NL', ref: ref(), onBlur:
+      // postcodeHousenumberValidation, },  { name: 'street', component: TTextInput, label: 'Street', ref: ref(), }, { name: 'street2', component: TTextInput, label: 'Extra street field', ref: ref(), isOptional: true, }, { name: 'city', component: TTextInput, label: 'Town/city', ref: ref(), }, { name: 'email', component: TTextInput, label: 'Email', ref: ref(), isOptional: true, // validators: [ //   { //     validator: (ctx, value: string) => { //       if (value.length > 0) { //         const regExp = new RegExp( //           /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, //         ); // //         return regExp.test(value); //       } //       return true; //     }, //     errorMessage: 'It looks like this is not an email address', //   }, // ], }, { name: 'phone', component: TTextInput, label: 'Telephone number', ref: ref(), isOptional: true, }, { component: TSubmitButton, },
     ],
   });
 };

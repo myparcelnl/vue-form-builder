@@ -1,0 +1,19 @@
+{
+  "name": "@myparcel/vue-form-builder-hook-manager",
+  "version": "1.0.0-alpha.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsup --dts",
+    "build:dev": "tsup --dts --sourcemap",
+    "buildOnly": "tsup",
+    "clean": "rimraf lib",
+    "serve": "tsup --watch"
+  },
+  "dependencies": {
+    "@myparcel/vue-form-builder-build-tsup": "workspace:*",
+    "@myparcel/vue-form-builder-utils": "workspace:*"
+  }
+}

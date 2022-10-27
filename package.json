@@ -18,8 +18,9 @@
     "serve:demo": "nx serve @myparcel/vue-form-builder-demo",
     "serve:watch": "yarn build:dev --watch",
     "test": "vitest run --environment jsdom",
-    "test:serve": "vitest",
-    "typecheck": "nx run-many --target=typecheck"
+    "test:serve": "vitest --environment jsdom",
+    "typecheck": "nx run-many --target=typecheck",
+    "postinstall": "husky install"
   },
   "lint-staged": {
     "*.{ts,vue}": "eslint --fix",

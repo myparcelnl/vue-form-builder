@@ -1,63 +1,124 @@
-import {FunctionalComponent, h, ref} from 'vue';
-import {InteractiveElement, defineForm} from '../../form';
-import {describe, expect, it} from 'vitest';
-import { mount } from '@vue/test-utils';
+import {Field, InteractiveElement, defineForm, FormInstance} from '../form';
+import {ref} from 'vue';
+import {afterAll, beforeAll, describe, expect, it, SpyInstance} from 'vitest';
+import { DOMWrapper, flushPromises, mount } from '@vue/test-utils';
 import { MagicForm } from '../components';
+import TextInput from './elements/TextInput.vue';
+import { vi } from 'vitest';
 
-const TextInput: FunctionalComponent<{modelValue: string}> = (props, ctx) => {
-  return h('input', {
-    value: props.modelValue,
-    onInput: (event) => {
-      ctx.emit('update:modelValue', event.target.value);
-    },
-  });
+const formIsInvalid = (formElement: DOMWrapper<HTMLElement>, form: FormInstance) => {
+  expect(form.isValid).toBe(false);
+  expect(formElement.classes()).toContain('invalid');
+  expect(formElement.classes()).not.toContain('valid');
 };
 
-TextInput.props = ['modelValue'];
+const formIsValid = (formElement: DOMWrapper<HTMLElement>, form: FormInstance) => {
+  expect(form.isValid).toBe(true);
+  expect(formElement.classes()).toContain('valid');
+  expect(formElement.classes()).not.toContain('invalid');
+}
 
-const form = defineForm('test', {
-  fields: [
-    {
-      name: 'named',
-      component: 'input',
-    },
-    {
-      component: 'br',
-    },
-    {
-      name: 'text',
-      component: TextInput,
-      ref: ref('initial'),
-    },
-  ],
-});
-
-describe('form builder', () => {
-  it('works', () => {
-
-    expect(form.model.named).toBeInstanceOf(InteractiveElement);
-    expect(form.model.text).toBeInstanceOf(InteractiveElement);
-
-    expect(form.model.text.ref).toEqual('initial');
-
-    form.model.text.ref = 'changed';
-    expect(form.model.text.ref).toEqual('changed');
-
-    // expect(form.registeredHooks).toEqual([]);
-    // expect(form.fields).toEqual({
-    //   toggle: {
-    //     component: CustomCheckbox,
-    //   },
-    // });
+describe('Form Generation', () => {
+  let consoleSpy: SpyInstance;
+  beforeAll(() => {
+    consoleSpy = vi.spyOn(console, 'info').mockImplementation(() => {});
   });
 
-  it('can use vue element wrapper', () => {
-    const wrapper = mount(MagicForm, {
-      props: {
-        form,
-      },
+  afterAll(() => {
+    consoleSpy.mockRestore();
+  });
+  describe('form builder', () => {
+    const form = defineForm('test', {
+      fields: [
+        {
+          name: 'named',
+          component: 'input',
+        },
+        {
+          component: 'br',
+        },
+        {
+          name: 'text',
+          component: TextInput,
+          ref: ref('initial'),
+        },
+      ],
     });
-    const formElement = wrapper.find('form');
-    expect(formElement.exists()).toBe(true);
+    it('works', () => {
+
+      expect(form.model.named).toBeInstanceOf(InteractiveElement);
+      expect(form.model.text).toBeInstanceOf(InteractiveElement);
+
+      expect(form.model.text.ref).toEqual('initial');
+
+      form.model.text.ref = 'changed';
+      expect(form.model.text.ref).toEqual('changed');
+
+      // expect(form.registeredHooks).toEqual([]);
+      // expect(form.fields).toEqual({
+      //   toggle: {
+      //     component: CustomCheckbox,
+      //   },
+      // });
+    });
+
+    it('can use vue element wrapper', () => {
+      const wrapper = mount(MagicForm, {
+        props: {
+          form,
+        },
+      });
+      const formElement = wrapper.find('form');
+      expect(formElement.exists()).toBe(true);
+      expect(formElement.attributes('id')).toBe('test');
+      expect(formElement.find('input').exists()).toBe(true);
+      expect(formElement.find('br').exists()).toBe(true);
+      expect(formElement.find('input[name="text"]').exists()).toBe(true);
+      expect(wrapper.html()).toMatchSnapshot();
+    });
   });
-});
+
+  describe('basic validation', () => {
+    it('can determine if a text input is valid based on single predicate', async () => {
+      const firstName = ref();
+      const lastName = ref();
+      const validationForm = defineForm('validationForm', {
+        fields: [
+          {
+            name: 'firstName',
+            component: TextInput,
+            ref: firstName,
+            validate: (field, value) => value !== 'John',
+          },
+          {
+            name: 'lastName',
+            component: TextInput,
+            ref: lastName,
+          },
+        ],
+      });
+      const wrapper = mount(MagicForm, {
+        props: {
+          form: validationForm,
+        },
+      });
+
+      const formElement = wrapper.find('form');
+
+      // expect default state to be valid regardless of input
+      formIsValid(formElement, validationForm);
+
+      const firstNameInput = wrapper.find('input[name="firstName"]');
+      await firstNameInput.setValue('John');
+      expect(firstName.value).toBe('John');
+
+      const lastNameInput = wrapper.find('input[name="lastName"]');
+      await lastNameInput.setValue('Doe');
+      expect(lastName.value).toBe('Doe');
+
+      await formElement.trigger('submit');
+      await flushPromises();
+      formIsInvalid(formElement, validationForm);
+    });
+  });
+})

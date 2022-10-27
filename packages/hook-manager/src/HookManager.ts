@@ -28,8 +28,7 @@ export class HookManager<HC extends InputHookConfiguration = InputHookConfigurat
   // todo: fix types
   public async execute<N extends HN>(name: N, ...args: Parameters<HC[N] | any>): Promise<ReturnType<HC[N] | any>> {
     if (this.has(name) && import.meta.env.MODE === 'development') {
-      // eslint-disable-next-line no-console
-      console.log(`%c@${name}`, 'color: yellow', ...args);
+      console.info(`%c@${name}`, 'color: yellow', ...args);
     }
 
     const returnValue = await Promise.all(

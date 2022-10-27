@@ -18,4 +18,5 @@ export const commonTsupConfig: Options = {
   outDir: 'lib',
   shims: true,
   target: 'es2022',
+  tsconfig: 'tsconfig.build.json',
 };

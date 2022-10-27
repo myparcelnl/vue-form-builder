@@ -55,12 +55,14 @@ module.exports = {
           'public-field',
           'protected-field',
           'private-field',
+
           'public-get',
-          'protected-get',
-          'private-get',
           'public-set',
+          'protected-get',
           'protected-set',
+          'private-get',
           'private-set',
+
           'public-method',
           'protected-method',
           'private-method',

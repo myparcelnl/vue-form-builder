@@ -19,8 +19,9 @@
 </template>
 
 <script lang="ts">
+import {PropType, defineComponent} from 'vue';
 import FormGroup from './FormGroup.vue';
-import {defineComponent} from 'vue';
+import {PromiseOr} from '@myparcel/vue-form-builder-utils';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
@@ -50,11 +51,13 @@ export default defineComponent({
     },
 
     disabled: {
-      type: Boolean,
+      type: [Promise, Boolean] as PropType<PromiseOr<boolean>>,
+      default: false,
     },
 
     valid: {
-      type: Boolean,
+      type: [Promise, Boolean] as PropType<PromiseOr<boolean>>,
+      default: true,
     },
 
     warnings: {
@@ -66,7 +69,7 @@ export default defineComponent({
 
   setup: (props) => {
     const isValid = () => {
-      return props.valid !== undefined ? props.valid : true;
+      return props.valid === undefined ? true : props.valid;
     };
 
     return {

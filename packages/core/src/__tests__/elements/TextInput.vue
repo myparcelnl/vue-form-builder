@@ -2,7 +2,6 @@
   <input
     v-model="value"
     v-bind="$attrs"
-    :valid="isValid"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"
     @focusin="$emit('focusin', $event)"
@@ -12,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from 'vue';
+import {computed, defineComponent, Ref} from 'vue';
 
 export default defineComponent({
   name: 'TextInput',
@@ -23,17 +22,11 @@ export default defineComponent({
       type: String,
       default: null,
     },
-    valid: {
-      type: Boolean,
-    },
   },
 
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
 
   setup: (props, { emit, attrs }) => {
-    const isValid = computed(() => {
-      return props.valid !== undefined ? props.valid : true;
-    });
 
     const value = computed({
       get() {
@@ -46,7 +39,6 @@ export default defineComponent({
 
     return {
       value,
-      isValid,
     };
   },
 });

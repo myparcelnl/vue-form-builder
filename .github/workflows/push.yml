@@ -44,6 +44,14 @@ jobs:
         with:
           token: ${{ secrets.GH_REPO_TOKEN }}
 
+      - name: 'debug'
+        run: |
+          git log --oneline
+
+          ls -la
+          ls -la packages
+          ls -la packages/**/lib
+
       - name: 'Run monodeploy'
         run: |
           yarn monodeploy \

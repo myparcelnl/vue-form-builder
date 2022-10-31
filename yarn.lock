@@ -491,7 +491,7 @@ __metadata:
     "@myparcel/vue-form-builder-build-tsup": "workspace:*"
     "@vitejs/plugin-vue": ^3.2.0
     typescript: ^4.8.4
-    vite: ^3.2.0
+    vite: ^3.2.2
     vite-plugin-dts: ^1.6.6
     vue: ^3.2.41
     vue-tsc: ^1.0.9
@@ -506,12 +506,12 @@ __metadata:
     "@myparcel/vue-form-builder": "workspace:*"
     "@vitejs/plugin-vue": ^3.2.0
     "@vueuse/core": ^9.4.0
-    autoprefixer: ^10.4.12
+    autoprefixer: ^10.4.13
     postcss: ^8.4.18
     sass: ^1.55.0
     tailwindcss: ^3.2.1
     typescript: ^4.8.4
-    vite: ^3.2.0
+    vite: ^3.2.2
     vue: ^3.2.41
     vue-router: ^4.1.6
     vue-tsc: ^1.0.9
@@ -535,27 +535,27 @@ __metadata:
     "@myparcel/eslint-config": ^3.6.2
     "@myparcel/prettier-config": ^1.1.0
     "@tsconfig/recommended": ^1.0.1
-    "@typescript-eslint/eslint-plugin": ^5.40.1
+    "@typescript-eslint/eslint-plugin": ^5.41.0
     "@typescript-eslint/parser": ^5.41.0
     "@vue/eslint-config-prettier": ^7.0.0
     "@vue/eslint-config-typescript": ^11.0.2
-    "@vue/test-utils": ^2.2.0
+    "@vue/test-utils": ^2.2.1
     "@vue/tsconfig": ^0.1.3
     conventional-changelog-conventionalcommits: ^5.0.0
-    eslint: ^8.25.0
+    eslint: ^8.26.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-vue: ^9.6.0
+    eslint-plugin-vue: ^9.7.0
     husky: ^8.0.1
     is-ci: ^3.0.1
-    jsdom: ^20.0.1
+    jsdom: ^20.0.2
     lint-staged: ^13.0.3
     monodeploy: ^3.3.1
-    nx: 15.0.0
+    nx: ^15.0.4
     prettier: ^2.7.1
     tsup: ^6.3.0
     typescript: ^4.8.4
-    vitest: ^0.24.3
+    vitest: ^0.24.4
   languageName: unknown
   linkType: soft
 
@@ -579,7 +579,7 @@ __metadata:
     "@vitejs/plugin-vue": ^3.2.0
     "@vue/devtools-api": ^6.4.4
     typescript: ^4.8.4
-    vite: ^3.2.0
+    vite: ^3.2.2
     vite-plugin-dts: ^1.6.6
     vue: ^3.2.41
     vue-tsc: ^1.0.9
@@ -836,23 +836,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/cli@npm:15.0.0":
-  version: 15.0.0
-  resolution: "@nrwl/cli@npm:15.0.0"
+"@nrwl/cli@npm:15.0.4":
+  version: 15.0.4
+  resolution: "@nrwl/cli@npm:15.0.4"
   dependencies:
-    nx: 15.0.0
-  checksum: a6d0f490c93e687f8d502d560efff0adcf8103be96b1d8fed45ea06cdbd51dea57fdb7b25c51883b25295e80d623850c81a45aba43c9af2158e202fa98c3171c
+    nx: 15.0.4
+  checksum: 4541f88135a83089b94f628be721c3803ba158eed28c67da977e0dffdb8304624f78e10b569ad97dc482939dd7851795d6738475226ef8fdfa73aaac06f24652
   languageName: node
   linkType: hard
 
-"@nrwl/tao@npm:15.0.0":
-  version: 15.0.0
-  resolution: "@nrwl/tao@npm:15.0.0"
+"@nrwl/tao@npm:15.0.4":
+  version: 15.0.4
+  resolution: "@nrwl/tao@npm:15.0.4"
   dependencies:
-    nx: 15.0.0
+    nx: 15.0.4
   bin:
     tao: index.js
-  checksum: e4ffcf05ae05bc95751c4f4236cb202fc4ef953ba88fc4fb198461583101220210705e946ae317f156d917df13798248c774f85e362fe23a5cf2a8b6e891bb13
+  checksum: 342ca77d317d64ea30c5e9299d6266afa4fb302cf8e6a47ae42f028d784fe363ecaaa94780ac86f92a52849b7042db271ab2bfeb1534a09dbbe4f072423e6efd
   languageName: node
   linkType: hard
 
@@ -1483,7 +1483,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.0.0, @typescript-eslint/eslint-plugin@npm:^5.25.0, @typescript-eslint/eslint-plugin@npm:^5.40.1":
+"@typescript-eslint/eslint-plugin@npm:^5.0.0, @typescript-eslint/eslint-plugin@npm:^5.25.0, @typescript-eslint/eslint-plugin@npm:^5.41.0":
   version: 5.41.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.41.0"
   dependencies:
@@ -1817,12 +1817,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/test-utils@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@vue/test-utils@npm:2.2.0"
+"@vue/test-utils@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@vue/test-utils@npm:2.2.1"
   peerDependencies:
     vue: ^3.0.1
-  checksum: e7a873a7020e6f13f2c301a695ca8e3e21df58ad09d324350e578f0607663e5356ead8a6e37a296f22e0dbbb9ed0a121a63ed923de191037d8ab4b046581ff9d
+  checksum: 6eccfbcd1839b43a6cdf7838c537a5b2446553d78a6743cc73c29765c21a66a7894089179139b7187b0b06a1bef1bee1758c738b18fd1dd8c91dec752a37da92
   languageName: node
   linkType: hard
 
@@ -2703,12 +2703,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.12":
-  version: 10.4.12
-  resolution: "autoprefixer@npm:10.4.12"
+"autoprefixer@npm:^10.4.13":
+  version: 10.4.13
+  resolution: "autoprefixer@npm:10.4.13"
   dependencies:
     browserslist: ^4.21.4
-    caniuse-lite: ^1.0.30001407
+    caniuse-lite: ^1.0.30001426
     fraction.js: ^4.2.0
     normalize-range: ^0.1.2
     picocolors: ^1.0.0
@@ -2717,7 +2717,7 @@ __metadata:
     postcss: ^8.1.0
   bin:
     autoprefixer: bin/autoprefixer
-  checksum: 6ae79cbacd31fb3d464ec64eb6ad2600f4f689c3080bbe62c5536d539b41b472083a2e941ef99d14aa11142370d6c16e8b05a62f077374933ed991aceb5943d2
+  checksum: dcb1cb7ae96a3363d65d82e52f9a0a7d8c982256f6fd032d7e1ec311f099c23acfebfd517ff8e96bf93f716a66c4ea2b80c60aa19efd2f474ce434bd75ef7b79
   languageName: node
   linkType: hard
 
@@ -2968,10 +2968,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001400, caniuse-lite@npm:^1.0.30001407":
+"caniuse-lite@npm:^1.0.30001400":
   version: 1.0.30001426
   resolution: "caniuse-lite@npm:1.0.30001426"
   checksum: e8b9c14ee33410d95b27da619f50648f373a7be712748970643f25d95fa80687b4755ba365f34a7a1cea00f9137193943aa6e742eedf0a4d7857f83809f49435
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001426":
+  version: 1.0.30001427
+  resolution: "caniuse-lite@npm:1.0.30001427"
+  checksum: 7b21a7d1f10c07130cecb7e7c7c38fd031f3dbd49afaee53fa4bb07355f9765686cad14f6296fbb49838f525c35292278b2c5ee9109c363edea5e134514ab6bb
   languageName: node
   linkType: hard
 
@@ -4601,7 +4608,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-vue@npm:^9.0.0, eslint-plugin-vue@npm:^9.6.0":
+"eslint-plugin-vue@npm:^9.0.0":
   version: 9.6.0
   resolution: "eslint-plugin-vue@npm:9.6.0"
   dependencies:
@@ -4615,6 +4622,23 @@ __metadata:
   peerDependencies:
     eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
   checksum: fcfb333b09af4d1db027f8a52b7ffdf0ebaa649f5738b7a6124bd02aaa1e075daaaa97e490a863667dda16c79e1d37688a8311d7685b9a63d3c4c0dd5f1d9622
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-vue@npm:^9.7.0":
+  version: 9.7.0
+  resolution: "eslint-plugin-vue@npm:9.7.0"
+  dependencies:
+    eslint-utils: ^3.0.0
+    natural-compare: ^1.4.0
+    nth-check: ^2.0.1
+    postcss-selector-parser: ^6.0.9
+    semver: ^7.3.5
+    vue-eslint-parser: ^9.0.1
+    xml-name-validator: ^4.0.0
+  peerDependencies:
+    eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
+  checksum: 733abf4f9ce2e355cc8d5501e6df94d7b332d9f8e0b5b5436ff24455e376c4c20a03d689e0502bd8facfb4953f1b1bf943fb0f7b0f2bc10c77a45bed9a8a9105
   languageName: node
   linkType: hard
 
@@ -4697,7 +4721,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.15.0, eslint@npm:^8.25.0":
+"eslint@npm:^8.15.0, eslint@npm:^8.26.0":
   version: 8.26.0
   resolution: "eslint@npm:8.26.0"
   dependencies:
@@ -6214,9 +6238,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^20.0.1":
-  version: 20.0.1
-  resolution: "jsdom@npm:20.0.1"
+"jsdom@npm:^20.0.2":
+  version: 20.0.2
+  resolution: "jsdom@npm:20.0.2"
   dependencies:
     abab: ^2.0.6
     acorn: ^8.8.0
@@ -6249,7 +6273,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: 9fc0b66a866f58a28e95f5a39b167ea663dc01c9754a019c356cc517d27ff0216055f37ace69e0f4414c51084adca8d5ec71c1e6faee3b8df0941a494167c3a0
+  checksum: 1912e73ecbc7cb1e458b63c4976a1f1dd40c1cdb9f91559cfeccb08c68ad1b9918c6260bd021559ecb1a7c233fae0d0c3fdcbd2ce82df597ef9373d67c8934c0
   languageName: node
   linkType: hard
 
@@ -7684,12 +7708,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:15.0.0":
-  version: 15.0.0
-  resolution: "nx@npm:15.0.0"
+"nx@npm:15.0.4, nx@npm:^15.0.4":
+  version: 15.0.4
+  resolution: "nx@npm:15.0.4"
   dependencies:
-    "@nrwl/cli": 15.0.0
-    "@nrwl/tao": 15.0.0
+    "@nrwl/cli": 15.0.4
+    "@nrwl/tao": 15.0.4
     "@parcel/watcher": 2.0.4
     "@yarnpkg/lockfile": ^1.1.0
     "@yarnpkg/parsers": ^3.0.0-rc.18
@@ -7733,7 +7757,7 @@ __metadata:
       optional: true
   bin:
     nx: bin/nx.js
-  checksum: 8f890d58ba23b664e457d91cc5b22d2b1ee72ab54449f7854c5ebd6929194da8c9d14a9832469f50b51475f873b42416839e0ff51d31b516867ff435f9ed0379
+  checksum: 00def43fa750159b32a6bebc13a90ebeaef4f6d65b51c556389c7a004f9d71d7231f66ffedf2ea64ec3877e36671dda1550f3cf4cdd208ea2868229e83da4a10
   languageName: node
   linkType: hard
 
@@ -9765,7 +9789,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinybench@npm:^2.3.0":
+"tinybench@npm:^2.3.1":
   version: 2.3.1
   resolution: "tinybench@npm:2.3.1"
   checksum: 74d45fa546d964a8123f98847fc59550945ed7f0d3e5a4ce0f9596d836b51c1d340c2ae0277a8023c15dc9ea3d7cb948a79173bfc46338c9b367c6323ea1eaf3
@@ -10272,7 +10296,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.0.0, vite@npm:^3.2.0":
+"vite@npm:^3.0.0":
   version: 3.2.0
   resolution: "vite@npm:3.2.0"
   dependencies:
@@ -10307,9 +10331,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:^0.24.3":
-  version: 0.24.3
-  resolution: "vitest@npm:0.24.3"
+"vite@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "vite@npm:3.2.2"
+  dependencies:
+    esbuild: ^0.15.9
+    fsevents: ~2.3.2
+    postcss: ^8.4.18
+    resolve: ^1.22.1
+    rollup: ^2.79.1
+  peerDependencies:
+    less: "*"
+    sass: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.4.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    less:
+      optional: true
+    sass:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: 7197ac91c612dda922367a95afa1b210353d6168d41845c186e2217bda1328d17b021b93d8089e336f9533b94645ae5dca18bb10937759f559c87006dd957fcd
+  languageName: node
+  linkType: hard
+
+"vitest@npm:^0.24.4":
+  version: 0.24.4
+  resolution: "vitest@npm:0.24.4"
   dependencies:
     "@types/chai": ^4.3.3
     "@types/chai-subset": ^1.3.3
@@ -10318,7 +10377,7 @@ __metadata:
     debug: ^4.3.4
     local-pkg: ^0.4.2
     strip-literal: ^0.4.2
-    tinybench: ^2.3.0
+    tinybench: ^2.3.1
     tinypool: ^0.3.0
     tinyspy: ^1.0.2
     vite: ^3.0.0
@@ -10341,7 +10400,7 @@ __metadata:
       optional: true
   bin:
     vitest: vitest.mjs
-  checksum: dd954f57396b81df466dd4346aa6c95709a1b3c2409d5526d3172fa34ec684f756a855f885778929a6b903a22b2517ff79d22f936fb3e4d7d54ff24e8e577459
+  checksum: 5e6072ce6b85e8130a1a44012350887984577f6e120c3b13128a576b1c80c3bf7a5bcc458b3989e3f3ece70301f102781aaa53ea7c2cb0730ee7fc3dc51df300
   languageName: node
   linkType: hard
 

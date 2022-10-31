@@ -8,6 +8,7 @@ export default createViteConfig({
     lib: {
       name: 'VueFormBuilder',
       entry: 'src/index.ts',
+      formats: ['es', 'umd', 'iife', 'cjs'],
     },
 
     rollupOptions: {

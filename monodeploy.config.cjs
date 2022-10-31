@@ -1,5 +1,7 @@
 const branch = require('child_process').execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 
+console.log('Detected branch: ', branch);
+
 const prereleaseBranches = ['next', 'alpha', 'beta', 'rc'];
 
 /**

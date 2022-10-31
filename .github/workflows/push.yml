@@ -10,9 +10,6 @@ jobs:
   release:
     name: 'Publish new release 🚀'
     runs-on: ubuntu-22.04
-    env:
-      GITHUB_TOKEN: ${{ secrets.GH_REPO_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -35,9 +32,9 @@ jobs:
         id: cache-nx
         with:
           path: node_modules/.cache/nx
-          key: cache-nx-${{ hashFiles('package.json') }}-${{ github.sha }}
+          key: ${{ runner.os }}-nx-${{ hashFiles('package.json') }}-${{ github.sha }}
           restore-keys: |
-            cache-nx-${{ hashFiles('package.json') }}-
+            ${{ runner.os }}-nx-${{ hashFiles('package.json') }}-
 
       - name: 'Build packages'
         run: |
@@ -45,7 +42,7 @@ jobs:
 
       - uses: myparcelnl/actions/setup-git-credentials@v2
         with:
-          token: ${{ env.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: 'Run monodeploy'
         run: |
@@ -53,4 +50,5 @@ jobs:
             --config-file monodeploy.config.cjs \
             --log-level 0
         env:
-          GH_TOKEN: ${{ env.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_REPO_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

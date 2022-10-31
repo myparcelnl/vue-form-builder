@@ -6,15 +6,17 @@ const prereleaseBranches = ['next', 'alpha', 'beta', 'rc'];
  * @type {import('@monodeploy/types').MonodeployConfiguration}
  */
 module.exports = {
-  preset: 'monodeploy/preset-recommended',
+  autoCommitMessage: 'chore: release [skip ci]',
   changelogFilename: '<packageDir>/CHANGELOG.md',
   changesetFilename: '-',
   conventionalChangelogConfig: 'conventional-changelog-conventionalcommits',
+  persistVersions: true,
   plugins: [
     '@monodeploy/plugin-github',
   ],
   prerelease: prereleaseBranches.includes(branch),
   prereleaseId: branch,
   prereleaseNPMTag: branch,
+  preset: 'monodeploy/preset-recommended',
   registryUrl: 'https://registry.npmjs.org',
 };

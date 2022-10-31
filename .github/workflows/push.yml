@@ -48,6 +48,9 @@ jobs:
           token: ${{ env.GITHUB_TOKEN }}
 
       - name: 'Run monodeploy'
-        run: yarn monodeploy --config-file monodeploy.config.cjs  --log-level 0
+        run: |
+          yarn monodeploy \
+            --config-file monodeploy.config.cjs \
+            --log-level 0
         env:
           GH_TOKEN: ${{ env.GITHUB_TOKEN }}

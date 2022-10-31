@@ -2,6 +2,7 @@
   "name": "@myparcel/vue-form-builder-monorepo",
   "version": "1.0.0-alpha.0",
   "private": true,
+  "repository": "github:myparcelnl/vue-form-builder",
   "type": "module",
   "main": "lib/vue-form-builder.js",
   "types": "lib/src/index.d.ts",
@@ -13,14 +14,14 @@
     "build:dev": "nx build:dev",
     "buildOnly": "nx buildOnly",
     "clean": "nx run-many --target=clean",
+    "postinstall": "husky install",
     "prepare": "is-ci || husky install",
     "serve": "npx concurrently yarn:serve:demo yarn:serve:watch",
     "serve:demo": "nx serve @myparcel/vue-form-builder-demo",
     "serve:watch": "yarn build:dev --watch",
     "test": "vitest run --environment jsdom",
     "test:serve": "vitest --environment jsdom",
-    "typecheck": "nx run-many --target=typecheck",
-    "postinstall": "husky install"
+    "typecheck": "nx run-many --target=typecheck"
   },
   "lint-staged": {
     "*.{ts,vue}": "eslint --fix",

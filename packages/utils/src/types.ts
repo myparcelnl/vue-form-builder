@@ -50,3 +50,7 @@ export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true;
 export type UnionToArray<T, A extends unknown[] = []> = IsUnion<T> extends true
   ? UnionToArray<Exclude<T, PopUnion<T>>, [PopUnion<T>, ...A]>
   : [T, ...A];
+
+export type ResolvePromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
+
+export type ReadonlyOr<T> = T | Readonly<T>;

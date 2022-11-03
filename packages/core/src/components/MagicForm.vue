@@ -3,16 +3,17 @@
     :id="form.name"
     :class="[
       form.config.formClass,
-      { valid: form.isValid },
-      { invalid: !form.isValid },
+      {
+        valid: form.isValid,
+        invalid: !form.isValid,
+      },
     ]"
-    @submit.prevent="form.submit"
-  >
+    @submit.prevent="form.submit">
     <template
       v-for="(field, index) in form.fields"
       :key="`field--${field.name ?? 'unnamed'}--${index}`">
       <InteractiveElement
-        v-if="isOfType(field, 'ref')"
+        v-if="field.hasOwnProperty('ref')"
         :element="field" />
 
       <PlainElement
@@ -28,7 +29,6 @@ import {FormInstance} from '../form';
 import {INJECT_FORM} from '../services';
 import InteractiveElement from './InteractiveElement.vue';
 import PlainElement from './BaseElement.vue';
-import {isOfType} from '@myparcel/vue-form-builder-utils';
 import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({
@@ -48,11 +48,9 @@ export default defineComponent({
   setup: (props) => {
     provide(INJECT_FORM, props.form);
 
-    useLifeCycleHooks(props.form.hooks as any, props.form);
+    const lifeCycleHooks = useLifeCycleHooks();
 
-    return {
-      isOfType,
-    };
+    lifeCycleHooks.register(props.form.hooks, props.form);
   },
 });
 </script>

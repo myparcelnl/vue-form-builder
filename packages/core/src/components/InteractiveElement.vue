@@ -35,12 +35,12 @@ export default defineComponent({
   },
 
   setup: (props) => {
+    const lifecycleHooks = useLifeCycleHooks();
     provide(INJECT_ELEMENT, props.element);
 
     const propRefs = toRefs(props);
 
-    // TODO: fix types
-    useLifeCycleHooks(props.element.hooks as any, props.element);
+    lifecycleHooks.register(propRefs.element.value.hooks, propRefs.element);
 
     const hooks = computed(() => {
       return props.element.hooks.registeredHooks.reduce(
@@ -52,14 +52,15 @@ export default defineComponent({
           return {
             ...acc,
             // todo: fix types
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             [hook.name.replace(/^on/, '')]: (value: any) => hook.callback(props.element, value),
           };
         },
         // TODO: fix types
         {
-          blur: (props.element as any).blur,
-          focus: (props.element as any).focus,
-          click: (props.element as any).click,
+          blur: props.element.blur,
+          focus: props.element.focus,
+          click: props.element.click,
         },
       );
     });
@@ -69,7 +70,7 @@ export default defineComponent({
       hooks,
       bindData: computed(() => {
         return {
-          ...((props.element as any).props ?? {}),
+          ...(props.element.props ?? {}),
           id: props.element.name ?? props.element.name,
           label: props.element.label,
           name: props.element.name,

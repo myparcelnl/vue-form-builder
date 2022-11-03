@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,no-underscore-dangle */
+/* eslint-disable @typescript-eslint/no-explicit-any,no-underscore-dangle,@typescript-eslint/naming-convention */
 // noinspection JSUnusedGlobalSymbols
 
 declare module '*.vue' {
   import {DefineComponent} from 'vue';
+
   const component: DefineComponent<any, any, any>;
   export default component;
 }

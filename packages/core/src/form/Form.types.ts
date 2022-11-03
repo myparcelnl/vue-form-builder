@@ -1,7 +1,9 @@
-import {AnyElementInstance, ComponentOrHtmlElement, FieldConfiguration, FieldName, FieldsToModel} from '../types';
-import {HookManager, HookManagerInput} from '@myparcel/vue-form-builder-hook-manager';
-import {ComputedRef} from 'vue';
+import {AnyElementConfiguration, AnyElementInstance, FieldsToModel, ResolvedElementConfiguration} from '../types';
+import {FORM_HOOKS} from './Form';
+import {HookManager} from '@myparcel/vue-form-builder-hook-manager';
 import {PromiseOr} from '@myparcel/vue-form-builder-utils';
+import {ReadonlyOr} from '@myparcel/vue-form-builder-utils/src';
+import {Ref} from 'vue';
 
 /**
  * The input configuration for a Form.
@@ -10,7 +12,7 @@ export type FormConfiguration = {
   /**
    * Fields in the form.
    */
-  fields: FieldConfiguration[];
+  fields: ReadonlyOr<ResolvedElementConfiguration[]>;
 
   /**
    * Function executed when any label is rendered.
@@ -34,33 +36,33 @@ export type FormConfiguration = {
     required?: string;
   } & Record<string, string>;
 
-  hookNames?: string[];
+  /**
+   * Names of hooks to register.
+   */
+  hookNames?: readonly string[] | string[];
 };
 
 export type FormHooks<I extends FormInstance = FormInstance> = {
-  beforeSubmit: (form: I) => PromiseOr<void>;
-  afterSubmit: (form: I) => PromiseOr<void>;
-  beforeReset: (form: I) => PromiseOr<void>;
-  afterReset: (form: I) => PromiseOr<void>;
-  beforeValidate: (form: I) => PromiseOr<void>;
-  afterValidate: (form: I) => PromiseOr<void>;
+  beforeSubmit?(form: I): PromiseOr<void>;
+  afterSubmit?(form: I): PromiseOr<void>;
+
+  beforeReset?(form: I): PromiseOr<void>;
+  afterReset?(form: I): PromiseOr<void>;
+
+  beforeValidate?(form: I): PromiseOr<void>;
+  afterValidate?(form: I): PromiseOr<void>;
 };
 
 /**
  * The instance of a form.
  */
-export type FormInstance<
-  FC extends FormConfiguration = FormConfiguration,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
-  RT = unknown,
-> = {
+export type FormInstance<FC extends FormConfiguration = FormConfiguration> = {
   readonly name: string;
 
   readonly config: Omit<FC, 'fields'>;
-  readonly fields: AnyElementInstance<C, N, RT>[];
-  readonly hooks: HookManager<HookManagerInput<string[], FormHooks>>;
-  readonly model: FieldsToModel<C, N, RT>;
+  readonly fields: AnyElementInstance[];
+  readonly hooks: HookManager<typeof FORM_HOOKS[number], FormHooks>;
+  readonly model: FieldsToModel;
 
   /**
    * Reset all fields to their original state.
@@ -78,7 +80,12 @@ export type FormInstance<
   validate(): PromiseOr<boolean>;
 
   /**
+   * Add a new element to the form at the end, or before or after an existing element.
+   */
+  addElement(element: AnyElementConfiguration, sibling?: string, position?: 'before' | 'after'): PromiseOr<void>;
+
+  /**
    * Determines whether the form is valid.
    */
-  isValid: ComputedRef<PromiseOr<boolean>>;
+  isValid: Ref<boolean>;
 };

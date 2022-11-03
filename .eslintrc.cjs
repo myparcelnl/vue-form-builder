@@ -1,39 +1,26 @@
 module.exports = {
   root: true,
-  extends: [
-    '@myparcel-eslint/eslint-config-esnext',
-    '@myparcel-eslint/eslint-config-prettier'
-  ],
+  extends: ['@myparcel-eslint/eslint-config-esnext', '@myparcel-eslint/eslint-config-prettier'],
   overrides: [
     {
-      files: ['./**/*.ts'],
+      files: ['./**/*.ts', './**/*.tsx'],
       extends: '@myparcel-eslint/eslint-config-prettier-typescript',
     },
     {
-      files: [
-        './*.cjs',
-      ],
-      env: {
-        node: true,
-      },
+      files: ['./packages/**/src/**/*.vue'],
+      extends: '@myparcel-eslint/eslint-config-prettier-typescript-vue',
     },
     {
-      files: [
-        './test/**/*.ts',
-        './src/**/*.spec.ts',
-      ],
+      files: ['./**/*.cjs', './**/*.js', './**/*.mjs'],
+      extends: '@myparcel-eslint/eslint-config-node',
+    },
+    {
+      files: ['./**/*.spec.*', './**/*.test.*', './**/__tests__/**'],
       rules: {
         '@typescript-eslint/no-magic-numbers': 'off',
         'max-len': 'off',
         'max-lines-per-function': 'off',
       },
     },
-    {
-      files: [
-        './packages/**/src/**/*.vue',
-      ],
-      extends: '@myparcel-eslint/eslint-config-prettier-typescript-vue',
-    },
-
   ],
 };

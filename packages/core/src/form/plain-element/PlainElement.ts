@@ -1,71 +1,50 @@
-/* eslint-disable no-invalid-this */
-import {COMPONENT_LIFECYCLE_HOOKS, ComponentLifecycleHooks} from '../../services/hook-manager/componentHooks';
-import {Component, ConcreteComponent, markRaw} from 'vue';
-import {ComponentProps, MakeOptional, PromiseOr, isOfType} from '@myparcel/vue-form-builder-shared';
-import {Form, FormInstance} from '../Form';
-import {HookManager, InputHookConfiguration} from '../../services';
+import {AnyElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
+import {HookManager, createHookManager} from '@myparcel/vue-form-builder-hook-manager';
+import {PLAIN_ELEMENT_HOOKS, PlainElementHooks, PlainElementInstance} from './PlainElement.types';
+import {FormInstance} from '../Form.types';
+import {markRaw} from 'vue';
 
-const AVAILABLE_HOOKS = ['click', 'focus', ...COMPONENT_LIFECYCLE_HOOKS] as const;
-
-type Hooks<I> = {
-  click(instance: I, event: MouseEvent): Promise<void>;
-  focus(instance: I, event: FocusEvent): Promise<void>;
-};
-
-export const HOOKS = ['update', 'blur', 'focus', 'click'] as const;
-
-type ElementHookName = typeof HOOKS[number];
-export type ComponentOrHtmlElement = string | Component;
-
-type ElementHooks<I> = {
-  [K in ElementHookName]: (element: I, ...args: never[]) => PromiseOr<void>;
-} & ComponentLifecycleHooks<I>;
-
-type MagicFormProps<C extends Component> = {
-  props?: Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>;
-};
-
-export type ElementDefinitionBase<C extends ComponentOrHtmlElement> = {
-  component: C;
-  hookNames?: string[];
-} & (C extends Component ? MagicFormProps<C> : never);
-
-export type ElementConfig<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  I = unknown,
-> = ElementDefinitionBase<C> & Partial<ElementHooks<I>>;
+type Hooks<C extends ComponentOrHtmlElement> = PlainElementHooks & ComponentHooks<C, PlainElementInstance<C>>;
 
 export class PlainElement<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  AHC extends InputHookConfiguration = InputHookConfiguration,
-  HC extends InputHookConfiguration = Hooks<typeof this> & AHC,
+  N extends ElementName = ElementName,
 > {
+  public readonly name: N;
   public readonly component: C;
   public readonly form: FormInstance;
-  public readonly hooks: HookManager<HC>;
+  public declare hooks: HookManager<typeof PLAIN_ELEMENT_HOOKS[number], Hooks<C>>;
 
-  public readonly props = {} as C extends Component ? MagicFormProps<C>['props'] : never;
+  public readonly props = {} as ElementProps<C>;
 
-  protected readonly config: ElementConfig<C, typeof this> & Partial<HC>;
+  protected readonly config: AnyElementConfiguration<C>;
 
-  constructor(form: Form, config: ElementConfig<C> & Partial<HC>) {
-    this.hooks = new HookManager<HC>({...config, hookNames: [...AVAILABLE_HOOKS, ...(config.hookNames ?? [])]});
+  public constructor(form: FormInstance, config: AnyElementConfiguration<C>) {
+    this.hooks = createHookManager<typeof PLAIN_ELEMENT_HOOKS[number], Hooks<C>>({
+      ...config,
+      hookNames: [...PLAIN_ELEMENT_HOOKS, ...(config.hookNames ?? [])],
+    });
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.name = config.name;
 
     Object.keys(config)
-      .filter((key) => !this.hooks.availableHooks.includes(key as keyof HC))
+      .filter((key) => !this.hooks.availableHooks.includes(key as typeof PLAIN_ELEMENT_HOOKS[number]))
       .forEach((key) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         this[key] = config[key];
       });
 
     this.form = form;
     this.config = config;
 
-    if (isOfType<ConcreteComponent>(config.component, 'props')) {
-      this.component = markRaw(config.component);
-    } else {
+    if (typeof config.component === 'string') {
       this.component = config.component;
+      return;
     }
+
+    this.component = markRaw(config.component) as C;
   }
 }

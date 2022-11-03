@@ -1,78 +1,74 @@
-import {defineForm} from '../../form';
-import {ref} from 'vue';
-import {afterAll, beforeAll, describe, expect, it, SpyInstance} from 'vitest';
-import { DOMWrapper, flushPromises, mount } from '@vue/test-utils';
+import {InteractiveElement, PlainElement, defineField, defineForm} from '../../form';
+import {canNotContainLetterValidator, firstNameNotJohnValidator} from './interactive-element/validationData';
+import {canNotContainX, firstNameNotDuane} from '@myparcel/vue-form-builder-demo/src/forms/validators';
+import {describe, expect, it} from 'vitest';
+import {flushPromises, mount} from '@vue/test-utils';
+import {formIsInvalid, formIsValid} from '../utils/formIsValid';
+import {MagicForm} from '../../components';
 import TextInput from '../elements/TextInput.vue';
-import { vi } from 'vitest';
-import { FormInstance } from '../../../lib';
-import { InteractiveElement } from '../../form/interactive-element';
-import { MagicForm } from '../../components';
-
-const formIsInvalid = (formElement: DOMWrapper<HTMLElement>, form: FormInstance) => {
-  expect(form.isValid.value).toBe(false);
-  expect(formElement.classes()).toContain('invalid');
-  expect(formElement.classes()).not.toContain('valid');
-};
-
-const formIsValid = (formElement: DOMWrapper<HTMLElement>, form: FormInstance) => {
-  expect(form.isValid.value).toBe(true);
-  expect(formElement.classes()).toContain('valid');
-  expect(formElement.classes()).not.toContain('invalid');
-}
+import {generateForm} from '../utils/generateForm';
+import {ref} from 'vue';
+import {removeUndefinedValues} from '../utils/removeUndefinedValues';
 
 describe('Form Generation', () => {
-  let consoleSpy: SpyInstance;
-  beforeAll(() => {
-    consoleSpy = vi.spyOn(console, 'info').mockImplementation(() => {});
-  });
+  describe('defining a form', () => {
+    const form = generateForm([
+      {
+        name: 'named',
+        component: 'input',
+      },
+      {
+        component: 'br',
+      },
+      {
+        name: 'text',
+        component: TextInput,
+        ref: ref('initial'),
+      },
+    ]);
 
-  afterAll(() => {
-    consoleSpy.mockRestore();
-  });
-  describe.skip('form builder', () => {
-    const form = defineForm('test', {
-      fields: [
-        {
-          name: 'named',
+    it('creates a reactive model from named elements', () => {
+      const form = generateForm([
+        defineField({
           component: 'input',
-        },
+          ...removeUndefinedValues(undefined),
+        }),
         {
-          component: 'br',
+          ...defineField({
+            component: 'input',
+            ...removeUndefinedValues(undefined),
+          }),
+          name: 'element',
+          ...removeUndefinedValues({name: 'test'}),
         },
-        {
-          name: 'text',
-          component: TextInput,
-          ref: ref('initial'),
-        },
-      ],
+        defineField({
+          ...{
+            ...defineField({
+              component: 'input',
+              ...removeUndefinedValues(undefined),
+            }),
+            name: 'element',
+            ...removeUndefinedValues(undefined),
+          },
+          ref: ref(''),
+          ...removeUndefinedValues({name: 'test2'}),
+        }),
+      ]);
+
+      expect(Object.keys(form.model)).toEqual(['test', 'test2']);
+      expect(form.model.test).toBeInstanceOf(PlainElement);
+      expect(form.model.test2).toBeInstanceOf(InteractiveElement);
+      expect(form.model.test2.ref).toBe('');
+      form.model.test2.ref = 'changed';
+      expect(form.model.test2.ref).toBe('changed');
     });
-    it('works', () => {
-      // expect(form.model.named).toBeInstanceOf(InteractiveElement);
-      expect(form.model.text).toBeInstanceOf(InteractiveElement);
 
-      expect(form.model.text.ref).toEqual('initial');
-
-      form.model.text.ref = 'changed';
-      expect(form.model.text.ref).toEqual('changed');
-
-      // expect(form.registeredHooks).toEqual([]);
-      // expect(form.fields).toEqual({
-      //   toggle: {
-      //     component: CustomCheckbox,
-      //   },
-      // });
-    });
-
-    it('can use vue element wrapper', async () => {
-      const wrapper = mount(MagicForm, {
-        props: {
-          form,
-        },
-      });
-      await flushPromises();
+    it('can use vue element wrapper', () => {
+      const wrapper = mount(MagicForm, {props: {form}});
       const formElement = wrapper.find('form');
+
       expect(formElement.exists()).toBe(true);
-      expect(formElement.attributes('id')).toBe('test');
+      expect(formElement.attributes('id')).toBe('form');
       expect(formElement.find('input').exists()).toBe(true);
       expect(formElement.find('br').exists()).toBe(true);
       expect(formElement.find('input[name="text"]').exists()).toBe(true);
@@ -80,48 +76,119 @@ describe('Form Generation', () => {
     });
   });
 
-  describe('basic validation', () => {
+  describe('validation', () => {
     it('can determine if a text input is valid based on single predicate', async () => {
       const firstName = ref('');
       const lastName = ref('');
       const validationForm = defineForm('validationForm', {
         fields: [
-          {
+          defineField({
             name: 'firstName',
             component: TextInput,
             ref: firstName,
             validate: (_, value) => String(value).startsWith('J'),
             errorMessage: 'Field must start with "J"',
-          },
-          {
+          }),
+          defineField({
             name: 'lastName',
             component: TextInput,
             ref: lastName,
-          },
+          }),
         ],
       });
-      const wrapper = mount(MagicForm, {
-        props: {
-          form: validationForm,
-        },
-      });
-      await flushPromises();
+
+      const wrapper = mount(MagicForm, {props: {form: validationForm}});
       const formElement = wrapper.find('form');
 
       // expect default state to be valid regardless of input
       formIsValid(formElement, validationForm);
 
-      const firstNameInput = wrapper.find('input[name="firstName"]');
-      await firstNameInput.setValue('Karen');
+      await wrapper.find('input[name="firstName"]').setValue('Karen');
       expect(firstName.value).toBe('Karen');
 
-      const lastNameInput = wrapper.find('input[name="lastName"]');
-      await lastNameInput.setValue('Doe');
+      await wrapper.find('input[name="lastName"]').setValue('Doe');
       expect(lastName.value).toBe('Doe');
 
       await formElement.trigger('submit');
       await flushPromises();
       formIsInvalid(formElement, validationForm);
     });
+
+    it('validates using a single function', async () => {
+      expect.assertions(1);
+
+      const eep = defineField({
+        component: 'input',
+        name: 'element',
+        ref: ref(''),
+        validate: (_, value) => String(value).startsWith('J'),
+        errorMessage: 'Field must start with "J"',
+      });
+
+      const form = generateForm([eep]);
+
+      await form.validate();
+      expect(form.isValid.value).toBe(false);
+
+      expect(form.model.element.errors).toEqual(['Field must start with "J"']);
+
+      form.model.element.ref = 'Joe Mater';
+
+      await form.validate();
+
+      expect(form.isValid.value).toBe(true);
+      expect(form.model.element.errors).toEqual([]);
+    });
+
+    it('validates using an array of validators', async () => {
+      expect.assertions(1);
+
+      const form = generateForm([
+        defineField({
+          component: 'input',
+          name: 'element',
+          ref: ref(''),
+          validators: [firstNameNotJohnValidator(), canNotContainLetterValidator()],
+        }),
+      ]);
+
+      const valid = await form.validate();
+
+      expect(valid).toBe(true);
+    });
+
+    it('validates using a computed validator', async () => {
+      expect.assertions(1);
+
+      const form = generateForm([
+        defineField({
+          component: 'input',
+          name: 'element',
+          ref: ref(''),
+          validators: [firstNameNotDuane(), canNotContainX()],
+        }),
+      ]);
+
+      const result = await form.validate();
+
+      expect(result).toBe(true);
+    });
+
+    it('can be reset', async () => {
+      expect.assertions(1);
+
+      const field = defineField({
+        component: 'input',
+        name: 'element',
+        ref: ref(''),
+        validators: [firstNameNotDuane()],
+      });
+
+      const form = generateForm([field]);
+
+      await form.model.element.reset();
+
+      // expect(result).toBe(true);
+    });
   });
-})
+});

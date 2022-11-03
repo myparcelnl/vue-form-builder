@@ -31,7 +31,7 @@ export default defineComponent({
   props: {
     // eslint-disable-next-line vue/no-unused-properties
     modelValue: {
-      type: String,
+      type: [String, Number],
       default: null,
     },
 
@@ -62,6 +62,7 @@ export default defineComponent({
 
     warnings: {
       type: Array,
+      default: () => [],
     },
   },
 

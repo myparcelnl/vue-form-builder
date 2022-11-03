@@ -1,13 +1,14 @@
-import {BaseElementConfiguration, ComponentOrHtmlElement, FieldName} from '../../types';
-import {ComputedRef, Ref} from 'vue';
+import {BaseElementConfiguration, ComponentOrHtmlElement, ElementName} from '../../types';
 import {FieldValidator, ValidateFunction, Validator} from './validator';
-import {FormConfiguration, FormInstance} from '../Form.types';
 import {MaybeRefOrComputed, PromiseOr} from '@myparcel/vue-form-builder-utils';
-import {PlainElementInstance} from '../plain-element';
+import {PLAIN_ELEMENT_HOOKS, PlainElementHooks, PlainElementInstance} from '../plain-element';
+import {FormInstance} from '../Form.types';
+import {HookManager} from '@myparcel/vue-form-builder-hook-manager';
+import {Ref} from 'vue';
 
 export type InteractiveElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  N extends ElementName = ElementName,
   RT = unknown,
 > = BaseElementConfiguration<C> &
   FieldValidator<RT, C, N> & {
@@ -24,7 +25,7 @@ export type InteractiveElementConfiguration<
     sanitize?: (_: InteractiveElementInstance, value: RT) => RT;
   };
 
-export const INTERACTIVE_ELEMENT_HOOKS: ReadonlyArray<keyof InteractiveElementHooks> = [
+export const INTERACTIVE_ELEMENT_HOOKS = [
   'beforeBlur',
   'afterBlur',
 
@@ -42,35 +43,37 @@ export const INTERACTIVE_ELEMENT_HOOKS: ReadonlyArray<keyof InteractiveElementHo
   'beforeValidate',
   'validate',
   'afterValidate',
+  ...PLAIN_ELEMENT_HOOKS,
 ] as const;
 
-export type InteractiveElementHooks<I = InteractiveElementInstance, RT = unknown> = {
-  beforeBlur: (field: I, value: RT) => PromiseOr<void>;
-  afterBlur: (field: I, value: RT) => PromiseOr<void>;
+export type InteractiveElementHooks<
+  I extends BaseInteractiveElementInstance = BaseInteractiveElementInstance,
+  RT = unknown,
+> = Omit<PlainElementHooks<I>, 'beforeBlur' | 'afterBlur'> & {
+  beforeBlur?(instance: I, value: RT): PromiseOr<void>;
+  afterBlur?(instance: I, value: RT): PromiseOr<void>;
 
-  beforeFocus: (field: I, event: FocusEvent) => PromiseOr<void>;
-  focus: (field: I, event: FocusEvent) => PromiseOr<void>;
-  afterFocus: (field: I, event: FocusEvent) => PromiseOr<void>;
+  beforeSanitize?(field: I, value: RT): PromiseOr<void>;
+  sanitize?(field: I, value: RT): PromiseOr<RT>;
+  afterSanitize?(field: I, value: RT): PromiseOr<void>;
 
-  beforeSanitize: (field: I, value: RT) => PromiseOr<void>;
-  sanitize: (field: I, value: RT) => PromiseOr<RT>;
-  afterSanitize: (field: I, value: RT) => PromiseOr<void>;
+  beforeUpdate?(field: I, value: RT, oldValue: RT): PromiseOr<void>;
+  afterUpdate?(field: I, value: RT, oldValueT: RT): PromiseOr<void>;
 
-  beforeUpdate: (field: I, value: RT, oldValue: RT) => PromiseOr<void>;
-  afterUpdate: (field: I, value: RT, oldValueT: RT) => PromiseOr<void>;
-
-  beforeValidate: (field: I, value: RT) => PromiseOr<void>;
-  validate: ValidateFunction;
-  afterValidate: (field: I, value: RT, isValid: boolean) => PromiseOr<void>;
+  beforeValidate?(field: I, value: RT): PromiseOr<void>;
+  validate?: ValidateFunction;
+  afterValidate?(field: I, value: RT, isValid: boolean): PromiseOr<void>;
 };
 
-export type InteractiveElementInstance<
+export type BaseInteractiveElementInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  N extends ElementName = ElementName,
   RT = unknown,
 > = PlainElementInstance<C, N> & {
-  form: FormInstance<FormConfiguration, C, N, RT>;
   ref: Ref<RT>;
+
+  form: FormInstance;
+  hooks: HookManager<typeof INTERACTIVE_ELEMENT_HOOKS[number], InteractiveElementHooks>;
 
   label?: string;
 
@@ -86,7 +89,7 @@ export type InteractiveElementInstance<
   /**
    * Determines whether the field is valid.
    */
-  isValid: ComputedRef<PromiseOr<boolean>>;
+  isValid: Ref<boolean>;
 
   /**
    * Validators used to compute the value of isValid.
@@ -103,3 +106,9 @@ export type InteractiveElementInstance<
    */
   reset: () => PromiseOr<void>;
 };
+
+export type InteractiveElementInstance<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  RT = unknown,
+> = BaseInteractiveElementInstance<C, N, RT> & InteractiveElementHooks<BaseInteractiveElementInstance, RT>;

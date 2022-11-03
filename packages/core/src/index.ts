@@ -8,3 +8,5 @@ export * from './services';
 export * from './types';
 
 export type {SelectOption};
+
+export {COMPONENT_LIFECYCLE_HOOKS} from './data/componentLifecycleHooks';

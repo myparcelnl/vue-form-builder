@@ -1,15 +1,14 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment,@typescript-eslint/no-unused-vars */
 import {
   ComponentOrHtmlElement,
-  FieldConfiguration,
-  FieldName,
   InteractiveElementConfiguration,
-  NamedElementConfiguration,
   PlainElementConfiguration,
   defineField,
   defineForm,
 } from '@myparcel/vue-form-builder';
 import {FetchClient, GetCarriers, createPublicSdk} from '@myparcel/sdk';
-import {canNotContainX, firstNameNotDuane} from './form/validators';
+import {canNotContainX, firstNameNotDuane} from './forms/validators';
+import {AnyElementConfiguration} from '@myparcel/vue-form-builder/src';
 import Heading from './components/Heading.vue';
 import THiddenInput from './components/template/THiddenInput.vue';
 import TNumberInput from './components/template/TNumberInput.vue';
@@ -19,41 +18,6 @@ import TTextInput from './components/template/TTextInput.vue';
 import TToggleSwitch from './components/template/TToggleSwitch.vue';
 import {UnionToArray} from '@myparcel/vue-form-builder-utils/src';
 import {ref} from 'vue';
-
-const interactiveFieldConfig = {
-  name: 'name',
-  component: 'input',
-  label: 'Name',
-  ref: ref('stringie'),
-};
-const interactiveField = defineField(interactiveFieldConfig);
-const field1: FieldConfiguration = interactiveFieldConfig; //
-const field2: InteractiveElementConfiguration = interactiveFieldConfig; //
-const field3: NamedElementConfiguration = interactiveFieldConfig;
-const field4: PlainElementConfiguration = interactiveFieldConfig;
-
-const namedFieldConfig = {
-  name: 'name',
-  component: 'input',
-};
-const namedField = defineField(namedFieldConfig);
-const field5: FieldConfiguration = namedFieldConfig; //
-const field6: InteractiveElementConfiguration = namedFieldConfig;
-const field7: NamedElementConfiguration = namedFieldConfig; //
-const field8: PlainElementConfiguration = namedFieldConfig;
-
-const plainFieldConfig = {
-  component: 'input',
-};
-const plainField = defineField(plainFieldConfig);
-const field9: FieldConfiguration = plainFieldConfig; //
-const field10: InteractiveElementConfiguration = plainFieldConfig;
-const field11: NamedElementConfiguration = plainFieldConfig;
-const field12: PlainElementConfiguration = plainFieldConfig; //
-
-defineForm('form', {
-  fields: [interactiveField, namedField, plainField],
-});
 
 defineField({
   component: Heading,
@@ -189,9 +153,6 @@ defineField({
     const sdk = createPublicSdk(new FetchClient(), [new GetCarriers()]);
     const carriers = await sdk.getCarriers();
 
-    console.log(carriers);
-    console.log(field);
-
     field.props.options = carriers.map((carrier) => ({
       label: carrier.human,
       value: carrier.name,
@@ -200,7 +161,7 @@ defineField({
     // console.log(carriers);
     // console.log(field.form);
 
-    // field.form.addField(
+    // field.form.addElement(
     //   {
     //     component: Heading,
     //     props: {
@@ -261,47 +222,19 @@ defineField({
   component: TSubmitButton,
 });
 
-declare function boop<
-  FC extends InteractiveElementConfiguration<C, N, RT>,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
-  RT = unknown,
->(config: Array<FC>): FC;
-
-declare function boop<
-  FC extends NamedElementConfiguration<C, N>,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
-  RT = unknown,
->(config: Array<FC>): FC;
-
-declare function boop<
-  FC extends PlainElementConfiguration<C>,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
-  RT = unknown,
->(config: Array<FC>): FC;
-
-declare function boop<
-  FC extends FieldConfiguration<C, N, RT>,
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
-  RT = unknown,
->(config: Array<FC>): FC;
-
 const fieldUnnamed = defineField({component: 'input'});
 const fieldName = defineField({name: 'name', component: 'input'});
 const fieldNameRef = defineField({name: 'name2', component: 'input', ref: ref(124)});
 
 const config = [fieldUnnamed, fieldName, fieldNameRef];
 
-const form4 = boop(config);
-
 form4.name.ref = 'test';
 form4.name2.ref = 124;
 
 type ItemA<C extends string> = {component: C; name?: never; value?: never};
+
 type ItemB<C extends string, N extends string> = {component: C; name: N; value?: never};
+
 type ItemC<C extends string, N extends string, V extends string> = {component: C; name: N; value: V};
 
 type Item<

@@ -1,18 +1,8 @@
-import {HookCallback, HookManager, HookNamesObject} from './HookManager';
+import {HookManager} from './HookManager';
+import {HookManagerConfiguration} from './types';
 
-export type InputHookConfiguration<HN extends string = string> = Record<string, unknown> & {
-  hookNames: Array<HN> | ReadonlyArray<HN>;
-};
-
-export type HookManagerInput<
-  T extends Array<string> | ReadonlyArray<string>,
-  H extends Record<string, HookCallback>,
-> = {
-  hookNames: T;
-} & H;
-
-export const createHookManager = <HN extends string, HC extends HookNamesObject<HN> & InputHookConfiguration<HN>>(
+export const createHookManager = <HN extends string, HC extends HookManagerConfiguration<HN>>(
   config: HC,
-) => {
-  return new HookManager<HC>(config);
+): HookManager<HN, HC> => {
+  return new HookManager(config);
 };

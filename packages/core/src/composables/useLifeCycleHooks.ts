@@ -1,40 +1,36 @@
 import * as Vue from 'vue';
-import {HookManager, HookManagerInput} from '@myparcel/vue-form-builder-hook-manager';
-import {PromiseOr} from '@myparcel/vue-form-builder-utils';
+import {COMPONENT_LIFECYCLE_HOOKS} from '../data/componentLifecycleHooks';
+import {ComponentLifecycleHooks} from '../types';
+import {HookManager} from '@myparcel/vue-form-builder-hook-manager';
 
-export const COMPONENT_LIFECYCLE_HOOKS = [
-  'onCreated',
-  'onActivated',
-  'onBeforeMount',
-  'onBeforeUnmount',
-  'onBeforeUpdate',
-  'onDeactivated',
-  'onMounted',
-  'onUnmounted',
-  'onUpdated',
-] as const;
-
-export type ComponentLifecycleHooks<I = unknown> = {
-  [k in typeof COMPONENT_LIFECYCLE_HOOKS[number]]?: (instance: I) => PromiseOr<void>;
+type UseLifeCycleHooks = () => {
+  hooks: typeof COMPONENT_LIFECYCLE_HOOKS;
+  register(
+    hookManager: HookManager<typeof COMPONENT_LIFECYCLE_HOOKS[number], ComponentLifecycleHooks>,
+    args?: unknown,
+  ): void;
 };
 
-export const useLifeCycleHooks = (
-  hookManager: HookManager<HookManagerInput<typeof COMPONENT_LIFECYCLE_HOOKS, ComponentLifecycleHooks>>,
-  args?: unknown,
-): void => {
-  if (hookManager.has('onCreated')) {
-    void hookManager.execute('onCreated', args);
-  }
+export const useLifeCycleHooks: UseLifeCycleHooks = () => {
+  return {
+    hooks: COMPONENT_LIFECYCLE_HOOKS,
 
-  COMPONENT_LIFECYCLE_HOOKS.forEach((hook) => {
-    if (!hookManager.has(hook)) {
-      return;
-    }
+    register(hookManager, args) {
+      if (hookManager.has('onCreated')) {
+        void hookManager.execute('onCreated', args);
+      }
 
-    if (hook === 'onCreated') return;
+      COMPONENT_LIFECYCLE_HOOKS.forEach((hook) => {
+        if (!hookManager.has(hook)) {
+          return;
+        }
 
-    Vue[hook](async () => {
-      await hookManager.execute(hook, args);
-    });
-  });
+        if (hook === 'onCreated') return;
+
+        Vue[hook](async () => {
+          await hookManager.execute(hook, args);
+        });
+      });
+    },
+  };
 };

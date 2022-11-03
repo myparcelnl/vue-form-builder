@@ -1,28 +1,56 @@
-import {PlainElementHooks, PlainElementInstance} from '../form';
+import {ComponentProps, MakeOptional} from '@myparcel/vue-form-builder-utils/src';
+import {
+  InteractiveElementConfiguration,
+  InteractiveElementInstance,
+  PlainElementConfiguration,
+  PlainElementInstance,
+} from '../form';
 import {Component} from 'vue';
-import {ComponentLifecycleHooks} from '../composables';
-import {ComponentOrHtmlElement} from './other.types';
-import {FormComponentProps} from './field.types';
+import {ComponentLifecycleHooks} from './other.types';
+import {HookNamesObject} from '@myparcel/vue-form-builder-hook-manager/src';
 
-export type ComponentHooks<I = unknown, C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = C extends Component
+export type ElementName = string | undefined;
+
+export type ComponentOrHtmlElement = string | Component;
+
+export type ComponentHooks<C extends ComponentOrHtmlElement = ComponentOrHtmlElement, I = unknown> = C extends Component
   ? ComponentLifecycleHooks<I>
+  : unknown;
+
+export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = C extends Component
+  ? Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>
   : never;
 
-export type Props<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = C extends Component
-  ? FormComponentProps<C>
-  : never;
-
-export type BaseElementConfiguration<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  I extends PlainElementInstance = PlainElementInstance,
-> = {
+export type BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
   /**
-   * HTML element or Vue component. Can be any type of component that renders as a Vue fragment, including JSX templates.
+   * HTML element or Vue component. Can be any type of component that renders as a Vue fragment, including JSX
+   * templates.
    */
   component: C;
 
   /**
-   * Props to be passed to the component.
+   * ElementProps to be passed to the component.
    */
-  props?: Props<C>;
-} & Partial<PlainElementHooks<I>>;
+  props?: ElementProps<C>;
+};
+
+export type AnyElementInstance<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  RT = unknown,
+> = InteractiveElementInstance<C, N, RT> | PlainElementInstance<C>;
+
+export type AnyElementConfiguration<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  RT = any,
+> = (PlainElementConfiguration<C> | InteractiveElementConfiguration<C, N, RT>) & HookNamesObject;
+
+export type ResolvedElementConfiguration<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  RT = any,
+> = RT extends never ? PlainElementConfiguration<C> : InteractiveElementConfiguration<C, N, RT>;

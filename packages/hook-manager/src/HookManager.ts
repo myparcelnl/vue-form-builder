@@ -1,33 +1,33 @@
-import {InputHookConfiguration} from './createHookManager';
+import {CustomHookItem, HookManagerConfiguration, HookNames} from './types';
+import {ResolvePromise} from '@myparcel/vue-form-builder-utils';
+import {filterMatchingHooks} from './utils/filterMatchingHooks';
 
-type CustomHookItem<HN extends string> = {
-  name: HN;
-  callback: HookCallback;
-};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type GetParameters<T> = T extends (...args: any[]) => any ? Parameters<T> : never;
 
-export type HookCallback = (...args: any[]) => any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type GetReturnType<T> = ResolvePromise<T extends (...args: any[]) => any ? ReturnType<T> : never>;
 
-export type HookNamesObject<HN extends string = string> = {
-  hookNames: Array<HN> | ReadonlyArray<HN>;
-};
+export class HookManager<
+  HN extends string = string,
+  HC extends HookManagerConfiguration<HN> = HookManagerConfiguration<HN>,
+> {
+  public availableHooks: HookNames<HN>;
 
-export class HookManager<HC extends InputHookConfiguration = InputHookConfiguration, HN extends keyof HC = keyof HC> {
-  public availableHooks: ReadonlyArray<HN>;
-  public registeredHooks: CustomHookItem<HN>[] = [];
-
-  constructor(config: Partial<HC> & {hookNames?: ReadonlyArray<HN>}) {
+  public registeredHooks: CustomHookItem<HN | string>[] = [];
+  public constructor(config: HC) {
     this.availableHooks = config.hookNames ?? [];
 
     Object.keys(config)
-      .filter((key) => this.availableHooks.includes(key as HN))
+      .filter((key) => filterMatchingHooks(this.availableHooks, key))
       .forEach((key) => {
         this.register(key as HN, config[key] as HC[HN]);
       });
   }
 
-  // todo: fix types
-  public async execute<N extends HN>(name: N, ...args: Parameters<HC[N] | any>): Promise<ReturnType<HC[N] | any>> {
+  public async execute<N extends HN | string>(name: N, ...args: GetParameters<HC[N]>): Promise<GetReturnType<HC[N]>> {
     if (this.has(name) && import.meta.env.MODE === 'development') {
+      // eslint-disable-next-line no-console
       console.info(`%c@${name}`, 'color: yellow', ...args);
     }
 
@@ -38,11 +38,17 @@ export class HookManager<HC extends InputHookConfiguration = InputHookConfigurat
     return returnValue[returnValue.length - 1];
   }
 
-  public has(name: HN): boolean {
+  public has(name: HN | string): boolean {
     return this.registeredHooks.some((hook) => hook.name === name);
   }
 
-  public register(name: HN, callback: HC[HN] | any): void {
-    this.registeredHooks.push({name, callback});
+  public register(name: HN | string, callback: HC[HN]): void {
+    if (!callback) {
+      return;
+    }
+
+    // TODO: fix types
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.registeredHooks.push({name, callback: callback as any});
   }
 }

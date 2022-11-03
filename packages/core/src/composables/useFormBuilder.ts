@@ -1,17 +1,39 @@
-import {FormConfiguration, FormInstance} from '../form';
-import {reactive} from 'vue';
+import {Form, FormConfiguration, FormInstance} from '../form';
+import {Ref, reactive, ref} from 'vue';
 
 let forms: Record<string, FormInstance>;
 
-export const useFormBuilder = <N extends string, FC extends FormConfiguration = FormConfiguration>() => {
+type UseFormBuilder = <N extends string, FC extends FormConfiguration = FormConfiguration>() => {
+  forms: typeof forms;
+  defaults: Ref<Partial<FC>>;
+  register<F extends FC>(name: N, config: F): FormInstance<F>;
+};
+
+export const useFormBuilder: UseFormBuilder = () => {
   forms ??= reactive({});
-  const defaults = reactive<Partial<FC>>({});
+  const defaults = ref({});
 
   return {
+    /**
+     * All registered forms.
+     */
     forms,
+
+    /**
+     * Default settings to apply to newly registered forms.
+     */
     defaults,
-    register<F extends FormInstance<FC>>(name: N, form: F): F {
-      forms[name] = {...defaults, ...form};
+
+    /**
+     * Register a new form. If a form with the same name already exists, it will be overwritten.
+     */
+    register(name, config) {
+      const form = new Form(name, {
+        ...defaults.value,
+        ...config,
+      });
+
+      forms[name] = form;
 
       return form;
     },

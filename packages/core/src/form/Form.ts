@@ -1,39 +1,32 @@
-import {AnyElementInstance, ComponentOrHtmlElement, FieldConfiguration, FieldName, FieldsToModel} from '../types';
-import {ComputedRef, computed, markRaw, reactive} from 'vue';
+import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, FieldsToModel} from '../types';
+import {ComputedRef, Ref, computed, markRaw, reactive} from 'vue';
 import {FormConfiguration, FormHooks, FormInstance} from './Form.types';
-import {HookManager, HookManagerInput, createHookManager} from '@myparcel/vue-form-builder-hook-manager';
+import {HookManager, createHookManager} from '@myparcel/vue-form-builder-hook-manager';
 import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
-import {NamedElement, NamedElementConfiguration} from './named-element';
-import {PlainElement} from './plain-element';
+import {PlainElement, PlainElementConfiguration} from './plain-element';
 import {isOfType} from '@myparcel/vue-form-builder-utils';
 
 export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'] as const;
 
-export class Form<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
-  RT = unknown,
-  FC extends FormConfiguration = FormConfiguration,
-  FN extends string = string,
-> {
+export class Form<FC extends FormConfiguration = FormConfiguration, FN extends string = string> {
   public readonly name: FN;
 
   public readonly config: Omit<FC, 'fields'>;
-  public readonly fields: AnyElementInstance<C, N, RT>[] = [];
-  public readonly hooks: HookManager<HookManagerInput<typeof FORM_HOOKS, FormHooks>>;
-  public readonly model = {} as FieldsToModel<C, N, RT>;
+  public readonly fields: AnyElementInstance[] = [];
+  public readonly hooks: HookManager<typeof FORM_HOOKS[number], FormHooks>;
+  public readonly model = {} as FieldsToModel;
 
   /**
    * Whether all fields in the form are valid.
    */
-  public isValid: ComputedRef<boolean>;
+  public isValid: Ref<boolean>;
 
   /**
    * Filtered array of fields that have a name and a ref.
    */
-  protected fieldsWithNamesAndRefs: ComputedRef<InteractiveElementInstance<C, N, RT>[]>;
+  protected fieldsWithNamesAndRefs: ComputedRef<InteractiveElementInstance[]>;
 
-  constructor(name: FN, formConfig: FC) {
+  public constructor(name: FN, formConfig: FC) {
     const {fields, ...config} = formConfig;
 
     formConfig.hookNames = [...FORM_HOOKS, ...(formConfig.hookNames ?? [])];
@@ -42,7 +35,8 @@ export class Form<
     this.config = config;
 
     // TODO: fix types
-    this.hooks = createHookManager(formConfig as any) as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.hooks = createHookManager(formConfig as any);
 
     const formInstance = this.createFormInstance();
 
@@ -52,33 +46,37 @@ export class Form<
       this.fields.push(instance);
     });
 
-    // TODO: fix types
     this.fieldsWithNamesAndRefs = computed(() => {
       return this.fields.filter((field) => {
-        return isOfType<InteractiveElementInstance<C, N, RT>>(field, 'ref');
+        return isOfType<InteractiveElementInstance>(field, 'ref');
       });
+
+      // TODO: fix types
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 
     this.isValid = computed(() => {
-      return this.fieldsWithNamesAndRefs.value.every((field) => field.isValid);
+      return this.fieldsWithNamesAndRefs.value.every((field) => {
+        return field.isValid.value;
+      });
     });
   }
 
-  public addField(newField: PlainElement, sibling: N, position: 'before' | 'after' = 'after'): void {
-    const siblingIndex = this.fields.findIndex((field) => field.name === sibling);
+  public addElement(element: AnyElementConfiguration, sibling?: string, position: 'before' | 'after' = 'after'): void {
+    const newIndex = sibling ? this.fields.findIndex((field) => field.name === sibling) : this.fields.length;
 
-    if (siblingIndex === -1) {
+    if (newIndex === -1) {
       // eslint-disable-next-line no-console
       console.error(`Field ${sibling} not found in form ${this.name}`);
       return;
     }
 
-    const index = position === 'after' ? siblingIndex + 1 : siblingIndex;
+    const index = position === 'after' ? newIndex + 1 : newIndex;
 
-    this.fields.splice(index, 0, this.createFieldInstance(newField, this.createFormInstance()));
+    this.fields.splice(index, 0, this.createFieldInstance(element, this.createFormInstance()));
   }
 
-  public async submit() {
+  public async submit(): Promise<void> {
     await this.hooks.execute('beforeSubmit', this);
     await this.validate();
     await this.hooks.execute('afterSubmit', this);
@@ -89,12 +87,12 @@ export class Form<
    *
    * @returns {Promise<void>}
    */
-  public async validate() {
+  public async validate(): Promise<boolean> {
     await this.hooks.execute('beforeValidate', this);
 
     await Promise.all(
       this.fields.map((field) => {
-        if (!isOfType<InteractiveElement<C, N, RT>>(field, 'isValid')) {
+        if (!isOfType<InteractiveElement>(field, 'isValid')) {
           return true;
         }
 
@@ -116,40 +114,33 @@ export class Form<
   }
 
   private createFieldInstance(
-    field: FieldConfiguration<C, N, RT> | FieldConfiguration,
-    form: FormInstance<FC, C, N, RT> & {fields: undefined},
-  ): InteractiveElementInstance<C, N, RT> {
+    field: AnyElementConfiguration,
+    form: FormInstance<FC> & {fields: undefined},
+  ): AnyElementInstance {
     let instance;
 
-    if (isOfType<NamedElementConfiguration<C, N> | InteractiveElementConfiguration<C, N, RT>>(field, 'name')) {
-      if (field.ref) {
-        instance = new InteractiveElement<C, N, RT>(form, field.name, field);
-      } else {
-        instance = new NamedElement<C, N>(form, field.name, field);
-      }
+    if (isOfType<InteractiveElementConfiguration<ComponentOrHtmlElement, string>>(field, 'ref')) {
+      instance = new InteractiveElement<ComponentOrHtmlElement, string>(form, field.name, field);
     } else {
-      // TODO: fix types
-      instance = new PlainElement<C>(form, field as any);
+      instance = new PlainElement(form, field);
+    }
+
+    if (typeof instance.component !== 'string') {
+      markRaw(instance.component);
     }
 
     const reactiveInstance = reactive(instance);
 
-    if (typeof reactiveInstance.component !== 'string') {
-      markRaw(reactiveInstance.component);
-    }
-
-    if (isOfType<NamedElementConfiguration<C, N> | InteractiveElementConfiguration<C, N, RT>>(field, 'name')) {
+    if (isOfType<PlainElementConfiguration<ComponentOrHtmlElement, string>>(field, 'name')) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       this.model[field.name] = reactiveInstance;
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     return reactiveInstance;
   }
 
-  private createFormInstance(): FormInstance<FC, C, N, RT> & {fields: undefined} {
+  private createFormInstance(): FormInstance<FC> & {fields: undefined} {
     return {...this, fields: undefined};
   }
 }

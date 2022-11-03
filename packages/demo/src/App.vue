@@ -4,19 +4,19 @@
       <nav class="gap-4 grid-flow-col inline-grid">
         <NLink
           class="hover:text-pink-200 transition-colors"
-          to="/"
-          >Home</NLink
-        >
+          to="/">
+          Home
+        </NLink>
         <NLink
           class="hover:text-pink-200 transition-colors"
-          to="/shipment-options"
-          >Shipment options</NLink
-        >
+          to="/shipment-options">
+          Shipment options
+        </NLink>
         <NLink
           class="hover:text-pink-200 transition-colors"
-          to="/addresses/new"
-          >Create address</NLink
-        >
+          to="/addresses/new">
+          Create address
+        </NLink>
       </nav>
     </div>
   </header>

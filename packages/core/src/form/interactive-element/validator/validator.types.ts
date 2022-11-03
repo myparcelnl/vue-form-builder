@@ -1,4 +1,4 @@
-import {ComponentOrHtmlElement, FieldName} from '../../../types';
+import {ComponentOrHtmlElement, ElementName} from '../../../types';
 import {ComputedRef} from 'vue';
 import {InteractiveElementInstance} from '../InteractiveElement.types';
 import {PromiseOr} from '@myparcel/vue-form-builder-utils';
@@ -6,7 +6,7 @@ import {PromiseOr} from '@myparcel/vue-form-builder-utils';
 export type ValidateFunction<
   RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  N extends ElementName = ElementName,
 > = (field: InteractiveElementInstance<C, N, RT>, value: RT) => PromiseOr<boolean>;
 
 export type ComputedValidator = {isValid: ComputedRef<boolean>};
@@ -14,25 +14,25 @@ export type ComputedValidator = {isValid: ComputedRef<boolean>};
 export type MultiValidator<
   RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
-> = {validators: Validator<RT | any, C, N>[]};
+  N extends ElementName = ElementName,
+> = {validators: Validator<RT, C, N>[]};
 
 export type SingleValidator<
   RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  N extends ElementName = ElementName,
 > = Validator<RT, C, N>;
 
 export type FieldValidator<
   RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  N extends ElementName = ElementName,
 > = Partial<ComputedValidator | MultiValidator<RT, C, N> | SingleValidator<RT, C, N>>;
 
 export type Validator<
   RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends FieldName = FieldName,
+  N extends ElementName = ElementName,
 > = {
   validate: ValidateFunction<RT, C, N>;
   errorMessage?: string;

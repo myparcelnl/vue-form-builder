@@ -1,38 +1,66 @@
 {
-  "pluginsConfig": {
-    "@nrwl/js": {
-      "analyzeSourceFiles": true
-    }
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "main",
+  "defaultProject": "@myparcel/vue-form-builder",
+  "npmScope": "@myparcel",
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
   },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/nx-cloud",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "buildOnly",
-          "test"
-        ],
-        "accessToken": "OGZiZjAzODMtYzZjNi00ODEwLTk1MzQtZjRmNjRiM2UyNDJmfHJlYWQtd3JpdGU="
-      }
-    }
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/lib"
+    ],
+    "src": [
+      "{projectRoot}/src",
+      "{projectRoot}/package.json"
+    ]
   },
   "targetDefaults": {
+    "build:dev": {
+      "dependsOn": [
+        "^build:dev"
+      ],
+      "outputs": [
+        "default"
+      ]
+    },
     "build": {
       "dependsOn": [
         "^build"
+      ],
+      "outputs": [
+        "default"
       ]
     },
     "buildOnly": {
       "dependsOn": [
         "^buildOnly"
+      ],
+      "outputs": [
+        "default"
       ]
     },
-    "dev": {
+    "serve": {
       "dependsOn": [
-        "^dev"
+        "^build:dev"
+      ],
+      "outputs": [
+        "default"
       ]
     }
   },
-  "defaultBase": "main"
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "build:dev",
+          "buildOnly",
+          "typecheck"
+        ]
+      }
+    }
+  }
 }

@@ -1,7 +1,4 @@
 const branch = require('child_process').execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-
-console.log('Detected branch: ', branch);
-
 const prereleaseBranches = ['next', 'alpha', 'beta', 'rc'];
 
 /**
@@ -10,7 +7,6 @@ const prereleaseBranches = ['next', 'alpha', 'beta', 'rc'];
 module.exports = {
   autoCommitMessage: 'chore: release [skip ci]',
   changelogFilename: '<packageDir>/CHANGELOG.md',
-  changesetFilename: '-',
   conventionalChangelogConfig: 'conventional-changelog-conventionalcommits',
   persistVersions: true,
   plugins: [

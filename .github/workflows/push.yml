@@ -44,14 +44,6 @@ jobs:
         with:
           token: ${{ secrets.GH_REPO_TOKEN }}
 
-      - name: 'debug'
-        run: |
-          git log --oneline
-
-          ls -la
-          ls -la packages
-          ls -la packages/**/lib
-
       - name: 'Run monodeploy'
         run: |
           yarn monodeploy \
@@ -59,4 +51,4 @@ jobs:
             --log-level 0
         env:
           GH_TOKEN: ${{ secrets.GH_REPO_TOKEN }}
-          NPM_PUBLISH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

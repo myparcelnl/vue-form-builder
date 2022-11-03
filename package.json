@@ -31,7 +31,7 @@
     "@monodeploy/plugin-github": "^0.6.2",
     "@myparcel-eslint/eslint-config-esnext": "^1.0.0-alpha.2",
     "@myparcel-eslint/eslint-config-prettier": "^1.0.0-alpha.2",
-    "@myparcel-eslint/eslint-config-prettier-typescript": "^1.0.0-alpha.2",
+    "@myparcel-eslint/eslint-config-prettier-typescript": "^1.0.0-alpha.5",
     "@myparcel-eslint/eslint-config-prettier-typescript-vue": "^1.0.0-alpha.2",
     "@tsconfig/recommended": "^1.0.1",
     "@vue/test-utils": "^2.2.1",

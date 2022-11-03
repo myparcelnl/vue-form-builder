@@ -400,6 +400,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@myparcel-eslint/eslint-config-es6@npm:^1.0.0-alpha.4":
+  version: 1.0.0-alpha.4
+  resolution: "@myparcel-eslint/eslint-config-es6@npm:1.0.0-alpha.4"
+  dependencies:
+    "@myparcel-eslint/eslint-config": ^1.0.0-alpha.3
+    eslint: "*"
+  checksum: 69604a1d617718276fdc1b58b9d0c714ac34dd1af475a9f0e8559f3622f59a3e8db3af89030d07b3371e31138e0a57f0c656d727e46457c6d96c8577f05f8dd8
+  languageName: node
+  linkType: hard
+
 "@myparcel-eslint/eslint-config-esnext@npm:^1.0.0-alpha.2":
   version: 1.0.0-alpha.2
   resolution: "@myparcel-eslint/eslint-config-esnext@npm:1.0.0-alpha.2"
@@ -407,6 +417,16 @@ __metadata:
     "@myparcel-eslint/eslint-config-es6": ^1.0.0-alpha.2
     eslint: "*"
   checksum: 5c612f6883015ab5fd4cab9b950f75ed91034b870abb827dbfc34dc7c92b72b398d6cd4607f2cc016d47de71766b498f608768f7253982b517cd6a0c5bc1cead
+  languageName: node
+  linkType: hard
+
+"@myparcel-eslint/eslint-config-esnext@npm:^1.0.0-alpha.4":
+  version: 1.0.0-alpha.4
+  resolution: "@myparcel-eslint/eslint-config-esnext@npm:1.0.0-alpha.4"
+  dependencies:
+    "@myparcel-eslint/eslint-config-es6": ^1.0.0-alpha.4
+    eslint: "*"
+  checksum: b88d685a0d193ef9283595d18150a5e7a5b08a1a5b4a108d6632fc21c745be2880247eefc55c2b419a4df4105d77aa4846a3d7e93a9880349420fcd7c74996f8
   languageName: node
   linkType: hard
 
@@ -425,15 +445,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@myparcel-eslint/eslint-config-prettier-typescript@npm:^1.0.0-alpha.2":
-  version: 1.0.0-alpha.2
-  resolution: "@myparcel-eslint/eslint-config-prettier-typescript@npm:1.0.0-alpha.2"
+"@myparcel-eslint/eslint-config-prettier-typescript@npm:^1.0.0-alpha.5":
+  version: 1.0.0-alpha.5
+  resolution: "@myparcel-eslint/eslint-config-prettier-typescript@npm:1.0.0-alpha.5"
   dependencies:
-    "@myparcel-eslint/eslint-config-prettier": ^1.0.0-alpha.2
-    "@myparcel-eslint/eslint-config-typescript": ^1.0.0-alpha.2
+    "@myparcel-eslint/eslint-config-prettier": ^1.0.0-alpha.4
+    "@myparcel-eslint/eslint-config-typescript": ^1.0.0-alpha.5
     eslint: "*"
     prettier: "*"
-  checksum: 95426c6a1ad07f894516a3df7c39b303f1cefe96df64ec50a74f48d404f465cdd0d9e677f0c985f1e4a661268b362b70a2178a490a3f04ec21516166322daaa6
+  checksum: dd2b665a0920d81acb87c01414631d9ccdd34a929ecded7e3a026838a0f4dce1acb3ea378606239e1bfa4e97e45ce102eedbf4aca9fa23a163bfdde0a802f94a
   languageName: node
   linkType: hard
 
@@ -447,6 +467,19 @@ __metadata:
     eslint-plugin-prettier: ^4.2.1
     prettier: "*"
   checksum: f27d7e9dd136b48527aaa0deca280c26320f4246c4110250ece240684301726c937a5d974e1227ed555ff0d0a465b44a39ad2edb978469f907145b60185f0e04
+  languageName: node
+  linkType: hard
+
+"@myparcel-eslint/eslint-config-prettier@npm:^1.0.0-alpha.4":
+  version: 1.0.0-alpha.4
+  resolution: "@myparcel-eslint/eslint-config-prettier@npm:1.0.0-alpha.4"
+  dependencies:
+    "@myparcel/prettier-config": ^1.1.0
+    eslint: "*"
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    prettier: "*"
+  checksum: 09988a7a92494c947b2730ffedd2c18fa65cf2c2b7b0643a049d5fd0506ddb81c39235824c2e98a867a7970cca20fd78dabe89f3655c5b80116aba5b1396d33c
   languageName: node
   linkType: hard
 
@@ -473,6 +506,19 @@ __metadata:
     "@typescript-eslint/parser": ^5.42.0
     eslint: "*"
   checksum: 6ec511d64e2574a4012d5a4ef665857132b857d7be12b465c16daad68af6f8fab1e9a1c7ca39bdb7b51dc47c0885c57d581cd3418bc11d2ad38151e9e4eca246
+  languageName: node
+  linkType: hard
+
+"@myparcel-eslint/eslint-config-typescript@npm:^1.0.0-alpha.5":
+  version: 1.0.0-alpha.5
+  resolution: "@myparcel-eslint/eslint-config-typescript@npm:1.0.0-alpha.5"
+  dependencies:
+    "@myparcel-eslint/eslint-config-es6": ^1.0.0-alpha.4
+    "@myparcel-eslint/eslint-config-esnext": ^1.0.0-alpha.4
+    "@typescript-eslint/eslint-plugin": ^5.42.0
+    "@typescript-eslint/parser": ^5.42.0
+    eslint: "*"
+  checksum: db1743515d464b968c56f7527d67cb8b86f63154ad3857cdede818c8faf79d5f343b06740ae2a2691fadfc63dfb906a931d471b2f56b097ade767a16eeec5859
   languageName: node
   linkType: hard
 
@@ -515,6 +561,15 @@ __metadata:
   dependencies:
     eslint: "*"
   checksum: ecd43da40c5c875785d8ad05716fe93918c4b496e673e1b247e13a82283c5c1398a24965cf9213911641abdf96f3d5fd4c55df830fe6ae452dda075733b98526
+  languageName: node
+  linkType: hard
+
+"@myparcel-eslint/eslint-config@npm:^1.0.0-alpha.3":
+  version: 1.0.0-alpha.3
+  resolution: "@myparcel-eslint/eslint-config@npm:1.0.0-alpha.3"
+  dependencies:
+    eslint: "*"
+  checksum: dd22daaf7965b2ae9cea3756e5ca76de81eb885ccb6c1f5683c1814840580c24bff7a0b057b08c3c53f35a12d0cb5b4aff93689c8885431e308565f1fe6327f0
   languageName: node
   linkType: hard
 
@@ -614,7 +669,7 @@ __metadata:
     "@monodeploy/plugin-github": ^0.6.2
     "@myparcel-eslint/eslint-config-esnext": ^1.0.0-alpha.2
     "@myparcel-eslint/eslint-config-prettier": ^1.0.0-alpha.2
-    "@myparcel-eslint/eslint-config-prettier-typescript": ^1.0.0-alpha.2
+    "@myparcel-eslint/eslint-config-prettier-typescript": ^1.0.0-alpha.5
     "@myparcel-eslint/eslint-config-prettier-typescript-vue": ^1.0.0-alpha.2
     "@tsconfig/recommended": ^1.0.1
     "@vue/test-utils": ^2.2.1

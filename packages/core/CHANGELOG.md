@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.4](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.3...@myparcel/vue-form-builder@1.0.0-alpha.4) "@myparcel/vue-form-builder" (2022-11-07)
+
+
+### Bug Fixes
+
+* **core:** update validation ([f6966c9](https://github/myparcelnl/vue-form-builder/commit/f6966c9b531a79261ac7867b6d9c7f04baa399e7))
+
+
+
+
 ## [1.0.0-alpha.3](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.2...@myparcel/vue-form-builder@1.0.0-alpha.3) "@myparcel/vue-form-builder" (2022-11-07)
 
 

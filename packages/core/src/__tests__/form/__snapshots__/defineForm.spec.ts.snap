@@ -1,7 +1,7 @@
 // Vitest Snapshot v1
 
 exports[`Form Generation > defining a form > can use vue element wrapper 1`] = `
-"<form id=\\"form\\" class=\\"invalid\\"><input><br>
+"<form id=\\"form\\" class=\\"valid\\">true <input><br>
   <div class=\\"\\"><input id=\\"text\\" name=\\"text\\" valid=\\"true\\" warnings=\\"\\"></div>
 </form>"
 `;

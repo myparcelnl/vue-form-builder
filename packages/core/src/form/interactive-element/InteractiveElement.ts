@@ -73,11 +73,34 @@ export class InteractiveElement<
     await this.hooks.execute('afterBlur', this, this.ref.value);
   };
 
-  public validate = async (): Promise<void> => {
+  public validate = async (): Promise<boolean> => {
     this.resetValidation();
     await this.hooks.execute('beforeValidate', this, this.ref.value);
-    this.isValidated.value = true;
+
+    if (this.isDisabled.value || !this.isDirty.value) {
+      this.isValid.value = true;
+      return this.isValid.value;
+    }
+
+    const promises = await Promise.all(
+      this.validators.value.map(async (validator) => {
+        // TODO: fix types
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const valid = await validator.validate(this as any, this.ref.value);
+
+        if (!valid && validator.errorMessage) {
+          this.errors.value.push(validator.errorMessage);
+        }
+
+        return valid;
+      }),
+    );
+
+    this.isValid.value = promises.every(Boolean);
+
     await this.hooks.execute('afterValidate', this, this.ref.value, this.isValid.value);
+
+    return this.isValid.value;
   };
 
   public reset(): void {
@@ -119,29 +142,6 @@ export class InteractiveElement<
       await this.hooks.execute('beforeUpdate', this, value, oldValue);
       this.isDirty.value = true;
       await this.hooks.execute('afterUpdate', this, value, oldValue);
-    });
-
-    watch([this.isDirty, this.isDisabled, this.isValidated, this.validators], async () => {
-      if (this.isDisabled.value || !this.isDirty.value || !this.isValidated.value) {
-        this.isValid.value = true;
-        return;
-      }
-
-      const promises = await Promise.all(
-        this.validators.value.map(async (validator) => {
-          // TODO: fix types
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const valid = await validator.validate(this as any, this.ref.value);
-
-          if (!valid && validator.errorMessage) {
-            this.errors.value.push(validator.errorMessage);
-          }
-
-          return valid;
-        }),
-      );
-
-      this.isValid.value = promises.every(Boolean);
     });
   }
 

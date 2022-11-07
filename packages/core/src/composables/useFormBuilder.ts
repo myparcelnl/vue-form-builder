@@ -28,14 +28,14 @@ export const useFormBuilder: UseFormBuilder = () => {
      * Register a new form. If a form with the same name already exists, it will be overwritten.
      */
     register(name, config) {
-      const form = new Form(name, {
+      const instance = new Form(name, {
         ...defaults.value,
         ...config,
       });
 
-      forms[name] = form;
+      forms[name] = instance;
 
-      return form;
+      return instance;
     },
   };
 };

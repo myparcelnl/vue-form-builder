@@ -1,5 +1,5 @@
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, FieldsToModel} from '../types';
-import {ComputedRef, Ref, computed, markRaw, reactive} from 'vue';
+import {ComputedRef, Ref, computed, markRaw, reactive, ref} from 'vue';
 import {FormConfiguration, FormHooks, FormInstance} from './Form.types';
 import {HookManager, createHookManager} from '@myparcel-vfb/hook-manager';
 import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
@@ -19,7 +19,7 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   /**
    * Whether all fields in the form are valid.
    */
-  public isValid: Ref<boolean>;
+  public isValid: Ref<boolean> = ref(true);
 
   /**
    * Filtered array of fields that have a name and a ref.
@@ -54,12 +54,6 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
       // TODO: fix types
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
-
-    this.isValid = computed(() => {
-      return this.fieldsWithNamesAndRefs.value.every((field) => {
-        return field.isValid.value;
-      });
-    });
   }
 
   public addElement(element: AnyElementConfiguration, sibling?: string, position: 'before' | 'after' = 'after'): void {
@@ -77,6 +71,7 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   }
 
   public async submit(): Promise<void> {
+    console.log('SUBMIT');
     await this.hooks.execute('beforeSubmit', this);
     await this.validate();
     await this.hooks.execute('afterSubmit', this);
@@ -90,19 +85,17 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   public async validate(): Promise<boolean> {
     await this.hooks.execute('beforeValidate', this);
 
-    await Promise.all(
-      this.fields.map((field) => {
+    const res = await Promise.all(
+      this.fields.map(async (field) => {
         if (!isOfType<InteractiveElement>(field, 'isValid')) {
           return true;
-        }
-
-        if (field.isDirty.value) {
-          field.isDirty.value = true;
         }
 
         return field.validate();
       }),
     );
+
+    this.isValid.value = res.every(Boolean);
 
     await this.hooks.execute('afterValidate', this);
 
@@ -137,6 +130,8 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
       this.model[field.name] = reactiveInstance;
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     return reactiveInstance;
   }
 

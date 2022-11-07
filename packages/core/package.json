@@ -4,7 +4,8 @@
   "keywords": [
     "vue",
     "form-builder",
-    "form"
+    "form",
+    "vue3"
   ],
   "repository": "github:myparcelnl/vue-form-builder",
   "license": "MIT",

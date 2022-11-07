@@ -15,5 +15,8 @@
   },
   "devDependencies": {
     "@myparcel-vfb/build-tsup": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

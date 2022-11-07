@@ -17,5 +17,8 @@
   },
   "dependencies": {
     "tsup": "^6.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

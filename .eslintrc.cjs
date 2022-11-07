@@ -1,17 +1,23 @@
 module.exports = {
   root: true,
   extends: ['@myparcel-eslint/eslint-config-esnext', '@myparcel-eslint/eslint-config-prettier'],
+  rules: {
+    'class-methods-use-this': 'off',
+  },
   overrides: [
     {
-      files: ['./**/*.ts', './**/*.tsx'],
-      extends: '@myparcel-eslint/eslint-config-prettier-typescript',
-    },
-    {
-      files: ['./packages/**/src/**/*.vue'],
+      files: ['./**/*.vue'],
       extends: '@myparcel-eslint/eslint-config-prettier-typescript-vue',
     },
     {
-      files: ['./**/*.cjs', './**/*.js', './**/*.mjs'],
+      files: ['./**/*.ts', './**/*.tsx'],
+      extends: '@myparcel-eslint/eslint-config-prettier-typescript',
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+    {
+      files: ['./**/*.js', './**/*.cjs', './**/*.mjs'],
       extends: '@myparcel-eslint/eslint-config-node',
     },
     {

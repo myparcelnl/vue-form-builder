@@ -1,0 +1,14 @@
+name: '🔸 Run tests 🧪'
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: myparcelnl/actions/yarn2-install@v2
+
+

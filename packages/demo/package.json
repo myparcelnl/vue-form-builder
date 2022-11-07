@@ -5,12 +5,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "yarn buildOnly",
-    "build:dev": "yarn buildOnly --mode development",
-    "buildOnly": "vite build",
-    "preview": "vite preview --port 4173",
+    "clean": "rimraf dist",
     "serve": "vite",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "run workspace:vite:typecheck \"$(pwd)\""
   },
   "dependencies": {
     "@myparcel/sdk": "^2.8.0",

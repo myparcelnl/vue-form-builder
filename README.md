@@ -114,8 +114,7 @@ A field is defined using the `defineField` function. This function takes one arg
 
 Fields are categorized into three types based on the passed options:
 
-- `plainElement`: A field that is not a form element and has no [name].
-- `namedElement`: A component with a [name].
+- `plainElement`: A field that is not a form element and may have a [name].
 - `interactiveElement`: A field with a [name] and a ref to hold a reactive value.
 
 ```js

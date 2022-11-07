@@ -7,11 +7,12 @@
   "main": "./lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "tsup --dts",
-    "build:dev": "tsup --dts --sourcemap",
-    "buildOnly": "tsup",
-    "clean": "rimraf lib",
-    "serve": "tsup --watch"
+    "build": "run workspace:tsup:build \"$(pwd)\"",
+    "build:dev": "run workspace:tsup:build:dev \"$(pwd)\"",
+    "buildOnly": "run workspace:tsup:buildOnly \"$(pwd)\"",
+    "clean": "run workspace:clean \"$(pwd)\"",
+    "typecheck": "run workspace:tsup:typecheck \"$(pwd)\"",
+    "watch": "run workspace:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
     "@vitejs/plugin-vue": "^3.1.2",
@@ -19,9 +20,9 @@
   },
   "devDependencies": {
     "@myparcel/vue-form-builder-build-tsup": "workspace:*",
-    "vite": "^3.1.8",
+    "vite": "^3.2.2",
     "vue": "^3.2.41",
-    "vue-tsc": "^1.0.8"
+    "vue-tsc": "^1.0.9"
   },
   "tsup": {}
 }

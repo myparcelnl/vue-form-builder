@@ -43,7 +43,7 @@
     },
     "serve": {
       "dependsOn": [
-        "^build:dev"
+        "build:dev"
       ],
       "outputs": [
         "default"
@@ -54,6 +54,7 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
+        "parallel": 10,
         "cacheableOperations": [
           "build",
           "build:dev",

@@ -17,8 +17,13 @@
     ]
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.vue"
+    "./**/*",
+    "./**/*.vue"
+  ],
+  "exclude": [
+    "node_modules",
+    "packages/**/dist",
+    "packages/**/lib",
+    "**/*.snap"
   ]
 }

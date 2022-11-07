@@ -6,11 +6,12 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "tsup --dts",
-    "build:dev": "tsup --dts --sourcemap",
-    "buildOnly": "tsup",
-    "clean": "rimraf lib",
-    "serve": "tsup --watch"
+    "build": "run workspace:tsup:build \"$(pwd)\"",
+    "build:dev": "run workspace:tsup:build:dev \"$(pwd)\"",
+    "buildOnly": "run workspace:tsup:buildOnly \"$(pwd)\"",
+    "clean": "run workspace:clean \"$(pwd)\"",
+    "typecheck": "run workspace:tsup:typecheck \"$(pwd)\"",
+    "watch": "run workspace:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
     "@myparcel/vue-form-builder-build-tsup": "workspace:*",

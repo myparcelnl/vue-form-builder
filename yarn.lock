@@ -188,7 +188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor@npm:^7.33.1":
+"@microsoft/api-extractor@npm:^7.33.1, @microsoft/api-extractor@npm:^7.33.5":
   version: 7.33.5
   resolution: "@microsoft/api-extractor@npm:7.33.5"
   dependencies:
@@ -666,7 +666,7 @@ __metadata:
     "@vue/devtools-api": ^6.4.5
     typescript: ^4.8.4
     vite: ^3.2.2
-    vite-plugin-dts: ^1.6.6
+    vite-plugin-dts: ^1.7.0
     vue: ^3.2.41
     vue-tsc: ^1.0.9
     vue3-async-computed: ^3.0.0
@@ -9597,6 +9597,23 @@ __metadata:
   peerDependencies:
     vite: ">=2.9.0"
   checksum: 718096a98c3fb8e3e793590fd215101dfa8fe7c18c8abe9f255314db6ae4d75ef71d0846bc8dc77a547657a1ccf5467da9dbd28c711dfec2003c6c556cfc379b
+  languageName: node
+  linkType: hard
+
+"vite-plugin-dts@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "vite-plugin-dts@npm:1.7.0"
+  dependencies:
+    "@microsoft/api-extractor": ^7.33.5
+    "@rushstack/node-core-library": ^3.53.2
+    debug: ^4.3.4
+    fast-glob: ^3.2.12
+    fs-extra: ^10.1.0
+    kolorist: ^1.6.0
+    ts-morph: ^16.0.0
+  peerDependencies:
+    vite: ">=2.9.0"
+  checksum: 4e532dd9d08a8ff1248a112c503dfa9faabda9ccbb8141300bb81e4924002fe67d5f73555bfec6645912913c70dd611330cdd132786ec389bcc47f6d1cc6d1b0
   languageName: node
   linkType: hard
 

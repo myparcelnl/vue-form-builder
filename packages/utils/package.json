@@ -1,7 +1,6 @@
 {
-  "name": "@myparcel/vue-form-builder-utils",
+  "name": "@myparcel-vfb/utils",
   "version": "1.0.0-alpha.0",
-  "private": true,
   "license": "MIT",
   "type": "module",
   "main": "./lib/index.js",
@@ -15,6 +14,6 @@
     "watch": "run workspace:tsup:watch \"$(pwd)\""
   },
   "devDependencies": {
-    "@myparcel/vue-form-builder-build-tsup": "workspace:*"
+    "@myparcel-vfb/build-tsup": "workspace:*"
   }
 }

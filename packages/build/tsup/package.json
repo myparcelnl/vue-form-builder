@@ -1,7 +1,6 @@
 {
-  "name": "@myparcel/vue-form-builder-build-tsup",
+  "name": "@myparcel-vfb/build-tsup",
   "version": "1.0.0-alpha.0",
-  "private": true,
   "license": "MIT",
   "type": "module",
   "exports": {

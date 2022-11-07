@@ -25,9 +25,9 @@
     "watch": "run workspace:vite:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel/vue-form-builder-build-vite": "workspace:*",
-    "@myparcel/vue-form-builder-hook-manager": "workspace:*",
-    "@myparcel/vue-form-builder-utils": "workspace:*",
+    "@myparcel-vfb/build-vite": "workspace:*",
+    "@myparcel-vfb/hook-manager": "workspace:*",
+    "@myparcel-vfb/utils": "workspace:*",
     "@vue/devtools-api": "^6.4.5"
   },
   "devDependencies": {

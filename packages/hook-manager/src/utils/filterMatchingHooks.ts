@@ -1,4 +1,4 @@
-import {ReadonlyOr} from '@myparcel/vue-form-builder-utils/src';
+import {ReadonlyOr} from '@myparcel-vfb/utils/src';
 
 const upperFirst = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 

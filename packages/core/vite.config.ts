@@ -1,4 +1,4 @@
-import {createViteConfig} from '@myparcel/vue-form-builder-build-vite';
+import {createViteConfig} from '@myparcel-vfb/build-vite';
 import vue from '@vitejs/plugin-vue';
 
 export default createViteConfig((env) => ({

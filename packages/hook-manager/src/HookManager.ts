@@ -1,5 +1,5 @@
 import {CustomHookItem, HookManagerConfiguration, HookNames} from './types';
-import {ResolvePromise} from '@myparcel/vue-form-builder-utils';
+import {ResolvePromise} from '@myparcel-vfb/utils';
 import {filterMatchingHooks} from './utils/filterMatchingHooks';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

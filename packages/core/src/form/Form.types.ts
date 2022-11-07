@@ -1,8 +1,8 @@
 import {AnyElementConfiguration, AnyElementInstance, FieldsToModel, ResolvedElementConfiguration} from '../types';
 import {FORM_HOOKS} from './Form';
-import {HookManager} from '@myparcel/vue-form-builder-hook-manager';
-import {PromiseOr} from '@myparcel/vue-form-builder-utils';
-import {ReadonlyOr} from '@myparcel/vue-form-builder-utils/src';
+import {HookManager} from '@myparcel-vfb/hook-manager';
+import {PromiseOr} from '@myparcel-vfb/utils';
+import {ReadonlyOr} from '@myparcel-vfb/utils/src';
 import {Ref} from 'vue';
 
 /**

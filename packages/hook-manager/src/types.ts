@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {ReadonlyOr} from '@myparcel/vue-form-builder-utils/src';
+import {ReadonlyOr} from '@myparcel-vfb/utils/src';
 
 export type HookCallback = (...args: any[]) => any;
 

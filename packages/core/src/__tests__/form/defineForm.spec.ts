@@ -1,6 +1,6 @@
 import {InteractiveElement, PlainElement, defineField, defineForm} from '../../form';
 import {canNotContainLetterValidator, firstNameNotJohnValidator} from './interactive-element/validationData';
-import {canNotContainX, firstNameNotDuane} from '@myparcel/vue-form-builder-demo/src/forms/validators';
+import {canNotContainX, firstNameNotDuane} from '@myparcel-vfb/demo/src/forms/validators';
 import {describe, expect, it} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {formIsInvalid, formIsValid} from '../utils/formIsValid';

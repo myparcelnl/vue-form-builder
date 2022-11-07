@@ -1,5 +1,5 @@
 {
-  "name": "@myparcel/vue-form-builder-hook-manager",
+  "name": "@myparcel-vfb/hook-manager",
   "version": "1.0.0-alpha.0",
   "license": "MIT",
   "type": "module",
@@ -14,7 +14,7 @@
     "watch": "run workspace:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel/vue-form-builder-build-tsup": "workspace:*",
-    "@myparcel/vue-form-builder-utils": "workspace:*"
+    "@myparcel-vfb/build-tsup": "workspace:*",
+    "@myparcel-vfb/utils": "workspace:*"
   }
 }

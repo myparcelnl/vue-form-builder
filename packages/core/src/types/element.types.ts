@@ -1,4 +1,4 @@
-import {ComponentProps, MakeOptional} from '@myparcel/vue-form-builder-utils/src';
+import {ComponentProps, MakeOptional} from '@myparcel-vfb/utils/src';
 import {
   InteractiveElementConfiguration,
   InteractiveElementInstance,
@@ -7,7 +7,7 @@ import {
 } from '../form';
 import {Component} from 'vue';
 import {ComponentLifecycleHooks} from './other.types';
-import {HookNamesObject} from '@myparcel/vue-form-builder-hook-manager/src';
+import {HookNamesObject} from '@myparcel-vfb/hook-manager/src';
 
 export type ElementName = string | undefined;
 

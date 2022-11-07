@@ -1,4 +1,4 @@
-import {SelectOption} from '@myparcel/vue-form-builder-utils';
+import {SelectOption} from '@myparcel-vfb/utils';
 
 export * from './components';
 export * from './composables';

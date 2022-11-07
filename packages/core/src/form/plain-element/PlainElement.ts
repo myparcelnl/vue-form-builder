@@ -1,5 +1,5 @@
 import {AnyElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
-import {HookManager, createHookManager} from '@myparcel/vue-form-builder-hook-manager';
+import {HookManager, createHookManager} from '@myparcel-vfb/hook-manager';
 import {PLAIN_ELEMENT_HOOKS, PlainElementHooks, PlainElementInstance} from './PlainElement.types';
 import {FormInstance} from '../Form.types';
 import {markRaw} from 'vue';

@@ -21,7 +21,7 @@
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
 import FormGroup from './FormGroup.vue';
-import {PromiseOr} from '@myparcel/vue-form-builder-utils';
+import {PromiseOr} from '@myparcel-vfb/utils';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {FormConfiguration, defineForm} from '../../form';
 import {ResolvedElementConfiguration} from '../../types';
-import {isOfType} from '@myparcel/vue-form-builder-utils';
+import {isOfType} from '@myparcel-vfb/utils';
 
 export const generateForm = (
   config: FormConfiguration | ResolvedElementConfiguration[] = [],

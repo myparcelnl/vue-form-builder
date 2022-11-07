@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, it, vi} from 'vitest';
-import {HookManager} from '@myparcel/vue-form-builder-hook-manager';
+import {HookManager} from '@myparcel-vfb/hook-manager';
 import {createHookManager} from '../createHookManager';
 
 const HOOKS = ['start', 'sanitize'] as const;

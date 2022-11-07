@@ -16,7 +16,7 @@ import TSelect from './components/template/TSelect.vue';
 import TSubmitButton from './components/template/TSubmitButton.vue';
 import TTextInput from './components/template/TTextInput.vue';
 import TToggleSwitch from './components/template/TToggleSwitch.vue';
-import {UnionToArray} from '@myparcel/vue-form-builder-utils/src';
+import {UnionToArray} from '@myparcel-vfb/utils/src';
 import {ref} from 'vue';
 
 defineField({

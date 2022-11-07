@@ -1,5 +1,5 @@
 {
-  "name": "@myparcel/vue-form-builder-monorepo",
+  "name": "@myparcel-vfb/monorepo",
   "version": "1.0.0-alpha.0",
   "private": true,
   "repository": "github:myparcelnl/vue-form-builder",
@@ -17,7 +17,7 @@
     "postinstall": "husky install",
     "prepare": "is-ci || husky install",
     "serve": "yarn build:dev && npx concurrently yarn:serve:demo yarn:serve:watch",
-    "serve:demo": "nx serve @myparcel/vue-form-builder-demo",
+    "serve:demo": "nx serve @myparcel-vfb/demo",
     "serve:watch": "nx run-many --target=watch",
     "test": "vitest run",
     "test:serve": "vitest",

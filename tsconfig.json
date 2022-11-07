@@ -2,10 +2,10 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@myparcel/vue-form-builder-build-*": [
+      "@myparcel-vfb/build-*": [
         "./packages/build/*/src"
       ],
-      "@myparcel/vue-form-builder-*": [
+      "@myparcel-vfb/*": [
         "./packages/*/src"
       ],
       "@myparcel/vue-form-builder": [

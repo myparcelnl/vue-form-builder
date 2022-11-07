@@ -1,3 +1,3 @@
-import {createTsupConfig} from '@myparcel/vue-form-builder-build-tsup';
+import {createTsupConfig} from '@myparcel-vfb/build-tsup';
 
 export default createTsupConfig();

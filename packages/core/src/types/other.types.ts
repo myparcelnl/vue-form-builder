@@ -1,7 +1,7 @@
 import {ComponentOrHtmlElement, ElementName} from './element.types';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../data/componentLifecycleHooks';
 import {InteractiveElementInstance} from '../form';
-import {PromiseOr} from '@myparcel/vue-form-builder-utils';
+import {PromiseOr} from '@myparcel-vfb/utils';
 import {UnwrapNestedRefs} from 'vue';
 
 /**

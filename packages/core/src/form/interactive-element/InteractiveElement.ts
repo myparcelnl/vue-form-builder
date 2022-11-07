@@ -7,9 +7,9 @@ import {
   InteractiveElementInstance,
 } from './InteractiveElement.types';
 import {MultiValidator, SingleValidator, Validator} from './validator';
-import {PromiseOr, createComputedValue, isOfType} from '@myparcel/vue-form-builder-utils';
+import {PromiseOr, createComputedValue, isOfType} from '@myparcel-vfb/utils';
 import {FormInstance} from '../Form.types';
-import {HookManager} from '@myparcel/vue-form-builder-hook-manager';
+import {HookManager} from '@myparcel-vfb/hook-manager';
 import {PlainElement} from '../plain-element';
 
 type Hooks<C extends ComponentOrHtmlElement, N extends string, RT = unknown> = InteractiveElementHooks &

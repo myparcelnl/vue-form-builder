@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue';
 const config: UserConfig = {
   plugins: [vue()],
   test: {
-    environment: 'jsdom',
+    environment: 'happy-dom',
   },
 };
 

@@ -535,7 +535,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@myparcel-vfb/build-tsup@workspace:*, @myparcel-vfb/build-tsup@workspace:packages/build/tsup":
+"@myparcel-vfb/build-tsup@workspace:*, @myparcel-vfb/build-tsup@workspace:^1.0.0-alpha.1, @myparcel-vfb/build-tsup@workspace:packages/build/tsup":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/build-tsup@workspace:packages/build/tsup"
   dependencies:
@@ -543,7 +543,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/build-vite@workspace:*, @myparcel-vfb/build-vite@workspace:packages/build/vite":
+"@myparcel-vfb/build-vite@workspace:^1.0.0-alpha.1, @myparcel-vfb/build-vite@workspace:packages/build/vite":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/build-vite@workspace:packages/build/vite"
   dependencies:
@@ -577,12 +577,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/hook-manager@workspace:*, @myparcel-vfb/hook-manager@workspace:packages/hook-manager":
+"@myparcel-vfb/hook-manager@workspace:^1.0.0-alpha.1, @myparcel-vfb/hook-manager@workspace:packages/hook-manager":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/hook-manager@workspace:packages/hook-manager"
   dependencies:
-    "@myparcel-vfb/build-tsup": "workspace:*"
-    "@myparcel-vfb/utils": "workspace:*"
+    "@myparcel-vfb/build-tsup": "workspace:^1.0.0-alpha.1"
+    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.1"
   languageName: unknown
   linkType: soft
 
@@ -615,7 +615,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/utils@workspace:*, @myparcel-vfb/utils@workspace:packages/utils":
+"@myparcel-vfb/utils@workspace:^1.0.0-alpha.1, @myparcel-vfb/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/utils@workspace:packages/utils"
   dependencies:
@@ -659,9 +659,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@myparcel/vue-form-builder@workspace:packages/core"
   dependencies:
-    "@myparcel-vfb/build-vite": "workspace:*"
-    "@myparcel-vfb/hook-manager": "workspace:*"
-    "@myparcel-vfb/utils": "workspace:*"
+    "@myparcel-vfb/build-vite": "workspace:^1.0.0-alpha.1"
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.1"
+    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.1"
     "@myparcel/semantic-release-config": ^4.0.0
     "@vitejs/plugin-vue": ^3.2.0
     "@vue/devtools-api": ^6.4.5

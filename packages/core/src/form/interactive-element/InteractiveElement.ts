@@ -44,11 +44,6 @@ export class InteractiveElement<
   public declare hooks: HookManager<typeof INTERACTIVE_ELEMENT_HOOKS[number], Hooks<C, N, RT>> | any;
 
   /**
-   * Enable to trigger validation.
-   */
-  protected isValidated = ref(false);
-
-  /**
    * The initial value of the field.
    */
   protected initialValue: RT;
@@ -173,6 +168,5 @@ export class InteractiveElement<
 
   private resetValidation(): void {
     this.errors.value = [];
-    this.isValidated.value = false;
   }
 }

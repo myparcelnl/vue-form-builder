@@ -139,6 +139,16 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
           },
         ],
       },
+      validators: [
+        {
+          validate: (field, value) =>
+            !(
+              field.form.model.name.ref.value === 'Mack' &&
+              String(value).startsWith('letter')
+            ),
+          errorMessage: 'Forget about letters, Mack does not like them.',
+        },
+      ],
 
       // afterUpdate: (field, newValue, oldValue) => {
       //   const isPackage = newValue === 'package';
@@ -158,41 +168,41 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       //   model.signature.ref = isPackage ? model.signature.ref : false;
       // },
     }),
-    defineField({
-      name: 'carrier',
-      label: 'Carrier',
-      component: TSelect,
-      ref: ref<string | null>(null),
+    // defineField({
+    //   name: 'carrier',
+    //   label: 'Carrier',
+    //   component: TSelect,
+    //   ref: ref<string | null>(null),
 
-      // onBeforeMount: async (field) => {
-      //   // console.log('beforeMount', field);
-      //   const sdk = createPublicSdk(new FetchClient(), [new GetCarriers()]);
-      //   const carriers = await sdk.getCarriers();
-      //
-      //   console.log(carriers);
-      //   console.log(field);
-      //
-      //   field.props.options = carriers.map((carrier) => ({
-      //     label: carrier.human,
-      //     value: carrier.name,
-      //   }));
-      //
-      //   // console.log(carriers);
-      //   // console.log(field.form);
-      //
-      //   // field.form.addElement(
-      //   //   {
-      //   //     component: Heading,
-      //   //     props: {
-      //   //       text: 'randomly inserted field!!',
-      //   //     },
-      //   //   },
-      //   //   'carrier',
-      //   // );
-      //
-      //   // field.ref = carriers[0].name;
-      // },
-    }),
+    //   // onBeforeMount: async (field) => {
+    //   //   // console.log('beforeMount', field);
+    //   //   const sdk = createPublicSdk(new FetchClient(), [new GetCarriers()]);
+    //   //   const carriers = await sdk.getCarriers();
+    //   //
+    //   //   console.log(carriers);
+    //   //   console.log(field);
+    //   //
+    //   //   field.props.options = carriers.map((carrier) => ({
+    //   //     label: carrier.human,
+    //   //     value: carrier.name,
+    //   //   }));
+    //   //
+    //   //   // console.log(carriers);
+    //   //   // console.log(field.form);
+    //   //
+    //   //   // field.form.addElement(
+    //   //   //   {
+    //   //   //     component: Heading,
+    //   //   //     props: {
+    //   //   //       text: 'randomly inserted field!!',
+    //   //   //     },
+    //   //   //   },
+    //   //   //   'carrier',
+    //   //   // );
+    //   //
+    //   //   // field.ref = carriers[0].name;
+    //   // },
+    // }),
     defineField({
       name: 'signature',
       component: TToggleSwitch,

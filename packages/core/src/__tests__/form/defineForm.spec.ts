@@ -58,9 +58,9 @@ describe('Form Generation', () => {
       expect(Object.keys(form.model)).toEqual(['test', 'test2']);
       expect(form.model.test).toBeInstanceOf(PlainElement);
       expect(form.model.test2).toBeInstanceOf(InteractiveElement);
-      expect(form.model.test2.ref).toBe('');
-      form.model.test2.ref = 'changed';
-      expect(form.model.test2.ref).toBe('changed');
+      expect(form.model.test2.ref.value).toBe('');
+      form.model.test2.ref.value = 'changed';
+      expect(form.model.test2.ref.value).toBe('changed');
     });
 
     it('can use vue element wrapper', () => {
@@ -99,6 +99,7 @@ describe('Form Generation', () => {
       });
 
       const wrapper = mount(MagicForm, {props: {form: validationForm}});
+      console.log(wrapper.html());
       const formElement = wrapper.find('form');
 
       // expect default state to be valid regardless of input
@@ -115,7 +116,7 @@ describe('Form Generation', () => {
     });
 
     it('validates using a single function', async () => {
-      expect.assertions(1);
+      expect.assertions(4);
 
       const form = generateForm([
         defineField({
@@ -127,14 +128,14 @@ describe('Form Generation', () => {
         }),
       ]);
 
-      await form.validate();
+      form.model.element.ref = 'Peter';
+      await form.submit();
       expect(form.isValid.value).toBe(false);
-
       expect(form.model.element.errors).toEqual(['Field must start with "J"']);
 
       form.model.element.ref = 'Joe Mater';
 
-      await form.validate();
+      await form.submit();
 
       expect(form.isValid.value).toBe(true);
       expect(form.model.element.errors).toEqual([]);
@@ -152,9 +153,8 @@ describe('Form Generation', () => {
         }),
       ]);
 
-      const valid = await form.validate();
-
-      expect(valid).toBe(true);
+      await form.submit();
+      expect(form.isValid.value).toBe(true);
     });
 
     it('validates using a computed validator', async () => {
@@ -169,9 +169,8 @@ describe('Form Generation', () => {
         }),
       ]);
 
-      const result = await form.validate();
-
-      expect(result).toBe(true);
+      await form.submit();
+      expect(form.isValid.value).toBe(true);
     });
 
     it('can be reset', async () => {
@@ -188,7 +187,7 @@ describe('Form Generation', () => {
 
       await form.model.element.reset();
 
-      // expect(result).toBe(true);
+      expect(form.isValid.value).toBe(true);
     });
   });
 });

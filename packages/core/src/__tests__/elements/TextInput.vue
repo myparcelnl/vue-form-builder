@@ -1,7 +1,14 @@
 <template>
   <input
+    type="text"
+    :id="id"
     v-model="value"
+    :name="name"
     v-bind="$attrs"
+    :disabled="disabled"
+    :class="{
+      'border-red-500': !isValid(),
+    }"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"
     @focusin="$emit('focusin', $event)"
@@ -22,11 +29,40 @@ export default defineComponent({
       type: String,
       default: null,
     },
+
+    id: {
+      type: String,
+      required: true,
+    },
+
+    name: {
+      type: String,
+      required: true,
+    },
+
+    label: {
+      type: String,
+      default: null,
+    },
+
+    disabled: {
+      type: Boolean,// [Promise, Boolean] as PropType<PromiseOr<boolean>>,
+      default: false,
+    },
+
+    valid: {
+      type: Boolean, //[Promise, Boolean] as PropType<PromiseOr<boolean>>,
+      default: true,
+    },
   },
 
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
 
   setup: (props, { emit, attrs }) => {
+
+    const isValid = () => {
+      return props.valid === undefined ? true : props.valid;
+    };
 
     const value = computed({
       get() {
@@ -39,6 +75,7 @@ export default defineComponent({
 
     return {
       value,
+      isValid,
     };
   },
 });

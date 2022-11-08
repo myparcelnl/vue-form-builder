@@ -1,8 +1,9 @@
 <template>
   <FormGroup v-bind="{label, id, warnings}">
     <input
+      type="text"
       :id="id"
-      v-model="model"
+      v-model="value"
       :name="name"
       v-bind="$attrs"
       :disabled="disabled"
@@ -15,14 +16,13 @@
       @focusout="$emit('focusout', $event)"
       @click="$emit('click', $event)"
       @change="$emit('change', $event)" />
+
   </FormGroup>
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent} from 'vue';
+import {defineComponent, computed} from 'vue';
 import FormGroup from './FormGroup.vue';
-import {PromiseOr} from '@myparcel-vfb/utils';
-import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TTextInput',
@@ -51,12 +51,12 @@ export default defineComponent({
     },
 
     disabled: {
-      type: [Promise, Boolean] as PropType<PromiseOr<boolean>>,
+      type: Boolean,
       default: false,
     },
 
     valid: {
-      type: [Promise, Boolean] as PropType<PromiseOr<boolean>>,
+      type: Boolean,
       default: true,
     },
 
@@ -68,13 +68,22 @@ export default defineComponent({
 
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
 
-  setup: (props) => {
+  setup: (props, { emit }) => {
     const isValid = () => {
       return props.valid === undefined ? true : props.valid;
     };
 
+    const value = computed({
+      get() {
+        return props.modelValue;
+      },
+      set(value) {
+        emit('update:modelValue', value);
+      },
+    });
+
     return {
-      model: useVModel(props, 'modelValue'),
+      value,
       isValid,
     };
   },

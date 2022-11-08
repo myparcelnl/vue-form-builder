@@ -11,7 +11,7 @@ export const isRequired = (): Validator => ({
 });
 
 export const firstNameNotDuane = (): Validator => ({
-  validate: (_, value) => String(value).startsWith('Duane'),
+  validate: (_, value) => !String(value).startsWith('Duane'),
   errorMessage: 'Duane, we told you to never come back here.',
 });
 

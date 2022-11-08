@@ -1,20 +1,20 @@
 <template>
   <div
-    v-show="element.isVisible"
-    :class="element.isVisible ? element.form.config.fieldClass : null">
+    v-show="element.isVisible.value"
+    :class="element.isVisible.value ? element.form.config.fieldClass : null"
+  >
     <component
       :is="element.component"
-      v-if="element.lazy"
-      v-model.lazy="/* eslint-disable vue/no-mutating-props */ element.ref"
-      v-bind="bindData"
-      v-on="hooks" />
-
-    <component
-      :is="element.component"
-      v-else
-      v-model="/* eslint-disable vue/no-mutating-props */ element.ref"
-      v-bind="bindData"
-      v-on="hooks" />
+      v-model="value"
+      :id="element.name ?? element.name"
+      :label="element.label"
+      :name="element.name"
+      :warnings="element.errors.value"
+      :disabled="element.isDisabled.value"
+      :valid="element.isValid.value"
+      :props="element.props"
+      v-on="hooks"
+    />
   </div>
 </template>
 
@@ -65,20 +65,19 @@ export default defineComponent({
       );
     });
 
+    const value = computed({
+      get() {
+        return props.element.ref.value;
+      },
+      set(value) {
+        props.element.ref.value = value;
+      },
+    });
+
+
     return {
-      propRefs,
       hooks,
-      bindData: computed(() => {
-        return {
-          ...(props.element.props ?? {}),
-          id: props.element.name ?? props.element.name,
-          label: props.element.label,
-          name: props.element.name,
-          disabled: props.element.isDisabled,
-          valid: props.element.isValid,
-          warnings: props.element.errors,
-        };
-      }),
+      value,
     };
   },
 });

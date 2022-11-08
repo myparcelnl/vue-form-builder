@@ -3,7 +3,7 @@ import {Validator, defineField} from '../../../form';
 import {ref} from 'vue';
 
 export const firstNameNotJohnValidator = (): Validator => ({
-  validate: (_, value) => String(value).startsWith('John'),
+  validate: (_, value) => !String(value).startsWith('John'),
   errorMessage: 'John, we do not accept you',
 });
 

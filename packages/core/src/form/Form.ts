@@ -71,7 +71,6 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   }
 
   public async submit(): Promise<void> {
-    console.log('SUBMIT');
     await this.hooks.execute('beforeSubmit', this);
     await this.validate();
     await this.hooks.execute('afterSubmit', this);
@@ -84,7 +83,6 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
    */
   public async validate(): Promise<boolean> {
     await this.hooks.execute('beforeValidate', this);
-
     const res = await Promise.all(
       this.fields.map(async (field) => {
         if (!isOfType<InteractiveElement>(field, 'isValid')) {
@@ -94,11 +92,8 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
         return field.validate();
       }),
     );
-
     this.isValid.value = res.every(Boolean);
-
     await this.hooks.execute('afterValidate', this);
-
     return this.isValid.value;
   }
 
@@ -122,17 +117,14 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
       markRaw(instance.component);
     }
 
-    const reactiveInstance = reactive(instance);
-
     if (isOfType<PlainElementConfiguration<ComponentOrHtmlElement, string>>(field, 'name')) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      this.model[field.name] = reactiveInstance;
+      this.model[field.name] = instance;
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    return reactiveInstance;
+    return instance;
   }
 
   private createFormInstance(): FormInstance<FC> & {fields: undefined} {

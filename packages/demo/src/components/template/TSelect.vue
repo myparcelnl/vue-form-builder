@@ -4,8 +4,7 @@
       :id="id"
       v-model="model"
       :name="name"
-      type="hidden"
-      :disabled="disabled"
+      :disabled="!disabled"
       :class="{
         'border-red-500': !isValid(),
       }"
@@ -56,17 +55,17 @@ export default defineComponent({
     },
 
     disabled: {
-      type: Boolean,
+      type: Object,
       default: false,
     },
 
     valid: {
-      type: Boolean,
+      type: Object,
       default: true,
     },
 
     warnings: {
-      type: Array,
+      type: Object,
       default: () => [],
     },
 
@@ -83,7 +82,7 @@ export default defineComponent({
     const propRefs = toRefs(props);
 
     const isValid = () => {
-      return props.valid === undefined ? true : props.valid;
+      return props.valid.value === undefined ? true : props.valid.value;
     };
 
     watchEffect(() => {

@@ -6,7 +6,7 @@
       v-model="value"
       :name="name"
       v-bind="$attrs"
-      :disabled="disabled"
+      :disabled="!disabled"
       :class="{
         'border-red-500': !isValid(),
       }"
@@ -16,7 +16,6 @@
       @focusout="$emit('focusout', $event)"
       @click="$emit('click', $event)"
       @change="$emit('change', $event)" />
-
   </FormGroup>
 </template>
 
@@ -51,17 +50,17 @@ export default defineComponent({
     },
 
     disabled: {
-      type: Boolean,
+      type: Object,
       default: false,
     },
 
     valid: {
-      type: Boolean,
+      type: Object,
       default: true,
     },
 
     warnings: {
-      type: Array,
+      type: Object,
       default: () => [],
     },
   },
@@ -70,7 +69,7 @@ export default defineComponent({
 
   setup: (props, { emit }) => {
     const isValid = () => {
-      return props.valid === undefined ? true : props.valid;
+      return props.valid.value === undefined ? true : props.valid.value;
     };
 
     const value = computed({

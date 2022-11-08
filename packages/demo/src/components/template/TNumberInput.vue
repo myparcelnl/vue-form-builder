@@ -7,7 +7,7 @@
       type="number"
       :min="min"
       :max="max"
-      :disabled="disabled"
+      :disabled="!disabled"
       :valid="valid" />
   </FormGroup>
 </template>
@@ -44,7 +44,7 @@ export default defineComponent({
     },
 
     disabled: {
-      type: Boolean,
+      type: Object,
     },
 
     min: {
@@ -58,7 +58,7 @@ export default defineComponent({
     },
 
     valid: {
-      type: Boolean,
+      type: Object,
     },
   },
 

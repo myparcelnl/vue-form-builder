@@ -5,7 +5,7 @@
     v-model="value"
     :name="name"
     v-bind="$attrs"
-    :disabled="disabled"
+    :disabled="!disabled"
     :class="{
       'border-red-500': !isValid(),
     }"
@@ -29,37 +29,29 @@ export default defineComponent({
       type: String,
       default: null,
     },
-
     id: {
       type: String,
       required: true,
     },
-
     name: {
       type: String,
       required: true,
     },
-
     label: {
       type: String,
       default: null,
     },
-
     disabled: {
-      type: Boolean,// [Promise, Boolean] as PropType<PromiseOr<boolean>>,
+      type: Object,
       default: false,
     },
-
     valid: {
-      type: Boolean, //[Promise, Boolean] as PropType<PromiseOr<boolean>>,
+      type: Object,
       default: true,
     },
   },
-
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
-
   setup: (props, { emit, attrs }) => {
-
     const isValid = () => {
       return props.valid === undefined ? true : props.valid;
     };

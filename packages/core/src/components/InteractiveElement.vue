@@ -1,7 +1,7 @@
 <template>
   <div
-    v-show="element.isVisible.value"
-    :class="element.isVisible.value ? element.form.config.fieldClass : null"
+    v-show="elementRefs.isVisible"
+    :class="elementRefs.isVisible ? element.form.config.fieldClass : null"
   >
     <component
       :is="element.component"
@@ -9,9 +9,9 @@
       :id="element.name ?? element.name"
       :label="element.label"
       :name="element.name"
-      :warnings="element.errors.value"
-      :disabled="element.isDisabled.value"
-      :valid="element.isValid.value"
+      :warnings="elementRefs.errors"
+      :disabled="elementRefs.isDisabled"
+      :valid="elementRefs.isValid"
       :props="element.props"
       v-on="hooks"
     />
@@ -39,6 +39,7 @@ export default defineComponent({
     provide(INJECT_ELEMENT, props.element);
 
     const propRefs = toRefs(props);
+    const elementRefs = toRefs(props.element);
 
     lifecycleHooks.register(propRefs.element.value.hooks, propRefs.element);
 
@@ -67,10 +68,10 @@ export default defineComponent({
 
     const value = computed({
       get() {
-        return props.element.ref.value;
+        return elementRefs.ref.value;
       },
       set(value) {
-        props.element.ref.value = value;
+        elementRefs.ref.value = value;
       },
     });
 
@@ -78,6 +79,7 @@ export default defineComponent({
     return {
       hooks,
       value,
+      elementRefs,
     };
   },
 });

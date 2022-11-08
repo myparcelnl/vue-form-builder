@@ -7,9 +7,9 @@
     >
 
     <slot />
-    <ul v-if="warnings">
+    <ul v-if="warningsRef">
       <li
-        v-for="warning in warnings"
+        v-for="warning in warningsRef"
         :key="warning">
         {{ warning }}
       </li>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {defineComponent, toRef, unref} from 'vue';
 
 export default defineComponent({
   name: 'FormGroup',
@@ -34,9 +34,15 @@ export default defineComponent({
     },
 
     warnings: {
-      type: Array,
+      type: Object,
       default: () => [],
     },
   },
+  setup: (props) => {
+    return {
+      warningsRef: toRef(props, 'warnings'),
+    }
+  },
+
 });
 </script>

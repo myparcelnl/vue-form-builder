@@ -6,7 +6,7 @@
         v-model="model"
         type="checkbox"
         :name="name"
-        :disabled="disabled"
+        :disabled="!disabled"
         class="h-0 opacity-0 peer w-0"
         @blur="$emit('blur', $event)"
         @focus="$emit('focus', $event)"
@@ -50,7 +50,7 @@ export default defineComponent({
     },
 
     disabled: {
-      type: Boolean,
+      type: Object,
     },
   },
 

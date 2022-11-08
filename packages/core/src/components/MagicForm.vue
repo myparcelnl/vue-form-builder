@@ -47,9 +47,7 @@ export default defineComponent({
 
   setup: (props) => {
     provide(INJECT_FORM, props.form);
-
     const lifeCycleHooks = useLifeCycleHooks();
-
     lifeCycleHooks.register(props.form.hooks, props.form);
   },
 });

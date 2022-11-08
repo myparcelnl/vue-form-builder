@@ -79,6 +79,7 @@ export class InteractiveElement<
 
     const promises = await Promise.all(
       this.validators.value.map(async (validator) => {
+
         // TODO: fix types
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const valid = await validator.validate(this as any, this.ref.value);
@@ -92,9 +93,7 @@ export class InteractiveElement<
     );
 
     this.isValid.value = promises.every(Boolean);
-
     await this.hooks.execute('afterValidate', this, this.ref.value, this.isValid.value);
-
     return this.isValid.value;
   };
 

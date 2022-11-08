@@ -5,6 +5,7 @@ import {describe, expect, it} from 'vitest';
 import {formIsInvalid, formIsValid} from '../utils/formIsValid';
 import {MagicForm} from '../../components';
 import TextInput from '../elements/TextInput.vue';
+import SubmitButton from '../elements/SubmitButton.vue';
 import {generateForm} from '../utils/generateForm';
 import {mount} from '@vue/test-utils';
 import {ref} from 'vue';
@@ -95,11 +96,13 @@ describe('Form Generation', () => {
             component: TextInput,
             ref: lastName,
           }),
+          defineField({
+            component: SubmitButton,
+          }),
         ],
       });
 
       const wrapper = mount(MagicForm, {props: {form: validationForm}});
-      console.log(wrapper.html());
       const formElement = wrapper.find('form');
 
       // expect default state to be valid regardless of input
@@ -128,17 +131,15 @@ describe('Form Generation', () => {
         }),
       ]);
 
-      form.model.element.ref = 'Peter';
+      form.model.element.ref.value = 'Peter';
       await form.submit();
       expect(form.isValid.value).toBe(false);
-      expect(form.model.element.errors).toEqual(['Field must start with "J"']);
+      expect(form.model.element.errors.value).toEqual(['Field must start with "J"']);
 
-      form.model.element.ref = 'Joe Mater';
-
+      form.model.element.ref.value = 'Joe Mater';
       await form.submit();
-
       expect(form.isValid.value).toBe(true);
-      expect(form.model.element.errors).toEqual([]);
+      expect(form.model.element.errors.value).toEqual([]);
     });
 
     it('validates using an array of validators', async () => {

@@ -10,7 +10,7 @@ export const commonViteConfig: UserConfigFn = (env) => ({
     minify: env.mode === 'production',
     sourcemap: env.mode !== 'production',
     rollupOptions: {
-      external: ['vue', '@myparcel/sdk'],
+      external: ['vue', '@myparcel/sdk', '@myparcel-vfb/*'],
       output: {
         globals: {
           vue: 'Vue',
@@ -21,7 +21,6 @@ export const commonViteConfig: UserConfigFn = (env) => ({
 
   test: {
     dir: 'src',
-
     coverage: {
       reporter: ['text', 'clover'],
     },

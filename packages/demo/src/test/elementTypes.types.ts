@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment,@typescript-eslint/no-unused-vars */
 import {
+  AnyElementConfiguration,
   InteractiveElementConfiguration,
   PlainElementConfiguration,
   defineField,
   defineForm,
 } from '@myparcel/vue-form-builder';
-import {AnyElementConfiguration} from '@myparcel/vue-form-builder/src';
 import {ref} from 'vue';
 
 const interactiveFieldConfig = {

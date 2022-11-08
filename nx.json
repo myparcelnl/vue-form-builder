@@ -2,7 +2,6 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "defaultBase": "main",
   "defaultProject": "@myparcel/vue-form-builder",
-  "npmScope": "@myparcel",
   "workspaceLayout": {
     "appsDir": "packages",
     "libsDir": "packages"
@@ -13,7 +12,9 @@
     ],
     "src": [
       "{projectRoot}/src",
-      "{projectRoot}/package.json"
+      "{projectRoot}/package.json",
+      "{projectRoot}/tsconfig.build.json",
+      "{projectRoot}/tsconfig.json"
     ]
   },
   "targetDefaults": {
@@ -48,6 +49,14 @@
       "outputs": [
         "default"
       ]
+    },
+    "test": {
+      "inputs": [
+        "{workspaceRoot}/packages/**/*"
+      ],
+      "outputs": [
+        "{workspaceRoot}/coverage"
+      ]
     }
   },
   "tasksRunnerOptions": {
@@ -59,6 +68,7 @@
           "build",
           "build:dev",
           "buildOnly",
+          "test",
           "typecheck"
         ]
       }

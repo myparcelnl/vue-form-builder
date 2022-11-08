@@ -1,6 +1,6 @@
 import {CYAN_400} from './types';
 import {CustomInspectorNode} from '@vue/devtools-api';
-import {FormInstance} from '../../form';
+import {FormInstance} from '@myparcel/vue-form-builder/src/form';
 
 export const createFieldsNodes = (form: FormInstance): CustomInspectorNode[] => {
   let anonymousIndex = 0;

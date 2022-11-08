@@ -10,8 +10,8 @@
   "repository": "github:myparcelnl/vue-form-builder",
   "license": "MIT",
   "type": "module",
-  "main": "lib/vue-form-builder.umd.cjs",
-  "module": "lib/vue-form-builder.js",
+  "main": "./lib/vue-form-builder.cjs",
+  "module": "./lib/vue-form-builder.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
@@ -26,12 +26,13 @@
     "watch": "run workspace:vite:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/build-vite": "workspace:^1.0.0-alpha.1",
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.1",
-    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.1",
     "@vue/devtools-api": "^6.4.5"
   },
   "devDependencies": {
+    "@myparcel-vfb/build-vite": "workspace:^1.0.0-alpha.1",
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.1",
+    "@myparcel-vfb/plugin": "workspace:*",
+    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.1",
     "@myparcel/semantic-release-config": "^4.0.0",
     "@vitejs/plugin-vue": "^3.2.0",
     "typescript": "^4.8.4",

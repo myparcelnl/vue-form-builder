@@ -3,7 +3,7 @@
   "version": "1.0.0-alpha.1",
   "license": "MIT",
   "type": "module",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "run workspace:tsup:build \"$(pwd)\"",

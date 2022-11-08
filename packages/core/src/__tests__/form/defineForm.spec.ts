@@ -1,6 +1,5 @@
 import {InteractiveElement, PlainElement, defineField, defineForm} from '../../form';
 import {canNotContainLetterValidator, firstNameNotJohnValidator} from './interactive-element/validationData';
-import {canNotContainX, firstNameNotDuane} from '@myparcel-vfb/demo/src/forms/validators';
 import {describe, expect, it} from 'vitest';
 import {formIsInvalid, formIsValid} from '../utils/formIsValid';
 import {MagicForm} from '../../components';
@@ -8,7 +7,6 @@ import TextInput from '../elements/TextInput.vue';
 import {generateForm} from '../utils/generateForm';
 import {mount} from '@vue/test-utils';
 import {ref} from 'vue';
-import {removeUndefinedValues} from '../utils/removeUndefinedValues';
 
 describe('Form Generation', () => {
   describe('defining a form', () => {
@@ -31,27 +29,12 @@ describe('Form Generation', () => {
       const form = generateForm([
         defineField({
           component: 'input',
-          ...removeUndefinedValues(undefined),
-        }),
-        {
-          ...defineField({
-            component: 'input',
-            ...removeUndefinedValues(undefined),
-          }),
           name: 'element',
-          ...removeUndefinedValues({name: 'test'}),
-        },
+        }),
         defineField({
-          ...{
-            ...defineField({
-              component: 'input',
-              ...removeUndefinedValues(undefined),
-            }),
-            name: 'element',
-            ...removeUndefinedValues(undefined),
-          },
+          component: 'input',
+          name: 'test2',
           ref: ref(''),
-          ...removeUndefinedValues({name: 'test2'}),
         }),
       ]);
 
@@ -165,7 +148,7 @@ describe('Form Generation', () => {
           component: 'input',
           name: 'element',
           ref: ref(''),
-          validators: [firstNameNotDuane(), canNotContainX()],
+          validators: [firstNameNotJohnValidator(), canNotContainLetterValidator()],
         }),
       ]);
 
@@ -181,7 +164,7 @@ describe('Form Generation', () => {
         component: 'input',
         name: 'element',
         ref: ref(''),
-        validators: [firstNameNotDuane()],
+        validators: [firstNameNotJohnValidator()],
       });
 
       const form = generateForm([field]);

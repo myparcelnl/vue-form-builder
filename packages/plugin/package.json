@@ -1,10 +1,10 @@
 {
-  "name": "@myparcel-vfb/build-tsup",
+  "name": "@myparcel-vfb/plugin",
   "version": "1.0.0-alpha.1",
   "license": "MIT",
   "type": "module",
   "main": "./lib/index.js",
-  "types": "lib/index.d.ts",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "build": "run workspace:tsup:build \"$(pwd)\"",
     "build:dev": "run workspace:tsup:build:dev \"$(pwd)\"",
@@ -14,7 +14,11 @@
     "watch": "run workspace:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "tsup": "^6.3.0"
+    "@vue/devtools-api": "^6.4.5",
+    "vue": "^3.2.41"
+  },
+  "devDependencies": {
+    "@myparcel-vfb/build-tsup": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {ReadonlyOr} from '@myparcel-vfb/utils/src';
+import {ReadonlyOr} from '@myparcel-vfb/utils';
 
 export type HookCallback = (...args: any[]) => any;
 

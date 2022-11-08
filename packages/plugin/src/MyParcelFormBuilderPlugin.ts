@@ -1,11 +1,12 @@
-import {App, Plugin, UnwrapNestedRefs} from 'vue';
-import {FormConfiguration} from '../form';
+/* eslint-disable @typescript-eslint/naming-convention,no-underscore-dangle */
+import {App, Plugin} from 'vue';
+import {FormConfiguration} from '@myparcel/vue-form-builder/src/form';
 import {setupDevtools} from './devtools';
-import {useFormBuilder} from '../composables';
+import {useFormBuilder} from '@myparcel/vue-form-builder/src/composables';
 
 export type MyParcelFormBuilderPlugin = Plugin;
 
-export type MyParcelFormBuilderPluginOptions = UnwrapNestedRefs<Partial<FormConfiguration>>;
+export type MyParcelFormBuilderPluginOptions = Partial<FormConfiguration>;
 
 /**
  * Plugin to register the form builder.
@@ -14,10 +15,9 @@ export const MyParcelFormBuilderPlugin: MyParcelFormBuilderPlugin = {
   install(app: App, options: MyParcelFormBuilderPluginOptions) {
     const formBuilder = useFormBuilder();
 
-    // eslint-disable-next-line no-underscore-dangle
     app._context.config.globalProperties.$formBuilder = formBuilder;
 
-    formBuilder.defaults = options;
+    formBuilder.defaults.value = options;
 
     if (import.meta.env.DEV || __VUE_PROD_DEVTOOLS__) {
       setupDevtools(app);

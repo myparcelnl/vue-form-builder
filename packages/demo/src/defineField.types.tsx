@@ -1,14 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment,@typescript-eslint/no-unused-vars */
-import {
-  ComponentOrHtmlElement,
-  InteractiveElementConfiguration,
-  PlainElementConfiguration,
-  defineField,
-  defineForm,
-} from '@myparcel/vue-form-builder';
 import {FetchClient, GetCarriers, createPublicSdk} from '@myparcel/sdk';
 import {canNotContainX, firstNameNotDuane} from './forms/validators';
-import {AnyElementConfiguration} from '@myparcel/vue-form-builder/src';
 import Heading from './components/Heading.vue';
 import THiddenInput from './components/template/THiddenInput.vue';
 import TNumberInput from './components/template/TNumberInput.vue';
@@ -16,7 +8,8 @@ import TSelect from './components/template/TSelect.vue';
 import TSubmitButton from './components/template/TSubmitButton.vue';
 import TTextInput from './components/template/TTextInput.vue';
 import TToggleSwitch from './components/template/TToggleSwitch.vue';
-import {UnionToArray} from '@myparcel-vfb/utils/src';
+import {UnionToArray} from '@myparcel-vfb/utils';
+import {defineField} from '@myparcel/vue-form-builder';
 import {ref} from 'vue';
 
 defineField({

@@ -1,0 +1,1 @@
+export {MyParcelFormBuilderPlugin} from './MyParcelFormBuilderPlugin';

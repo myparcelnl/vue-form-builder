@@ -1,6 +1,6 @@
 {
   "name": "@myparcel-vfb/hook-manager",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "license": "MIT",
   "type": "module",
   "main": "lib/index.js",
@@ -17,7 +17,7 @@
     "watch": "run workspace:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/utils": "workspace:*"
+    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.2"
   },
   "devDependencies": {
     "@myparcel-vfb/build-tsup": "workspace:*"

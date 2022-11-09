@@ -2,6 +2,17 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.5](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.4...@myparcel/vue-form-builder@1.0.0-alpha.5) "@myparcel/vue-form-builder" (2022-11-09)
+
+
+### Bug Fixes
+
+* reactiveness and unit tests ([9ab6e2e](https://github/myparcelnl/vue-form-builder/commit/9ab6e2eefdde38ba1c19660e867e14753d1d5e94))
+* reactivity of form fields ([f758ee0](https://github/myparcelnl/vue-form-builder/commit/f758ee028c1456f3c956d158200ed03061a52181))
+
+
+
+
 ## [1.0.0-alpha.4](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.3...@myparcel/vue-form-builder@1.0.0-alpha.4) "@myparcel/vue-form-builder" (2022-11-07)
 
 

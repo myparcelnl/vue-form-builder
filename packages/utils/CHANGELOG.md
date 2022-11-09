@@ -2,6 +2,11 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.2](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/utils@1.0.0-alpha.1...@myparcel-vfb/utils@1.0.0-alpha.2) "@myparcel-vfb/utils" (2022-11-09)
+
+
+
+
 ## [1.0.0-alpha.1](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/utils@1.0.0-alpha.0...@myparcel-vfb/utils@1.0.0-alpha.1) "@myparcel-vfb/utils" (2022-11-07)
 
 

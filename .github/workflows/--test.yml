@@ -14,12 +14,9 @@ jobs:
 
       - name: 'Handle NX Cache'
         uses: myparcelnl/actions/nx-cache@v2
-        with:
-          cache-key: ${{ github.sha }}
-          cache-path: .yarn/cache
 
       - name: 'Run tests'
-        run: yarn test
+        run: yarn test:run
 
       - uses: codecov/codecov-action@v3
 

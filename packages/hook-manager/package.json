@@ -5,6 +5,9 @@
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "run workspace:tsup:build \"$(pwd)\"",
     "build:dev": "run workspace:tsup:build:dev \"$(pwd)\"",
@@ -14,8 +17,10 @@
     "watch": "run workspace:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/build-tsup": "workspace:^1.0.0-alpha.1",
-    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.1"
+    "@myparcel-vfb/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@myparcel-vfb/build-tsup": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

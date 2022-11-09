@@ -20,13 +20,16 @@ export class PlainElement<
   protected readonly config: AnyElementConfiguration<C>;
 
   public constructor(form: FormInstance, config: AnyElementConfiguration<C>) {
+    // This line has a TS error during the build
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     this.hooks = createHookManager<typeof PLAIN_ELEMENT_HOOKS[number], Hooks<C>>({
       ...config,
       hookNames: [...PLAIN_ELEMENT_HOOKS, ...(config.hookNames ?? [])],
     });
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     this.name = config.name;
 
     Object.keys(config)

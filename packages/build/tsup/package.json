@@ -7,6 +7,9 @@
     ".": "./lib/index.js"
   },
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "run workspace:tsup:build \"$(pwd)\"",
     "build:dev": "run workspace:tsup:build:dev \"$(pwd)\"",
@@ -16,7 +19,7 @@
     "watch": "run workspace:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "tsup": "^6.3.0"
+    "tsup": "^6.4.0"
   },
   "publishConfig": {
     "access": "public"

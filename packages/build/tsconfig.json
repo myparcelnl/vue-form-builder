@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "references": [
+    {
+      "path": "./tsup/tsconfig.json"
+    },
+    {
+      "path": "./vite/tsconfig.json"
+    }
+  ]
+}

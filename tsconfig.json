@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
       "@myparcel-vfb/build-*": [
         "./packages/build/*/src"
@@ -11,19 +12,11 @@
       "@myparcel/vue-form-builder": [
         "./packages/core/src"
       ]
-    },
-    "types": [
-      "vite/client"
-    ]
+    }
   },
-  "include": [
-    "./**/*",
-    "./**/*.vue"
-  ],
-  "exclude": [
-    "node_modules",
-    "packages/**/dist",
-    "packages/**/lib",
-    "**/*.snap"
+  "references": [
+    {
+      "path": "./packages/tsconfig.json"
+    }
   ]
 }

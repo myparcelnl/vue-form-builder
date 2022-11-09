@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {App, Plugin, UnwrapNestedRefs} from 'vue';
 import {FormConfiguration} from '../form';
 import {setupDevtools} from './devtools';
@@ -17,7 +18,7 @@ export const MyParcelFormBuilderPlugin: MyParcelFormBuilderPlugin = {
     // eslint-disable-next-line no-underscore-dangle
     app._context.config.globalProperties.$formBuilder = formBuilder;
 
-    formBuilder.defaults = options;
+    formBuilder.defaults.value = options;
 
     if (import.meta.env.DEV || __VUE_PROD_DEVTOOLS__) {
       setupDevtools(app);

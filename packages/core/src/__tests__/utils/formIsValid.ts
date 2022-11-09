@@ -1,5 +1,5 @@
 import {DOMWrapper} from '@vue/test-utils';
-import {FormInstance} from '../../form';
+import {FormInstance} from '../../../../form-builder/src';
 import {expect} from 'vitest';
 
 export const formIsInvalid = (formElement: DOMWrapper<HTMLElement>, form: FormInstance): void => {

@@ -4,9 +4,9 @@ import {
   InteractiveElementInstance,
   PlainElementConfiguration,
   PlainElementInstance,
-} from '../form';
+} from '../index';
 import {Component} from 'vue';
-import {ComponentLifecycleHooks} from './other.types';
+import {ComponentLifecycleHooks} from '@myparcel/vue-form-builder';
 import {HookNamesObject} from '@myparcel-vfb/hook-manager';
 
 export type ElementName = string | undefined;

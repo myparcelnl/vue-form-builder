@@ -1,6 +1,9 @@
-import {ComponentOrHtmlElement, ElementName} from './element.types';
-import {COMPONENT_LIFECYCLE_HOOKS} from '../data/componentLifecycleHooks';
-import {InteractiveElementInstance} from '../form';
+import {
+  COMPONENT_LIFECYCLE_HOOKS,
+  ComponentOrHtmlElement,
+  ElementName,
+  InteractiveElementInstance,
+} from '@myparcel-vfb/form-builder';
 import {PromiseOr} from '@myparcel-vfb/utils';
 import {UnwrapNestedRefs} from 'vue';
 

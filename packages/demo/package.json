@@ -4,6 +4,9 @@
   "private": true,
   "license": "MIT",
   "type": "module",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rimraf dist",
     "serve": "vite",

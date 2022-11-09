@@ -1,5 +1,6 @@
-import {Form, FormConfiguration, FormInstance} from '../form';
+import {FormConfiguration, FormInstance} from '../Form.types';
 import {Ref, reactive, ref} from 'vue';
+import {Form} from '../Form';
 
 let forms: Record<string, FormInstance>;
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {FormConfiguration, defineForm} from '../../form';
-import {ResolvedElementConfiguration} from '../../types';
+import {FormConfiguration, ResolvedElementConfiguration} from '@myparcel-vfb/form-builder';
+import {defineForm} from '../../defineForm';
 import {isOfType} from '@myparcel-vfb/utils';
 
 export const generateForm = (

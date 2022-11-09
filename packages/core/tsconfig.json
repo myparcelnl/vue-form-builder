@@ -1,6 +1,20 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "include": [
     "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../form-builder"
+    },
+    {
+      "path": "../hook-manager"
+    },
+    {
+      "path": "../plugin"
+    },
+    {
+      "path": "../utils"
+    }
   ]
 }

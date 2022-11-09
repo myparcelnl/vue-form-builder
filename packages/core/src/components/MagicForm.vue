@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import {PropType, defineComponent, provide} from 'vue';
-import {FormInstance} from '../form';
+import {FormInstance} from '../../../form-builder/src';
 import {INJECT_FORM} from '../services';
 import InteractiveElement from './InteractiveElement.vue';
 import PlainElement from './BaseElement.vue';

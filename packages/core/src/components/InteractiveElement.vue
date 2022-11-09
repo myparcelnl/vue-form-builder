@@ -21,7 +21,7 @@
 <script lang="ts">
 import {PropType, computed, defineComponent, provide, toRefs} from 'vue';
 import {INJECT_ELEMENT} from '../services';
-import {InteractiveElementInstance} from '../form';
+import {InteractiveElementInstance} from '../../../form-builder/src';
 import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({

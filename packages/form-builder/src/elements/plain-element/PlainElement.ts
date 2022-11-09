@@ -1,7 +1,13 @@
-import {AnyElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
+import {
+  AnyElementConfiguration,
+  ComponentHooks,
+  ComponentOrHtmlElement,
+  ElementName,
+  ElementProps,
+} from '../element.types';
 import {HookManager, createHookManager} from '@myparcel-vfb/hook-manager';
 import {PLAIN_ELEMENT_HOOKS, PlainElementHooks, PlainElementInstance} from './PlainElement.types';
-import {FormInstance} from '../Form.types';
+import {FormInstance} from '../../Form.types';
 import {markRaw} from 'vue';
 
 type Hooks<C extends ComponentOrHtmlElement> = PlainElementHooks & ComponentHooks<C, PlainElementInstance<C>>;

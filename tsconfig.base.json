@@ -1,14 +1,27 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
-    "target": "ESNext",
+    "declarationMap": true,
+    "importsNotUsedAsValues": "remove",
+    "keyofStringsOnly": true,
     "lib": [
       "ESNext",
       "DOM",
       "DOM.Iterable"
     ],
-    "importsNotUsedAsValues": "remove",
-    "keyofStringsOnly": true,
-    "preserveValueImports": false
-  }
+    "preserveValueImports": false,
+    "target": "ESNext",
+    "types": [
+      "vite/client"
+    ]
+  },
+  "include": [
+    "./packages/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "packages/**/dist",
+    "packages/**/lib",
+    "packages/**/*.snap"
+  ]
 }

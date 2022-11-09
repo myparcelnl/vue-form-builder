@@ -1,5 +1,5 @@
 import {CustomInspectorNode} from '@vue/devtools-api';
-import {FormInstance} from '@myparcel/vue-form-builder/src/form';
+import {FormInstance} from '@myparcel-vfb/form-builder';
 import {LIME_500} from './types';
 import {createFieldsNodes} from './createFieldsNodes';
 

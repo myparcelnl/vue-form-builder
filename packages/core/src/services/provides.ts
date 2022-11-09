@@ -1,4 +1,4 @@
-import {FormInstance, InteractiveElementInstance} from '../form';
+import {FormInstance, InteractiveElementInstance} from '../../../form-builder/src';
 import {InjectionKey} from 'vue';
 
 export const INJECT_FORM = Symbol('form') as InjectionKey<FormInstance>;

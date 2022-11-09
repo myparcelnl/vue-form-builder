@@ -1,4 +1,4 @@
-import {ComponentHooks, ComponentOrHtmlElement} from '../../types';
+import {ComponentHooks, ComponentOrHtmlElement} from '../element.types';
 import {ComputedRef, Ref, ref, watch} from 'vue';
 import {
   INTERACTIVE_ELEMENT_HOOKS,
@@ -8,7 +8,7 @@ import {
 } from './InteractiveElement.types';
 import {MultiValidator, SingleValidator, Validator} from './validator';
 import {PromiseOr, createComputedValue, isOfType} from '@myparcel-vfb/utils';
-import {FormInstance} from '../Form.types';
+import {FormInstance} from '../../Form.types';
 import {HookManager} from '@myparcel-vfb/hook-manager';
 import {PlainElement} from '../plain-element';
 

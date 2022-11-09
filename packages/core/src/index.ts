@@ -1,11 +1,10 @@
-import {SelectOption} from '@myparcel-vfb/utils';
-
 export * from './components';
 export * from './composables';
-export * from './form';
+export * from './defineField';
+export * from './defineForm';
 export * from './services';
 export * from './types';
 
-export type {SelectOption};
-
 export {MyParcelFormBuilderPlugin} from '@myparcel-vfb/plugin';
+
+export {useFormBuilder} from '@myparcel-vfb/form-builder';

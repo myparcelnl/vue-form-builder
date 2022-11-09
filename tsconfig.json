@@ -11,19 +11,6 @@
       "@myparcel/vue-form-builder": [
         "./packages/core/src"
       ]
-    },
-    "types": [
-      "vite/client"
-    ]
-  },
-  "include": [
-    "./**/*",
-    "./**/*.vue"
-  ],
-  "exclude": [
-    "node_modules",
-    "packages/**/dist",
-    "packages/**/lib",
-    "**/*.snap"
-  ]
+    }
+  }
 }

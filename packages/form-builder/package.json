@@ -1,5 +1,5 @@
 {
-  "name": "@myparcel-vfb/plugin",
+  "name": "@myparcel-vfb/form-builder",
   "version": "1.0.0-alpha.1",
   "license": "MIT",
   "type": "module",
@@ -15,11 +15,6 @@
     "clean": "run workspace:clean \"$(pwd)\"",
     "typecheck": "run workspace:tsup:typecheck \"$(pwd)\"",
     "watch": "run workspace:tsup:watch \"$(pwd)\""
-  },
-  "dependencies": {
-    "@myparcel-vfb/form-builder": "workspace:*",
-    "@vue/devtools-api": "^6.4.5",
-    "vue": "^3.2.41"
   },
   "devDependencies": {
     "@myparcel-vfb/build-tsup": "workspace:*"

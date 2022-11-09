@@ -1,7 +1,7 @@
-import {ComponentOrHtmlElement, ElementName} from '../../../types';
 import {ComputedRef} from 'vue';
 import {InteractiveElementInstance} from '../InteractiveElement.types';
 import {PromiseOr} from '@myparcel-vfb/utils';
+import {ComponentOrHtmlElement, ElementName} from '../../element.types';
 
 export type ValidateFunction<
   RT = unknown,

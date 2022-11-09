@@ -1,6 +1,6 @@
 import {App, setupDevtoolsPlugin} from '@vue/devtools-api';
 import {createFormNode} from './createFormNode';
-import {useFormBuilder} from '@myparcel/vue-form-builder/src/composables';
+import {useFormBuilder} from '@myparcel-vfb/form-builder';
 
 const formInspectorId = `myparcel-form-builder-inspector`;
 

@@ -26,21 +26,18 @@
     "watch": "run workspace:vite:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@vue/devtools-api": "^6.4.5"
+    "@myparcel-vfb/form-builder": "workspace:*",
+    "@myparcel-vfb/hook-manager": "workspace:*",
+    "@myparcel-vfb/plugin": "workspace:*",
+    "@myparcel-vfb/utils": "workspace:*"
   },
   "devDependencies": {
-    "@myparcel-vfb/build-vite": "workspace:^1.0.0-alpha.1",
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.1",
-    "@myparcel-vfb/plugin": "workspace:*",
-    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.1",
-    "@myparcel/semantic-release-config": "^4.0.0",
     "@vitejs/plugin-vue": "^3.2.0",
     "typescript": "^4.8.4",
     "vite": "^3.2.2",
     "vite-plugin-dts": "^1.6.6",
     "vue": "^3.2.41",
-    "vue-tsc": "^1.0.9",
-    "vue3-async-computed": "^3.0.0"
+    "vue-tsc": "^1.0.9"
   },
   "publishConfig": {
     "access": "public"

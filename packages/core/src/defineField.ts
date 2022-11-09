@@ -1,4 +1,9 @@
-import {AnyElementConfiguration, ComponentOrHtmlElement, ElementName, ResolvedElementConfiguration} from '../types';
+import {
+  AnyElementConfiguration,
+  ComponentOrHtmlElement,
+  ElementName,
+  ResolvedElementConfiguration,
+} from '@myparcel-vfb/form-builder';
 
 /**
  * Define a field for use in a form.

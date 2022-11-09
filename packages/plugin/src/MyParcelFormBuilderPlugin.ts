@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention,no-underscore-dangle */
 import {App, Plugin} from 'vue';
-import {FormConfiguration} from '@myparcel/vue-form-builder/src/form';
+import {FormConfiguration, useFormBuilder} from '@myparcel-vfb/form-builder';
 import {setupDevtools} from './devtools';
-import {useFormBuilder} from '@myparcel/vue-form-builder/src/composables';
 
 export type MyParcelFormBuilderPlugin = Plugin;
 

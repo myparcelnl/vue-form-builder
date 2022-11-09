@@ -1,5 +1,5 @@
 import * as Vue from 'vue';
-import {COMPONENT_LIFECYCLE_HOOKS} from '../data/componentLifecycleHooks';
+import {COMPONENT_LIFECYCLE_HOOKS} from '@myparcel-vfb/form-builder';
 import {ComponentLifecycleHooks} from '../types';
 import {HookManager} from '@myparcel-vfb/hook-manager';
 

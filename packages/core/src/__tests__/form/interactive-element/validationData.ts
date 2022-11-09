@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {Validator, defineField} from '../../../form';
+import {Validator} from '@myparcel-vfb/form-builder';
+import {defineField} from '../../../defineField';
 import {ref} from 'vue';
 
 export const firstNameNotJohnValidator = (): Validator => ({

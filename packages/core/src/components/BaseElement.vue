@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import {PropType, computed, defineComponent, toRefs} from 'vue';
-import {PlainElementInstance} from '../form';
+import {PlainElementInstance} from '../../../form-builder/src';
 
 export default defineComponent({
   name: 'BaseElement',

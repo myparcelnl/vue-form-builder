@@ -1,6 +1,6 @@
-import {BaseElementConfiguration, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
-import {COMPONENT_LIFECYCLE_HOOKS} from '../../data/componentLifecycleHooks';
-import {FormInstance} from '../Form.types';
+import {BaseElementConfiguration, ComponentOrHtmlElement, ElementName, ElementProps} from '../element.types';
+import {COMPONENT_LIFECYCLE_HOOKS} from '../../data';
+import {FormInstance} from '../../Form.types';
 import {HookManager} from '@myparcel-vfb/hook-manager';
 import {PromiseOr} from '@myparcel-vfb/utils';
 

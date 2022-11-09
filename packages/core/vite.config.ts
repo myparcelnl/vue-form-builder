@@ -1,24 +1,26 @@
-import {createViteConfig} from '@myparcel-vfb/build-vite';
+import {defineConfig} from 'vite';
+import dts from 'vite-plugin-dts';
 import vue from '@vitejs/plugin-vue';
 
-export default createViteConfig((env) => ({
-  plugins: [vue()],
+export default defineConfig((env) => ({
+  plugins: [dts({entryRoot: 'src'}), vue()],
 
   build: {
+    outDir: 'lib',
+    lib: {
+      entry: 'src/index.ts',
+      formats: ['es'],
+    },
     minify: env.mode === 'production',
     sourcemap: env.mode !== 'production',
-    lib: {
-      name: 'VueFormBuilder',
-      entry: 'src/index.ts',
-      formats: ['es', 'umd', 'iife', 'cjs'],
-    },
     rollupOptions: {
-      external: ['vue'],
-      output: {
-        globals: {
-          vue: 'Vue',
-        },
-      },
+      external: [
+        '@myparcel-vfb/form-builder',
+        '@myparcel-vfb/hook-manager',
+        '@myparcel-vfb/plugin',
+        '@myparcel-vfb/utils',
+        'vue',
+      ],
     },
   },
 }));

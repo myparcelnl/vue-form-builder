@@ -1,9 +1,12 @@
-import {InteractiveElement, PlainElement, defineField, defineForm} from '../../form';
 import {canNotContainLetterValidator, firstNameNotJohnValidator} from './interactive-element/validationData';
 import {describe, expect, it} from 'vitest';
 import {formIsInvalid, formIsValid} from '../utils/formIsValid';
+import InteractiveElement from '../../components/InteractiveElement.vue';
 import {MagicForm} from '../../components';
+import {PlainElement} from '@myparcel-vfb/form-builder/src';
 import TextInput from '../elements/TextInput.vue';
+import {defineField} from '../../defineField';
+import {defineForm} from '../../defineForm';
 import {generateForm} from '../utils/generateForm';
 import {mount} from '@vue/test-utils';
 import {ref} from 'vue';

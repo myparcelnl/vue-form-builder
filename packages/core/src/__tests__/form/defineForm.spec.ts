@@ -239,6 +239,30 @@ describe('Form Generation', () => {
       vi.useRealTimers();
     });
 
+    it('can calculate backwards based on primary input, out of a promise', async () => {
+      vi.useFakeTimers();
+      const firstName = ref('');
+      const price = ref('0');
+
+      const validationForm = defineForm('validationForm', {
+        fields: [
+          defineField({
+            name: 'firstName',
+            component: TextInput,
+            ref: firstName,
+          }),
+          defineField({
+            name: 'price',
+            component: TextInput,
+            ref: price,
+          }),
+        ],
+      });
+      const wrapper = mount(MagicForm, {props: {form: validationForm}});
+      await wrapper.find('#firstName__container input').setValue('Hank');
+      // figure out how to reverse calculate the price when firstName is updated.
+    });
+
     it('validates using a single function', async () => {
       expect.assertions(4);
 

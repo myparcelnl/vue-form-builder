@@ -15,6 +15,9 @@
     @focusout="$emit('focusout', $event)"
     @click="$emit('click', $event)"
     @change="$emit('change', $event)" />
+    <span class="loading-indicator" v-if="isSuspended">
+      Loading...
+    </span>
     <ul v-if="warningsRef.length" class="warnings">
       <li
         v-for="warning in warningsRef"
@@ -56,6 +59,10 @@ export default defineComponent({
       type: Object,
       default: true,
     },
+    suspended: {
+      type: Object,
+      default: false,
+    },
     warnings: {
       type: Object,
       default: () => [],
@@ -80,6 +87,7 @@ export default defineComponent({
       value,
       isValid,
       warningsRef: toRef(props, 'warnings'),
+      isSuspended: toRef(props, 'suspended'),
     };
   },
 });

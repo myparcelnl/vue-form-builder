@@ -13,6 +13,7 @@
       :warnings="elementRefs.errors"
       :disabled="elementRefs.isDisabled"
       :valid="elementRefs.isValid"
+      :suspended="elementRefs.isSuspended"
       :props="element.props"
       v-on="hooks"
     />

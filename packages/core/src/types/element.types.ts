@@ -1,4 +1,3 @@
-import {ComponentProps, MakeOptional} from '@myparcel-vfb/utils/src';
 import {
   InteractiveElementConfiguration,
   InteractiveElementInstance,
@@ -7,7 +6,9 @@ import {
 } from '../form';
 import {Component} from 'vue';
 import {ComponentLifecycleHooks} from './other.types';
-import {HookNamesObject} from '@myparcel-vfb/hook-manager/src';
+import {ComponentProps} from '@myparcel-vfb/utils';
+import {HookNamesObject} from '@myparcel-vfb/hook-manager';
+import {MakeOptional} from '@myparcel/ts-utils';
 
 export type ElementName = string | undefined;
 

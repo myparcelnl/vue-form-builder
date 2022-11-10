@@ -1,9 +1,10 @@
 import {BaseElementConfiguration, ComponentOrHtmlElement, ElementName} from '../../types';
 import {FieldValidator, ValidateFunction, Validator} from './validator';
-import {MaybeRefOrComputed, PromiseOr} from '@myparcel-vfb/utils';
+import {MaybeRefOrComputed} from '@myparcel-vfb/utils';
 import {PLAIN_ELEMENT_HOOKS, PlainElementHooks, PlainElementInstance} from '../plain-element';
 import {FormInstance} from '../Form.types';
 import {HookManager} from '@myparcel-vfb/hook-manager';
+import {PromiseOr} from '@myparcel/ts-utils';
 import {Ref} from 'vue';
 
 export type InteractiveElementConfiguration<

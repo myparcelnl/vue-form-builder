@@ -1,4 +1,4 @@
-import {ReadonlyOr} from '@myparcel-vfb/utils/src';
+import {ReadonlyOr} from '@myparcel/ts-utils';
 
 const upperFirst = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 

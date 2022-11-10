@@ -16,8 +16,12 @@
     "typecheck": "run workspace:tsup:typecheck \"$(pwd)\"",
     "watch": "run workspace:tsup:watch \"$(pwd)\""
   },
+  "dependencies": {
+    "@myparcel/ts-utils": "^1.0.0-alpha.1"
+  },
   "devDependencies": {
-    "@myparcel-vfb/build-tsup": "workspace:*"
+    "@myparcel-vfb/build-tsup": "workspace:*",
+    "vue": "^3.2.44"
   },
   "publishConfig": {
     "access": "public"

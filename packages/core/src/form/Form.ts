@@ -1,10 +1,10 @@
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, FieldsToModel} from '../types';
-import {ComputedRef, Ref, computed, markRaw, reactive, ref} from 'vue';
+import {ComputedRef, Ref, computed, markRaw, ref} from 'vue';
 import {FormConfiguration, FormHooks, FormInstance} from './Form.types';
 import {HookManager, createHookManager} from '@myparcel-vfb/hook-manager';
 import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
 import {PlainElement, PlainElementConfiguration} from './plain-element';
-import {isOfType} from '@myparcel-vfb/utils';
+import {isOfType} from '@myparcel/ts-utils';
 
 export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'] as const;
 

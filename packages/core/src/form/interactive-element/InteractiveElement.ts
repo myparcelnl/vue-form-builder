@@ -7,10 +7,11 @@ import {
   InteractiveElementInstance,
 } from './InteractiveElement.types';
 import {MultiValidator, SingleValidator, Validator} from './validator';
-import {PromiseOr, createComputedValue, isOfType} from '@myparcel-vfb/utils';
+import {PromiseOr, isOfType} from '@myparcel/ts-utils';
 import {FormInstance} from '../Form.types';
 import {HookManager} from '@myparcel-vfb/hook-manager';
 import {PlainElement} from '../plain-element';
+import {createComputedValue} from '@myparcel-vfb/utils';
 
 type Hooks<C extends ComponentOrHtmlElement, N extends string, RT = unknown> = InteractiveElementHooks &
   ComponentHooks<C, InteractiveElementInstance<C, N, RT>>;
@@ -79,7 +80,6 @@ export class InteractiveElement<
 
     const promises = await Promise.all(
       this.validators.value.map(async (validator) => {
-
         // TODO: fix types
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const valid = await validator.validate(this as any, this.ref.value);

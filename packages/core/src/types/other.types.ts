@@ -1,8 +1,8 @@
 import {ComponentOrHtmlElement, ElementName} from './element.types';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../data/componentLifecycleHooks';
 import {InteractiveElementInstance} from '../form';
-import {PromiseOr} from '@myparcel-vfb/utils';
 import {UnwrapNestedRefs} from 'vue';
+import {PromiseOr} from '@myparcel/ts-utils';
 
 /**
  * TODO: This is a temporary solution to avoid errors.

@@ -2,7 +2,7 @@ import {BaseElementConfiguration, ComponentOrHtmlElement, ElementName, ElementPr
 import {COMPONENT_LIFECYCLE_HOOKS} from '../../data/componentLifecycleHooks';
 import {FormInstance} from '../Form.types';
 import {HookManager} from '@myparcel-vfb/hook-manager';
-import {PromiseOr} from '@myparcel-vfb/utils';
+import {PromiseOr} from '@myparcel/ts-utils';
 
 export type PlainElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,

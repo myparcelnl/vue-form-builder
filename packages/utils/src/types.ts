@@ -1,27 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {AllowedComponentProps, Component, ComputedRef, Ref, VNodeProps} from 'vue';
-
-export type RecursiveRequired<T> = Required<{
-  [P in keyof T]: T[P] extends object | undefined ? RecursiveRequired<Required<T[P]>> : T[P];
-}>;
-
-export type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
-};
-
-export type Identity<T> = {[P in keyof T]: T[P]};
-
-export type Replace<T, K extends keyof T, TReplace> = Pick<T, Exclude<keyof T, K>> & {
-  [P in K]: TReplace;
-};
-
-export type RequireOnly<K, T extends keyof K> = Required<Pick<K, T>> & Partial<Omit<K, T>>;
-
-export type PromiseOr<T> = Promise<T> | T;
-
-export type MakeOptional<Type, Key extends string | keyof Type> = Key extends keyof Type
-  ? Omit<Type, Key> & Partial<Pick<Type, Key>>
-  : Type;
+import {PromiseOr} from '@myparcel/ts-utils';
 
 export type ComponentProps<C extends Component> = C extends new (...args: any) => any
   ? Omit<
@@ -50,7 +29,3 @@ export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true;
 export type UnionToArray<T, A extends unknown[] = []> = IsUnion<T> extends true
   ? UnionToArray<Exclude<T, PopUnion<T>>, [PopUnion<T>, ...A]>
   : [T, ...A];
-
-export type ResolvePromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
-
-export type ReadonlyOr<T> = T | Readonly<T>;

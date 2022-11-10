@@ -6,8 +6,9 @@ import {formIsInvalid, formIsValid} from '../utils/formIsValid';
 import {MagicForm} from '../../components';
 import TextInput from '../elements/TextInput.vue';
 import SubmitButton from '../elements/SubmitButton.vue';
+import Select from '../elements/Select.vue';
 import {generateForm} from '../utils/generateForm';
-import {mount} from '@vue/test-utils';
+import {flushPromises, mount} from '@vue/test-utils';
 import {ref} from 'vue';
 import {removeUndefinedValues} from '../utils/removeUndefinedValues';
 
@@ -79,7 +80,7 @@ describe('Form Generation', () => {
 
   describe('validation', () => {
     it('can determine if a text input is valid based on single predicate', async () => {
-      expect.assertions(8);
+      expect.assertions(11);
       const firstName = ref('');
       const lastName = ref('');
       const validationForm = defineForm('validationForm', {
@@ -108,14 +109,115 @@ describe('Form Generation', () => {
       // expect default state to be valid regardless of input
       formIsValid(formElement, validationForm);
 
-      await wrapper.find('input[name="firstName"]').setValue('Karen');
+      await wrapper.find('#firstName__container input').setValue('Karen');
       expect(firstName.value).toBe('Karen');
 
-      await wrapper.find('input[name="lastName"]').setValue('Doe');
+      await wrapper.find('#lastName__container input').setValue('Doe');
       expect(lastName.value).toBe('Doe');
 
       await validationForm.submit();
+
+      const firstNameWarning = wrapper.find('#firstName__container .warnings');
+      expect(firstNameWarning.exists()).toBe(true);
+      expect(firstNameWarning.text()).toBe('Field must start with "J"');
+
+      const lastNameWarning = wrapper.find('#lastName__container .warnings');
+      expect(lastNameWarning.exists()).toBe(false);
+
       formIsInvalid(formElement, validationForm);
+    });
+
+    it('can determine if a text input is valid based on previous inputs and predicates', async () => {
+      const firstName = ref('');
+      const lastName = ref('');
+      const validationForm = defineForm('validationForm', {
+        fields: [
+          defineField({
+            name: 'firstName',
+            component: TextInput,
+            ref: firstName,
+            validate: (_, value) => String(value).startsWith('J'),
+            errorMessage: 'Field must start with "J"',
+          }),
+          defineField({
+            name: 'lastName',
+            component: TextInput,
+            ref: lastName,
+            validate: (field, value) => !(
+              field.form.model.firstName.ref.value === 'Jack' &&
+              String(value) === 'McGill'
+            ),
+            errorMessage: 'Last name cannot be "McGill" if first name is "Jack"',
+          }),
+          defineField({
+            component: SubmitButton,
+          }),
+        ],
+      });
+      const wrapper = mount(MagicForm, {props: {form: validationForm}});
+      const formElement = wrapper.find('form');
+      formIsValid(formElement, validationForm);
+
+      await wrapper.find('#firstName__container input').setValue('Jack');
+      await wrapper.find('#lastName__container input').setValue('McGill');
+
+      await validationForm.submit();
+
+      const lastNameWarning = wrapper.find('#lastName__container .warnings');
+      expect(lastNameWarning.text()).toBe('Last name cannot be "McGill" if first name is "Jack"');
+
+      formIsInvalid(formElement, validationForm);
+
+      await wrapper.find('#lastName__container input').setValue('Taves');
+
+      await validationForm.submit();
+      formIsValid(formElement, validationForm);
+    });
+
+    it('can load external data into option selector with timeout', async () => {
+      const firstName = ref('');
+      const option = ref('Package');
+      const validationForm = defineForm('validationForm', {
+        fields: [
+          defineField({
+            name: 'firstName',
+            component: TextInput,
+            ref: firstName,
+          }),
+          defineField({
+            name: 'options',
+            component: Select,
+            ref: option,
+            props: {
+              options: [
+                {
+                  label: 'Package',
+                  value: 'package',
+                },
+                {
+                  label: 'Mailbox',
+                  value: 'mailbox',
+                },
+                {
+                  label: 'Letter',
+                  value: 'letter',
+                },
+                {
+                  label: 'Digital Stamp',
+                  value: 'digital_stamp',
+                },
+              ],
+            },
+          }),
+          defineField({
+            component: SubmitButton,
+          }),
+        ],
+      });
+      const wrapper = mount(MagicForm, {props: {form: validationForm}});
+      const item = wrapper.find('#options__container select').setValue('mailbox')
+      console.log(wrapper.html());
+      expect(option.value).toBe('mailbox');
     });
 
     it('validates using a single function', async () => {

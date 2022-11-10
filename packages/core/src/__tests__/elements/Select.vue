@@ -1,10 +1,8 @@
 <template>
-  <input
-    type="text"
+  <select
     :id="id"
     v-model="value"
     :name="name"
-    v-bind="$attrs"
     :disabled="!disabled"
     :class="{
       'border-red-500': !isValid(),
@@ -14,18 +12,27 @@
     @focusin="$emit('focusin', $event)"
     @focusout="$emit('focusout', $event)"
     @click="$emit('click', $event)"
-    @change="$emit('change', $event)" />
-    <ul v-if="warningsRef.length" class="warnings">
-      <li
-        v-for="warning in warningsRef"
-        :key="warning">
-        {{ warning }}
-      </li>
-    </ul>
+    @change="change"
+  >
+    <option
+      v-for="(option, index) in options"
+      :key="`${name}__option--${option.value}`"
+      :value="option.value"
+    >
+      {{ option.label }}
+    </option>
+  </select>
+  <ul v-if="warningsRef.length" class="warnings">
+    <li
+      v-for="warning in warningsRef"
+      :key="warning">
+      {{ warning }}
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, Ref, toRef} from 'vue';
+import {computed, defineComponent, Ref, toRef, toRefs, watchEffect} from 'vue';
 
 export default defineComponent({
   name: 'TextInput',
@@ -60,9 +67,14 @@ export default defineComponent({
       type: Object,
       default: () => [],
     },
+    props: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
   setup: (props, { emit, attrs }) => {
+    // const propRefs = toRefs(props);
     const isValid = () => {
       return props.valid === undefined ? true : props.valid;
     };
@@ -72,12 +84,22 @@ export default defineComponent({
         return props.modelValue;
       },
       set(value) {
+        console.log('value', value);
         emit('update:modelValue', value);
       },
     });
 
+    const change = (e) => {
+      emit('change', e);
+      emit('blur', e);
+    }
+
+    const options = props.props.options;
+
     return {
+      change,
       value,
+      options,
       isValid,
       warningsRef: toRef(props, 'warnings'),
     };

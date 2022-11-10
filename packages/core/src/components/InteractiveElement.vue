@@ -1,6 +1,7 @@
 <template>
   <div
     v-show="elementRefs.isVisible"
+    :id="elementId()"
     :class="elementRefs.isVisible ? element.form.config.fieldClass : null"
   >
     <component
@@ -75,10 +76,18 @@ export default defineComponent({
       },
     });
 
+    const elementId = (): String => {
+      if (elementRefs.name.value) {
+        return elementRefs.name.value + '__container';
+      }
+      return '';
+    };
+
 
     return {
       hooks,
       value,
+      elementId,
       elementRefs,
     };
   },

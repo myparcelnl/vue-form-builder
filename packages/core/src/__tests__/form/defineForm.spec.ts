@@ -1,36 +1,38 @@
 import {InteractiveElement, PlainElement, defineField, defineForm} from '../../form';
 import {canNotContainLetterValidator, firstNameNotJohnValidator} from './interactive-element/validationData';
 import {canNotContainX, firstNameNotDuane} from '@myparcel-vfb/demo/src/forms/validators';
-import {describe, expect, it} from 'vitest';
+import {describe, expect, it, vi} from 'vitest';
 import {formIsInvalid, formIsValid} from '../utils/formIsValid';
 import {MagicForm} from '../../components';
 import TextInput from '../elements/TextInput.vue';
 import SubmitButton from '../elements/SubmitButton.vue';
-import Select from '../elements/Select.vue';
 import {generateForm} from '../utils/generateForm';
 import {flushPromises, mount} from '@vue/test-utils';
 import {ref} from 'vue';
 import {removeUndefinedValues} from '../utils/removeUndefinedValues';
+import { optionData } from '../utils/externalData';
 
 describe('Form Generation', () => {
   describe('defining a form', () => {
-    const form = generateForm([
-      {
-        name: 'named',
-        component: 'input',
-      },
-      {
-        component: 'br',
-      },
-      {
-        name: 'text',
-        component: TextInput,
-        ref: ref('initial'),
-      },
-    ]);
+    const form = generateForm({
+      fields: [
+        {
+          name: 'named',
+          component: 'input',
+        },
+        {
+          component: 'br',
+        },
+        {
+          name: 'text',
+          component: TextInput,
+          ref: ref('initial'),
+        },
+      ]
+    });
 
     it('creates a reactive model from named elements', () => {
-      const form = generateForm([
+      const form = generateForm({ fields: [
         defineField({
           component: 'input',
           ...removeUndefinedValues(undefined),
@@ -55,7 +57,7 @@ describe('Form Generation', () => {
           ref: ref(''),
           ...removeUndefinedValues({name: 'test2'}),
         }),
-      ]);
+      ] });
 
       expect(Object.keys(form.model)).toEqual(['test', 'test2']);
       expect(form.model.test).toBeInstanceOf(PlainElement);
@@ -174,56 +176,73 @@ describe('Form Generation', () => {
       formIsValid(formElement, validationForm);
     });
 
-    it('can load external data into option selector with timeout', async () => {
+    it('can calculate forwards based on primary input', async () => {
       const firstName = ref('');
-      const option = ref('Package');
+      const price = ref('0');
+
       const validationForm = defineForm('validationForm', {
         fields: [
           defineField({
             name: 'firstName',
             component: TextInput,
             ref: firstName,
-          }),
-          defineField({
-            name: 'options',
-            component: Select,
-            ref: option,
-            props: {
-              options: [
-                {
-                  label: 'Package',
-                  value: 'package',
-                },
-                {
-                  label: 'Mailbox',
-                  value: 'mailbox',
-                },
-                {
-                  label: 'Letter',
-                  value: 'letter',
-                },
-                {
-                  label: 'Digital Stamp',
-                  value: 'digital_stamp',
-                },
-              ],
+            afterUpdate: (field, newValue, oldValue) => {
+              field.form.model.price.ref.value = newValue === 'Jack' ? '100' : '50';
             },
           }),
           defineField({
-            component: SubmitButton,
+            name: 'price',
+            component: TextInput,
+            ref: price,
           }),
         ],
       });
       const wrapper = mount(MagicForm, {props: {form: validationForm}});
-      const item = wrapper.find('#options__container select').setValue('mailbox')
-      console.log(wrapper.html());
-      expect(option.value).toBe('mailbox');
+      await wrapper.find('#firstName__container input').setValue('Hank');
+      expect(price.value).toBe('50');
+      await wrapper.find('#firstName__container input').setValue('Jack');
+      expect(price.value).toBe('100');
+    });
+
+    it('can calculate forwards based on primary input, out of a promise', async () => {
+      vi.useFakeTimers();
+      const firstName = ref('');
+      const price = ref('0');
+
+      const validationForm = defineForm('validationForm', {
+        fields: [
+          defineField({
+            name: 'firstName',
+            component: TextInput,
+            ref: firstName,
+            afterUpdate: async (field, newValue, oldValue) => {
+              const remote = await optionData(newValue);
+              field.form.model.price.ref.value = remote.price;
+            },
+          }),
+          defineField({
+            name: 'price',
+            component: TextInput,
+            ref: price,
+          }),
+        ],
+      });
+      const wrapper = mount(MagicForm, {props: {form: validationForm}});
+      await wrapper.find('#firstName__container input').setValue('Hank');
+      vi.advanceTimersByTime(1000);
+      await flushPromises();
+      expect(price.value).toBe('50');
+      await wrapper.find('#firstName__container input').setValue('John');
+      vi.advanceTimersByTime(1000);
+      await flushPromises();
+      expect(price.value).toBe('100');
+      vi.useRealTimers();
     });
 
     it('validates using a single function', async () => {
       expect.assertions(4);
 
-      const form = generateForm([
+      const form = generateForm({ fields: [
         defineField({
           component: 'input',
           name: 'element',
@@ -231,7 +250,7 @@ describe('Form Generation', () => {
           validate: (_, value) => String(value).startsWith('J'),
           errorMessage: 'Field must start with "J"',
         }),
-      ]);
+      ] });
 
       form.model.element.ref.value = 'Peter';
       await form.submit();
@@ -247,14 +266,14 @@ describe('Form Generation', () => {
     it('validates using an array of validators', async () => {
       expect.assertions(1);
 
-      const form = generateForm([
+      const form = generateForm({ fields: [
         defineField({
           component: 'input',
           name: 'element',
           ref: ref(''),
           validators: [firstNameNotJohnValidator(), canNotContainLetterValidator()],
         }),
-      ]);
+      ]} );
 
       await form.submit();
       expect(form.isValid.value).toBe(true);
@@ -263,14 +282,14 @@ describe('Form Generation', () => {
     it('validates using a computed validator', async () => {
       expect.assertions(1);
 
-      const form = generateForm([
+      const form = generateForm({ fields: [
         defineField({
           component: 'input',
           name: 'element',
           ref: ref(''),
           validators: [firstNameNotDuane(), canNotContainX()],
         }),
-      ]);
+      ]});
 
       await form.submit();
       expect(form.isValid.value).toBe(true);
@@ -286,7 +305,7 @@ describe('Form Generation', () => {
         validators: [firstNameNotDuane()],
       });
 
-      const form = generateForm([field]);
+      const form = generateForm({ fields: [field] });
 
       await form.model.element.reset();
 

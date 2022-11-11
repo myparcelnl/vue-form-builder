@@ -27,9 +27,9 @@ export class InteractiveElement<
   public isSuspended = ref(false);
   public isTouched = ref(false);
 
-  public isDisabled: ComputedRef<PromiseOr<boolean>>;
-  public isOptional: ComputedRef<PromiseOr<boolean>>;
-  public isVisible: ComputedRef<PromiseOr<boolean>>;
+  public isOptional: Ref<Boolean>;
+  public isVisible: Ref<Boolean>;
+  public isDisabled: Ref<Boolean>;
   public isValid: Ref<PromiseOr<boolean>> = ref(true);
 
   public errors: Ref<string[]> = ref([]);
@@ -115,15 +115,9 @@ export class InteractiveElement<
     this.label = config.label;
     this.lazy = config.lazy ?? false;
 
-    this.isOptional = createComputedValue(config.optional, false);
-    this.isDisabled = createComputedValue(config.disabled, false);
-    this.isVisible = createComputedValue(config.visible, true);
-
-    // this.isValid = this.createComputedIsValid(config);
-
-    // this.isDisabled.value = config.disabled ?? false;
-    // this.isOptional.value = config.optional ?? false;
-    // this.isVisible.value = config.visible ?? true;
+    this.isVisible = config.visible !== undefined ? ref(config.visible) : ref(true);
+    this.isDisabled = config.disabled !== undefined ? ref(config.disabled) : ref(false);
+    this.isOptional = config.optional !== undefined ? ref(config.optional) : ref(false);
 
     // this.click = (event: MouseEvent) => this.hooks.execute('click', this, event);
     this.focus = async (instance: typeof this, event: FocusEvent): Promise<void> => {

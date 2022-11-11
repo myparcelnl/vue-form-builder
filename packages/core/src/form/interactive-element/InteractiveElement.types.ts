@@ -19,9 +19,9 @@ export type InteractiveElementConfiguration<
 
     lazy?: boolean;
 
-    disabled?: MaybeRefOrComputed<boolean>;
-    visible?: MaybeRefOrComputed<boolean>;
-    optional?: MaybeRefOrComputed<boolean>;
+    disabled?: boolean;
+    visible?: boolean;
+    optional?: boolean;
 
     sanitize?: (_: InteractiveElementInstance, value: RT) => RT;
   };

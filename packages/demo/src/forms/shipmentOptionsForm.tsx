@@ -83,36 +83,22 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         min: 1,
         max: 10,
       },
-
-      // isVisible() {},
-
-      // onCreated: () => {
-      //   console.warn('onCreated');
-      // },
-      // onActivated: () => {
-      //   console.warn('onActivated');
-      // },
-      // onBeforeMount: () => {
-      //   console.warn('onBeforeMount');
-      // },
-      // onBeforeUnmount: () => {
-      //   console.warn('onBeforeUnmount');
-      // },
-      // onBeforeUpdate: () => {
-      //   console.warn('onBeforeUpdate');
-      // },
-      // onDeactivated: () => {
-      //   console.warn('onDeactivated');
-      // },
-      // onMounted: () => {
-      //   console.warn('onMounted');
-      // },
-      // onUnmounted: () => {
-      //   console.warn('onUnmounted');
-      // },
-      // onUpdated: () => {
-      //   console.warn('onUpdated');
-      // },
+      afterUpdate: (field, newValue, oldValue) => {
+        field.form.model.copyAmount.isDisabled.value = newValue < 5;
+        field.form.model.copyAmount.isVisible.value = newValue > 4;
+      },
+    }),
+    defineField({
+      name: 'copyAmount',
+      component: TNumberInput,
+      ref: ref(1),
+      label: 'Copy Amount',
+      disabled: true,
+      visible: false,
+      props: {
+        min: 1,
+        max: 10,
+      },
     }),
     defineField({
       name: 'packageType',
@@ -241,6 +227,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       validate: (field: any, value: any) => {
         return value < 500;
       },
+      optional: true,
     }),
     defineField({
       component: TSubmitButton,

@@ -1,10 +1,10 @@
 <template>
   <div
-    v-show="elementRefs.isVisible"
+    v-show="isVisible"
     :id="elementId()"
-    :class="elementRefs.isVisible ? element.form.config.fieldClass : null"
+    :class="isVisible ? element.form.config.fieldClass : null"
   >
-  <component
+    <component
       :is="element.component"
       v-model="value"
       :id="element.name ?? element.name"
@@ -13,7 +13,9 @@
       :warnings="errors"
       :disabled="isDisabled"
       :valid="isValid"
+      :visible="isVisible"
       :suspended="isSuspended"
+      :optional="isOptional"
       :props="element.props"
       v-on="hooks"
     />
@@ -89,6 +91,8 @@ export default defineComponent({
     const isValid = toRef(props.element, 'isValid');
     const isSuspended = toRef(props.element, 'isSuspended');
     const isDisabled = toRef(props.element, 'isDisabled');
+    const isVisible = toRef(props.element, 'isVisible');
+    const isOptional = toRef(props.element, 'isOptional');
 
     return {
       hooks,
@@ -98,6 +102,8 @@ export default defineComponent({
       isValid,
       isSuspended,
       isDisabled,
+      isVisible,
+      isOptional,
       elementId,
       elementRefs,
     };

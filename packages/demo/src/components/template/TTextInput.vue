@@ -1,5 +1,5 @@
 <template>
-  <FormGroup v-bind="{label, id, warnings}">
+  <FormGroup v-bind="{label, id, warnings, optional}">
     <input
       type="text"
       :id="id"
@@ -59,9 +59,18 @@ export default defineComponent({
       default: true,
     },
 
+    visible: {
+      type: Boolean,
+    },
+
     warnings: {
       type: Array<String>,
       default: () => [],
+    },
+
+    optional: {
+      type: Boolean,
+      default: false,
     },
   },
 

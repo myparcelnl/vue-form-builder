@@ -3,13 +3,15 @@
     <label
       v-if="label"
       :for="name"
-      >{{ label }}</label
     >
+      {{ label }}
+    </label>
 
     <slot />
-    <ul v-if="warningsRef">
+    <span v-if="optional"> (optional)</span>
+    <ul v-if="warnings">
       <li
-        v-for="warning in warningsRef"
+        v-for="warning in warnings"
         :key="warning">
         {{ warning }}
       </li>
@@ -33,16 +35,15 @@ export default defineComponent({
       default: null,
     },
 
+    optional: {
+      type: Boolean,
+      default: false,
+    },
+
     warnings: {
       type: Object,
       default: () => [],
     },
   },
-  setup: (props) => {
-    return {
-      warningsRef: toRef(props, 'warnings'),
-    }
-  },
-
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <FormGroup v-bind="{label, id}">
+  <FormGroup v-bind="{label, id, warnings, optional}">
     <TTextInput
       :id="id"
       v-model="model"
@@ -8,7 +8,11 @@
       :min="min"
       :max="max"
       :disabled="disabled"
-      :valid="valid" />
+      :valid="valid"
+      :class="{
+        'cursor-not-allowed opacity-50': disabled,
+      }"
+      />
   </FormGroup>
 </template>
 
@@ -59,6 +63,20 @@ export default defineComponent({
 
     valid: {
       type: Boolean,
+    },
+
+    visible: {
+      type: Boolean,
+    },
+
+    optional: {
+      type: Boolean,
+      default: false,
+    },
+
+    warnings: {
+      type: Array<String>,
+      default: () => [],
     },
   },
 

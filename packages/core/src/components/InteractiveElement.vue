@@ -4,16 +4,16 @@
     :id="elementId()"
     :class="elementRefs.isVisible ? element.form.config.fieldClass : null"
   >
-    <component
+  <component
       :is="element.component"
       v-model="value"
       :id="element.name ?? element.name"
-      :label="element.label"
+      :label="label"
       :name="element.name"
-      :warnings="elementRefs.errors"
-      :disabled="elementRefs.isDisabled"
-      :valid="elementRefs.isValid"
-      :suspended="elementRefs.isSuspended"
+      :warnings="errors"
+      :disabled="isDisabled"
+      :valid="isValid"
+      :suspended="isSuspended"
       :props="element.props"
       v-on="hooks"
     />
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import {PropType, computed, defineComponent, provide, toRefs} from 'vue';
+import {PropType, computed, defineComponent, provide, toRefs, toRef} from 'vue';
 import {INJECT_ELEMENT} from '../services';
 import {InteractiveElementInstance} from '../form';
 import {useLifeCycleHooks} from '../composables';
@@ -84,10 +84,20 @@ export default defineComponent({
       return '';
     };
 
+    const label = toRef(props.element, 'label');
+    const errors = toRef(props.element, 'errors');
+    const isValid = toRef(props.element, 'isValid');
+    const isSuspended = toRef(props.element, 'isSuspended');
+    const isDisabled = toRef(props.element, 'isDisabled');
 
     return {
       hooks,
       value,
+      label,
+      errors,
+      isValid,
+      isSuspended,
+      isDisabled,
       elementId,
       elementRefs,
     };

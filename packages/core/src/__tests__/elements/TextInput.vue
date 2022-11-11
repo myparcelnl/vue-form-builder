@@ -5,7 +5,7 @@
     v-model="value"
     :name="name"
     v-bind="$attrs"
-    :disabled="!disabled"
+    :disabled="disabled"
     :class="{
       'border-red-500': !isValid(),
     }"
@@ -15,12 +15,12 @@
     @focusout="$emit('focusout', $event)"
     @click="$emit('click', $event)"
     @change="$emit('change', $event)" />
-    <span class="loading-indicator" v-if="isSuspended">
+    <span class="loading-indicator" v-if="suspended">
       Loading...
     </span>
-    <ul v-if="warningsRef.length" class="warnings">
+    <ul v-if="warnings.length" class="warnings">
       <li
-        v-for="warning in warningsRef"
+        v-for="warning in warnings"
         :key="warning">
         {{ warning }}
       </li>
@@ -52,19 +52,19 @@ export default defineComponent({
       default: null,
     },
     disabled: {
-      type: Object,
+      type: Boolean,
       default: false,
     },
     valid: {
-      type: Object,
+      type: Boolean,
       default: true,
     },
     suspended: {
-      type: Object,
+      type: Boolean,
       default: false,
     },
     warnings: {
-      type: Object,
+      type: Array<String>,
       default: () => [],
     },
   },
@@ -86,8 +86,6 @@ export default defineComponent({
     return {
       value,
       isValid,
-      warningsRef: toRef(props, 'warnings'),
-      isSuspended: toRef(props, 'suspended'),
     };
   },
 });

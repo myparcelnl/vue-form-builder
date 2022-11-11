@@ -4,7 +4,7 @@
       :id="id"
       v-model="model"
       :name="name"
-      :disabled="!disabled"
+      :disabled="disabled"
       :class="{
         'border-red-500': !isValid(),
       }"
@@ -55,17 +55,17 @@ export default defineComponent({
     },
 
     disabled: {
-      type: Object,
+      type: Boolean,
       default: false,
     },
 
     valid: {
-      type: Object,
+      type: Boolean,
       default: true,
     },
 
     warnings: {
-      type: Object,
+      type: Array<String>,
       default: () => [],
     },
 

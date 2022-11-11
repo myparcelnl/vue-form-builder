@@ -415,13 +415,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@myparcel-eslint/eslint-config-esnext@npm:^1.0.0-alpha.2, @myparcel-eslint/eslint-config-esnext@npm:^1.0.0-alpha.6":
+"@myparcel-eslint/eslint-config-es6@npm:^1.0.0-alpha.7":
+  version: 1.0.0-alpha.7
+  resolution: "@myparcel-eslint/eslint-config-es6@npm:1.0.0-alpha.7"
+  dependencies:
+    "@myparcel-eslint/eslint-config": ^1.0.0-alpha.5
+    eslint: "*"
+  checksum: 75106318a8439395273340a9d0022cf9aa898c05395132457d4b1461e6a95f82b05a798bad1cd5d4a22517b47f1d03f8fcc702b52c50db6222e9caadd467a96b
+  languageName: node
+  linkType: hard
+
+"@myparcel-eslint/eslint-config-esnext@npm:^1.0.0-alpha.6":
   version: 1.0.0-alpha.6
   resolution: "@myparcel-eslint/eslint-config-esnext@npm:1.0.0-alpha.6"
   dependencies:
     "@myparcel-eslint/eslint-config-es6": ^1.0.0-alpha.6
     eslint: "*"
   checksum: 510a37f4e8d8c5ca9776d3aa67f3589ca47d4893fa21f0b008c75438e30936bec1817cfedb8cc298ce00c12fd03534f4fa018b6d584c766089d505eabd3fac84
+  languageName: node
+  linkType: hard
+
+"@myparcel-eslint/eslint-config-esnext@npm:^1.0.0-alpha.7":
+  version: 1.0.0-alpha.7
+  resolution: "@myparcel-eslint/eslint-config-esnext@npm:1.0.0-alpha.7"
+  dependencies:
+    "@myparcel-eslint/eslint-config-es6": ^1.0.0-alpha.7
+    eslint: "*"
+  checksum: 57c67916150ff39fbee44530eae7f7798c254189a29823ccae3b1d7775eba4d6c771561535017a2dafed7b2a65019093a29092c276ee868cd8e72fd1c8a1b842
   languageName: node
   linkType: hard
 
@@ -606,7 +626,7 @@ __metadata:
   resolution: "@myparcel-vfb/monorepo@workspace:."
   dependencies:
     "@monodeploy/plugin-github": ^0.6.2
-    "@myparcel-eslint/eslint-config-esnext": ^1.0.0-alpha.2
+    "@myparcel-eslint/eslint-config-esnext": ^1.0.0-alpha.7
     "@myparcel-eslint/eslint-config-node": ^1.0.0-alpha.2
     "@myparcel-eslint/eslint-config-prettier": ^1.0.0-alpha.2
     "@myparcel-eslint/eslint-config-prettier-typescript": ^1.0.0-alpha.1

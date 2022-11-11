@@ -6,7 +6,7 @@
       :name="name"
       :disabled="disabled"
       :class="{
-        'border-red-500': !isValid(),
+        'border-red-500': !valid,
       }"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
@@ -81,10 +81,6 @@ export default defineComponent({
     const model = useVModel(props, 'modelValue');
     const propRefs = toRefs(props);
 
-    const isValid = () => {
-      return props.valid.value === undefined ? true : props.valid.value;
-    };
-
     watchEffect(() => {
       if (model.value) {
         return;
@@ -103,7 +99,6 @@ export default defineComponent({
     return {
       model,
       options,
-      isValid,
       change,
     };
   },

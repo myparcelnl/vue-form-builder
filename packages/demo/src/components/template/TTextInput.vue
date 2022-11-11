@@ -8,7 +8,7 @@
       v-bind="$attrs"
       :disabled="disabled"
       :class="{
-        'border-red-500': !isValid(),
+        'border-red-500': !valid,
       }"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
@@ -68,10 +68,6 @@ export default defineComponent({
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
 
   setup: (props, { emit }) => {
-    const isValid = () => {
-      return props.valid.value === undefined ? true : props.valid.value;
-    };
-
     const value = computed({
       get() {
         return props.modelValue;
@@ -83,7 +79,6 @@ export default defineComponent({
 
     return {
       value,
-      isValid,
     };
   },
 });

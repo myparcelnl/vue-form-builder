@@ -613,7 +613,7 @@ __metadata:
     "@myparcel-eslint/eslint-config-prettier-typescript-vue": ^1.0.0-alpha.1
     "@tsconfig/recommended": ^1.0.1
     "@vitest/coverage-c8": ^0.25.1
-    "@vue/test-utils": ^2.2.1
+    "@vue/test-utils": ^2.2.2
     "@vue/tsconfig": ^0.1.3
     conventional-changelog-conventionalcommits: ^5.0.0
     eslint: ^8.27.0
@@ -1583,12 +1583,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/test-utils@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "@vue/test-utils@npm:2.2.1"
+"@vue/test-utils@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@vue/test-utils@npm:2.2.2"
   peerDependencies:
     vue: ^3.0.1
-  checksum: 6eccfbcd1839b43a6cdf7838c537a5b2446553d78a6743cc73c29765c21a66a7894089179139b7187b0b06a1bef1bee1758c738b18fd1dd8c91dec752a37da92
+  checksum: fdfd15d755ea14c5cd65a9ce36ef6e5d29bcfb72f5fc8daa3f698e16b35f0c1b695ceb7d50d81dc4f3bf89500ca3d97cf61c814aff04c3c62ffe4eb73a70a730
   languageName: node
   linkType: hard
 

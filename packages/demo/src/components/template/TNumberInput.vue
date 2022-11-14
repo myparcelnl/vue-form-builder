@@ -5,8 +5,8 @@
       v-model="model"
       :name="name"
       type="number"
-      :min="min"
-      :max="max"
+      :min="props.min"
+      :max="props.max"
       :disabled="disabled"
       :valid="valid"
       :class="{
@@ -51,14 +51,9 @@ export default defineComponent({
       type: Boolean,
     },
 
-    min: {
-      type: Number,
-      default: null,
-    },
-
-    max: {
-      type: Number,
-      default: null,
+    props: {
+      type: Object,
+      default: () => ({}),
     },
 
     valid: {

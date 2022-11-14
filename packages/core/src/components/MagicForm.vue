@@ -10,7 +10,7 @@
     ]"
     @submit.prevent="form.submit">
     <template
-      v-for="(field, index) in form.fields"
+      v-for="(field, index) in fields"
       :key="`field--${field.name ?? 'unnamed'}--${index}`">
       <InteractiveElement
         v-if="field.hasOwnProperty('ref')"
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent, provide} from 'vue';
+import {PropType, defineComponent, provide, toRef} from 'vue';
 import {FormInstance} from '../form';
 import {INJECT_FORM} from '../services';
 import InteractiveElement from './InteractiveElement.vue';
@@ -49,6 +49,12 @@ export default defineComponent({
     provide(INJECT_FORM, props.form);
     const lifeCycleHooks = useLifeCycleHooks();
     lifeCycleHooks.register(props.form.hooks, props.form);
+
+    const fields = toRef(props.form, 'fields');
+
+    return {
+      fields,
+    };
   },
 });
 </script>

@@ -11,6 +11,14 @@ import {ref} from 'vue';
 // todo: dynamically add more form parts, see BO -> canada -> project groups
 // todo: form groups?
 
+const copyNameValidation = (field: any, value: any) => {
+  // check with other `copyName_${value}` fields if the value is not the same
+  const otherFields = field.form.fields.value.filter((f) => {
+    return f.name?.startsWith('copyName_') && f.name !== field.name;
+  });
+  return !otherFields.some((field) => field.ref === value);
+};
+
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
   fieldClass: [
     'flex',
@@ -91,13 +99,35 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
     defineField({
       name: 'copyAmount',
       component: TNumberInput,
-      ref: ref(1),
+      ref: ref(0),
       label: 'Copy Amount',
       disabled: true,
       visible: false,
       props: {
-        min: 1,
+        min: 0,
         max: 10,
+      },
+      afterUpdate: (field, newValue, oldValue) => {
+        // collect all fields named `copyName_${value}`;
+        const copyNameFields = field.form.fields.value.filter((field) => field.name?.startsWith('copyName_'));
+        if (copyNameFields.length < newValue) {
+          // add new fields
+          for (let i = copyNameFields.length; i < newValue; i++) {
+            field.form.addElement({
+              name: `copyName_${i}`,
+              component: TTextInput,
+              ref: ref(''),
+              label: `Copy Name ${i+1}`,
+              validate: copyNameValidation,
+              errorMessage: 'Cannot have duplicate copy names',
+            }, 'packageType', 'before');
+          }
+        } else if (copyNameFields.length > newValue) {
+          // remove fields
+          for (let i = copyNameFields.length; i > newValue; i--) {
+            field.form.removeElement(copyNameFields[i - 1].name);
+          }
+        }
       },
     }),
     defineField({

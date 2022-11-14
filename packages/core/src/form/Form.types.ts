@@ -11,7 +11,7 @@ export type FormConfiguration = {
   /**
    * Fields in the form.
    */
-  fields: ReadonlyOr<ResolvedElementConfiguration[]>;
+  fields: ResolvedElementConfiguration[];
 
   /**
    * Function executed when any label is rendered.
@@ -59,9 +59,9 @@ export type FormInstance<FC extends FormConfiguration = FormConfiguration> = {
   readonly name: string;
 
   readonly config: Omit<FC, 'fields'>;
-  readonly fields: AnyElementInstance[];
   readonly hooks: HookManager<typeof FORM_HOOKS[number], FormHooks>;
   readonly model: FieldsToModel;
+  fields: Ref<AnyElementInstance[]>;
 
   /**
    * Reset all fields to their original state.

@@ -12,9 +12,9 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   public readonly name: FN;
 
   public readonly config: Omit<FC, 'fields'>;
-  public readonly fields: AnyElementInstance[] = [];
   public readonly hooks: HookManager<typeof FORM_HOOKS[number], FormHooks>;
   public readonly model = {} as FieldsToModel;
+  public fields: Ref<AnyElementInstance[]> = ref([]);
 
   /**
    * Whether all fields in the form are valid.
@@ -38,16 +38,16 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.hooks = createHookManager(formConfig as any);
 
-    const formInstance = this.createFormInstance();
+    this.fields.value = [];
 
     fields.forEach((field) => {
-      const instance = this.createFieldInstance(field, formInstance);
+      const instance = this.createFieldInstance(field, this);
 
-      this.fields.push(instance);
+      this.fields.value.push(instance);
     });
 
     this.fieldsWithNamesAndRefs = computed(() => {
-      return this.fields.filter((field) => {
+      return this.fields.value.filter((field) => {
         return isOfType<InteractiveElementInstance>(field, 'ref');
       });
 
@@ -57,7 +57,9 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   }
 
   public addElement(element: AnyElementConfiguration, sibling?: string, position: 'before' | 'after' = 'after'): void {
-    const newIndex = sibling ? this.fields.findIndex((field) => field.name === sibling) : this.fields.length;
+    const newIndex = sibling ? this.fields.value.findIndex(
+      (field) => field.name === sibling
+    ) : this.fields.value.length;
 
     if (newIndex === -1) {
       // eslint-disable-next-line no-console
@@ -67,7 +69,13 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
 
     const index = position === 'after' ? newIndex + 1 : newIndex;
 
-    this.fields.splice(index, 0, this.createFieldInstance(element, this.createFormInstance()));
+    const newElement = this.createFieldInstance(element, this);
+    this.fields.value.splice(index, 0, newElement);
+  }
+
+  public removeElement(name: string): void {
+    const index = this.fields.value.findIndex((field) => field.name === name);
+    this.fields.value.splice(index, 1);
   }
 
   public async submit(): Promise<void> {
@@ -84,7 +92,7 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   public async validate(): Promise<boolean> {
     await this.hooks.execute('beforeValidate', this);
     const res = await Promise.all(
-      this.fields.map(async (field) => {
+      this.fields.value.map(async (field) => {
         if (!isOfType<InteractiveElement>(field, 'isValid')) {
           return true;
         }
@@ -103,7 +111,7 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
 
   private createFieldInstance(
     field: AnyElementConfiguration,
-    form: FormInstance<FC> & {fields: undefined},
+    form: FormInstance<FC>,
   ): AnyElementInstance {
     let instance;
 
@@ -125,9 +133,5 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     return instance;
-  }
-
-  private createFormInstance(): FormInstance<FC> & {fields: undefined} {
-    return {...this, fields: undefined};
   }
 }

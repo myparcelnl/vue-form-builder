@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "serve": "vite",
-    "typecheck": "run workspace:vite:typecheck \"$(pwd)\""
+    "typecheck": "run ws:vite:typecheck \"$(pwd)\""
   },
   "eslintConfig": {
     "rules": {

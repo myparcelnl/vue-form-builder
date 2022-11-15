@@ -9,15 +9,15 @@
     "lib"
   ],
   "scripts": {
-    "build": "run workspace:tsup:build \"$(pwd)\"",
-    "build:dev": "run workspace:tsup:build:dev \"$(pwd)\"",
-    "buildOnly": "run workspace:tsup:buildOnly \"$(pwd)\"",
-    "clean": "run workspace:clean \"$(pwd)\"",
-    "typecheck": "run workspace:tsup:typecheck \"$(pwd)\"",
-    "watch": "run workspace:tsup:watch \"$(pwd)\""
+    "build": "run ws:tsup:build \"$(pwd)\"",
+    "build:dev": "run ws:tsup:build:dev \"$(pwd)\"",
+    "buildOnly": "run ws:tsup:buildOnly \"$(pwd)\"",
+    "clean": "run ws:clean \"$(pwd)\"",
+    "typecheck": "run ws:tsup:typecheck \"$(pwd)\"",
+    "watch": "run ws:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel/ts-utils": "^1.0.0-alpha.1"
+    "@myparcel/ts-utils": "^1.0.0"
   },
   "devDependencies": {
     "@myparcel-vfb/build-tsup": "workspace:*",

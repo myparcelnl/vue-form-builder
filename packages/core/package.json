@@ -10,25 +10,24 @@
   "repository": "github:myparcelnl/vue-form-builder",
   "license": "MIT",
   "type": "module",
-  "main": "./lib/vue-form-builder.cjs",
-  "module": "./lib/vue-form-builder.js",
-  "types": "lib/index.d.ts",
+  "main": "./lib/vue-form-builder.js",
+  "types": "./lib/index.d.ts",
   "files": [
     "lib"
   ],
   "scripts": {
-    "build": "run workspace:vite:build \"$(pwd)\"",
-    "build:dev": "run workspace:vite:build:dev \"$(pwd)\"",
-    "buildOnly": "run workspace:vite:buildOnly \"$(pwd)\"",
+    "build": "run ws:vite:build \"$(pwd)\"",
+    "build:dev": "run ws:vite:build:dev \"$(pwd)\"",
+    "buildOnly": "run ws:vite:buildOnly \"$(pwd)\"",
     "clean": "rimraf dist",
-    "serve": "run workspace:vite:serve \"$(pwd)\"",
-    "typecheck": "run workspace:vite:typecheck \"$(pwd)\"",
-    "watch": "run workspace:vite:watch \"$(pwd)\""
+    "serve": "run ws:vite:serve \"$(pwd)\"",
+    "typecheck": "run ws:vite:typecheck \"$(pwd)\"",
+    "watch": "run ws:vite:watch \"$(pwd)\""
   },
   "dependencies": {
     "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.4",
     "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.4",
-    "@myparcel/ts-utils": "^1.0.0-alpha.2"
+    "@myparcel/ts-utils": "^1.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",

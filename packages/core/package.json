@@ -1,6 +1,6 @@
 {
   "name": "@myparcel/vue-form-builder",
-  "version": "1.0.0-alpha.9",
+  "version": "1.0.0-alpha.10",
   "keywords": [
     "vue",
     "form-builder",
@@ -26,8 +26,8 @@
     "watch": "run workspace:vite:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/hook-manager": "workspace:*",
-    "@myparcel-vfb/utils": "workspace:*",
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.4",
+    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.4",
     "@myparcel/ts-utils": "^1.0.0-alpha.2"
   },
   "devDependencies": {

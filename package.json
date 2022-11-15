@@ -42,7 +42,7 @@
     "@myparcel-eslint/eslint-config-node": "^1.0.0-alpha.2",
     "@myparcel-eslint/eslint-config-prettier": "^1.0.0-alpha.2",
     "@myparcel-eslint/eslint-config-prettier-typescript": "^1.0.0-alpha.1",
-    "@myparcel-eslint/eslint-config-prettier-typescript-vue": "^1.0.0-alpha.1",
+    "@myparcel-eslint/eslint-config-prettier-typescript-vue": "^1.2.0",
     "@tsconfig/recommended": "^1.0.1",
     "@vitest/coverage-c8": "^0.25.1",
     "@vue/test-utils": "^2.2.3",

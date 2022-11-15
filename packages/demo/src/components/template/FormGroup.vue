@@ -1,24 +1,32 @@
 <template>
-  <div class="grid grid-cols-3 items-center justify-center w-full">
-    <label
-      v-if="label"
-      :for="name"
-      >{{ label }}</label
-    >
+  <div class="grid grid-cols-2 items-center justify-center relative w-full">
+    <div>
+      <label
+        v-if="label"
+        :for="name"
+        v-text="label" />
+    </div>
 
-    <slot />
-    <ul v-if="warningsRef">
-      <li
-        v-for="warning in warningsRef"
-        :key="warning">
-        {{ warning }}
-      </li>
-    </ul>
+    <div>
+      <slot />
+    </div>
+
+    <div
+      v-if="warnings.length"
+      class="bg-red-700 border border-red-800 col-span-2 dark:bg-red-900 mt-3 p-5 rounded-lg">
+      <ul>
+        <li
+          v-for="warning in warnings"
+          :key="warning"
+          v-text="warning" />
+      </ul>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, toRef, unref} from 'vue';
+import {defineComponent} from 'vue';
+import {translate} from '../../translate.js';
 
 export default defineComponent({
   name: 'FormGroup',
@@ -35,14 +43,14 @@ export default defineComponent({
 
     warnings: {
       type: Object,
-      default: () => [],
+      default: () => ({}),
     },
   },
-  setup: (props) => {
-    return {
-      warningsRef: toRef(props, 'warnings'),
-    }
-  },
 
+  setup: () => {
+    return {
+      translate,
+    };
+  },
 });
 </script>

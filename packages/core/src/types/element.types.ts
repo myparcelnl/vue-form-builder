@@ -1,13 +1,12 @@
+import {Component, UnwrapNestedRefs} from 'vue';
 import {
   InteractiveElementConfiguration,
   InteractiveElementInstance,
   PlainElementConfiguration,
   PlainElementInstance,
 } from '../form';
-import {Component} from 'vue';
 import {ComponentLifecycleHooks} from './other.types';
 import {ComponentProps} from '@myparcel-vfb/utils';
-import {HookNamesObject} from '@myparcel-vfb/hook-manager';
 import {MakeOptional} from '@myparcel/ts-utils';
 
 export type ElementName = string | undefined;
@@ -19,7 +18,9 @@ export type ComponentHooks<C extends ComponentOrHtmlElement = ComponentOrHtmlEle
   : unknown;
 
 export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = C extends Component
-  ? Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>
+  ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>
   : never;
 
 export type BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
@@ -33,25 +34,26 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
    * ElementProps to be passed to the component.
    */
   props?: ElementProps<C>;
+
+  hookNames?: string[];
 };
 
 export type AnyElementInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   RT = unknown,
-> = InteractiveElementInstance<C, N, RT> | PlainElementInstance<C>;
+> = UnwrapNestedRefs<InteractiveElementInstance<C, N, RT> | PlainElementInstance<C, N>>;
 
 export type AnyElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   RT = any,
-> = (PlainElementConfiguration<C> | InteractiveElementConfiguration<C, N, RT>) & HookNamesObject;
+> = PlainElementConfiguration<C, N> | InteractiveElementConfiguration<C, N, RT>;
 
 export type ResolvedElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   RT = any,
-> = RT extends never ? PlainElementConfiguration<C> : InteractiveElementConfiguration<C, N, RT>;
+> = RT extends never ? PlainElementConfiguration<C, N> : InteractiveElementConfiguration<C, N, RT>;

@@ -1,34 +1,60 @@
-import {CustomHookItem, HookManagerConfiguration, HookNames} from './types';
-import {ResolvePromise} from '@myparcel/ts-utils';
+import {CustomHookItem, HookCallback, HookManagerConfiguration} from './types';
+import {ReadonlyOr, ResolvePromise} from '@myparcel/ts-utils';
 import {filterMatchingHooks} from './utils/filterMatchingHooks';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type GetParameters<T> = T extends (...args: any[]) => any ? Parameters<T> : never;
+type GetParameters<T> = T extends (...args: any[]) => any ? Parameters<T> : any[];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type GetReturnType<T> = ResolvePromise<T extends (...args: any[]) => any ? ReturnType<T> : never>;
+type GetReturnType<T> = ResolvePromise<T extends (...args: any[]) => any ? ReturnType<T> : Promise<any>>;
 
-export class HookManager<
+export type HookManagerInstance<
+  HC extends HookManagerConfiguration = HookManagerConfiguration,
   HN extends string = string,
-  HC extends HookManagerConfiguration<HN> = HookManagerConfiguration<HN>,
-> {
-  public availableHooks: HookNames<HN>;
+> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  execute<N extends HN>(name: N, ...args: any[]): Promise<GetReturnType<HC[N]>>;
 
-  public registeredHooks: CustomHookItem<HN | string>[] = [];
+  getAvailableHooks(): ReadonlyOr<HN[]>;
+
+  getRegisteredHooks(): CustomHookItem[];
+
+  has(name: HN): boolean;
+
+  register(name: HN, callback: HookCallback): void;
+};
+
+export class HookManager<HC extends HookManagerConfiguration = HookManagerConfiguration, HN extends string = string> {
+  protected readonly availableHooks: ReadonlyOr<(HN | string)[]>;
+  protected readonly registeredHooks: CustomHookItem[] = [];
+
   public constructor(config: HC) {
     this.availableHooks = config.hookNames ?? [];
 
     Object.keys(config)
       .filter((key) => filterMatchingHooks(this.availableHooks, key))
       .forEach((key) => {
-        this.register(key as HN, config[key] as HC[HN]);
+        this.register(key, config[key] as HookCallback);
       });
   }
 
-  public async execute<N extends HN | string>(name: N, ...args: GetParameters<HC[N]>): Promise<GetReturnType<HC[N]>> {
-    if (this.has(name) && import.meta.env.MODE === 'development') {
-      // eslint-disable-next-line no-console
-      console.info(`%c@${name}`, 'color: yellow', ...args);
+  public getAvailableHooks(): ReadonlyOr<string[]> {
+    return this.availableHooks;
+  }
+
+  public getRegisteredHooks(): CustomHookItem[] {
+    return this.registeredHooks;
+  }
+
+  public async execute<N extends HN>(name: N, ...args: GetParameters<HC[N]>): Promise<GetReturnType<HC[N]>> {
+    if (import.meta.env.MODE === 'development') {
+      if (this.has(name)) {
+        // eslint-disable-next-line no-console
+        console.info(`%c@${name}`, 'color: yellow', ...args);
+      } else {
+        // eslint-disable-next-line no-console
+        console.info(`%c@${name} does not exist`, 'color: red', ...args);
+      }
     }
 
     const returnValue = await Promise.all(
@@ -42,13 +68,11 @@ export class HookManager<
     return this.registeredHooks.some((hook) => hook.name === name);
   }
 
-  public register(name: HN | string, callback: HC[HN]): void {
+  public register(name: HN | string, callback: HookCallback): void {
     if (!callback) {
       return;
     }
 
-    // TODO: fix types
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.registeredHooks.push({name, callback: callback as any});
+    this.registeredHooks.push({name, callback});
   }
 }

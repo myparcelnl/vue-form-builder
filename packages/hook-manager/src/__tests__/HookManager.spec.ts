@@ -1,22 +1,22 @@
 import {beforeEach, describe, expect, it, vi} from 'vitest';
-import {HookManager} from '@myparcel-vfb/hook-manager';
+import {HookManagerInstance} from '../HookManager';
 import {createHookManager} from '../createHookManager';
 
 const HOOKS = ['start', 'sanitize'] as const;
 
-type Configuration<I> = {
+type Configuration<I = unknown> = {
   beforeStart: (instance: I) => void;
   start: (instance: I, value: string) => void;
   afterStart: (instance: I, value: string) => void;
   sanitize: (instance: I, value: string) => string;
 };
 
-// eslint-disable-next-line no-invalid-this
 class Throwaway {
-  public hooks: HookManager<typeof HOOKS[number], Configuration<Throwaway>>;
+  public hooks: HookManagerInstance<Configuration<Throwaway>>;
 
   public constructor(config: Partial<Configuration<Throwaway>>) {
-    // TODO: fix types
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     this.hooks = createHookManager({...config, hookNames: HOOKS});
   }
 
@@ -41,9 +41,10 @@ describe('Hookable', () => {
 
   it('registers hooks', () => {
     const instance = new Throwaway(DEFAULT_CONFIG);
+    const registeredHooks = instance.hooks.getRegisteredHooks();
 
-    expect(instance.hooks.registeredHooks).toHaveLength(3);
-    expect(instance.hooks.registeredHooks.map((hook) => hook.name)).toEqual(['start', 'afterStart', 'sanitize']);
+    expect(registeredHooks).toHaveLength(3);
+    expect(registeredHooks.map((hook) => hook.name)).toEqual(['start', 'afterStart', 'sanitize']);
   });
 
   it('executes hooks', async () => {

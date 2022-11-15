@@ -4,36 +4,36 @@ import {InteractiveElementInstance} from '../InteractiveElement.types';
 import {PromiseOr} from '@myparcel/ts-utils';
 
 export type ValidateFunction<
-  RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
+  RT = unknown,
 > = (field: InteractiveElementInstance<C, N, RT>, value: RT) => PromiseOr<boolean>;
 
 export type ComputedValidator = {isValid: ComputedRef<boolean>};
 
 export type MultiValidator<
-  RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-> = {validators: Validator<RT, C, N>[]};
+  RT = unknown,
+> = {validators: Validator<C, N, RT>[]};
 
 export type SingleValidator<
-  RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-> = Validator<RT, C, N>;
+  RT = unknown,
+> = Validator<C, N, RT>;
 
 export type FieldValidator<
-  RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-> = Partial<ComputedValidator | MultiValidator<RT, C, N> | SingleValidator<RT, C, N>>;
+  RT = unknown,
+> = Partial<ComputedValidator | MultiValidator<C, N, RT> | SingleValidator<C, N, RT>>;
 
 export type Validator<
-  RT = unknown,
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
+  RT = unknown,
 > = {
-  validate: ValidateFunction<RT, C, N>;
+  validate: ValidateFunction<C, N, RT>;
   errorMessage?: string;
 };

@@ -1,34 +1,32 @@
 <template>
   <div
-    v-show="elementRefs.isVisible"
-    :id="elementId()"
-    :class="elementRefs.isVisible ? element.form.config.fieldClass : null"
-  >
+    v-show="element.isVisible"
+    :id="elementId"
+    :class="element.isVisible ? element.form.config.fieldClass : null">
     <component
       :is="element.component"
-      v-model="value"
       :id="element.name ?? element.name"
+      v-model="model"
       :label="element.label"
       :name="element.name"
-      :warnings="elementRefs.errors"
-      :disabled="elementRefs.isDisabled"
-      :valid="elementRefs.isValid"
-      :suspended="elementRefs.isSuspended"
-      :props="element.props"
-      v-on="hooks"
-    />
+      :warnings="element.errors"
+      :disabled="element.isDisabled"
+      :valid="element.isValid"
+      :suspended="element.isSuspended"
+      v-bind="{...$attrs, ...element.props}"
+      v-on="hooks" />
   </div>
 </template>
 
 <script lang="ts">
-import {PropType, computed, defineComponent, provide, toRefs} from 'vue';
+import {PropType, computed, defineComponent, provide} from 'vue';
 import {INJECT_ELEMENT} from '../services';
 import {InteractiveElementInstance} from '../form';
 import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'InteractiveElement',
-
+  inheritAttrs: false,
   props: {
     element: {
       type: Object as PropType<InteractiveElementInstance>,
@@ -40,13 +38,12 @@ export default defineComponent({
     const lifecycleHooks = useLifeCycleHooks();
     provide(INJECT_ELEMENT, props.element);
 
-    const propRefs = toRefs(props);
-    const elementRefs = toRefs(props.element);
-
-    lifecycleHooks.register(propRefs.element.value.hooks, propRefs.element);
+    lifecycleHooks.register(props.element.hooks, props.element);
 
     const hooks = computed(() => {
-      return props.element.hooks.registeredHooks.reduce(
+      const registeredHooks = props.element.hooks.getRegisteredHooks();
+
+      return registeredHooks.reduce(
         (acc, hook) => {
           if (!hook.name.startsWith('on')) {
             return acc;
@@ -59,7 +56,6 @@ export default defineComponent({
             [hook.name.replace(/^on/, '')]: (value: any) => hook.callback(props.element, value),
           };
         },
-        // TODO: fix types
         {
           blur: props.element.blur,
           focus: props.element.focus,
@@ -68,28 +64,19 @@ export default defineComponent({
       );
     });
 
-    const value = computed({
-      get() {
-        return elementRefs.ref.value;
-      },
-      set(value) {
-        elementRefs.ref.value = value;
-      },
-    });
-
-    const elementId = (): String => {
-      if (elementRefs.name.value) {
-        return elementRefs.name.value + '__container';
-      }
-      return '';
-    };
-
-
     return {
       hooks,
-      value,
-      elementId,
-      elementRefs,
+      model: computed({
+        get() {
+          return props.element.ref;
+        },
+        set(value) {
+          // eslint-disable-next-line vue/no-mutating-props
+          props.element.ref = value;
+        },
+      }),
+
+      elementId: computed(() => (props.element.name ? `${props.element.name}__container` : '')),
     };
   },
 });

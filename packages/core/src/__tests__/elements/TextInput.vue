@@ -1,13 +1,14 @@
 <template>
   <input
-    type="text"
     :id="id"
     v-model="value"
+    type="text"
     :name="name"
     v-bind="$attrs"
-    :disabled="!disabled"
+    :disabled="disabled"
     :class="{
-      'border-red-500': !isValid(),
+      'border-red-500': valid === false,
+      'opacity-50 cursor-not-allowed': disabled,
     }"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"
@@ -15,20 +16,25 @@
     @focusout="$emit('focusout', $event)"
     @click="$emit('click', $event)"
     @change="$emit('change', $event)" />
-    <span class="loading-indicator" v-if="isSuspended">
-      Loading...
-    </span>
-    <ul v-if="warningsRef.length" class="warnings">
-      <li
-        v-for="warning in warningsRef"
-        :key="warning">
-        {{ warning }}
-      </li>
-    </ul>
+  <span
+    v-if="suspended"
+    class="loading-indicator"
+    v-text="translate('loading')">
+  </span>
+  <ul
+    v-if="warningsRef.length"
+    class="warnings">
+    <li
+      v-for="warning in warningsRef"
+      :key="warning">
+      {{ warning }}
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, Ref, toRef} from 'vue';
+import {computed, defineComponent, toRef} from 'vue';
+import {translate} from '@myparcel-vfb/demo/src/translate.js';
 
 export default defineComponent({
   name: 'TextInput',
@@ -39,41 +45,44 @@ export default defineComponent({
       type: String,
       default: null,
     },
+
     id: {
       type: String,
       required: true,
     },
+
     name: {
       type: String,
       required: true,
     },
+
+    // eslint-disable-next-line vue/no-unused-properties
     label: {
       type: String,
       default: null,
     },
-    disabled: {
-      type: Object,
-      default: false,
-    },
-    valid: {
-      type: Object,
-      default: true,
-    },
-    suspended: {
-      type: Object,
-      default: false,
-    },
+
     warnings: {
       type: Object,
-      default: () => [],
+      default: () => ({}),
+    },
+
+    disabled: {
+      type: Boolean,
+    },
+
+    suspended: {
+      type: Boolean,
+    },
+
+    valid: {
+      type: Boolean,
     },
   },
-  emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
-  setup: (props, { emit, attrs }) => {
-    const isValid = () => {
-      return props.valid === undefined ? true : props.valid;
-    };
 
+  emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
+
+  setup: (props, {emit}) => {
     const value = computed({
       get() {
         return props.modelValue;
@@ -84,10 +93,9 @@ export default defineComponent({
     });
 
     return {
+      translate,
       value,
-      isValid,
       warningsRef: toRef(props, 'warnings'),
-      isSuspended: toRef(props, 'suspended'),
     };
   },
 });

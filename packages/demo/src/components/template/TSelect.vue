@@ -4,29 +4,31 @@
       :id="id"
       v-model="model"
       :name="name"
-      :disabled="!disabled"
+      :disabled="disabled"
       :class="{
-        'border-red-500': !isValid(),
+        'border-red-500': valid === false,
+        'opacity-50 cursor-not-allowed': disabled,
       }"
       @blur="$emit('blur', $event)"
+      @change="$emit('change', $event)"
+      @click="$emit('click', $event)"
       @focus="$emit('focus', $event)"
       @focusin="$emit('focusin', $event)"
-      @focusout="$emit('focusout', $event)"
-      @click="$emit('click', $event)"
-      @change="change">
+      @focusout="$emit('focusout', $event)">
       <option
-        v-for="(option, index) in options"
+        v-for="option in options"
         :key="`${name}__option--${option.value}`"
-        :value="option.value">
-        {{ option.label }}
-      </option>
+        :value="option.value"
+        v-text="option.label"></option>
     </select>
   </FormGroup>
 </template>
 
 <script lang="ts">
-import {defineComponent, toRefs, watchEffect} from 'vue';
+/* eslint-disable vue/no-unused-properties */
+import {PropType, defineComponent, toRefs, watch} from 'vue';
 import FormGroup from './FormGroup.vue';
+import {SelectOption} from '@myparcel/vue-form-builder';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
@@ -54,57 +56,50 @@ export default defineComponent({
       default: null,
     },
 
-    disabled: {
-      type: Object,
-      default: false,
-    },
-
-    valid: {
-      type: Object,
-      default: true,
-    },
-
     warnings: {
       type: Object,
+      default: () => ({}),
+    },
+
+    options: {
+      type: Array as PropType<SelectOption[]>,
       default: () => [],
     },
 
-    props: {
-      type: Object,
-      default: () => ({}),
+    disabled: {
+      type: Boolean,
+    },
+
+    suspended: {
+      type: Boolean,
+    },
+
+    valid: {
+      type: Boolean,
     },
   },
 
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
 
-  setup: (props, { emit }) => {
+  setup: (props) => {
     const model = useVModel(props, 'modelValue');
     const propRefs = toRefs(props);
 
-    const isValid = () => {
-      return props.valid.value === undefined ? true : props.valid.value;
-    };
+    // Set the model value to the first option if no value is set
+    watch(
+      propRefs.options,
+      (options) => {
+        if (model.value) {
+          return;
+        }
 
-    watchEffect(() => {
-      if (model.value) {
-        return;
-      }
-
-      model.value = propRefs.options.value[0]?.value;
-    });
-
-    const change = (e) => {
-      emit('change', e);
-      emit('blur', e);
-    }
-
-    const options = props.props.options;
+        model.value = options[0]?.value;
+      },
+      {immediate: true},
+    );
 
     return {
       model,
-      options,
-      isValid,
-      change,
     };
   },
 });

@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@myparcel-vfb/build-tsup": "workspace:*",
-    "vue": "^3.2.44"
+    "vue": "^3.2.45"
   },
   "publishConfig": {
     "access": "public"

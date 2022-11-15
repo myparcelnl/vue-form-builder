@@ -1,26 +1,38 @@
 <template>
-  <FormGroup v-bind="{label, id}">
-    <TTextInput
+  <FormGroup v-bind="{label, id, warnings}">
+    <LoadingOverlay v-if="suspended" />
+    <input
       :id="id"
-      v-model="model"
-      :name="name"
+      v-model.number="model"
       type="number"
+      :name="name"
+      v-bind="$attrs"
+      :disabled="disabled"
       :min="min"
       :max="max"
-      :disabled="!disabled"
-      :valid="valid" />
+      :class="{
+        'border-red-500': valid === false,
+        'opacity-50 cursor-not-allowed': disabled,
+      }"
+      @blur="$emit('blur', $event)"
+      @focus="$emit('focus', $event)"
+      @focusin="$emit('focusin', $event)"
+      @focusout="$emit('focusout', $event)"
+      @click="$emit('click', $event)"
+      @change="$emit('change', $event)" />
   </FormGroup>
 </template>
 
 <script lang="ts">
 import FormGroup from './FormGroup.vue';
-import TTextInput from './TTextInput.vue';
+import LoadingOverlay from '../LoadingOverlay.vue';
 import {defineComponent} from 'vue';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TNumberInput',
-  components: {TTextInput, FormGroup},
+  components: {LoadingOverlay, FormGroup},
+  inheritAttrs: false,
   props: {
     // eslint-disable-next-line vue/no-unused-properties
     modelValue: {
@@ -43,10 +55,6 @@ export default defineComponent({
       default: null,
     },
 
-    disabled: {
-      type: Object,
-    },
-
     min: {
       type: Number,
       default: null,
@@ -57,10 +65,25 @@ export default defineComponent({
       default: null,
     },
 
-    valid: {
+    warnings: {
       type: Object,
+      default: () => ({}),
+    },
+
+    disabled: {
+      type: Boolean,
+    },
+
+    suspended: {
+      type: Boolean,
+    },
+
+    valid: {
+      type: Boolean,
     },
   },
+
+  emits: ['blur', 'focus', 'focusin', 'focusout', 'click', 'change'],
 
   setup: (props) => {
     return {

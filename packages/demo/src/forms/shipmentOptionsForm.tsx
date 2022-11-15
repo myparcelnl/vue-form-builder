@@ -1,3 +1,4 @@
+import {CARRIERS, CarrierName, PACKAGE_TYPES} from '@myparcel/sdk';
 import {defineField, defineForm} from '@myparcel/vue-form-builder';
 import Heading from '../components/Heading.vue';
 import THiddenInput from '../components/template/THiddenInput.vue';
@@ -7,23 +8,15 @@ import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TTextInput from '../components/template/TTextInput.vue';
 import TToggleSwitch from '../components/template/TToggleSwitch.vue';
 import {ref} from 'vue';
+import {translate} from '../translate';
+import {useFetchCarriers} from '../queries/fetchCarriers';
 
 // todo: dynamically add more form parts, see BO -> canada -> project groups
 // todo: form groups?
 
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
-  fieldClass: [
-    'flex',
-    'items-center',
-    'py-1',
-    'pb-2',
-    'dark:hover:bg-opacity-30',
-    'dark:hover:bg-pink-500',
-    'duration-100',
-    'group',
-    'hover:bg-pink-100',
-    'transition-colors',
-  ],
+  renderLabel: translate,
+  fieldClass: ['flex', 'items-center', 'py-1', 'pb-2', 'duration-100', 'group', 'transition-colors'],
   formClass: ['border', 'border-gray-600', 'rounded-xl', 'p-4'],
 
   // refs: toRefs(
@@ -48,11 +41,41 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         level: 2,
       },
     }),
+
+    defineField({
+      name: 'carrier',
+      label: 'carrier',
+      component: TSelect,
+      ref: ref<CarrierName>(),
+      props: {
+        options: [],
+      },
+
+      onBeforeMount: async (field) => {
+        const carriers = useFetchCarriers();
+        await carriers.suspense();
+
+        field.props.options =
+          carriers.data.value?.map((carrier) => ({
+            label: carrier.human,
+            value: carrier.name,
+          })) ?? [];
+      },
+    }),
+
+    defineField({
+      name: 'dhlOptions',
+      label: 'DHL Only Options',
+      component: TTextInput,
+      ref: ref<string>(),
+      visibleCb: (field) => field.form.model.carrier.ref?.includes('dhl'),
+    }),
+
     defineField({
       name: 'name',
       component: TTextInput,
       ref: ref(''),
-      label: 'Name',
+      label: 'name',
       validators: [
         {
           validate: (field, value) => !String(value).startsWith('John'),
@@ -78,7 +101,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       name: 'labelAmount',
       component: TNumberInput,
       ref: ref(1),
-      label: 'Label Amount',
+      label: 'label_amount',
       props: {
         min: 1,
         max: 10,
@@ -118,55 +141,20 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       name: 'packageType',
       component: TSelect,
       ref: ref('package'),
-      label: 'Package Type',
+      label: 'package_type',
       props: {
-        options: [
-          {
-            label: 'Package',
-            value: 'package',
-          },
-          {
-            label: 'Mailbox',
-            value: 'mailbox',
-          },
-          {
-            label: 'Letter',
-            value: 'letter',
-          },
-          {
-            label: 'Digital Stamp',
-            value: 'digital_stamp',
-          },
-        ],
+        options: PACKAGE_TYPES.ALL.map((type) => ({
+          label: translate(`package_type_${type.NAME}`),
+          value: type.NAME,
+        })),
       },
       validators: [
         {
           validate: (field, value) =>
-            !(
-              field.form.model.name.ref.value === 'Mack' &&
-              String(value).startsWith('letter')
-            ),
+            !(field.form.model.name.ref.value === 'Mack' && String(value).startsWith('letter')),
           errorMessage: 'Forget about letters, Mack does not like them.',
         },
       ],
-
-      // afterUpdate: (field, newValue, oldValue) => {
-      //   const isPackage = newValue === 'package';
-      //   const {model} = field.form;
-      //
-      //   model.ageCheck.isVisible = isPackage;
-      //   model.ageCheck.ref = isPackage ? model.ageCheck.ref : false;
-      //   model.insurance.isVisible = isPackage;
-      //   model.insurance.ref = isPackage ? model.insurance.ref : 0;
-      //   model.largeFormat.isVisible = isPackage;
-      //   model.largeFormat.ref = isPackage ? model.largeFormat.ref : false;
-      //   model.onlyRecipient.isVisible = isPackage;
-      //   model.onlyRecipient.ref = isPackage ? model.onlyRecipient.ref : false;
-      //   model.return.isVisible = isPackage;
-      //   model.return.ref = isPackage ? model.return.ref : false;
-      //   model.signature.isVisible = isPackage;
-      //   model.signature.ref = isPackage ? model.signature.ref : false;
-      // },
     }),
     // defineField({
     //   name: 'carrier',
@@ -207,40 +195,60 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       name: 'signature',
       component: TToggleSwitch,
       ref: ref(true),
-      label: 'Signature',
+      label: 'shipment_option_signature',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
     defineField({
       name: 'onlyRecipient',
       component: TToggleSwitch,
       ref: ref(false),
-      label: 'Only Recipient',
+      label: 'shipment_option_only_recipient',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
     defineField({
       name: 'ageCheck',
       component: TToggleSwitch,
       ref: ref(false),
-      label: 'Age Check',
+      label: 'shipment_option_age_check',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
     defineField({
       name: 'return',
       component: TToggleSwitch,
       ref: ref(false),
-      label: 'Return',
+      label: 'shipment_option_return',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
     defineField({
       name: 'largeFormat',
       component: TToggleSwitch,
       ref: ref(false),
-      label: 'Large Format',
+      label: 'shipment_option_large_format',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+    }),
+    defineField({
+      name: 'sameDayDelivery',
+      component: TToggleSwitch,
+      ref: ref(false),
+      label: 'shipment_option_same_day_delivery',
+      visibleCb: ({form}) => {
+        const {packageType, carrier} = form.model;
+
+        return (
+          packageType.ref === PACKAGE_TYPES.PACKAGE_NAME && ['dhlforyou', CARRIERS.INSTABOX_NAME].includes(carrier.ref)
+        );
+      },
     }),
     defineField({
       name: 'insurance',
-      component: TTextInput,
+      component: TNumberInput,
       ref: ref(1000),
-      label: 'Insurance',
-      validate: (field: any, value: any) => {
-        return value < 500;
+      label: 'shipment_option_insurance',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      validate: (field, value) => {
+        return value > 100;
       },
+      errorMessage: 'Insurance must be at least 100',
     }),
     defineField({
       component: TSubmitButton,

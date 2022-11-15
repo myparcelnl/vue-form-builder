@@ -1,7 +1,12 @@
-import {AnyElementConfiguration, AnyElementInstance, FieldsToModel, ResolvedElementConfiguration} from '../types';
+import {
+  AnyElementConfiguration,
+  AnyElementInstance,
+  ComponentLifecycleHooks,
+  FieldsToModel,
+  ResolvedElementConfiguration,
+} from '../types';
 import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
-import {FORM_HOOKS} from './Form';
-import {HookManager} from '@myparcel-vfb/hook-manager';
+import {HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
 import {Ref} from 'vue';
 
 /**
@@ -11,7 +16,7 @@ export type FormConfiguration = {
   /**
    * Fields in the form.
    */
-  fields: ReadonlyOr<ResolvedElementConfiguration[]>;
+  fields: ReadonlyOr<(ResolvedElementConfiguration | unknown)[]>;
 
   /**
    * Function executed when any label is rendered.
@@ -41,7 +46,7 @@ export type FormConfiguration = {
   hookNames?: readonly string[] | string[];
 };
 
-export type FormHooks<I extends FormInstance = FormInstance> = {
+export type FormHooks<I extends FormInstance = FormInstance> = Partial<ComponentLifecycleHooks<I>> & {
   beforeSubmit?(form: I): PromiseOr<void>;
   afterSubmit?(form: I): PromiseOr<void>;
 
@@ -60,7 +65,7 @@ export type FormInstance<FC extends FormConfiguration = FormConfiguration> = {
 
   readonly config: Omit<FC, 'fields'>;
   readonly fields: AnyElementInstance[];
-  readonly hooks: HookManager<typeof FORM_HOOKS[number], FormHooks>;
+  readonly hooks: HookManagerInstance<FormHooks>;
   readonly model: FieldsToModel;
 
   /**

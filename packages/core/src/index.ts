@@ -10,3 +10,5 @@ export * from './types';
 export type {SelectOption};
 
 export {COMPONENT_LIFECYCLE_HOOKS} from './data/componentLifecycleHooks';
+
+export {useDynamicWatcher} from './utils/useDynamicWatcher';

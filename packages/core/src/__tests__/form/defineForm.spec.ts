@@ -2,15 +2,14 @@ import {InteractiveElement, PlainElement, defineField, defineForm} from '../../f
 import {canNotContainLetterValidator, firstNameNotJohnValidator} from './interactive-element/validationData';
 import {canNotContainX, firstNameNotDuane} from '@myparcel-vfb/demo/src/forms/validators';
 import {describe, expect, it, vi} from 'vitest';
+import {flushPromises, mount} from '@vue/test-utils';
 import {formIsInvalid, formIsValid} from '../utils/formIsValid';
 import {MagicForm} from '../../components';
-import TextInput from '../elements/TextInput.vue';
 import SubmitButton from '../elements/SubmitButton.vue';
+import TextInput from '../elements/TextInput.vue';
 import {generateForm} from '../utils/generateForm';
-import {flushPromises, mount} from '@vue/test-utils';
+import {optionData} from '../utils/externalData';
 import {ref} from 'vue';
-import {removeUndefinedValues} from '../utils/removeUndefinedValues';
-import { optionData } from '../utils/externalData';
 
 describe('Form Generation', () => {
   describe('defining a form', () => {
@@ -28,36 +27,24 @@ describe('Form Generation', () => {
           component: TextInput,
           ref: ref('initial'),
         },
-      ]
+      ],
     });
 
     it('creates a reactive model from named elements', () => {
-      const form = generateForm({ fields: [
+      const form = generateForm([
         defineField({
           component: 'input',
-          ...removeUndefinedValues(undefined),
         }),
-        {
-          ...defineField({
-            component: 'input',
-            ...removeUndefinedValues(undefined),
-          }),
-          name: 'element',
-          ...removeUndefinedValues({name: 'test'}),
-        },
         defineField({
-          ...{
-            ...defineField({
-              component: 'input',
-              ...removeUndefinedValues(undefined),
-            }),
-            name: 'element',
-            ...removeUndefinedValues(undefined),
-          },
-          ref: ref(''),
-          ...removeUndefinedValues({name: 'test2'}),
+          component: 'input',
+          name: 'test',
         }),
-      ] });
+        defineField({
+          component: 'input',
+          ref: ref(''),
+          name: 'test2',
+        }),
+      ]);
 
       expect(Object.keys(form.model)).toEqual(['test', 'test2']);
       expect(form.model.test).toBeInstanceOf(PlainElement);
@@ -145,10 +132,8 @@ describe('Form Generation', () => {
             name: 'lastName',
             component: TextInput,
             ref: lastName,
-            validate: (field, value) => !(
-              field.form.model.firstName.ref.value === 'Jack' &&
-              String(value) === 'McGill'
-            ),
+            validate: (field, value) =>
+              !(field.form.model.firstName.ref.value === 'Jack' && String(value) === 'McGill'),
             errorMessage: 'Last name cannot be "McGill" if first name is "Jack"',
           }),
           defineField({
@@ -186,7 +171,7 @@ describe('Form Generation', () => {
             name: 'firstName',
             component: TextInput,
             ref: firstName,
-            afterUpdate: (field, newValue, oldValue) => {
+            afterUpdate: (field, newValue) => {
               field.form.model.price.ref.value = newValue === 'Jack' ? '100' : '50';
             },
           }),
@@ -215,8 +200,9 @@ describe('Form Generation', () => {
             name: 'firstName',
             component: TextInput,
             ref: firstName,
-            afterUpdate: async (field, newValue, oldValue) => {
+            afterUpdate: async (field, newValue) => {
               const remote = await optionData(newValue);
+
               field.form.model.price.ref.value = remote.price;
             },
           }),
@@ -266,15 +252,17 @@ describe('Form Generation', () => {
     it('validates using a single function', async () => {
       expect.assertions(4);
 
-      const form = generateForm({ fields: [
-        defineField({
-          component: 'input',
-          name: 'element',
-          ref: ref(''),
-          validate: (_, value) => String(value).startsWith('J'),
-          errorMessage: 'Field must start with "J"',
-        }),
-      ] });
+      const form = generateForm({
+        fields: [
+          defineField({
+            component: 'input',
+            name: 'element',
+            ref: ref(''),
+            validate: (_, value) => String(value).startsWith('J'),
+            errorMessage: 'Field must start with "J"',
+          }),
+        ],
+      });
 
       form.model.element.ref.value = 'Peter';
       await form.submit();
@@ -290,14 +278,16 @@ describe('Form Generation', () => {
     it('validates using an array of validators', async () => {
       expect.assertions(1);
 
-      const form = generateForm({ fields: [
-        defineField({
-          component: 'input',
-          name: 'element',
-          ref: ref(''),
-          validators: [firstNameNotJohnValidator(), canNotContainLetterValidator()],
-        }),
-      ]} );
+      const form = generateForm({
+        fields: [
+          defineField({
+            component: 'input',
+            name: 'element',
+            ref: ref(''),
+            validators: [firstNameNotJohnValidator(), canNotContainLetterValidator()],
+          }),
+        ],
+      });
 
       await form.submit();
       expect(form.isValid.value).toBe(true);
@@ -306,14 +296,16 @@ describe('Form Generation', () => {
     it('validates using a computed validator', async () => {
       expect.assertions(1);
 
-      const form = generateForm({ fields: [
-        defineField({
-          component: 'input',
-          name: 'element',
-          ref: ref(''),
-          validators: [firstNameNotDuane(), canNotContainX()],
-        }),
-      ]});
+      const form = generateForm({
+        fields: [
+          defineField({
+            component: 'input',
+            name: 'element',
+            ref: ref(''),
+            validators: [firstNameNotDuane(), canNotContainX()],
+          }),
+        ],
+      });
 
       await form.submit();
       expect(form.isValid.value).toBe(true);
@@ -329,7 +321,7 @@ describe('Form Generation', () => {
         validators: [firstNameNotDuane()],
       });
 
-      const form = generateForm({ fields: [field] });
+      const form = generateForm({fields: [field]});
 
       await form.model.element.reset();
 

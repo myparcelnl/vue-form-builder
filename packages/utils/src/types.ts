@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {AllowedComponentProps, Component, ComputedRef, Ref, VNodeProps} from 'vue';
-import {PromiseOr} from '@myparcel/ts-utils';
 
 export type ComponentProps<C extends Component> = C extends new (...args: any) => any
   ? Omit<
@@ -16,7 +15,7 @@ export interface SelectOption {
   value: string;
 }
 
-export type MaybeRefOrComputed<T = unknown> = T | Ref<T> | ComputedRef<PromiseOr<T>>;
+export type MaybeRefOrComputed<T = unknown> = T | Ref<T> | ComputedRef<T>;
 
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 

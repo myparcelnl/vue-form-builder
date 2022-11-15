@@ -8,7 +8,7 @@ export const createFormNode = (name: string, form: FormInstance): CustomInspecto
   label: name,
   tags: [
     {
-      label: `Fields: ${form.fields.length}`,
+      label: `Fields: ${form.fields.value.length}`,
       textColor: 0,
       backgroundColor: LIME_500,
     },

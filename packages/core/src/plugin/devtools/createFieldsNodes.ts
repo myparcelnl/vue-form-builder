@@ -5,7 +5,7 @@ import {FormInstance} from '../../form';
 export const createFieldsNodes = (form: FormInstance): CustomInspectorNode[] => {
   let anonymousIndex = 0;
 
-  return form.fields.map((field) => {
+  return form.fields.value.map((field) => {
     const fieldName = field.name ?? `anonymous:${anonymousIndex++}`;
 
     const componentName: string = (typeof field.component === 'string' ? field.component : field.component.name) ?? '?';

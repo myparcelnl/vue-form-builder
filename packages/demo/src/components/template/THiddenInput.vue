@@ -2,8 +2,7 @@
   <FormGroup>
     <input
       v-model="model"
-      type="hidden"
-      :disabled="disabled" />
+      type="hidden" />
   </FormGroup>
 </template>
 
@@ -18,12 +17,8 @@ export default defineComponent({
   props: {
     // eslint-disable-next-line vue/no-unused-properties
     modelValue: {
-      type: String,
+      type: [String, Number],
       default: null,
-    },
-
-    disabled: {
-      type: Boolean,
     },
   },
 

@@ -1,12 +1,12 @@
 import * as Vue from 'vue';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../data/componentLifecycleHooks';
 import {ComponentLifecycleHooks} from '../types';
-import {HookManager} from '@myparcel-vfb/hook-manager';
+import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 
 type UseLifeCycleHooks = () => {
   hooks: typeof COMPONENT_LIFECYCLE_HOOKS;
   register(
-    hookManager: HookManager<typeof COMPONENT_LIFECYCLE_HOOKS[number], ComponentLifecycleHooks>,
+    hookManager: HookManagerInstance<Partial<ComponentLifecycleHooks>> & Record<string, unknown>,
     args?: unknown,
   ): void;
 };
@@ -25,7 +25,9 @@ export const useLifeCycleHooks: UseLifeCycleHooks = () => {
           return;
         }
 
-        if (hook === 'onCreated') return;
+        if (hook === 'onCreated') {
+          return;
+        }
 
         Vue[hook](async () => {
           await hookManager.execute(hook, args);

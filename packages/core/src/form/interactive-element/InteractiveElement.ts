@@ -1,48 +1,44 @@
-import {ComponentHooks, ComponentOrHtmlElement} from '../../types';
-import {ComputedRef, Ref, ref, watch} from 'vue';
+import {ComponentOrHtmlElement, ElementName} from '../../types';
 import {
   INTERACTIVE_ELEMENT_HOOKS,
   InteractiveElementConfiguration,
-  InteractiveElementHooks,
   InteractiveElementInstance,
 } from './InteractiveElement.types';
-import {MultiValidator, SingleValidator, Validator} from './validator';
-import {PromiseOr, isOfType} from '@myparcel/ts-utils';
+import {MultiValidator, SingleValidator, Validator, isRequired} from './validator';
+import {Ref, ref, watch} from 'vue';
 import {FormInstance} from '../Form.types';
-import {HookManager} from '@myparcel-vfb/hook-manager';
 import {PlainElement} from '../plain-element';
-import {createComputedValue} from '@myparcel-vfb/utils';
-
-type Hooks<C extends ComponentOrHtmlElement, N extends string, RT = unknown> = InteractiveElementHooks &
-  ComponentHooks<C, InteractiveElementInstance<C, N, RT>>;
+import {isOfType} from '@myparcel/ts-utils';
+import {useDynamicWatcher} from '../../utils/useDynamicWatcher';
 
 export class InteractiveElement<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends string = string,
+  N extends ElementName = ElementName,
   RT = unknown,
 > extends PlainElement<C, N> {
   public focus;
 
   public isDirty = ref(false);
+
   public isSuspended = ref(false);
   public isTouched = ref(false);
+  public isValid: Ref<boolean> = ref(true);
+  public isOptional = ref(false);
 
-  public isOptional: Ref<Boolean>;
-  public isVisible: Ref<Boolean>;
-  public isDisabled: Ref<Boolean>;
-  public isValid: Ref<PromiseOr<boolean>> = ref(true);
-
-  public errors: Ref<string[]> = ref([]);
+  public isDisabled = ref(false);
+  public errors = ref<string[]>([]);
 
   public label?: string;
-  public lazy = false;
-  public ref: Ref<RT>;
-  public validators = ref<Validator<RT, C, N>[]>([]);
 
-  public declare readonly form: FormInstance;
-  // todo fix types
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public declare hooks: HookManager<typeof INTERACTIVE_ELEMENT_HOOKS[number], Hooks<C, N, RT>> | any;
+  public lazy = false;
+  public ref: InteractiveElementInstance<C, N, RT>['ref'];
+
+  public validators = ref<Validator<C, N, RT>[]>([]);
+  public declare readonly form: InteractiveElementInstance<C, N, RT>['form'];
+
+  public declare hooks: InteractiveElementInstance<C, N, RT>['hooks'];
+
+  protected declare config: InteractiveElementConfiguration<C, N, RT>;
 
   /**
    * The initial value of the field.
@@ -52,10 +48,11 @@ export class InteractiveElement<
   /**
    * Default sanitizer does nothing.
    */
-  protected sanitize: InteractiveElementConfiguration<C, N, RT>['sanitize'];
+  protected sanitize: InteractiveElementInstance<C, N, RT>['sanitize'];
 
   public blur = async (): Promise<void> => {
     await this.hooks.execute('beforeBlur', this, this.ref.value);
+
     this.isSuspended.value = true;
 
     this.ref.value = ((await this.hooks.execute('sanitize', this, this.ref.value)) as RT) ?? this.ref.value;
@@ -97,32 +94,43 @@ export class InteractiveElement<
     return this.isValid.value;
   };
 
-  public reset(): void {
+  public reset = (): void => {
     this.resetValidation();
     this.isDirty.value = false;
     this.isTouched.value = false;
     this.ref.value = this.initialValue;
-  }
+  };
 
   public constructor(form: FormInstance, name: N, config: InteractiveElementConfiguration<C, N, RT>) {
     super(form, {...config, hookNames: INTERACTIVE_ELEMENT_HOOKS});
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     this.ref = config.ref;
     this.initialValue = this.ref.value;
-
-    this.sanitize = config.sanitize ?? (((_, value) => value) as InteractiveElementConfiguration<C, N, RT>['sanitize']);
-
-    this.label = config.label;
     this.lazy = config.lazy ?? false;
 
-    this.isVisible = config.visible !== undefined ? ref(config.visible) : ref(true);
-    this.isDisabled = config.disabled !== undefined ? ref(config.disabled) : ref(false);
-    this.isOptional = config.optional !== undefined ? ref(config.optional) : ref(false);
+    this.label = config.label ? form.config.renderLabel?.(config.label) ?? config.label : undefined;
 
-    // this.click = (event: MouseEvent) => this.hooks.execute('click', this, event);
     this.focus = async (instance: typeof this, event: FocusEvent): Promise<void> => {
       await this.hooks.execute('focus', this, event);
     };
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    this.sanitize = config.sanitize ?? (((_, value) => value) as InteractiveElementConfiguration<C, N, RT>['sanitize']);
+
+    if (config.disabledCb) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      useDynamicWatcher(() => config.disabledCb(this), this.isDisabled);
+    }
+
+    if (config.optionalCb) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      useDynamicWatcher(() => config.optionalCb(this), this.isOptional);
+    }
 
     this.createValidators(config);
 
@@ -133,10 +141,18 @@ export class InteractiveElement<
     });
   }
 
-  private createValidators(config: InteractiveElementConfiguration<C, N, RT>): void {
-    let validators: Validator[] = [];
+  public setOptional(value: boolean): void {
+    this.isOptional.value = value;
+  }
 
-    if (isOfType<SingleValidator>(config, 'validate')) {
+  public setDisabled(value: boolean): void {
+    this.isDisabled.value = value;
+  }
+
+  private createValidators(config: InteractiveElementConfiguration<C, N, RT>): void {
+    let validators: Validator<C, N, RT>[] = [];
+
+    if (isOfType<SingleValidator<C, N, RT>>(config, 'validate')) {
       validators = [
         {
           validate: config.validate,
@@ -145,15 +161,12 @@ export class InteractiveElement<
       ];
     }
 
-    if (isOfType<MultiValidator>(config, 'validators')) {
+    if (isOfType<MultiValidator<C, N, RT>>(config, 'validators')) {
       validators = config.validators ?? [];
     }
 
     if (!this.isOptional.value) {
-      validators.push({
-        validate: (value) => Boolean(value),
-        errorMessage: this.form.config.validationMessages?.required ?? '',
-      });
+      validators.push(isRequired<C, N, RT>(this.form.config.validationMessages?.required ?? ''));
     }
 
     this.validators.value = validators;

@@ -13,11 +13,13 @@
       v-for="(field, index) in fields"
       :key="`field--${field.name ?? 'unnamed'}--${index}`">
       <InteractiveElement
+        v-show="field.isVisible"
         v-if="field.hasOwnProperty('ref')"
         :element="field" />
 
       <PlainElement
         v-else
+        v-show="field.isVisible"
         :element="field" />
     </template>
   </form>
@@ -47,13 +49,13 @@ export default defineComponent({
 
   setup: (props) => {
     provide(INJECT_FORM, props.form);
+
     const lifeCycleHooks = useLifeCycleHooks();
+
     lifeCycleHooks.register(props.form.hooks, props.form);
 
-    const fields = toRef(props.form, 'fields');
-
     return {
-      fields,
+      fields: toRef(props.form, 'fields'),
     };
   },
 });

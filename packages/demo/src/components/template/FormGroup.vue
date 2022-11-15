@@ -1,33 +1,42 @@
 <template>
-  <div class="grid grid-cols-3 items-center justify-center w-full">
-    <label
-      v-if="label"
-      :for="name"
-    >
-      {{ label }}
-    </label>
+  <div class="grid grid-cols-2 items-center justify-center relative w-full">
+    <div>
+      <label
+        v-if="label"
+        :for="name"
+        v-text="label" />
+      <span
+        v-if="optional"
+        v-text="translate('form_optional_suffix')" />
+    </div>
 
-    <slot />
-    <span v-if="optional"> (optional)</span>
-    <ul v-if="warnings">
-      <li
-        v-for="warning in warnings"
-        :key="warning">
-        {{ warning }}
-      </li>
-    </ul>
+    <div>
+      <slot />
+    </div>
+
+    <div
+      v-if="errors.length"
+      class="bg-red-700 border border-red-800 col-span-2 dark:bg-red-900 mt-3 p-5 rounded-lg">
+      <ul>
+        <li
+          v-for="warning in errors"
+          :key="warning"
+          v-text="warning" />
+      </ul>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, toRef, unref} from 'vue';
+import {PropType, defineComponent} from 'vue';
+import {translate} from '../../translate';
 
 export default defineComponent({
   name: 'FormGroup',
   props: {
-    name: {
-      type: String,
-      default: null,
+    errors: {
+      type: Array as PropType<string[]>,
+      default: () => [],
     },
 
     label: {
@@ -35,15 +44,20 @@ export default defineComponent({
       default: null,
     },
 
-    optional: {
-      type: Boolean,
-      default: false,
+    name: {
+      type: String,
+      default: null,
     },
 
-    warnings: {
-      type: Object,
-      default: () => [],
+    optional: {
+      type: Boolean,
     },
+  },
+
+  setup: () => {
+    return {
+      translate,
+    };
   },
 });
 </script>

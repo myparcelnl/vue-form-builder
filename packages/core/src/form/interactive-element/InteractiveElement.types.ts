@@ -1,9 +1,8 @@
-import {BaseElementConfiguration, ComponentOrHtmlElement, ElementName} from '../../types';
-import {FieldValidator, ValidateFunction, Validator} from './validator';
-import {MaybeRefOrComputed} from '@myparcel-vfb/utils';
-import {PLAIN_ELEMENT_HOOKS, PlainElementHooks, PlainElementInstance} from '../plain-element';
+import {BaseElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName} from '../../types';
+import {FieldValidator, Validator} from './validator';
+import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from '../plain-element';
 import {FormInstance} from '../Form.types';
-import {HookManager} from '@myparcel-vfb/hook-manager';
+import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {PromiseOr} from '@myparcel/ts-utils';
 import {Ref} from 'vue';
 
@@ -12,47 +11,37 @@ export type InteractiveElementConfiguration<
   N extends ElementName = ElementName,
   RT = unknown,
 > = BaseElementConfiguration<C> &
-  FieldValidator<RT, C, N> & {
+  FieldValidator<C, N, RT> &
+  InteractiveElementHooks<C, N, RT> & {
     name: N;
     ref: Ref<RT>;
+
     label?: string;
-
     lazy?: boolean;
-
-    disabled?: boolean;
-    visible?: boolean;
-    optional?: boolean;
-
-    sanitize?: (_: InteractiveElementInstance, value: RT) => RT;
   };
 
 export const INTERACTIVE_ELEMENT_HOOKS = [
-  'beforeBlur',
-  'afterBlur',
-
-  'beforeFocus',
+  'blur',
   'focus',
-  'afterFocus',
-
-  'beforeSanitize',
   'sanitize',
-  'afterSanitize',
-
-  'beforeUpdate',
-  'afterUpdate',
-
-  'beforeValidate',
+  'update',
   'validate',
-  'afterValidate',
   ...PLAIN_ELEMENT_HOOKS,
 ] as const;
 
 export type InteractiveElementHooks<
-  I extends BaseInteractiveElementInstance = BaseInteractiveElementInstance,
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
   RT = unknown,
-> = Omit<PlainElementHooks<I>, 'beforeBlur' | 'afterBlur'> & {
+  I = BaseInteractiveElementInstance<C, N, RT>,
+> = Partial<ComponentHooks<C, I>> & {
   beforeBlur?(instance: I, value: RT): PromiseOr<void>;
+  blur?(instance: I, event: MouseEvent): PromiseOr<void>;
   afterBlur?(instance: I, value: RT): PromiseOr<void>;
+
+  beforeFocus?(instance: I): PromiseOr<void>;
+  focus?(instance: I, event: FocusEvent): PromiseOr<void>;
+  afterFocus?(instance: I): PromiseOr<void>;
 
   beforeSanitize?(field: I, value: RT): PromiseOr<void>;
   sanitize?(field: I, value: RT): PromiseOr<RT>;
@@ -62,8 +51,16 @@ export type InteractiveElementHooks<
   afterUpdate?(field: I, value: RT, oldValueT: RT): PromiseOr<void>;
 
   beforeValidate?(field: I, value: RT): PromiseOr<void>;
-  validate?: ValidateFunction;
+  validate?(field: I, value: RT): PromiseOr<boolean>;
   afterValidate?(field: I, value: RT, isValid: boolean): PromiseOr<void>;
+
+  beforeClick?(instance: I): PromiseOr<void>;
+  click?(instance: I, event: MouseEvent): PromiseOr<void>;
+  afterClick?(instance: I): PromiseOr<void>;
+
+  disabledCb?(field: I): PromiseOr<boolean>;
+  optionalCb?(field: I): PromiseOr<boolean>;
+  visibleCb?(field: I): PromiseOr<boolean>;
 };
 
 export type BaseInteractiveElementInstance<
@@ -73,29 +70,31 @@ export type BaseInteractiveElementInstance<
 > = PlainElementInstance<C, N> & {
   ref: Ref<RT>;
 
-  form: FormInstance;
-  hooks: HookManager<typeof INTERACTIVE_ELEMENT_HOOKS[number], InteractiveElementHooks>;
+  readonly form: FormInstance;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly hooks: HookManagerInstance<InteractiveElementHooks<C, N, RT> | any>;
 
-  label?: string;
+  readonly label?: string;
 
-  lazy: boolean;
+  readonly lazy: boolean;
 
-  isDirty: Ref<false>;
-  isDisabled: Ref<false>;
-  isOptional: Ref<false>;
-  isSuspended: Ref<false>;
-  isTouched: Ref<false>;
-  isVisible: Ref<true>;
+  readonly isDirty: Ref<boolean>;
+  readonly isSuspended: Ref<boolean>;
+  readonly isTouched: Ref<boolean>;
+
+  readonly isDisabled: Ref<boolean>;
+  readonly isOptional: Ref<boolean>;
+  readonly isVisible: Ref<boolean>;
 
   /**
    * Determines whether the field is valid.
    */
-  isValid: Ref<boolean>;
+  readonly isValid: Ref<boolean>;
 
   /**
    * Validators used to compute the value of isValid.
    */
-  validators: Validator<RT, C, N>[];
+  readonly validators: Validator<C, N, RT>[];
 
   /**
    * Error messages generated during validation.
@@ -105,11 +104,11 @@ export type BaseInteractiveElementInstance<
   /**
    * Resets the field.
    */
-  reset: () => PromiseOr<void>;
+  readonly reset: () => PromiseOr<void>;
 };
 
 export type InteractiveElementInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-> = BaseInteractiveElementInstance<C, N, RT> & InteractiveElementHooks<BaseInteractiveElementInstance, RT>;
+> = BaseInteractiveElementInstance<C, N, RT> & InteractiveElementHooks<C, N, RT>;

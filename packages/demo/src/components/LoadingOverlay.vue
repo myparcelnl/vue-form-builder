@@ -1,13 +1,11 @@
 <template>
-  <div class="m-auto max-w-screen-xl px-6 w-full">
-    <slot />
-  </div>
+  <span class="absolute animate-pulse bg-opacity-25 bg-white flex m-auto" />
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
 
 export default defineComponent({
-  name: 'NContainer',
+  name: 'LoadingOverlay',
 });
 </script>

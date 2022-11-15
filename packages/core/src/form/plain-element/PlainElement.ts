@@ -1,10 +1,9 @@
-import {AnyElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
-import {HookManager, createHookManager} from '@myparcel-vfb/hook-manager';
-import {PLAIN_ELEMENT_HOOKS, PlainElementHooks, PlainElementInstance} from './PlainElement.types';
+import {AnyElementConfiguration, ComponentOrHtmlElement, ElementName} from '../../types';
+import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from './PlainElement.types';
+import {markRaw, ref} from 'vue';
 import {FormInstance} from '../Form.types';
-import {markRaw} from 'vue';
-
-type Hooks<C extends ComponentOrHtmlElement> = PlainElementHooks & ComponentHooks<C, PlainElementInstance<C>>;
+import {createHookManager} from '@myparcel-vfb/hook-manager';
+import {useDynamicWatcher} from '../../utils/useDynamicWatcher';
 
 export class PlainElement<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
@@ -13,17 +12,20 @@ export class PlainElement<
   public readonly name: N;
   public readonly component: C;
   public readonly form: FormInstance;
-  public declare hooks: HookManager<typeof PLAIN_ELEMENT_HOOKS[number], Hooks<C>>;
+  public declare hooks: PlainElementInstance<C, N>['hooks'];
 
-  public readonly props = {} as ElementProps<C>;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  public isVisible: PlainElementInstance<C, N>['isVisible'] = ref(true);
 
-  protected readonly config: AnyElementConfiguration<C>;
+  public readonly props = {} as PlainElementInstance<C, N>['props'];
 
-  public constructor(form: FormInstance, config: AnyElementConfiguration<C>) {
-    // This line has a TS error during the build
+  protected readonly config: AnyElementConfiguration<C, N>;
+
+  public constructor(form: FormInstance, config: AnyElementConfiguration<C, N>) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.hooks = createHookManager<typeof PLAIN_ELEMENT_HOOKS[number], Hooks<C>>({
+    // @ts-expect-error
+    this.hooks = createHookManager({
       ...config,
       hookNames: [...PLAIN_ELEMENT_HOOKS, ...(config.hookNames ?? [])],
     });
@@ -32,8 +34,10 @@ export class PlainElement<
     // @ts-expect-error
     this.name = config.name;
 
+    const availableHooks = this.hooks.getAvailableHooks();
+
     Object.keys(config)
-      .filter((key) => !this.hooks.availableHooks.includes(key as typeof PLAIN_ELEMENT_HOOKS[number]))
+      .filter((key) => !availableHooks.includes(key))
       .forEach((key) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
@@ -43,11 +47,21 @@ export class PlainElement<
     this.form = form;
     this.config = config;
 
+    if ('visibleCb' in config) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      useDynamicWatcher(() => this.config.visibleCb(this), this.isVisible);
+    }
+
     if (typeof config.component === 'string') {
       this.component = config.component;
       return;
     }
 
     this.component = markRaw(config.component) as C;
+  }
+
+  public setVisible(value: boolean): void {
+    this.isVisible.value = value;
   }
 }

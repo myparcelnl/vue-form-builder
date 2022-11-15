@@ -1,13 +1,14 @@
 <template>
   <input
-    type="text"
     :id="id"
-    v-model="value"
+    v-model="model"
+    type="text"
     :name="name"
     v-bind="$attrs"
     :disabled="disabled"
     :class="{
-      'border-red-500': !isValid(),
+      'border-red-500': valid === false,
+      'opacity-50 cursor-not-allowed': disabled,
     }"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"
@@ -15,77 +16,80 @@
     @focusout="$emit('focusout', $event)"
     @click="$emit('click', $event)"
     @change="$emit('change', $event)" />
-    <span class="loading-indicator" v-if="suspended">
-      Loading...
-    </span>
-    <ul v-if="warnings.length" class="warnings">
-      <li
-        v-for="warning in warnings"
-        :key="warning">
-        {{ warning }}
-      </li>
-    </ul>
+  <span
+    v-if="suspended"
+    class="loading-indicator">
+    Loading...
+  </span>
+  <ul
+    v-if="errors.length"
+    class="errors">
+    <li
+      v-for="warning in errors"
+      :key="warning">
+      {{ warning }}
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, Ref, toRef} from 'vue';
+import {PropType, computed, defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'TextInput',
   inheritAttrs: false,
   props: {
-    // eslint-disable-next-line vue/no-unused-properties
-    modelValue: {
-      type: String,
-      default: null,
+    disabled: {
+      type: Boolean,
     },
+
+    errors: {
+      type: Array as PropType<string[]>,
+      default: () => [],
+    },
+
     id: {
       type: String,
       required: true,
     },
-    name: {
-      type: String,
-      required: true,
-    },
+
+    // eslint-disable-next-line vue/no-unused-properties
     label: {
       type: String,
       default: null,
     },
-    disabled: {
-      type: Boolean,
-      default: false,
+
+    modelValue: {
+      type: String,
+      default: null,
     },
-    valid: {
-      type: Boolean,
-      default: true,
+
+    name: {
+      type: String,
+      required: true,
     },
+
     suspended: {
       type: Boolean,
-      default: false,
     },
-    warnings: {
-      type: Array<String>,
-      default: () => [],
+
+    valid: {
+      type: Boolean,
     },
   },
+
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
-  setup: (props, { emit, attrs }) => {
-    const isValid = () => {
-      return props.valid === undefined ? true : props.valid;
-    };
 
-    const value = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value) {
-        emit('update:modelValue', value);
-      },
-    });
-
+  setup: (props, {emit}) => {
     return {
-      value,
-      isValid,
+      model: computed({
+        get() {
+          return props.modelValue;
+        },
+        set(value) {
+          emit('update:modelValue', value);
+        },
+      }),
     };
   },
 });

@@ -49,6 +49,7 @@ export default defineComponent({
 
     const excerpt = computed(() => {
       const json: string = JSON.stringify(props.code);
+      // eslint-disable-next-line no-magic-numbers,@typescript-eslint/no-magic-numbers
       let string = json.slice(0, 80);
 
       if (string.length < json.length) {

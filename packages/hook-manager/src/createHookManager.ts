@@ -1,8 +1,8 @@
-import {HookManager} from './HookManager';
+import {HookManager, HookManagerInstance} from './HookManager';
 import {HookManagerConfiguration} from './types';
 
-export const createHookManager = <HN extends string, HC extends HookManagerConfiguration<HN>>(
+export const createHookManager = <HC extends HookManagerConfiguration = HookManagerConfiguration>(
   config: HC,
-): HookManager<HN, HC> => {
+): HookManagerInstance<HC> => {
   return new HookManager(config);
 };

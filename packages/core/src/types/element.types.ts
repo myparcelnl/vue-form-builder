@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   InteractiveElementConfiguration,
   InteractiveElementInstance,
@@ -7,7 +8,6 @@ import {
 import {Component} from 'vue';
 import {ComponentLifecycleHooks} from './other.types';
 import {ComponentProps} from '@myparcel-vfb/utils';
-import {HookNamesObject} from '@myparcel-vfb/hook-manager';
 import {MakeOptional} from '@myparcel/ts-utils';
 
 export type ElementName = string | undefined;
@@ -33,25 +33,23 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
    * ElementProps to be passed to the component.
    */
   props?: ElementProps<C>;
+
+  /**
+   * Hooks to be registered.
+   */
+  hookNames?: string[];
 };
 
-export type AnyElementInstance<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  RT = unknown,
-> = InteractiveElementInstance<C, N, RT> | PlainElementInstance<C>;
+export type AnyElementInstance<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =
+  | InteractiveElementInstance<C, N, RT>
+  | PlainElementInstance<C, N>;
 
-export type AnyElementConfiguration<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  RT = any,
-> = (PlainElementConfiguration<C> | InteractiveElementConfiguration<C, N, RT>) & HookNamesObject;
+export type AnyElementConfiguration<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =
+  | PlainElementConfiguration<C, N>
+  | InteractiveElementConfiguration<C, N, RT>;
 
 export type ResolvedElementConfiguration<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  C extends ComponentOrHtmlElement = any,
+  N extends ElementName = any,
   RT = any,
 > = RT extends never ? PlainElementConfiguration<C> : InteractiveElementConfiguration<C, N, RT>;

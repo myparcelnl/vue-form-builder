@@ -1,43 +1,50 @@
 <template>
-  <FormGroup v-bind="{label, id, warnings, optional}">
-    <TTextInput
+  <FormGroup v-bind="{label, id, errors, optional}">
+    <LoadingOverlay v-if="suspended" />
+    <input
       :id="id"
-      v-model="model"
-      :name="name"
+      v-model.number="model"
       type="number"
-      :min="props.min"
-      :max="props.max"
-      :disabled="disabled"
-      :valid="valid"
+      v-bind="$attrs"
       :class="{
-        'cursor-not-allowed opacity-50': disabled,
+        'border-red-500': valid === false,
+        'opacity-50 cursor-not-allowed': disabled,
       }"
-      />
+      :disabled="disabled"
+      :max="max"
+      :min="min"
+      :name="name"
+      :step="step"
+      @blur="$emit('blur', $event)"
+      @change="$emit('change', $event)"
+      @click="$emit('click', $event)"
+      @focus="$emit('focus', $event)"
+      @focusin="$emit('focusin', $event)"
+      @focusout="$emit('focusout', $event)" />
   </FormGroup>
 </template>
 
 <script lang="ts">
+import {PropType, defineComponent} from 'vue';
 import FormGroup from './FormGroup.vue';
-import TTextInput from './TTextInput.vue';
-import {defineComponent} from 'vue';
+import LoadingOverlay from '../LoadingOverlay.vue';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TNumberInput',
-  components: {TTextInput, FormGroup},
+  components: {LoadingOverlay, FormGroup},
+  inheritAttrs: false,
   props: {
-    // eslint-disable-next-line vue/no-unused-properties
-    modelValue: {
-      type: [String, Number],
-      default: null,
+    disabled: {
+      type: Boolean,
+    },
+
+    errors: {
+      type: Array as PropType<string[]>,
+      default: () => [],
     },
 
     id: {
-      type: String,
-      required: true,
-    },
-
-    name: {
       type: String,
       required: true,
     },
@@ -47,33 +54,46 @@ export default defineComponent({
       default: null,
     },
 
-    disabled: {
+    max: {
+      type: Number,
+      default: null,
+    },
+
+    min: {
+      type: Number,
+      default: 0,
+    },
+
+    // eslint-disable-next-line vue/no-unused-properties
+    modelValue: {
+      type: [String, Number],
+      default: null,
+    },
+
+    name: {
+      type: String,
+      required: true,
+    },
+
+    optional: {
       type: Boolean,
     },
 
-    props: {
-      type: Object,
-      default: () => ({}),
+    step: {
+      type: Number,
+      default: 1,
+    },
+
+    suspended: {
+      type: Boolean,
     },
 
     valid: {
       type: Boolean,
     },
-
-    visible: {
-      type: Boolean,
-    },
-
-    optional: {
-      type: Boolean,
-      default: false,
-    },
-
-    warnings: {
-      type: Array<String>,
-      default: () => [],
-    },
   },
+
+  emits: ['update:modelValue', 'blur', 'focus', 'focusin', 'focusout', 'click', 'change'],
 
   setup: (props) => {
     return {

@@ -5,6 +5,9 @@ const config: UserConfig = {
   plugins: [vue()],
   test: {
     environment: 'happy-dom',
+    coverage: {
+      exclude: ['**/lib/**/*', '**/__tests__/**/*', './packages/demo/**/*'],
+    },
   },
 };
 

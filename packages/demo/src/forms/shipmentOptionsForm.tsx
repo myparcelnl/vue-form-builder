@@ -1,4 +1,6 @@
-import {defineField, defineForm} from '@myparcel/vue-form-builder';
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import {AnyElementInstance, InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder';
+import {CARRIERS, CarrierName, PACKAGE_TYPES} from '@myparcel/sdk';
 import Heading from '../components/Heading.vue';
 import THiddenInput from '../components/template/THiddenInput.vue';
 import TNumberInput from '../components/template/TNumberInput.vue';
@@ -7,46 +9,16 @@ import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TTextInput from '../components/template/TTextInput.vue';
 import TToggleSwitch from '../components/template/TToggleSwitch.vue';
 import {ref} from 'vue';
+import {translate} from '../translate';
+import {useFetchCarriers} from '../queries/fetchCarriers';
 
 // todo: dynamically add more form parts, see BO -> canada -> project groups
 // todo: form groups?
 
-const copyNameValidation = (field: any, value: any) => {
-  // check with other `copyName_${value}` fields if the value is not the same
-  const otherFields = field.form.fields.value.filter((f) => {
-    return f.name?.startsWith('copyName_') && f.name !== field.name;
-  });
-  return !otherFields.some((field) => field.ref === value);
-};
-
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
-  fieldClass: [
-    'flex',
-    'items-center',
-    'py-1',
-    'pb-2',
-    'dark:hover:bg-opacity-30',
-    'dark:hover:bg-pink-500',
-    'duration-100',
-    'group',
-    'hover:bg-pink-100',
-    'transition-colors',
-  ],
+  renderLabel: translate,
+  fieldClass: ['flex', 'items-center', 'py-1', 'pb-2', 'duration-100', 'group', 'transition-colors'],
   formClass: ['border', 'border-gray-600', 'rounded-xl', 'p-4'],
-
-  // refs: toRefs(
-  //   reactive({
-  //     orderId: 1,
-  //     labelAmount: 1,
-  //     packageType: 'package',
-  //     signature: true,
-  //     onlyRecipient: false,
-  //     ageCheck: false,
-  //     return: false,
-  //     insurance: 1000,
-  //     largeFormat: false,
-  //   }),
-  // ),
 
   fields: [
     defineField({
@@ -56,11 +28,41 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         level: 2,
       },
     }),
+
+    defineField({
+      name: 'carrier',
+      label: 'carrier',
+      component: TSelect,
+      ref: ref<CarrierName>(),
+      props: {
+        options: [],
+      },
+
+      onBeforeMount: async (field) => {
+        const carriers = useFetchCarriers();
+        await carriers.suspense();
+
+        field.props.options =
+          carriers.data.value?.map((carrier) => ({
+            label: carrier.human,
+            value: carrier.name,
+          })) ?? [];
+      },
+    }),
+
+    defineField({
+      name: 'dhlOptions',
+      label: 'DHL Only Options',
+      component: TTextInput,
+      ref: ref<string>(),
+      visibleCb: (field) => field.form.model.carrier.ref?.includes('dhl'),
+    }),
+
     defineField({
       name: 'name',
       component: TTextInput,
       ref: ref(''),
-      label: 'Name',
+      label: 'name',
       validators: [
         {
           validate: (field, value) => !String(value).startsWith('John'),
@@ -73,192 +75,158 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       ],
     }),
 
-    // new HiddenInput({
-    //   name: 'orderId',
-    //   ref: ref(1),
-    // }),
     defineField({
       name: 'orderId',
       component: THiddenInput,
       ref: ref(1),
     }),
+
     defineField({
       name: 'labelAmount',
       component: TNumberInput,
       ref: ref(1),
-      label: 'Label Amount',
+      label: 'label_amount',
       props: {
         min: 1,
         max: 10,
       },
-      afterUpdate: (field, newValue, oldValue) => {
-        field.form.model.copyAmount.isDisabled.value = newValue < 5;
-        field.form.model.copyAmount.isVisible.value = newValue > 4;
-      },
     }),
+
     defineField({
       name: 'copyAmount',
       component: TNumberInput,
       ref: ref(0),
-      label: 'Copy Amount',
-      disabled: true,
-      visible: false,
+      label: 'copy_amount',
       props: {
-        min: 0,
         max: 10,
       },
-      afterUpdate: (field, newValue, oldValue) => {
+      disabledCb: (instance: InteractiveElementInstance) => instance.form.model.labelAmount.ref < 5,
+      visibleCb: (instance: InteractiveElementInstance) => instance.form.model.labelAmount.ref > 4,
+      afterUpdate: (instance: InteractiveElementInstance, newValue: number) => {
         // collect all fields named `copyName_${value}`;
-        const copyNameFields = field.form.fields.value.filter((field) => field.name?.startsWith('copyName_'));
+        const copyNameFields = instance.form.fields.value.filter((field: AnyElementInstance) =>
+          field.name?.startsWith('copyName_'),
+        );
+
         if (copyNameFields.length < newValue) {
           // add new fields
-          for (let i = copyNameFields.length; i < newValue; i++) {
-            field.form.addElement({
-              name: `copyName_${i}`,
-              component: TTextInput,
-              ref: ref(''),
-              label: `Copy Name ${i+1}`,
-              validate: copyNameValidation,
-              errorMessage: 'Cannot have duplicate copy names',
-            }, 'packageType', 'before');
+          for (let i: number = copyNameFields.length; i < newValue; i++) {
+            void instance.form.addElement(
+              defineField({
+                name: `copyName_${i}`,
+                component: TTextInput,
+                ref: ref(''),
+                label: `Copy Name ${i + 1}`,
+                validate: (field: InteractiveElementInstance, value: string) => {
+                  return !field.form.fields.value.some((otherField: AnyElementInstance) => {
+                    const isDifferentField = otherField.name !== field.name;
+                    const isCopyNameField: boolean | undefined = otherField.name?.startsWith('copyName_');
+                    const valueMatches = otherField.ref === value;
+
+                    return isDifferentField && isCopyNameField && valueMatches;
+                  });
+                },
+                errorMessage: 'Cannot have duplicate copy names',
+              }),
+              'packageType',
+              'before',
+            );
           }
         } else if (copyNameFields.length > newValue) {
           // remove fields
           for (let i = copyNameFields.length; i > newValue; i--) {
-            field.form.removeElement(copyNameFields[i - 1].name);
+            instance.form.removeElement(copyNameFields[i - 1].name);
           }
         }
       },
     }),
+
     defineField({
       name: 'packageType',
       component: TSelect,
       ref: ref('package'),
-      label: 'Package Type',
+      label: 'package_type',
       props: {
-        options: [
-          {
-            label: 'Package',
-            value: 'package',
-          },
-          {
-            label: 'Mailbox',
-            value: 'mailbox',
-          },
-          {
-            label: 'Letter',
-            value: 'letter',
-          },
-          {
-            label: 'Digital Stamp',
-            value: 'digital_stamp',
-          },
-        ],
+        options: PACKAGE_TYPES.ALL.map((type) => ({
+          label: translate(`package_type_${type.NAME}`),
+          value: type.NAME,
+        })),
       },
       validators: [
         {
-          validate: (field, value) =>
-            !(
-              field.form.model.name.ref.value === 'Mack' &&
-              String(value).startsWith('letter')
-            ),
+          validate: (field, value) => {
+            return !(field.form.model.name.ref.value === 'Mack' && String(value).startsWith('letter'));
+          },
           errorMessage: 'Forget about letters, Mack does not like them.',
         },
       ],
-
-      // afterUpdate: (field, newValue, oldValue) => {
-      //   const isPackage = newValue === 'package';
-      //   const {model} = field.form;
-      //
-      //   model.ageCheck.isVisible = isPackage;
-      //   model.ageCheck.ref = isPackage ? model.ageCheck.ref : false;
-      //   model.insurance.isVisible = isPackage;
-      //   model.insurance.ref = isPackage ? model.insurance.ref : 0;
-      //   model.largeFormat.isVisible = isPackage;
-      //   model.largeFormat.ref = isPackage ? model.largeFormat.ref : false;
-      //   model.onlyRecipient.isVisible = isPackage;
-      //   model.onlyRecipient.ref = isPackage ? model.onlyRecipient.ref : false;
-      //   model.return.isVisible = isPackage;
-      //   model.return.ref = isPackage ? model.return.ref : false;
-      //   model.signature.isVisible = isPackage;
-      //   model.signature.ref = isPackage ? model.signature.ref : false;
-      // },
     }),
-    // defineField({
-    //   name: 'carrier',
-    //   label: 'Carrier',
-    //   component: TSelect,
-    //   ref: ref<string | null>(null),
 
-    //   // onBeforeMount: async (field) => {
-    //   //   // console.log('beforeMount', field);
-    //   //   const sdk = createPublicSdk(new FetchClient(), [new GetCarriers()]);
-    //   //   const carriers = await sdk.getCarriers();
-    //   //
-    //   //   console.log(carriers);
-    //   //   console.log(field);
-    //   //
-    //   //   field.props.options = carriers.map((carrier) => ({
-    //   //     label: carrier.human,
-    //   //     value: carrier.name,
-    //   //   }));
-    //   //
-    //   //   // console.log(carriers);
-    //   //   // console.log(field.form);
-    //   //
-    //   //   // field.form.addElement(
-    //   //   //   {
-    //   //   //     component: Heading,
-    //   //   //     props: {
-    //   //   //       text: 'randomly inserted field!!',
-    //   //   //     },
-    //   //   //   },
-    //   //   //   'carrier',
-    //   //   // );
-    //   //
-    //   //   // field.ref = carriers[0].name;
-    //   // },
-    // }),
     defineField({
       name: 'signature',
       component: TToggleSwitch,
       ref: ref(true),
-      label: 'Signature',
+      label: 'shipment_option_signature',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
+
     defineField({
       name: 'onlyRecipient',
       component: TToggleSwitch,
       ref: ref(false),
-      label: 'Only Recipient',
+      label: 'shipment_option_only_recipient',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
+
     defineField({
       name: 'ageCheck',
       component: TToggleSwitch,
       ref: ref(false),
-      label: 'Age Check',
+      label: 'shipment_option_age_check',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
+
     defineField({
       name: 'return',
       component: TToggleSwitch,
       ref: ref(false),
-      label: 'Return',
+      label: 'shipment_option_return',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
+
     defineField({
       name: 'largeFormat',
       component: TToggleSwitch,
       ref: ref(false),
-      label: 'Large Format',
+      label: 'shipment_option_large_format',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
+
+    defineField({
+      name: 'sameDayDelivery',
+      component: TToggleSwitch,
+      ref: ref(false),
+      label: 'shipment_option_same_day_delivery',
+      visibleCb: ({form}) => {
+        const {packageType, carrier} = form.model;
+
+        return (
+          packageType.ref === PACKAGE_TYPES.PACKAGE_NAME && ['dhlforyou', CARRIERS.INSTABOX_NAME].includes(carrier.ref)
+        );
+      },
+    }),
+
     defineField({
       name: 'insurance',
-      component: TTextInput,
+      component: TNumberInput,
       ref: ref(1000),
-      label: 'Insurance',
-      validate: (field: any, value: any) => {
-        return value < 500;
-      },
-      optional: true,
+      label: 'shipment_option_insurance',
+      validate: (field, value) => value > 100,
+      errorMessage: 'Insurance must be at least 100',
+      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      optionalCb: () => true,
     }),
+
     defineField({
       component: TSubmitButton,
     }),

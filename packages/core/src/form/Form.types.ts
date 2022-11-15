@@ -1,8 +1,8 @@
-import {AnyElementConfiguration, AnyElementInstance, FieldsToModel, ResolvedElementConfiguration} from '../types';
+import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, ElementName} from '../types';
 import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
-import {FORM_HOOKS} from './Form';
-import {HookManager} from '@myparcel-vfb/hook-manager';
-import {Ref} from 'vue';
+import {Ref, UnwrapNestedRefs} from 'vue';
+import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
+import {InteractiveElementInstance} from './interactive-element';
 
 /**
  * The input configuration for a Form.
@@ -11,7 +11,7 @@ export type FormConfiguration = {
   /**
    * Fields in the form.
    */
-  fields: ResolvedElementConfiguration[];
+  fields: ReadonlyOr<AnyElementConfiguration[]>;
 
   /**
    * Function executed when any label is rendered.
@@ -41,7 +41,7 @@ export type FormConfiguration = {
   hookNames?: readonly string[] | string[];
 };
 
-export type FormHooks<I extends FormInstance = FormInstance> = {
+export type FormHooks<I extends BaseFormInstance = BaseFormInstance> = {
   beforeSubmit?(form: I): PromiseOr<void>;
   afterSubmit?(form: I): PromiseOr<void>;
 
@@ -55,13 +55,28 @@ export type FormHooks<I extends FormInstance = FormInstance> = {
 /**
  * The instance of a form.
  */
-export type FormInstance<FC extends FormConfiguration = FormConfiguration> = {
+export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> = {
   readonly name: string;
 
   readonly config: Omit<FC, 'fields'>;
-  readonly hooks: HookManager<typeof FORM_HOOKS[number], FormHooks>;
+  readonly fields: Ref<UnwrapNestedRefs<AnyElementInstance>[]>;
+  readonly hooks: HookManagerInstance<FormHooks>;
   readonly model: FieldsToModel;
-  fields: Ref<AnyElementInstance[]>;
+
+  /**
+   * Determines whether the form is valid.
+   */
+  isValid: Ref<boolean>;
+
+  /**
+   * Add a new element to the form at the end, or before or after an existing element.
+   */
+  addElement(element: AnyElementConfiguration, sibling?: string, position?: 'before' | 'after'): void;
+
+  /**
+   * Remove an element from the form by name.
+   */
+  removeElement(name: string): void;
 
   /**
    * Reset all fields to their original state.
@@ -77,14 +92,18 @@ export type FormInstance<FC extends FormConfiguration = FormConfiguration> = {
    * Validate all fields in the form.
    */
   validate(): PromiseOr<boolean>;
+};
 
-  /**
-   * Add a new element to the form at the end, or before or after an existing element.
-   */
-  addElement(element: AnyElementConfiguration, sibling?: string, position?: 'before' | 'after'): PromiseOr<void>;
+export type FormInstance<FC extends FormConfiguration = FormConfiguration> = BaseFormInstance<FC> & FormHooks;
 
-  /**
-   * Determines whether the form is valid.
-   */
-  isValid: Ref<boolean>;
+/**
+ * TODO: This is a temporary solution to avoid errors.
+ *  We need to find a way to infer the types from the input form configuration.
+ */
+export type FieldsToModel<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  RT = unknown,
+> = {
+  [K in N extends string ? N | string : string]: UnwrapNestedRefs<InteractiveElementInstance<C, N, RT>>;
 };

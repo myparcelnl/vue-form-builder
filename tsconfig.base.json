@@ -16,7 +16,9 @@
     ]
   },
   "include": [
-    "./**/*.*"
+    "./**/*.ts",
+    "./**/*.tsx",
+    "./**/*.vue"
   ],
   "exclude": [
     "packages/**/dist",

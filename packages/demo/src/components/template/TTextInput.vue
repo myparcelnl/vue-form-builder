@@ -1,14 +1,16 @@
 <template>
-  <FormGroup v-bind="{label, id, warnings, optional}">
+  <FormGroup v-bind="{label, id, errors, optional}">
+    <LoadingOverlay v-if="suspended" />
     <input
-      type="text"
       :id="id"
-      v-model="value"
+      v-model="model"
+      type="text"
       :name="name"
       v-bind="$attrs"
       :disabled="disabled"
       :class="{
-        'border-red-500': !valid,
+        'border-red-500': valid === false,
+        'opacity-50 cursor-not-allowed': disabled,
       }"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
@@ -20,26 +22,26 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, computed} from 'vue';
+import {PropType, defineComponent} from 'vue';
 import FormGroup from './FormGroup.vue';
+import LoadingOverlay from '../LoadingOverlay.vue';
+import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TTextInput',
-  components: {FormGroup},
+  components: {LoadingOverlay, FormGroup},
   inheritAttrs: false,
   props: {
-    // eslint-disable-next-line vue/no-unused-properties
-    modelValue: {
-      type: [String, Number],
-      default: null,
+    disabled: {
+      type: Boolean,
+    },
+
+    errors: {
+      type: Array as PropType<string[]>,
+      default: () => [],
     },
 
     id: {
-      type: String,
-      required: true,
-    },
-
-    name: {
       type: String,
       required: true,
     },
@@ -49,45 +51,35 @@ export default defineComponent({
       default: null,
     },
 
-    disabled: {
-      type: Boolean,
-      default: false,
+    // eslint-disable-next-line vue/no-unused-properties
+    modelValue: {
+      type: [String, Number],
+      default: null,
     },
 
-    valid: {
-      type: Boolean,
-      default: true,
-    },
-
-    visible: {
-      type: Boolean,
-    },
-
-    warnings: {
-      type: Array<String>,
-      default: () => [],
+    name: {
+      type: String,
+      required: true,
     },
 
     optional: {
       type: Boolean,
-      default: false,
+    },
+
+    suspended: {
+      type: Boolean,
+    },
+
+    valid: {
+      type: Boolean,
     },
   },
 
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
 
-  setup: (props, { emit }) => {
-    const value = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value) {
-        emit('update:modelValue', value);
-      },
-    });
-
+  setup: (props) => {
     return {
-      value,
+      model: useVModel(props, 'modelValue'),
     };
   },
 });

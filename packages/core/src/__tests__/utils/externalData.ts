@@ -1,5 +1,4 @@
-
-export const optionData = (name: string) : Promise<Record<string, unknown>> => {
+export const optionData = (name: string): Promise<Record<string, unknown>> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -7,4 +6,4 @@ export const optionData = (name: string) : Promise<Record<string, unknown>> => {
       });
     }, 1000);
   });
-}
+};

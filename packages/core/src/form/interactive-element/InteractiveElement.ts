@@ -4,7 +4,7 @@ import {
   InteractiveElementConfiguration,
   InteractiveElementInstance,
 } from './InteractiveElement.types';
-import {MultiValidator, SingleValidator, Validator, isRequired} from './validator';
+import {MultiValidator, SingleValidator, Validator, isRequired} from '../validator';
 import {Ref, ref, watch} from 'vue';
 import {FormInstance} from '../Form.types';
 import {PlainElement} from '../plain-element';

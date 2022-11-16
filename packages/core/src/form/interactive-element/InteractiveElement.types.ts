@@ -1,5 +1,5 @@
 import {BaseElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName} from '../../types';
-import {FieldValidator, Validator} from './validator';
+import {FieldValidator, Validator} from '../validator';
 import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from '../plain-element';
 import {FormInstance} from '../Form.types';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager';

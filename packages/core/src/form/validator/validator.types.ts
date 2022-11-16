@@ -1,6 +1,6 @@
-import {ComponentOrHtmlElement, ElementName} from '../../../types';
+import {ComponentOrHtmlElement, ElementName} from '../../types';
 import {ComputedRef} from 'vue';
-import {InteractiveElementInstance} from '../InteractiveElement.types';
+import {InteractiveElementInstance} from '../interactive-element';
 import {PromiseOr} from '@myparcel/ts-utils';
 
 export type ValidateFunction<

@@ -1,5 +1,5 @@
-import {ComponentOrHtmlElement, ElementName} from '../../../types';
-import {Validator} from '../index';
+import {ComponentOrHtmlElement, ElementName} from '../../types';
+import {Validator} from './validator.types';
 
 export const isRequired = <
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,

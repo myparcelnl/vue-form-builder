@@ -26,10 +26,6 @@ jobs:
         with:
           token: ${{ secrets.GH_REPO_TOKEN }}
 
-      - name: 'Build packages'
-        run: |
-          yarn build --output-style stream
-
       - name: 'Run monodeploy'
         run: |
           yarn monodeploy \

@@ -1,6 +1,6 @@
 name: 'Set up environment'
 
-description: 'Sets up environment by checking out the repository, installing dependencies and handling cache'
+description: 'Sets up environment by setting up credentials, installing dependencies and creating a build'
 
 inputs:
   token:
@@ -17,3 +17,8 @@ runs:
     - uses: myparcelnl/actions/yarn2-install@v2
 
     - uses: myparcelnl/actions/cache-nx@v2
+
+    - name: 'Build packages'
+      shell: bash
+      run: |
+        yarn build --output-style stream

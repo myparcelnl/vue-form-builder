@@ -9,11 +9,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_REPO_TOKEN }}
 
-      - uses: myparcelnl/actions/yarn2-install@v2
-
-      - name: 'Handle NX Cache'
-        uses: myparcelnl/actions/nx-cache@v2
+      - uses: ./.github/actions/setup
+        with:
+          token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: 'Run tests'
         run: yarn test:run --coverage

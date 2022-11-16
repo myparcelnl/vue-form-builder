@@ -1,0 +1,19 @@
+name: 'Set up environment'
+
+description: 'Sets up environment by checking out the repository, installing dependencies and handling cache'
+
+inputs:
+  token:
+    description: 'GitHub token'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: myparcelnl/actions/setup-git-credentials@v2
+      with:
+        token: ${{ inputs.token }}
+
+    - uses: myparcelnl/actions/yarn2-install@v2
+
+    - uses: myparcelnl/actions/cache-nx@v2

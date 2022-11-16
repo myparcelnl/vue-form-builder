@@ -20,26 +20,15 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          persist-credentials: false
+          token: ${{ secrets.GH_REPO_TOKEN }}
 
-      - uses: myparcelnl/actions/yarn2-install@v2
-
-      - name: 'Handle Nx cache'
-        uses: actions/cache@v3
-        id: cache-nx
+      - uses: ./.github/actions/setup
         with:
-          path: node_modules/.cache/nx
-          key: ${{ runner.os }}-nx-${{ hashFiles('package.json') }}-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-nx-${{ hashFiles('package.json') }}-
+          token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: 'Build packages'
         run: |
           yarn build --output-style stream
-
-      - uses: myparcelnl/actions/setup-git-credentials@v2
-        with:
-          token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: 'Run monodeploy'
         run: |

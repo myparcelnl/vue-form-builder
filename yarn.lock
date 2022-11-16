@@ -593,7 +593,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/hook-manager@workspace:^1.0.0-alpha.4, @myparcel-vfb/hook-manager@workspace:packages/hook-manager":
+"@myparcel-vfb/hook-manager@workspace:^1.0.0-alpha.5, @myparcel-vfb/hook-manager@workspace:packages/hook-manager":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/hook-manager@workspace:packages/hook-manager"
   dependencies:
@@ -634,7 +634,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/utils@workspace:^1.0.0-alpha.4, @myparcel-vfb/utils@workspace:packages/utils":
+"@myparcel-vfb/utils@workspace:^1.0.0-alpha.5, @myparcel-vfb/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/utils@workspace:packages/utils"
   dependencies:
@@ -669,8 +669,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@myparcel/vue-form-builder@workspace:packages/core"
   dependencies:
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.4"
-    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.4"
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.5"
+    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.5"
     "@myparcel/ts-utils": ^1.0.0
     "@vitejs/plugin-vue": ^3.2.0
     typescript: ^4.8.4

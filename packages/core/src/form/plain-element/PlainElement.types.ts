@@ -41,11 +41,13 @@ export type BasePlainElementInstance<
 > = {
   readonly name: N;
   readonly component: C;
+
   readonly hooks: HookManagerInstance<PlainElementHooks<C, N>>;
   readonly form: FormInstance;
   readonly props: ElementProps<C>;
 
   readonly isVisible: Ref<boolean>;
+  readonly teleportSelector: string;
 };
 
 export type PlainElementInstance<

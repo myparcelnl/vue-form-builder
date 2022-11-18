@@ -203,7 +203,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_return',
-      teleportId: '#return-shipment',
+      teleportSelector: '#return-shipment',
       visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 

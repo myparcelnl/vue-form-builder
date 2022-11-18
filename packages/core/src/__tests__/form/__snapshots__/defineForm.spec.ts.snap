@@ -2,13 +2,9 @@
 
 exports[`Form Generation > defining a form > can use vue element wrapper 1`] = `
 "<form id=\\"form\\" class=\\"valid\\"><input><br>
-  <div>
-    <!--teleport start-->
-    <div id=\\"text__wrapper\\" class=\\"\\"><input id=\\"text\\" type=\\"text\\" name=\\"text\\" class=\\"\\">
-      <!--v-if-->
-      <!--v-if-->
-    </div>
-    <!--teleport end-->
+  <div id=\\"text__wrapper\\" class=\\"\\"><input id=\\"text\\" type=\\"text\\" name=\\"text\\" class=\\"\\">
+    <!--v-if-->
+    <!--v-if-->
   </div>
 </form>"
 `;

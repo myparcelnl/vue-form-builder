@@ -77,8 +77,6 @@ export type BaseInteractiveElementInstance<
   readonly label?: string;
   readonly lazy: boolean;
 
-  readonly teleportId?: string;
-
   readonly isDirty: Ref<boolean>;
   readonly isSuspended: Ref<boolean>;
   readonly isTouched: Ref<boolean>;

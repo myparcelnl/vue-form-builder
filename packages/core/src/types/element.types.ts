@@ -38,6 +38,11 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
    * Hooks to be registered.
    */
   hookNames?: string[];
+
+  /**
+   * Selector to render the field in.
+   */
+  teleportSelector?: string;
 };
 
 export type AnyElementInstance<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =

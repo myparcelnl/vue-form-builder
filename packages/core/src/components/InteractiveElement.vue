@@ -1,26 +1,20 @@
 <template>
-  <div>
-    <Teleport
-      :to="teleportId"
-      :disabled="teleportDisabled">
-      <div
-        v-show="element.isVisible"
-        :id="elementId"
-        :class="element.isVisible ? element.form.config.fieldClass : null">
-        <component
-          :is="element.component"
-          :id="element.name ?? element.name"
-          v-model="model"
-          :label="element.label"
-          :name="element.name"
-          :errors="element.errors"
-          :disabled="element.isDisabled"
-          :valid="element.isValid"
-          :suspended="element.isSuspended"
-          v-bind="{...$attrs, ...element.props}"
-          v-on="hooks" />
-      </div>
-    </Teleport>
+  <div
+    v-show="element.isVisible"
+    :id="elementId"
+    :class="element.isVisible ? element.form.config.fieldClass : null">
+    <component
+      :is="element.component"
+      :id="element.name ?? element.name"
+      v-model="model"
+      :label="element.label"
+      :name="element.name"
+      :errors="element.errors"
+      :disabled="element.isDisabled"
+      :valid="element.isValid"
+      :suspended="element.isSuspended"
+      v-bind="{...$attrs, ...element.props}"
+      v-on="hooks" />
   </div>
 </template>
 
@@ -83,8 +77,6 @@ export default defineComponent({
       }),
 
       elementId: computed(() => (props.element.name ? `${props.element.name}__wrapper` : '')),
-      teleportId: computed(() => props.element.teleportId ?? `#teleport--${props.element.name}`),
-      teleportDisabled: computed(() => !props.element.teleportId),
     };
   },
 });

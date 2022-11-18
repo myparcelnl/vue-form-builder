@@ -12,34 +12,30 @@
     <template
       v-for="(field, index) in fields"
       :key="`field--${field.name ?? 'unnamed'}--${index}`">
-      <template v-if="isMounted">
-        <InteractiveElement
-          v-show="field.isVisible"
-          v-if="field.hasOwnProperty('ref')"
-          :element="field" />
+      <Teleport
+        v-if="field.teleportSelector"
+        :to="field.teleportSelector">
+        <FormElement :field="field" />
+      </Teleport>
 
-        <PlainElement
-          v-else
-          v-show="field.isVisible"
-          :element="field" />
+      <template v-else>
+        <FormElement :field="field" />
       </template>
     </template>
   </form>
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent, onMounted, provide, ref, toRef} from 'vue';
+import {PropType, defineComponent, provide, toRef} from 'vue';
+import FormElement from './FormElement.vue';
 import {FormInstance} from '../form';
 import {INJECT_FORM} from '../services';
-import InteractiveElement from './InteractiveElement.vue';
-import PlainElement from './PlainElement.vue';
 import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'MagicForm',
   components: {
-    InteractiveElement,
-    PlainElement,
+    FormElement,
   },
 
   props: {
@@ -56,15 +52,8 @@ export default defineComponent({
 
     lifeCycleHooks.register(props.form.hooks, props.form);
 
-    const isMounted = ref(false);
-
-    onMounted(() => {
-      isMounted.value = true;
-    });
-
     return {
       fields: toRef(props.form, 'fields'),
-      isMounted,
     };
   },
 });

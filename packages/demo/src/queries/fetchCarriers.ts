@@ -3,7 +3,7 @@ import {FetchClient, GetCarriers, createMyParcelSdk} from '@myparcel/sdk';
 import {useQuery} from '@tanstack/vue-query';
 
 export const useFetchCarriers = () => {
-  return useQuery('carriers', async () => {
+  return useQuery(['carriers'], async () => {
     const sdk = createMyParcelSdk(new FetchClient(), [new GetCarriers()]);
 
     return sdk.getCarriers();

@@ -36,4 +36,5 @@ export type Validator<
 > = {
   validate: ValidateFunction<C, N, RT>;
   errorMessage?: string;
+  precedence?: number;
 };

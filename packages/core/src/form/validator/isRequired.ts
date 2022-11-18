@@ -1,4 +1,5 @@
 import {ComponentOrHtmlElement, ElementName} from '../../types';
+import { InteractiveElementInstance } from '../interactive-element';
 import {Validator} from './validator.types';
 
 export const isRequired = <
@@ -8,6 +9,8 @@ export const isRequired = <
 >(
   errorMessage: string,
 ): Validator<C, N, RT> => ({
-  validate: Boolean,
+  validate: (field: InteractiveElementInstance<C, N, RT>, value: RT): boolean => {
+    return !(value === null || value === undefined || value === '');
+  },
   errorMessage,
 });

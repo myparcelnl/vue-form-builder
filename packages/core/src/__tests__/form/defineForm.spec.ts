@@ -1,6 +1,6 @@
 import {InteractiveElement, PlainElement, defineField, defineForm} from '../../form';
-import {canNotContainLetterValidator, firstNameNotJohnValidator} from './interactive-element/validationData';
-import {canNotContainX, firstNameNotDuane} from '@myparcel-vfb/demo/src/forms/validators';
+import {canNotContainLetterValidator, firstNameNotJohnValidator, nameNotDonaldMack, nameNotDonald } from './interactive-element/validationData';
+import {canNotContainX, firstNameNotDuane } from '@myparcel-vfb/demo/src/forms/validators';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {formIsInvalid, formIsValid} from '../utils/formIsValid';
@@ -287,7 +287,7 @@ describe('Form Generation', () => {
           defineField({
             component: 'input',
             name: 'element',
-            ref: ref(''),
+            ref: ref('Jack'),
             validators: [firstNameNotJohnValidator(), canNotContainLetterValidator()],
           }),
         ],
@@ -305,7 +305,7 @@ describe('Form Generation', () => {
           defineField({
             component: 'input',
             name: 'element',
-            ref: ref(''),
+            ref: ref('Jack'),
             validators: [firstNameNotDuane(), canNotContainX()],
           }),
         ],
@@ -313,6 +313,35 @@ describe('Form Generation', () => {
 
       await form.submit();
       expect(form.isValid.value).toBe(true);
+    });
+
+    it('validates using an array of validators, with precedence', async () => {
+      expect.assertions(3);
+
+      const form = generateForm({
+        fields: [
+          defineField({
+            component: 'input',
+            name: 'element',
+            ref: ref('Jack'),
+            validators: [
+              // validators without precedence:
+              firstNameNotJohnValidator(), canNotContainLetterValidator(),
+              // validators with precedence:
+              nameNotDonaldMack(1), nameNotDonald(2),
+            ],
+          }),
+        ],
+      });
+
+      await form.submit();
+      expect(form.isValid.value).toBe(true);
+      form.model.element.ref = 'Donald Mack';
+      await form.submit();
+      expect(form.model.element.errors).toEqual(['Donald Mack, we specifically do not send to you.']);
+      form.model.element.ref = 'Donald';
+      await form.submit();
+      expect(form.model.element.errors).toEqual(['Donald, we do not send to you.']);
     });
 
     it('can be reset', async () => {

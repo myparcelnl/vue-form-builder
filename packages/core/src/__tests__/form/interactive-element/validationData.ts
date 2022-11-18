@@ -7,6 +7,18 @@ export const firstNameNotJohnValidator = (): Validator => ({
   errorMessage: 'John, we do not accept you',
 });
 
+export const nameNotDonaldMack = (precedence: number): Validator => ({
+  precedence,
+  validate: (_, value) => !String(value).startsWith('Donald Mack'),
+  errorMessage: 'Donald Mack, we specifically do not send to you.',
+});
+
+export const nameNotDonald = (precedence: number): Validator => ({
+  precedence,
+  validate: (_, value) => !String(value).startsWith('Donald'),
+  errorMessage: 'Donald, we do not send to you.',
+});
+
 export const canNotContainLetterValidator = (): Validator => ({
   validate: (_, value) => !String(value).includes('e'),
   errorMessage: 'The most common letter in the English language is not allowed',

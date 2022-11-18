@@ -19,7 +19,9 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
   renderLabel: translate,
   fieldClass: ['flex', 'items-center', 'py-1', 'pb-2', 'duration-100', 'group', 'transition-colors'],
   formClass: ['border', 'border-gray-600', 'rounded-xl', 'p-4'],
-
+  validationMessages: {
+    required: 'This field is required',
+  },
   fields: [
     defineField({
       component: Heading,
@@ -71,6 +73,16 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         {
           validate: (field, value) => !String(value).includes('e'),
           errorMessage: 'E is not allowed',
+        },
+        {
+          precedence: 1,
+          validate: (field, value) => !String(value).startsWith('Mack John'),
+          errorMessage: 'Mack John, we also do not send to you.',
+        },
+        {
+          precedence: 2,
+          validate: (field, value) => !String(value).startsWith('Mack'),
+          errorMessage: 'Mack, we do not send to you.',
         },
       ],
     }),

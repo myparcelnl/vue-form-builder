@@ -75,8 +75,9 @@ export type BaseInteractiveElementInstance<
   readonly hooks: HookManagerInstance<InteractiveElementHooks<C, N, RT> | any>;
 
   readonly label?: string;
-
   readonly lazy: boolean;
+
+  readonly teleportId?: string;
 
   readonly isDirty: Ref<boolean>;
   readonly isSuspended: Ref<boolean>;

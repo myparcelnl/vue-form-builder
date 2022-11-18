@@ -59,10 +59,10 @@ describe('Form Generation', () => {
       expect(form.model.test2.ref).toBe('changed');
     });
 
-    it('can use vue element wrapper', () => {
+    it('can use vue element wrapper', async () => {
       const wrapper = mount(MagicForm, {props: {form}});
+      await flushPromises();
       const formElement = wrapper.find('form');
-
       expect(formElement.exists()).toBe(true);
       expect(formElement.attributes('id')).toBe('form');
       expect(formElement.find('input').exists()).toBe(true);
@@ -99,6 +99,7 @@ describe('Form Generation', () => {
 
       const wrapper = mount(MagicForm, {props: {form: validationForm}});
       const formElement = wrapper.find('form');
+      await flushPromises();
 
       // expect default state to be valid regardless of input
       formIsValid(formElement, validationForm);
@@ -146,6 +147,7 @@ describe('Form Generation', () => {
         ],
       });
       const wrapper = mount(MagicForm, {props: {form: validationForm}});
+      await flushPromises();
       const formElement = wrapper.find('form');
       formIsValid(formElement, validationForm);
 
@@ -187,6 +189,7 @@ describe('Form Generation', () => {
       });
 
       const wrapper = mount(MagicForm, {props: {form: validationForm}});
+      await flushPromises();
 
       await wrapper.find('#firstName__wrapper input').setValue('Hank');
       expect(price.value).toBe('50');
@@ -223,6 +226,7 @@ describe('Form Generation', () => {
       });
 
       const wrapper = mount(MagicForm, {props: {form: validationForm}});
+      await flushPromises();
       await wrapper.find('#firstName__wrapper input').setValue('Hank');
       vi.advanceTimersByTime(1000);
 
@@ -256,6 +260,7 @@ describe('Form Generation', () => {
         ],
       });
       const wrapper = mount(MagicForm, {props: {form: validationForm}});
+      await flushPromises();
       await wrapper.find('#firstName__wrapper input').setValue('Hank');
       // figure out how to reverse calculate the price when firstName is updated.
     });

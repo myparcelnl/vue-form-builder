@@ -1,6 +1,6 @@
 <template>
   <h1>Behold, a form</h1>
-
+  <div id="return-shipment"></div>
   <MagicForm :form="shipmentOptionsForm" />
 
   <pre v-text="values" />
@@ -39,3 +39,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+#return-shipment {
+  float: right;
+}
+</style>

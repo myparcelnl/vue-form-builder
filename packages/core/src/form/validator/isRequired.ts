@@ -1,5 +1,5 @@
 import {ComponentOrHtmlElement, ElementName} from '../../types';
-import { InteractiveElementInstance } from '../interactive-element';
+import {InteractiveElementInstance} from '../interactive-element';
 import {Validator} from './validator.types';
 
 export const isRequired = <

@@ -32,7 +32,6 @@ import {INJECT_FORM} from '../services';
 import InteractiveElement from './InteractiveElement.vue';
 import PlainElement from './PlainElement.vue';
 import {useLifeCycleHooks} from '../composables';
-import { computed } from '@vue/reactivity';
 
 export default defineComponent({
   name: 'MagicForm',

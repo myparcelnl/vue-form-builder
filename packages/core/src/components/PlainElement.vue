@@ -10,7 +10,7 @@ import {PropType, computed, defineComponent} from 'vue';
 import {PlainElementInstance} from '../form';
 
 export default defineComponent({
-  name: 'BaseElement',
+  name: 'PlainElement',
   inheritAttrs: false,
   props: {
     element: {

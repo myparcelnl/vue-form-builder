@@ -1,6 +1,11 @@
 import {InteractiveElement, PlainElement, defineField, defineForm} from '../../form';
-import {canNotContainLetterValidator, firstNameNotJohnValidator, nameNotDonaldMack, nameNotDonald } from './interactive-element/validationData';
-import {canNotContainX, firstNameNotDuane } from '@myparcel-vfb/demo/src/forms/validators';
+import {
+  canNotContainLetterValidator,
+  firstNameNotJohnValidator,
+  nameNotDonald,
+  nameNotDonaldMack,
+} from './interactive-element/validationData';
+import {canNotContainX, firstNameNotDuane} from '@myparcel-vfb/demo/src/forms/validators';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {formIsInvalid, formIsValid} from '../utils/formIsValid';
@@ -326,9 +331,11 @@ describe('Form Generation', () => {
             ref: ref('Jack'),
             validators: [
               // validators without precedence:
-              firstNameNotJohnValidator(), canNotContainLetterValidator(),
+              firstNameNotJohnValidator(),
+              canNotContainLetterValidator(),
               // validators with precedence:
-              nameNotDonaldMack(1), nameNotDonald(2),
+              nameNotDonaldMack(1),
+              nameNotDonald(2),
             ],
           }),
         ],

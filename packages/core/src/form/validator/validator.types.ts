@@ -38,3 +38,9 @@ export type Validator<
   errorMessage?: string;
   precedence?: number;
 };
+
+export type ValidatorWithPrecedence<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  RT = unknown,
+> = Validator<C, N, RT> & {precedence: number};

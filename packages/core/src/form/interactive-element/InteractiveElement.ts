@@ -4,11 +4,11 @@ import {
   InteractiveElementConfiguration,
   InteractiveElementInstance,
 } from './InteractiveElement.types';
-import {MultiValidator, SingleValidator, Validator, isRequired, ValidateFunction} from '../validator';
+import {MultiValidator, SingleValidator, Validator, ValidatorWithPrecedence, isRequired} from '../validator';
 import {Ref, ref, watch} from 'vue';
+import {asyncEvery, isOfType} from '@myparcel/ts-utils';
 import {FormInstance} from '../Form.types';
 import {PlainElement} from '../plain-element';
-import {isOfType} from '@myparcel/ts-utils';
 import {useDynamicWatcher} from '../../utils/useDynamicWatcher';
 
 export class InteractiveElement<
@@ -67,18 +67,6 @@ export class InteractiveElement<
   };
 
   public validate = async (): Promise<boolean> => {
-    const doValidate = async (validator: Validator) => {
-      // TODO: fix types
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const valid = await validator.validate(this as any, this.ref.value);
-
-      if (!valid && validator.errorMessage) {
-        this.errors.value.push(validator.errorMessage);
-      }
-
-      return valid;
-    }
-
     this.resetValidation();
     await this.hooks.execute('beforeValidate', this, this.ref.value);
 
@@ -87,26 +75,27 @@ export class InteractiveElement<
       return this.isValid.value;
     }
 
+    const doValidate = async (validator: Validator<C, N, RT>) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      const valid = await validator.validate(this, this.ref.value);
+
+      if (!valid && validator.errorMessage) {
+        this.errors.value.push(validator.errorMessage);
+      }
+
+      return valid;
+    };
+
     // validation schema: 1) validators without precedence 2) validators with precedence
     // if a validator with precedence fails, the rest of the validators are not executed.
     const withoutPrecedence = this.validators.value.filter((validator) => !validator.precedence);
     const withPrecedence = this.validators.value
-      .filter((validator) => validator.precedence)
-      .sort((a, b) => a.precedence! - b.precedence!);
+      .filter((validator) => isOfType<ValidatorWithPrecedence<C, N, RT>>(validator, 'precedence'))
+      .sort((validatorA, validatorB) => (validatorA.precedence ?? 0) - (validatorB.precedence ?? 0));
 
-    let promises = await Promise.all(withoutPrecedence.map(doValidate));
-    if (!promises.every(Boolean)) {
-      this.isValid.value = promises.every(Boolean);
-    } else {
-      let valid = true;
-      for (const v of withPrecedence) {
-        valid = await doValidate(v);
-        if (!valid) {
-          break;
-        }
-      }
-      this.isValid.value = valid;
-    }
+    this.isValid.value =
+      (await asyncEvery(withoutPrecedence, doValidate)) && (await asyncEvery(withPrecedence, doValidate));
 
     await this.hooks.execute('afterValidate', this, this.ref.value, this.isValid.value);
     return this.isValid.value;

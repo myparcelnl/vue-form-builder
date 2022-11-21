@@ -79,13 +79,15 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       name: 'name',
       component: FormGroup,
       label: 'name',
-      slot: h('div', { class: 'flex flex-row gap-2' }, [
-        h('div', {id: 'teleport--firstname'}),
-        h('div', {id: 'teleport--lastname'}),
-      ]),
+      slots: {
+        default: h('div', { class: 'flex flex-row gap-2' }, [
+          h('div', {id: 'teleport--firstname'}),
+          h('div', {id: 'teleport--lastname'}),
+        ]),
+      },
       props: {
         label: 'Naam',
-      }
+      },
     }),
 
     defineField({

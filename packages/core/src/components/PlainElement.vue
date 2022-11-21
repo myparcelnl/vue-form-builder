@@ -3,7 +3,13 @@
     :is="element.component"
     v-bind="{...$attrs, ...element.props}"
     v-on="hooks">
-    <component v-if="element.slot" :is="element.slot" />
+    <template
+      v-for="(slot, key) in element.slots"
+      #[key]
+      :key="key">
+      <component :is="slot" />
+    </template>
+    <!-- <component v-if="element.slot" :is="element.slot" /> -->
   </component>
 </template>
 

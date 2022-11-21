@@ -45,7 +45,7 @@ export type BasePlainElementInstance<
   readonly hooks: HookManagerInstance<PlainElementHooks<C, N>>;
   readonly form: FormInstance;
   readonly props: ElementProps<C>;
-  readonly slot?: VNode | VNode[] | string;
+  readonly slots?: Record<string, VNode | VNode[] | string>;
 
   readonly isVisible: Ref<boolean>;
   readonly teleportSelector?: string;

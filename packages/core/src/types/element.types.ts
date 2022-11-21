@@ -38,7 +38,7 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
   /**
    * Slot content to be passed to the component.
    */
-  slot?: VNode | VNode[] | string;
+  slots?: Record<string, VNode | VNode[] | string>;
 
   /**
    * Hooks to be registered.

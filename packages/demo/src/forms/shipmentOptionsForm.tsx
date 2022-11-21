@@ -2,6 +2,8 @@
 import {AnyElementInstance, InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder';
 import {CARRIERS, CarrierName, PACKAGE_TYPES} from '@myparcel/sdk';
 import Heading from '../components/Heading.vue';
+import FormGroup from '../components/template/FormGroup.vue';
+import PTextInput from '../components/template/PTextInput.vue';
 import THiddenInput from '../components/template/THiddenInput.vue';
 import TNumberInput from '../components/template/TNumberInput.vue';
 import TSelect from '../components/template/TSelect.vue';
@@ -14,6 +16,19 @@ import {useFetchCarriers} from '../queries/fetchCarriers';
 
 // todo: dynamically add more form parts, see BO -> canada -> project groups
 // todo: form groups?
+
+let firstname = ref('');
+let lastname = ref('');
+
+const validateName = (field: InteractiveElementInstance) => {
+  const nameField = field.form.fields.value.find((f) => f.name === 'name');
+  const firstNameField = field.form.fields.value.find((f) => f.name === 'firstname');
+  const lastNameField = field.form.fields.value.find((f) => f.name === 'lastname');
+  nameField.props.errors = [
+    ...(firstNameField.errors ?? []),
+    ...(lastNameField.errors ?? []),
+  ];
+};
 
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
   renderLabel: translate,
@@ -61,36 +76,60 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
     }),
 
     defineField({
-      name: 'teleportName',
-      component: h('div', {id: 'teleport--name'}),
+      name: 'name',
+      component: FormGroup,
+      label: 'name',
+      slot: h('div', { class: 'flex flex-row gap-2' }, [
+        h('div', {id: 'teleport--firstname'}),
+        h('div', {id: 'teleport--lastname'}),
+      ]),
+      props: {
+        label: 'Naam',
+      }
     }),
 
     defineField({
-      name: 'name',
-      component: TTextInput,
-      ref: ref(''),
-      label: 'name',
-      teleportSelector: '#teleport--name',
+      name: 'firstname',
+      component: PTextInput,
+      ref: firstname,
+      label: 'firstname',
+      teleportSelector: '#teleport--firstname',
       validators: [
         {
-          validate: (field, value) => !String(value).startsWith('John'),
+          validate: (field, value) => !value.startsWith('John'),
           errorMessage: 'John is not allowed',
         },
         {
-          validate: (field, value) => !String(value).includes('e'),
+          validate: (field, value) => !value.includes('e'),
           errorMessage: 'E is not allowed',
         },
         {
           precedence: 1,
-          validate: (field, value) => !String(value).startsWith('Mack John'),
+          validate: (field, value) => !value.startsWith('Mack John'),
           errorMessage: 'Mack John, we also do not send to you.',
         },
         {
           precedence: 2,
-          validate: (field, value) => !String(value).startsWith('Mack'),
+          validate: (field, value) => !value.startsWith('Mack'),
           errorMessage: 'Mack, we do not send to you.',
         },
       ],
+      afterValidate: validateName,
+    }),
+
+    defineField({
+      name: 'lastname',
+      component: PTextInput,
+      ref: lastname,
+      label: 'lastname',
+      teleportSelector: '#teleport--lastname',
+      validators: [
+        {
+          validate: (field, value) => !value.startsWith('Love'),
+          errorMessage: 'Love is not allowed',
+        }
+      ],
+      afterValidate: validateName,
     }),
 
     defineField({

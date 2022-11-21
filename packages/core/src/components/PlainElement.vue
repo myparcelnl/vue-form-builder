@@ -2,7 +2,9 @@
   <component
     :is="element.component"
     v-bind="{...$attrs, ...element.props}"
-    v-on="hooks" />
+    v-on="hooks">
+    <component v-if="element.slot" :is="element.slot" />
+  </component>
 </template>
 
 <script lang="ts">

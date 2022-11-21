@@ -3,7 +3,7 @@ import {COMPONENT_LIFECYCLE_HOOKS} from '../../data/componentLifecycleHooks';
 import {FormInstance} from '../Form.types';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {PromiseOr} from '@myparcel/ts-utils';
-import {Ref} from 'vue';
+import {Ref, VNode} from 'vue';
 
 export type PlainElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
@@ -45,6 +45,7 @@ export type BasePlainElementInstance<
   readonly hooks: HookManagerInstance<PlainElementHooks<C, N>>;
   readonly form: FormInstance;
   readonly props: ElementProps<C>;
+  readonly slot?: VNode | VNode[] | string;
 
   readonly isVisible: Ref<boolean>;
   readonly teleportSelector?: string;

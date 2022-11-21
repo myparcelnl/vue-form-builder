@@ -12,15 +12,7 @@
     <template
       v-for="(field, index) in fields"
       :key="`field--${field.name ?? 'unnamed'}--${index}`">
-      <Teleport
-        v-if="field.teleportSelector"
-        :to="field.teleportSelector">
-        <FormElement :field="field" />
-      </Teleport>
-
-      <template v-else>
-        <FormElement :field="field" />
-      </template>
+      <FormElement :field="field" />
     </template>
   </form>
 </template>

@@ -47,7 +47,7 @@ export type BasePlainElementInstance<
   readonly props: ElementProps<C>;
 
   readonly isVisible: Ref<boolean>;
-  readonly teleportSelector: string;
+  readonly teleportSelector?: string;
 };
 
 export type PlainElementInstance<

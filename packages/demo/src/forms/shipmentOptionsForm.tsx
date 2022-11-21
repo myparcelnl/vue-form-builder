@@ -61,10 +61,16 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
     }),
 
     defineField({
+      name: 'teleportName',
+      component: h('div', {id: 'teleport--name'}),
+    }),
+
+    defineField({
       name: 'name',
       component: TTextInput,
       ref: ref(''),
       label: 'name',
+      teleportSelector: '#teleport--name',
       validators: [
         {
           validate: (field, value) => !String(value).startsWith('John'),

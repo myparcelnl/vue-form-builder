@@ -1,9 +1,9 @@
 import {BaseElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
+import {Ref, VNode} from 'vue';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../../data/componentLifecycleHooks';
 import {FormInstance} from '../Form.types';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {PromiseOr} from '@myparcel/ts-utils';
-import {Ref, VNode} from 'vue';
 
 export type PlainElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,

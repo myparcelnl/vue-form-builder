@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {Component, VNode} from 'vue';
 import {
   InteractiveElementConfiguration,
   InteractiveElementInstance,
   PlainElementConfiguration,
   PlainElementInstance,
 } from '../form';
-import {Component, VNode} from 'vue';
 import {ComponentLifecycleHooks} from './other.types';
 import {ComponentProps} from '@myparcel-vfb/utils';
 import {MakeOptional} from '@myparcel/ts-utils';
@@ -33,7 +33,6 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
    * ElementProps to be passed to the component.
    */
   props?: ElementProps<C>;
-
 
   /**
    * Slot content to be passed to the component.

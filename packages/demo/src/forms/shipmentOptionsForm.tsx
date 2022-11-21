@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import {AnyElementInstance, InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder';
 import {CARRIERS, CarrierName, PACKAGE_TYPES} from '@myparcel/sdk';
-import Heading from '../components/Heading.vue';
 import FormGroup from '../components/template/FormGroup.vue';
+import Heading from '../components/Heading.vue';
 import PTextInput from '../components/template/PTextInput.vue';
 import THiddenInput from '../components/template/THiddenInput.vue';
 import TNumberInput from '../components/template/TNumberInput.vue';
@@ -17,17 +17,14 @@ import {useFetchCarriers} from '../queries/fetchCarriers';
 // todo: dynamically add more form parts, see BO -> canada -> project groups
 // todo: form groups?
 
-let firstname = ref('');
-let lastname = ref('');
+const firstname = ref('');
+const lastname = ref('');
 
 const validateName = (field: InteractiveElementInstance) => {
-  const nameField = field.form.fields.value.find((f) => f.name === 'name');
-  const firstNameField = field.form.fields.value.find((f) => f.name === 'firstname');
-  const lastNameField = field.form.fields.value.find((f) => f.name === 'lastname');
-  nameField.props.errors = [
-    ...(firstNameField.errors ?? []),
-    ...(lastNameField.errors ?? []),
-  ];
+  const nameField = field.form.fields.value.find((field) => field.name === 'name');
+  const firstNameField = field.form.fields.value.find((field) => field.name === 'firstname');
+  const lastNameField = field.form.fields.value.find((field) => field.name === 'lastname');
+  nameField.props.errors = [...(firstNameField.errors ?? []), ...(lastNameField.errors ?? [])];
 };
 
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
@@ -80,7 +77,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: FormGroup,
       label: 'name',
       slots: {
-        default: h('div', { class: 'flex flex-row gap-2' }, [
+        default: h('div', {class: 'flex flex-row gap-2'}, [
           h('div', {id: 'teleport--firstname'}),
           h('div', {id: 'teleport--lastname'}),
         ]),
@@ -129,7 +126,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         {
           validate: (field, value) => !value.startsWith('Love'),
           errorMessage: 'Love is not allowed',
-        }
+        },
       ],
       afterValidate: validateName,
     }),

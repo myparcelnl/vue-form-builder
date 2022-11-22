@@ -14,7 +14,7 @@ import SubmitButton from '../elements/SubmitButton.vue';
 import TextInput from '../elements/TextInput.vue';
 import {generateForm} from '../utils/generateForm';
 import {optionData} from '../utils/externalData';
-import {ref} from 'vue';
+import {h, ref} from 'vue';
 
 describe('Form Generation', () => {
   describe('defining a form', () => {
@@ -354,6 +354,46 @@ describe('Form Generation', () => {
       form.model.element.ref = 'Donald';
       await form.submit();
       expect(form.model.element.errors).toEqual(['Donald, we do not send to you.']);
+    });
+
+    it('can teleport a field in the same form', async () => {
+      // expect.assertions(2);
+      const form = generateForm({
+        fields: [
+          defineField({
+            name: 'name',
+            component: 'div',
+            label: 'name',
+            slots: {
+              default: h('div', {class: 'flex flex-row gap-2'}, [
+                h('div', {id: 'teleport--firstname'}),
+                h('div', {id: 'teleport--lastname'}),
+              ]),
+            },
+            props: {
+              label: 'Naam',
+            },
+          }),
+          defineField({
+            name: 'firstname',
+            component: 'input',
+            ref: ref(''),
+            label: 'firstname',
+            teleportSelector: '#teleport--firstname',
+          }),
+
+          defineField({
+            name: 'lastname',
+            component: 'input',
+            ref: ref(''),
+            label: 'lastname',
+            teleportSelector: '#teleport--lastname',
+          }),
+        ],
+      });
+      const wrapper = mount(MagicForm, {props: {form}});
+      await flushPromises();
+      console.log(wrapper.html());
     });
 
     it('can be reset', async () => {

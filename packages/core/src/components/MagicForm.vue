@@ -44,8 +44,10 @@ export default defineComponent({
 
     lifeCycleHooks.register(props.form.hooks, props.form);
 
+    const fields = toRef(props.form, 'fields');
+
     return {
-      fields: toRef(props.form, 'fields'),
+      fields,
     };
   },
 });

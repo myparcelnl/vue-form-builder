@@ -1,8 +1,6 @@
 <template>
   <template v-if="field.teleportSelector">
-    <Teleport
-      v-if="isLoaded"
-      :to="field.teleportSelector">
+    <SafeTeleport :to="field.teleportSelector">
       <InteractiveElement
         v-show="field.isVisible"
         v-if="field.hasOwnProperty('ref')"
@@ -11,7 +9,7 @@
         v-else
         v-show="field.isVisible"
         :element="field" />
-    </Teleport>
+    </SafeTeleport>
   </template>
   <template v-else>
     <InteractiveElement
@@ -26,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent, onMounted, ref} from 'vue';
+import {PropType, defineComponent} from 'vue';
 import {AnyElementInstance} from '../types';
 import InteractiveElement from './InteractiveElement.vue';
 import PlainElement from './PlainElement.vue';
@@ -39,18 +37,6 @@ export default defineComponent({
       type: Object as PropType<AnyElementInstance>,
       required: true,
     },
-  },
-
-  setup: () => {
-    const isLoaded = ref(false);
-
-    onMounted(() => {
-      isLoaded.value = true;
-    });
-
-    return {
-      isLoaded,
-    };
   },
 });
 </script>

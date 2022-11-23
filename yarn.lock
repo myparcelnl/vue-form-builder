@@ -624,7 +624,7 @@ __metadata:
     jsdom: ^20.0.2
     lint-staged: ^13.0.3
     monodeploy: ^3.3.1
-    nx: ^15.1.0
+    nx: ^15.2.1
     prettier: ^2.7.1
     rimraf: ^3.0.2
     tsup: ^6.5.0
@@ -677,6 +677,7 @@ __metadata:
     vite: ^3.2.4
     vite-plugin-dts: ^1.7.1
     vue: ^3.2.45
+    vue-safe-teleport: ^0.1.0
     vue-tsc: ^1.0.9
   languageName: unknown
   linkType: soft
@@ -728,23 +729,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/cli@npm:15.1.0":
-  version: 15.1.0
-  resolution: "@nrwl/cli@npm:15.1.0"
+"@nrwl/cli@npm:15.2.1":
+  version: 15.2.1
+  resolution: "@nrwl/cli@npm:15.2.1"
   dependencies:
-    nx: 15.1.0
-  checksum: 3623ee4d3c185a5ff2b98e3cbb856dd335a6cd97e8703e4a298be07931aa78d8a286dd4ebf0c6885e1692708583fbe48147c75bfaf360a2de580247c015d6714
+    nx: 15.2.1
+  checksum: 4639287011ca6cef30ab9ff31247625bca83c070c33e65acb186d34592621ca063617d0210588894c878f9c1d878d4dad389c4356843950f2eca371f1ee2c756
   languageName: node
   linkType: hard
 
-"@nrwl/tao@npm:15.1.0":
-  version: 15.1.0
-  resolution: "@nrwl/tao@npm:15.1.0"
+"@nrwl/tao@npm:15.2.1":
+  version: 15.2.1
+  resolution: "@nrwl/tao@npm:15.2.1"
   dependencies:
-    nx: 15.1.0
+    nx: 15.2.1
   bin:
     tao: index.js
-  checksum: bb1efe2876efca8e069a4a68e2056263699cbeeeeaca4f5a0b6f7e2f7d8b632d4aa20e87f95e849172d79a7fe26c39e21b17c872f48650768a8f177f7b75dd88
+  checksum: 42ebb19df2b06f28e007fe6fc8f9ff2a998092eb01b688c06575ff95f01ea5dbc9b03ddfac512d072f1af30d1be614d33f0cc3a594a13b203987ca9246b13263
   languageName: node
   linkType: hard
 
@@ -4173,7 +4174,7 @@ __metadata:
 
 "fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
   dependencies:
     node-gyp: latest
   conditions: os=darwin
@@ -5924,12 +5925,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:15.1.0, nx@npm:^15.1.0":
-  version: 15.1.0
-  resolution: "nx@npm:15.1.0"
+"nx@npm:15.2.1, nx@npm:^15.2.1":
+  version: 15.2.1
+  resolution: "nx@npm:15.2.1"
   dependencies:
-    "@nrwl/cli": 15.1.0
-    "@nrwl/tao": 15.1.0
+    "@nrwl/cli": 15.2.1
+    "@nrwl/tao": 15.2.1
     "@parcel/watcher": 2.0.4
     "@yarnpkg/lockfile": ^1.1.0
     "@yarnpkg/parsers": ^3.0.0-rc.18
@@ -5973,7 +5974,7 @@ __metadata:
       optional: true
   bin:
     nx: bin/nx.js
-  checksum: ede748ed184fe9539f6a135dd15283f3242456fcf3ee9da3e2351e7429dc3d5b5312375c59d0d18f57f6d8c7ff00d5ebf7b172764ccd46dc16b258a844b45468
+  checksum: a1125b624455625f53ad256362aaab06ffbfeea9f73664cbb74e05e9f61d7cef5e18303f223e81378c78f28e9b28a1bc327d7c4971b26cf687097cd8bc612926
   languageName: node
   linkType: hard
 
@@ -6757,7 +6758,7 @@ __metadata:
 
 "resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
   version: 1.22.1
-  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=07638b"
   dependencies:
     is-core-module: ^2.9.0
     path-parse: ^1.0.7
@@ -6770,7 +6771,7 @@ __metadata:
 
 "resolve@patch:resolve@~1.17.0#~builtin<compat/resolve>":
   version: 1.17.0
-  resolution: "resolve@patch:resolve@npm%3A1.17.0#~builtin<compat/resolve>::version=1.17.0&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.17.0#~builtin<compat/resolve>::version=1.17.0&hash=07638b"
   dependencies:
     path-parse: ^1.0.6
   checksum: 6fd799f282ddf078c4bc20ce863e3af01fa8cb218f0658d9162c57161a2dbafe092b13015b9a4c58d0e1e801cf7aa7a4f13115fea9db98c3f9a0c43e429bad6f
@@ -6779,7 +6780,7 @@ __metadata:
 
 "resolve@patch:resolve@~1.19.0#~builtin<compat/resolve>":
   version: 1.19.0
-  resolution: "resolve@patch:resolve@npm%3A1.19.0#~builtin<compat/resolve>::version=1.19.0&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.19.0#~builtin<compat/resolve>::version=1.19.0&hash=07638b"
   dependencies:
     is-core-module: ^2.1.0
     path-parse: ^1.0.6
@@ -7865,17 +7866,17 @@ __metadata:
 
 "typescript@patch:typescript@^4.9.3#~builtin<compat/typescript>":
   version: 4.9.3
-  resolution: "typescript@patch:typescript@npm%3A4.9.3#~builtin<compat/typescript>::version=4.9.3&hash=d73830"
+  resolution: "typescript@patch:typescript@npm%3A4.9.3#~builtin<compat/typescript>::version=4.9.3&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 67ca21a387c0572f1c04936e638dde7782c5aa520c3754aadc7cc9b7c915da9ebc3e27c601bfff4ccb7d7264e82dce6d277ada82ec09dc75024349e0ef64926d
+  checksum: ef65c22622d864497d0a0c5db693523329b3284c15fe632e93ad9aa059e8dc38ef3bd767d6f26b1e5ecf9446f49bd0f6c4e5714a2eeaf352805dc002479843d1
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@~4.8.4#~builtin<compat/typescript>":
   version: 4.8.4
-  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=0102e9"
+  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
@@ -8151,6 +8152,15 @@ __metadata:
   peerDependencies:
     vue: ^3.2.0
   checksum: c7f0156ac03a9561d110f5ff778121eee7c8c154be6ec5064558ba22ab5237db36f29ffffc95cc16d692cc68a26df0c434f395401c0e3b48f782c7bed51391c6
+  languageName: node
+  linkType: hard
+
+"vue-safe-teleport@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "vue-safe-teleport@npm:0.1.0"
+  peerDependencies:
+    vue: ^3.2.0
+  checksum: ff1ececeecb3624d534188d07c67cad38b51553b8a433dad33a89d456c8a40e89742817588d8ebf7bb3a12f941d8dafef581a3446c5f7ece7982b97dbde7a484
   languageName: node
   linkType: hard
 

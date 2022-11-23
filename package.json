@@ -37,7 +37,7 @@
   },
   "prettier": "@myparcel/prettier-config",
   "devDependencies": {
-    "@monodeploy/plugin-github": "^0.6.2",
+    "@monodeploy/plugin-github": "^0.6.3",
     "@myparcel-eslint/eslint-config-esnext": "^1.2.0",
     "@myparcel-eslint/eslint-config-node": "^1.2.0",
     "@myparcel-eslint/eslint-config-prettier": "^1.2.0",

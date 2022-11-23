@@ -1,6 +1,6 @@
 <template>
   <template v-if="field.teleportSelector">
-    <SafeTeleport :to="field.teleportSelector">
+    <Teleport :to="field.teleportSelector">
       <InteractiveElement
         v-show="field.isVisible"
         v-if="field.hasOwnProperty('ref')"
@@ -9,7 +9,7 @@
         v-else
         v-show="field.isVisible"
         :element="field" />
-    </SafeTeleport>
+    </Teleport>
   </template>
   <template v-else>
     <InteractiveElement

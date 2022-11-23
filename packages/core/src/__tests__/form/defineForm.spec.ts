@@ -9,12 +9,12 @@ import {canNotContainX, firstNameNotDuane} from '@myparcel-vfb/demo/src/forms/va
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {formIsInvalid, formIsValid} from '../utils/formIsValid';
+import {h, ref} from 'vue';
 import {MagicForm} from '../../components';
 import SubmitButton from '../elements/SubmitButton.vue';
 import TextInput from '../elements/TextInput.vue';
 import {generateForm} from '../utils/generateForm';
 import {optionData} from '../utils/externalData';
-import {h, ref} from 'vue';
 
 describe('Form Generation', () => {
   describe('defining a form', () => {
@@ -391,7 +391,16 @@ describe('Form Generation', () => {
           }),
         ],
       });
-      const wrapper = mount(MagicForm, {props: {form}});
+      const wrapper = mount(MagicForm, {
+        global: {
+          stubs: {
+            teleport: true,
+          },
+        },
+        props: {
+          form,
+        },
+      });
       await flushPromises();
       console.log(wrapper.html());
     });

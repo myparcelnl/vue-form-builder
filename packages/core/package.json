@@ -27,8 +27,7 @@
   "dependencies": {
     "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.6",
     "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.6",
-    "@myparcel/ts-utils": "^1.1.0",
-    "vue-safe-teleport": "^0.1.0"
+    "@myparcel/ts-utils": "^1.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",

@@ -3,7 +3,6 @@ import {App, Plugin, UnwrapNestedRefs} from 'vue';
 import {FormConfiguration} from '../form';
 import {setupDevtools} from './devtools';
 import {useFormBuilder} from '../composables';
-import VueSafeTeleport from 'vue-safe-teleport'
 
 export type MyParcelFormBuilderPlugin = Plugin;
 
@@ -14,8 +13,6 @@ export type MyParcelFormBuilderPluginOptions = UnwrapNestedRefs<Partial<FormConf
  */
 export const MyParcelFormBuilderPlugin: MyParcelFormBuilderPlugin = {
   install(app: App, options: MyParcelFormBuilderPluginOptions) {
-    app.use(VueSafeTeleport);
-
     const formBuilder = useFormBuilder();
 
     // eslint-disable-next-line no-underscore-dangle

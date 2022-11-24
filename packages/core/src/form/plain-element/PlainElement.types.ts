@@ -40,6 +40,7 @@ export type BasePlainElementInstance<
   N extends ElementName = ElementName,
 > = {
   readonly name: N;
+  readonly label?: string;
   readonly component: C;
 
   readonly hooks: HookManagerInstance<PlainElementHooks<C, N>>;

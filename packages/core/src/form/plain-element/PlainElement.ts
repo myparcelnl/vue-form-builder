@@ -10,6 +10,7 @@ export class PlainElement<
   N extends ElementName = ElementName,
 > {
   public readonly name: N;
+  public label?: string;
   public readonly component: C;
   public readonly form: FormInstance;
   public declare hooks: PlainElementInstance<C, N>['hooks'];

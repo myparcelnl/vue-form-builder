@@ -1,6 +1,9 @@
 <template>
   <component
     :is="element.component"
+    :id="element.name ?? element.name"
+    :name="element.name"
+    :label="element.label"
     v-bind="{...$attrs, ...element.props}"
     v-on="hooks">
     <template
@@ -9,7 +12,6 @@
       :key="key">
       <component :is="slot" />
     </template>
-    <!-- <component v-if="element.slot" :is="element.slot" /> -->
   </component>
 </template>
 

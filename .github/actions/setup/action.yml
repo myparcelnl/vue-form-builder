@@ -17,6 +17,8 @@ runs:
     - uses: myparcelnl/actions/yarn2-install@v2
 
     - uses: myparcelnl/actions/cache-nx@v2
+      with:
+        lockfile: '**/yarn.lock'
 
     - name: 'Build packages'
       shell: bash

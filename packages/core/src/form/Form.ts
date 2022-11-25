@@ -88,6 +88,7 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
     const res = await Promise.all(
       this.fields.value.map(async (field) => {
         if (!isOfType<InteractiveElement>(field, 'isValid')) {
+          field.resetValidation();
           return true;
         }
 

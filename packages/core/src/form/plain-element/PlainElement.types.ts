@@ -52,6 +52,11 @@ export type BasePlainElementInstance<
   readonly teleportSelector?: string;
 
   readonly formattedErrors: () => string[];
+
+  /**
+   * Resets the field.
+   */
+  readonly reset: () => PromiseOr<void>;  
 };
 
 export type PlainElementInstance<

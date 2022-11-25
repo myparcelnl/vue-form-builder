@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent, provide, ref, toRef} from 'vue';
+import {PropType, computed, defineComponent, provide, ref, toRefs} from 'vue';
 import FormElement from './FormElement.vue';
 import {FormInstance} from '../form';
 import {INJECT_FORM} from '../services';
@@ -49,21 +49,19 @@ export default defineComponent({
   setup: (props) => {
     provide(INJECT_FORM, props.form);
 
+    const propRefs = toRefs(props);
     const fieldsAreResolved = ref(false);
-
     const lifeCycleHooks = useLifeCycleHooks();
 
     lifeCycleHooks.register(props.form.hooks, props.form);
 
-    const fields = toRef(props.form, 'fields');
-    const plainFields = fields.value.filter((field) => !field.teleportSelector);
-    const teleportFields = fields.value.filter((field) => !!field.teleportSelector);
+    const {fields} = propRefs.form.value;
 
     return {
       fields,
       fieldsAreResolved,
-      plainFields,
-      teleportFields,
+      plainFields: computed(() => fields.value.filter((field) => !field.teleportSelector)),
+      teleportFields: computed(() => fields.value.filter((field) => Boolean(field.teleportSelector))),
     };
   },
 });

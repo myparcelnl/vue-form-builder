@@ -100,7 +100,6 @@ export type BaseInteractiveElementInstance<
    */
   readonly reset: () => PromiseOr<void>;
 
-
   readonly formattedErrors: () => string[];
 };
 

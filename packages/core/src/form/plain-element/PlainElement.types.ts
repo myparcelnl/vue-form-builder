@@ -56,7 +56,7 @@ export type BasePlainElementInstance<
   /**
    * Resets the field.
    */
-  readonly reset: () => PromiseOr<void>;  
+  readonly reset: () => PromiseOr<void>;
 };
 
 export type PlainElementInstance<

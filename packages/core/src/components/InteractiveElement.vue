@@ -9,7 +9,7 @@
       v-model="model"
       :label="element.label"
       :name="element.name"
-      :errors="element.errors"
+      :errors="element.formattedErrors()"
       :disabled="element.isDisabled"
       :valid="element.isValid"
       :suspended="element.isSuspended"

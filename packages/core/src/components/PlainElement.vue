@@ -4,6 +4,7 @@
     :id="element.name ?? element.name"
     :name="element.name"
     :label="element.label"
+    :errors="element.formattedErrors()"
     v-bind="{...$attrs, ...element.props}"
     v-on="hooks">
     <template

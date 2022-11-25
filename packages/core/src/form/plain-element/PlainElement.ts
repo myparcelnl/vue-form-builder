@@ -14,6 +14,7 @@ export class PlainElement<
   public readonly component: C;
   public readonly form: FormInstance;
   public declare hooks: PlainElementInstance<C, N>['hooks'];
+  public errors = ref<[() => string | string]>([]);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
@@ -64,5 +65,15 @@ export class PlainElement<
 
   public setVisible(value: boolean): void {
     this.isVisible.value = value;
+  }
+
+  public formattedErrors(): string[] {
+    return this.errors.map((error) => {
+      if (typeof error === 'function') {
+        return error();
+      }
+
+      return error;
+    });
   }
 }

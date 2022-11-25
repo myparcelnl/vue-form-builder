@@ -96,14 +96,12 @@ export type BaseInteractiveElementInstance<
   readonly validators: Validator<C, N, RT>[];
 
   /**
-   * Error messages generated during validation.
-   */
-  errors: Ref<string[]>;
-
-  /**
    * Resets the field.
    */
   readonly reset: () => PromiseOr<void>;
+
+
+  readonly formattedErrors: () => string[];
 };
 
 export type InteractiveElementInstance<

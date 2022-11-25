@@ -48,6 +48,11 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
    * Selector to render the field in.
    */
   teleportSelector?: string;
+
+  /**
+   * Name of the field to port errors to.
+   */
+  errorsTarget?: string;
 };
 
 export type AnyElementInstance<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =

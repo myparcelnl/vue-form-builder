@@ -26,9 +26,9 @@ export class InteractiveElement<
   public isOptional = ref(false);
 
   public isDisabled = ref(false);
-  public errors = ref<string[]>([]);
 
   public label?: string;
+  public errorsTarget?: string;
 
   public lazy = false;
   public ref: InteractiveElementInstance<C, N, RT>['ref'];
@@ -82,6 +82,11 @@ export class InteractiveElement<
 
       if (!valid && validator.errorMessage) {
         this.errors.value.push(validator.errorMessage);
+
+        if (this.errorsTarget) {
+          const target = this.form.fields.value.find((field) => field.name === this.errorsTarget);
+          target.errors.push(validator.errorMessage);
+        }
       }
 
       return valid;
@@ -98,6 +103,7 @@ export class InteractiveElement<
       (await asyncEvery(withoutPrecedence, doValidate)) && (await asyncEvery(withPrecedence, doValidate));
 
     await this.hooks.execute('afterValidate', this, this.ref.value, this.isValid.value);
+
     return this.isValid.value;
   };
 
@@ -116,6 +122,8 @@ export class InteractiveElement<
     this.ref = config.ref;
     this.initialValue = this.ref.value;
     this.lazy = config.lazy ?? false;
+
+    this.errorsTarget = config.errorsTarget;
 
     this.label = config.label ? form.config.renderLabel?.(config.label) ?? config.label : undefined;
 

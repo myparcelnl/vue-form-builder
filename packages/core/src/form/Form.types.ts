@@ -32,7 +32,7 @@ export type FormConfiguration = {
    * Messages that are used for built-in validations.
    */
   validationMessages?: {
-    required?: string;
+    required?: () => string | string;
   } & Record<string, string>;
 
   /**

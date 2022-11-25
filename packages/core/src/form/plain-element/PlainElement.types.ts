@@ -50,6 +50,8 @@ export type BasePlainElementInstance<
 
   readonly isVisible: Ref<boolean>;
   readonly teleportSelector?: string;
+
+  readonly formattedErrors: () => string[];
 };
 
 export type PlainElementInstance<

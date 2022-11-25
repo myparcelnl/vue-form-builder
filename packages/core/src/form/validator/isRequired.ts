@@ -7,7 +7,7 @@ export const isRequired = <
   N extends ElementName = ElementName,
   RT = unknown,
 >(
-  errorMessage: string,
+  errorMessage: () => string | string,
 ): Validator<C, N, RT> => ({
   validate: (field: InteractiveElementInstance<C, N, RT>, value: RT): boolean => {
     return !(value === null || value === undefined || value === '');

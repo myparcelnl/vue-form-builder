@@ -8,11 +8,11 @@ on:
 
   workflow_dispatch:
     inputs:
-      cache:
-        description: 'Enable cache'
-        required: true
+      reset-nx-cache:
+        description: 'Reset Nx cache'
+        required: false
         type: boolean
-        default: true
+        default: false
 
 jobs:
   test:
@@ -32,7 +32,7 @@ jobs:
 
       - uses: ./.github/actions/setup
         with:
-          cache: ${{ github.event.inputs.cache }}
+          reset-nx-cache: ${{ github.event.inputs.reset-nx-cache }}
           token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: 'Run monodeploy'

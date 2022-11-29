@@ -7,9 +7,9 @@ inputs:
     description: 'GitHub token'
     required: true
 
-  cache:
-    description: 'Enable cache'
-    required: true
+  reset-nx-cache:
+    description: 'Reset Nx cache'
+    required: false
 
 runs:
   using: composite
@@ -20,8 +20,13 @@ runs:
 
     - uses: myparcelnl/actions/yarn2-install@v2
 
+    - name: 'Reset NX cache'
+      if: inputs.reset-nx-cache
+      shell: bash
+      run: |
+        yarn nx reset
+
     - uses: myparcelnl/actions/cache-nx@v2
-      if: inputs.cache == 'true'
       with:
         lockfile: '**/yarn.lock'
 

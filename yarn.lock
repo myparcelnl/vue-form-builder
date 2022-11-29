@@ -333,7 +333,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@monodeploy/plugin-github@npm:^0.6.2":
+"@monodeploy/plugin-github@npm:^0.6.3":
   version: 0.6.3
   resolution: "@monodeploy/plugin-github@npm:0.6.3"
   dependencies:
@@ -568,7 +568,7 @@ __metadata:
     vite: ^3.2.4
     vite-plugin-dts: ^1.7.1
     vue: ^3.2.45
-    vue-tsc: ^1.0.9
+    vue-tsc: ^1.0.10
   languageName: unknown
   linkType: soft
 
@@ -579,9 +579,9 @@ __metadata:
     "@myparcel/sdk": ^2.8.1
     "@myparcel/ts-utils": ^1.1.0
     "@myparcel/vue-form-builder": "workspace:*"
-    "@tanstack/vue-query": ^4.17.0
+    "@tanstack/vue-query": ^4.18.1
     "@vitejs/plugin-vue": ^3.2.0
-    "@vueuse/core": ^9.5.0
+    "@vueuse/core": ^9.6.0
     autoprefixer: ^10.4.13
     postcss: ^8.4.19
     sass: ^1.56.1
@@ -590,7 +590,7 @@ __metadata:
     vite: ^3.2.4
     vue: ^3.2.45
     vue-router: ^4.1.6
-    vue-tsc: ^1.0.9
+    vue-tsc: ^1.0.10
   languageName: unknown
   linkType: soft
 
@@ -607,30 +607,30 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/monorepo@workspace:."
   dependencies:
-    "@monodeploy/plugin-github": ^0.6.2
+    "@monodeploy/plugin-github": ^0.6.3
     "@myparcel-eslint/eslint-config-esnext": ^1.2.0
     "@myparcel-eslint/eslint-config-node": ^1.2.0
     "@myparcel-eslint/eslint-config-prettier": ^1.2.0
     "@myparcel-eslint/eslint-config-prettier-typescript": ^1.2.0
     "@myparcel-eslint/eslint-config-prettier-typescript-vue": ^1.2.0
     "@tsconfig/recommended": ^1.0.1
-    "@vitest/coverage-c8": ^0.25.1
-    "@vue/test-utils": ^2.2.3
+    "@vitest/coverage-c8": ^0.25.3
+    "@vue/test-utils": ^2.2.4
     "@vue/tsconfig": ^0.1.3
     conventional-changelog-conventionalcommits: ^5.0.0
-    eslint: ^8.27.0
+    eslint: ^8.28.0
     happy-dom: ^7.7.0
     husky: ^8.0.2
     is-ci: ^3.0.1
-    jsdom: ^20.0.2
-    lint-staged: ^13.0.3
-    monodeploy: ^3.3.1
-    nx: ^15.1.0
-    prettier: ^2.7.1
+    jsdom: ^20.0.3
+    lint-staged: ^13.0.4
+    monodeploy: ^3.4.0
+    nx: ^15.2.1
+    prettier: ^2.8.0
     rimraf: ^3.0.2
     tsup: ^6.5.0
     typescript: ^4.9.3
-    vitest: ^0.25.2
+    vitest: ^0.25.3
     vue: ^3.2.45
   languageName: unknown
   linkType: soft
@@ -678,7 +678,7 @@ __metadata:
     vite: ^3.2.4
     vite-plugin-dts: ^1.7.1
     vue: ^3.2.45
-    vue-tsc: ^1.0.9
+    vue-tsc: ^1.0.10
   languageName: unknown
   linkType: soft
 
@@ -945,7 +945,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/vue-query@npm:^4.17.0":
+"@tanstack/vue-query@npm:^4.18.1":
   version: 4.18.1
   resolution: "@tanstack/vue-query@npm:4.18.1"
   dependencies:
@@ -1316,7 +1316,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-c8@npm:^0.25.1":
+"@vitest/coverage-c8@npm:^0.25.3":
   version: 0.25.3
   resolution: "@vitest/coverage-c8@npm:0.25.3"
   dependencies:
@@ -1531,7 +1531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/test-utils@npm:^2.2.3":
+"@vue/test-utils@npm:^2.2.4":
   version: 2.2.4
   resolution: "@vue/test-utils@npm:2.2.4"
   peerDependencies:
@@ -1552,7 +1552,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:^9.5.0":
+"@vueuse/core@npm:^9.6.0":
   version: 9.6.0
   resolution: "@vueuse/core@npm:9.6.0"
   dependencies:
@@ -3775,7 +3775,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:*, eslint@npm:^8.27.0":
+"eslint@npm:*, eslint@npm:^8.28.0":
   version: 8.28.0
   resolution: "eslint@npm:8.28.0"
   dependencies:
@@ -4989,7 +4989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^20.0.2":
+"jsdom@npm:^20.0.3":
   version: 20.0.3
   resolution: "jsdom@npm:20.0.3"
   dependencies:
@@ -5190,7 +5190,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^13.0.3":
+"lint-staged@npm:^13.0.4":
   version: 13.0.4
   resolution: "lint-staged@npm:13.0.4"
   dependencies:
@@ -5651,7 +5651,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monodeploy@npm:^3.3.1":
+"monodeploy@npm:^3.4.0":
   version: 3.4.0
   resolution: "monodeploy@npm:3.4.0"
   dependencies:
@@ -5918,7 +5918,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:15.2.1, nx@npm:^15.1.0":
+"nx@npm:15.2.1, nx@npm:^15.2.1":
   version: 15.2.1
   resolution: "nx@npm:15.2.1"
   dependencies:
@@ -6404,7 +6404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:*, prettier@npm:^2.7.1":
+"prettier@npm:*, prettier@npm:^2.8.0":
   version: 2.8.0
   resolution: "prettier@npm:2.8.0"
   bin:
@@ -8063,7 +8063,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:0.25.3, vitest@npm:^0.25.2":
+"vitest@npm:0.25.3, vitest@npm:^0.25.3":
   version: 0.25.3
   resolution: "vitest@npm:0.25.3"
   dependencies:
@@ -8158,7 +8158,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-tsc@npm:^1.0.9":
+"vue-tsc@npm:^1.0.10":
   version: 1.0.10
   resolution: "vue-tsc@npm:1.0.10"
   dependencies:

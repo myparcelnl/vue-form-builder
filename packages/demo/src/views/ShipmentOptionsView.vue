@@ -19,17 +19,7 @@ export default defineComponent({
 
   setup: () => {
     const values = computed(() => {
-      return shipmentOptionsForm.fields.value.reduce(
-        (acc, element) => ({
-          ...acc,
-          ...(element.name
-            ? {
-                [element.name]: element.ref,
-              }
-            : {}),
-        }),
-        {},
-      );
+      return shipmentOptionsForm.getValues();
     });
 
     return {

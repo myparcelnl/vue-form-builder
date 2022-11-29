@@ -1,4 +1,5 @@
 import {ComponentOrHtmlElement, ElementName} from '../../types';
+import {FunctionOr} from '@myparcel-vfb/utils';
 import {InteractiveElementInstance} from '../interactive-element';
 import {Validator} from './validator.types';
 
@@ -7,7 +8,7 @@ export const isRequired = <
   N extends ElementName = ElementName,
   RT = unknown,
 >(
-  errorMessage: () => string | string,
+  errorMessage: FunctionOr<string>,
 ): Validator<C, N, RT> => ({
   validate: (field: InteractiveElementInstance<C, N, RT>, value: RT): boolean => {
     return !(value === null || value === undefined || value === '');

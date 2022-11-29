@@ -1,6 +1,7 @@
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, ElementName} from '../types';
 import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
 import {Ref, UnwrapNestedRefs} from 'vue';
+import {FunctionOr} from '@myparcel-vfb/utils';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {InteractiveElementInstance} from './interactive-element';
 
@@ -31,14 +32,22 @@ export type FormConfiguration = {
   /**
    * Messages that are used for built-in validations.
    */
-  validationMessages?: {
-    required?: () => string | string;
-  } & Record<string, string>;
+  validationMessages?: Record<'required' | string, FunctionOr<string>>;
 
   /**
    * Names of hooks to register.
    */
   hookNames?: readonly string[] | string[];
+
+  /**
+   * Whether fields are optional by default. Defaults to false.
+   */
+  fieldsOptional?: boolean;
+
+  /**
+   * Whether fields are lazy by default. Defaults to false.
+   */
+  fieldsLazy?: boolean;
 };
 
 export type FormHooks<I extends BaseFormInstance = BaseFormInstance> = {
@@ -74,6 +83,12 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   addElement(element: AnyElementConfiguration, sibling?: string, position?: 'before' | 'after'): void;
 
   /**
+   * Get values from all non-disabled fields.
+   * @returns {Record}
+   */
+  getValues(): Record<string, unknown>;
+
+  /**
    * Remove an element from the form by name.
    */
   removeElement(name: string): void;
@@ -103,7 +118,8 @@ export type FormInstance<FC extends FormConfiguration = FormConfiguration> = Bas
 export type FieldsToModel<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-  RT = unknown,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  RT = any,
 > = {
   [K in N extends string ? N | string : string]: UnwrapNestedRefs<InteractiveElementInstance<C, N, RT>>;
 };

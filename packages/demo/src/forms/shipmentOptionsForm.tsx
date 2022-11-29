@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import {AnyElementInstance, InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder';
 import {CARRIERS, CarrierName, PACKAGE_TYPES} from '@myparcel/sdk';
+import {InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder';
 import FormGroup from '../components/template/FormGroup.vue';
 import Heading from '../components/Heading.vue';
 import PTextInput from '../components/template/PTextInput.vue';
@@ -10,11 +10,14 @@ import TSelect from '../components/template/TSelect.vue';
 import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TTextInput from '../components/template/TTextInput.vue';
 import TToggleSwitch from '../components/template/TToggleSwitch.vue';
+import {isOfType} from '@myparcel/ts-utils';
 import {ref} from 'vue';
 import {translate} from '../translate';
 import {useFetchCarriers} from '../queries/fetchCarriers';
 
-// todo: dynamically add more form parts, see BO -> canada -> project groups
+// eslint-disable-next-line id-length
+declare const h: typeof import('vue').h;
+
 // todo: form groups?
 
 const firstname = ref('');
@@ -24,7 +27,12 @@ const validateName = (field: InteractiveElementInstance) => {
   const nameField = field.form.fields.value.find((field) => field.name === 'name');
   const firstNameField = field.form.fields.value.find((field) => field.name === 'firstname');
   const lastNameField = field.form.fields.value.find((field) => field.name === 'lastname');
-  nameField.props.errors = [...(firstNameField.errors ?? []), ...(lastNameField.errors ?? [])];
+
+  if (!nameField) {
+    return;
+  }
+
+  nameField.props.errors = [...(firstNameField?.errors ?? []), ...(lastNameField?.errors ?? [])];
 };
 
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
@@ -156,13 +164,11 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       props: {
         max: 10,
       },
-      disabledCb: (instance: InteractiveElementInstance) => instance.form.model.labelAmount.ref < 5,
-      visibleCb: (instance: InteractiveElementInstance) => instance.form.model.labelAmount.ref > 4,
-      afterUpdate: (instance: InteractiveElementInstance, newValue: number) => {
+      disabledCb: (instance) => instance.form.model.labelAmount.ref < 5,
+      visibleCb: (instance) => instance.form.model.labelAmount.ref > 4,
+      afterUpdate: (instance, newValue: number) => {
         // collect all fields named `copyName_${value}`;
-        const copyNameFields = instance.form.fields.value.filter((field: AnyElementInstance) =>
-          field.name?.startsWith('copyName_'),
-        );
+        const copyNameFields = instance.form.fields.value.filter((field: Int) => field.name?.startsWith('copyName_'));
 
         if (copyNameFields.length < newValue) {
           // add new fields
@@ -173,10 +179,14 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
                 component: TTextInput,
                 ref: ref(''),
                 label: `Copy Name ${i + 1}`,
-                validate: (field: InteractiveElementInstance, value: string) => {
-                  return !field.form.fields.value.some((otherField: InteractiveElementInstance) => {
+                validate: (field, value: string) => {
+                  return !field.form.fields.value.some((otherField) => {
+                    if (!isOfType<InteractiveElementInstance>(otherField, 'ref')) {
+                      return false;
+                    }
+
                     const isDifferentField = otherField.name !== field.name;
-                    const isCopyNameField: boolean | undefined = otherField.name?.startsWith('copyName_');
+                    const isCopyNameField = otherField.name?.startsWith('copyName_');
                     const valueMatches = otherField.ref === value;
 
                     return isDifferentField && isCopyNameField && valueMatches;
@@ -211,7 +221,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       validators: [
         {
           validate: (field, value) => {
-            return !(field.form.model.name.ref.value === 'Mack' && String(value).startsWith('letter'));
+            return !(field.form.model.name.ref === 'Mack' && String(value).startsWith('letter'));
           },
           errorMessage: 'Forget about letters, Mack does not like them.',
         },

@@ -1,11 +1,11 @@
 import {ComponentOrHtmlElement, ElementName} from '../../types';
+import {Ref, ref, watch} from 'vue';
 import {
   INTERACTIVE_ELEMENT_HOOKS,
   InteractiveElementConfiguration,
   InteractiveElementInstance,
 } from './InteractiveElement.types';
 import {MultiValidator, SingleValidator, Validator, ValidatorWithPrecedence, isRequired} from '../validator';
-import {Ref, ref, watch} from 'vue';
 import {asyncEvery, isOfType} from '@myparcel/ts-utils';
 import {FormInstance} from '../Form.types';
 import {PlainElement} from '../plain-element';
@@ -16,24 +16,26 @@ export class InteractiveElement<
   N extends ElementName = ElementName,
   RT = unknown,
 > extends PlainElement<C, N> {
-  public focus;
-
   public isDirty = ref(false);
 
   public isSuspended = ref(false);
+
   public isTouched = ref(false);
   public isValid: Ref<boolean> = ref(true);
   public isOptional = ref(false);
-
   public isDisabled = ref(false);
 
   public label?: string;
-  public errorsTarget?: string;
 
+  public errorsTarget?: string;
   public lazy = false;
+
   public ref: InteractiveElementInstance<C, N, RT>['ref'];
 
   public validators = ref<Validator<C, N, RT>[]>([]);
+
+  public focus: InteractiveElementConfiguration<C, N, RT>['focus'];
+
   public declare readonly form: InteractiveElementInstance<C, N, RT>['form'];
 
   public declare hooks: InteractiveElementInstance<C, N, RT>['hooks'];
@@ -45,10 +47,7 @@ export class InteractiveElement<
    */
   protected initialValue: RT;
 
-  /**
-   * Default sanitizer does nothing.
-   */
-  protected sanitize: InteractiveElementInstance<C, N, RT>['sanitize'];
+  protected sanitize: InteractiveElementConfiguration<C, N, RT>['sanitize'];
 
   public blur = async (): Promise<void> => {
     await this.hooks.execute('beforeBlur', this, this.ref.value);
@@ -85,7 +84,10 @@ export class InteractiveElement<
 
         if (this.errorsTarget) {
           const target = this.form.fields.value.find((field) => field.name === this.errorsTarget);
-          target.errors.push(validator.errorMessage);
+
+          if (isOfType<InteractiveElementInstance>(target, 'errors')) {
+            target.errors.value.push(validator.errorMessage);
+          }
         }
       }
 
@@ -121,19 +123,33 @@ export class InteractiveElement<
     // @ts-expect-error
     this.ref = config.ref;
     this.initialValue = this.ref.value;
-    this.lazy = config.lazy ?? false;
+
+    this.lazy = config.lazy ?? form.config.fieldsLazy ?? false;
+
+    this.isDisabled.value = config.disabled ?? false;
+    this.isOptional.value = config.optional ?? form.config.fieldsOptional ?? false;
 
     this.errorsTarget = config.errorsTarget;
 
     this.label = config.label ? form.config.renderLabel?.(config.label) ?? config.label : undefined;
 
-    this.focus = async (instance: typeof this, event: FocusEvent): Promise<void> => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    this.focus = async (instance, event) => {
+      await this.hooks.execute('beforeFocus', this, event);
       await this.hooks.execute('focus', this, event);
+      await this.hooks.execute('afterFocus', this, event);
     };
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    this.sanitize = config.sanitize ?? (((_, value) => value) as InteractiveElementConfiguration<C, N, RT>['sanitize']);
+    this.sanitize = async (instance, value) => {
+      await this.hooks.execute('beforeSanitize', this, value);
+      const sanitizedValue = await this.hooks.execute('sanitize', this, value);
+      await this.hooks.execute('afterSanitize', this, sanitizedValue);
+
+      return sanitizedValue;
+    };
 
     if (config.disabledCb) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -185,9 +201,5 @@ export class InteractiveElement<
     }
 
     this.validators.value = validators;
-  }
-
-  private resetValidation(): void {
-    this.errors.value = [];
   }
 }

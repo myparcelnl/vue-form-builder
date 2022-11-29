@@ -20,6 +20,8 @@ describe('useFormBuilder', () => {
 
     expect(formBuilder.forms).toHaveProperty('test');
     expect(formBuilder.forms.test.config.formClass).toBe('test-class');
+
+    formBuilder.defaults.value = {};
   });
 
   it('should overwrite old form when registering a form with a previously used name', () => {

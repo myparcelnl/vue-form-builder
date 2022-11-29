@@ -1,7 +1,8 @@
 import {BaseElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
-import {Ref, VNode} from 'vue';
+import {ComputedRef, Ref, VNode} from 'vue';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../../data/componentLifecycleHooks';
 import {FormInstance} from '../Form.types';
+import {FunctionOr} from '@myparcel-vfb/utils';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {PromiseOr} from '@myparcel/ts-utils';
 
@@ -40,7 +41,6 @@ export type BasePlainElementInstance<
   N extends ElementName = ElementName,
 > = {
   readonly name: N;
-  readonly label?: string;
   readonly component: C;
 
   readonly hooks: HookManagerInstance<PlainElementHooks<C, N>>;
@@ -51,12 +51,10 @@ export type BasePlainElementInstance<
   readonly isVisible: Ref<boolean>;
   readonly teleportSelector?: string;
 
-  readonly formattedErrors: () => string[];
-
-  /**
-   * Resets the field.
-   */
-  readonly reset: () => PromiseOr<void>;
+  readonly label?: string;
+  readonly errorsTarget?: string;
+  readonly errors: Ref<FunctionOr<string>[]>;
+  readonly formattedErrors: ComputedRef<string[]>;
 };
 
 export type PlainElementInstance<

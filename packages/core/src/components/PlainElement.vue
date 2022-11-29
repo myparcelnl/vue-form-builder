@@ -3,8 +3,9 @@
     :is="element.component"
     :id="element.name ?? element.name"
     :name="element.name"
+    :class="element.isVisible ? element.form.config.fieldClass : null"
     :label="element.label"
-    :errors="element.formattedErrors()"
+    :errors="element.formattedErrors"
     v-bind="{...$attrs, ...element.props}"
     v-on="hooks">
     <template

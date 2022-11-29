@@ -85,9 +85,11 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
    */
   public async validate(): Promise<boolean> {
     await this.hooks.execute('beforeValidate', this);
-    const res = await Promise.all(
-      this.fields.value.map(async (field) => {
-        if (!isOfType<InteractiveElement>(field, 'isValid')) {
+    const result = await Promise.all(
+      this.fields.value.map((field) => {
+        if (!isOfType<InteractiveElementInstance>(field, 'ref')) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
           field.resetValidation();
           return true;
         }
@@ -95,13 +97,25 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
         return field.validate();
       }),
     );
-    this.isValid.value = res.every(Boolean);
+
+    this.isValid.value = result.every(Boolean);
     await this.hooks.execute('afterValidate', this);
     return this.isValid.value;
   }
 
   public async reset(): Promise<void> {
     await Promise.all(this.fieldsWithNamesAndRefs.value.map((field) => field.reset()));
+  }
+
+  public getValues(): Record<string, unknown> {
+    return this.fieldsWithNamesAndRefs.value.reduce((acc, field) => {
+      if (field.isDisabled) {
+        return acc;
+      }
+
+      acc[field.name] = field.ref;
+      return acc;
+    }, {} as Record<string, unknown>);
   }
 
   private createFieldInstance(

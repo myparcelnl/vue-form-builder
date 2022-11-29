@@ -20,7 +20,7 @@ export type ComponentHooks<C extends ComponentOrHtmlElement = ComponentOrHtmlEle
 
 export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = C extends Component
   ? Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>
-  : never;
+  : Record<string, unknown>;
 
 export type BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
   /**
@@ -53,6 +53,16 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
    * Name of the field to port errors to.
    */
   errorsTarget?: string;
+
+  /**
+   * Element label.
+   */
+  label?: string;
+
+  /**
+   * Visibility of the element. Defaults to true.
+   */
+  visible?: boolean;
 };
 
 export type AnyElementInstance<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =

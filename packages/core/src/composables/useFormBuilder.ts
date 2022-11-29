@@ -2,16 +2,17 @@ import {Form, FormConfiguration, FormInstance} from '../form';
 import {Ref, reactive, ref} from 'vue';
 
 let forms: Record<string, FormInstance>;
+let defaults: Ref<Partial<FormConfiguration>>;
 
 type UseFormBuilder = <N extends string, FC extends FormConfiguration = FormConfiguration>() => {
   forms: typeof forms;
-  defaults: Ref<Partial<FC>>;
+  defaults: Ref<Partial<FormConfiguration>>;
   register<F extends FC>(name: N, config: F): FormInstance<F>;
 };
 
 export const useFormBuilder: UseFormBuilder = () => {
   forms ??= reactive({});
-  const defaults = ref({});
+  defaults ??= ref({});
 
   return {
     /**

@@ -1,5 +1,6 @@
 import {ComponentOrHtmlElement, ElementName} from '../../types';
 import {ComputedRef} from 'vue';
+import {FunctionOr} from '@myparcel-vfb/utils';
 import {InteractiveElementInstance} from '../interactive-element';
 import {PromiseOr} from '@myparcel/ts-utils';
 
@@ -35,7 +36,7 @@ export type Validator<
   RT = unknown,
 > = {
   validate: ValidateFunction<C, N, RT>;
-  errorMessage?: () => string | string;
+  errorMessage?: FunctionOr<string>;
   precedence?: number;
 };
 

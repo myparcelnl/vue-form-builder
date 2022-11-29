@@ -16,8 +16,24 @@ export type InteractiveElementConfiguration<
     name: N;
     ref: Ref<RT>;
 
-    label?: string;
+    /**
+     * Whether the field is lazy. Defaults to `fieldsLazy` in the form configuration.
+     *
+     * @see FormConfiguration.fieldsLazy
+     */
     lazy?: boolean;
+
+    /**
+     * Whether the element is disabled. Defaults to false.
+     */
+    disabled?: boolean;
+
+    /**
+     * Whether the element is optional. Defaults to `fieldsOptional` in the form configuration.
+     *
+     * @see FormConfiguration.fieldsOptional
+     */
+    optional?: boolean;
   };
 
 export const INTERACTIVE_ELEMENT_HOOKS = [
@@ -74,7 +90,6 @@ export type BaseInteractiveElementInstance<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly hooks: HookManagerInstance<InteractiveElementHooks<C, N, RT> | any>;
 
-  readonly label?: string;
   readonly lazy: boolean;
 
   readonly isDirty: Ref<boolean>;
@@ -98,13 +113,20 @@ export type BaseInteractiveElementInstance<
   /**
    * Resets the field.
    */
-  readonly reset: () => PromiseOr<void>;
+  reset(): PromiseOr<void>;
 
-  readonly formattedErrors: () => string[];
+  /**
+   * Validates the field.
+   * @returns {Promise<boolean>}
+   */
+  validate(): Promise<boolean>;
+
+  setOptional(optional: boolean): void;
+  setDisabled(disabled: boolean): void;
 };
 
 export type InteractiveElementInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-> = BaseInteractiveElementInstance<C, N, RT> & InteractiveElementHooks<C, N, RT>;
+> = BaseInteractiveElementInstance<C, N, RT>;

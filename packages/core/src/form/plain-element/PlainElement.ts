@@ -1,7 +1,8 @@
 import {AnyElementConfiguration, ComponentOrHtmlElement, ElementName} from '../../types';
+import {ComputedRef, computed, markRaw, ref} from 'vue';
 import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from './PlainElement.types';
-import {markRaw, ref} from 'vue';
 import {FormInstance} from '../Form.types';
+import {FunctionOr} from '@myparcel-vfb/utils';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {useDynamicWatcher} from '../../utils/useDynamicWatcher';
 
@@ -10,11 +11,13 @@ export class PlainElement<
   N extends ElementName = ElementName,
 > {
   public readonly name: N;
-  public label?: string;
   public readonly component: C;
   public readonly form: FormInstance;
   public declare hooks: PlainElementInstance<C, N>['hooks'];
-  public errors = ref<[() => string | string]>([]);
+
+  public errors = ref<FunctionOr<string>[]>([]);
+
+  public formattedErrors: ComputedRef<string[]>;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
@@ -32,10 +35,6 @@ export class PlainElement<
       hookNames: [...PLAIN_ELEMENT_HOOKS, ...(config.hookNames ?? [])],
     });
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    this.name = config.name;
-
     const availableHooks = this.hooks.getAvailableHooks();
 
     Object.keys(config)
@@ -46,8 +45,14 @@ export class PlainElement<
         this[key] = config[key];
       });
 
+    this.name = config.name as N;
     this.form = form;
     this.config = config;
+    this.isVisible.value = config.visible ?? true;
+
+    this.formattedErrors = computed(() => {
+      return this.errors.value.map((error) => (typeof error === 'function' ? error() : error));
+    });
 
     if ('visibleCb' in config) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -67,17 +72,7 @@ export class PlainElement<
     this.isVisible.value = value;
   }
 
-  public formattedErrors(): string[] {
-    return this.errors.map((error) => {
-      if (typeof error === 'function') {
-        return error();
-      }
-
-      return error;
-    });
-  }
-
-  private resetValidation(): void {
-    this.errors = [];
+  public resetValidation(): void {
+    this.errors.value = [];
   }
 }

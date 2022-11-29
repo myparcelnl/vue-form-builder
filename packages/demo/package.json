@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@myparcel/sdk": "^2.8.1",
+    "@myparcel/ts-utils": "^1.1.0",
     "@myparcel/vue-form-builder": "workspace:*",
     "@tanstack/vue-query": "^4.17.0",
     "@vueuse/core": "^9.5.0",

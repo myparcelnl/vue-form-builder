@@ -1,16 +1,7 @@
 // Vitest Snapshot v1
 
-exports[`Form Generation > defining a form > can use vue element wrapper 1`] = `
-"<form id=\\"form\\" class=\\"valid\\"><input id=\\"named\\" name=\\"named\\"><br>
-  <div id=\\"text__wrapper\\" class=\\"\\"><input id=\\"text\\" type=\\"text\\" name=\\"text\\" class=\\"\\">
-    <!--v-if-->
-    <!--v-if-->
-  </div>
-</form>"
-`;
-
 exports[`defining a form > can use vue element wrapper 1`] = `
-"<form id=\\"form\\" class=\\"valid\\"><input id=\\"named\\" name=\\"named\\"><br>
+"<form id=\\"form\\" class=\\"valid\\"><input id=\\"named\\" name=\\"named\\" errors=\\"\\"><br errors=\\"\\">
   <div id=\\"text__wrapper\\" class=\\"\\"><input id=\\"text\\" type=\\"text\\" name=\\"text\\" class=\\"\\">
     <!--v-if-->
     <!--v-if-->

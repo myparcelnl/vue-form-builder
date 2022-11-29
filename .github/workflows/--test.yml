@@ -17,10 +17,13 @@ jobs:
           token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: 'Run tests'
-        run: yarn test:run --coverage
+        run: yarn test:run
 
-      - uses: codecov/codecov-action@v3
-
-      - uses: codacy/codacy-coverage-reporter-action@v1
-        with:
-          api-token: ${{ secrets.CODACY_API_TOKEN }}
+      # TODO: uncomment when repo is public
+      # - uses: codecov/codecov-action@v3
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #
+      # - uses: codacy/codacy-coverage-reporter-action@v1
+      #   with:
+      #     api-token: ${{ secrets.CODACY_API_TOKEN }}

@@ -17,7 +17,7 @@
     "serve:demo": "nx serve demo",
     "serve:watch": "nx run-many --target=watch --exclude=.",
     "test": "vitest",
-    "test:run": "vitest run --coverage",
+    "test:run": "vitest run",
     "typecheck": "nx run-many --target=typecheck --exclude=.",
     "ws:clean": "cd $0 && rimraf lib",
     "ws:tsup:build": "cd $0 && tsup src/index.ts --dts",

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.16](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.15...@myparcel/vue-form-builder@1.0.0-alpha.16) "@myparcel/vue-form-builder" (2022-11-29)
+
+
+### Features
+
+* improve field configurations ([8c61233](https://github/myparcelnl/vue-form-builder/commit/8c612332cf95adc242454195982394d3e61312d9))
+
+
+
+
 ## [1.0.0-alpha.15](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.14...@myparcel/vue-form-builder@1.0.0-alpha.15) "@myparcel/vue-form-builder" (2022-11-29)
 
 

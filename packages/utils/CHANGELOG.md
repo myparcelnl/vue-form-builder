@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.7](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/utils@1.0.0-alpha.6...@myparcel-vfb/utils@1.0.0-alpha.7) "@myparcel-vfb/utils" (2022-11-29)
+
+
+### Features
+
+* **utils:** add FunctionOr type ([c2088f9](https://github/myparcelnl/vue-form-builder/commit/c2088f98016996b6d1338895a094dea1c8475688))
+
+
+
+
 ## [1.0.0-alpha.6](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/utils@1.0.0-alpha.5...@myparcel-vfb/utils@1.0.0-alpha.6) "@myparcel-vfb/utils" (2022-11-18)
 
 

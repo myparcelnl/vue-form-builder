@@ -2,6 +2,28 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.15](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.14...@myparcel/vue-form-builder@1.0.0-alpha.15) "@myparcel/vue-form-builder" (2022-11-29)
+
+
+### Features
+
+* add errorsTarget selector to defineForm ([ad389dd](https://github/myparcelnl/vue-form-builder/commit/ad389ddeb39226899cf7f805bd7d7030e2b53d7e))
+* add id, name, label to PlainElement ([c99ca0d](https://github/myparcelnl/vue-form-builder/commit/c99ca0d3a18662a6f77f6370ddb308e9d51d98f2))
+* add teleport functionality ([661d9c5](https://github/myparcelnl/vue-form-builder/commit/661d9c565ff48958d3adf3d61ae43ea3aeff5486))
+
+
+### Bug Fixes
+
+* add SafeTeleport to fix issues ([e4a38bc](https://github/myparcelnl/vue-form-builder/commit/e4a38bc07e55dff224d7dbae8d68448d14fc7660))
+* **core:** fix dynamic adding and removing of fields ([4030acd](https://github/myparcelnl/vue-form-builder/commit/4030acdacfbdaa9572b9bde88941bc4531abbfb4))
+* defer loading of teleported elements ([2dc849f](https://github/myparcelnl/vue-form-builder/commit/2dc849f01c86edd5e7f1e86e3d3cad46a663bac6))
+* don't render teleport if not needed ([170f60b](https://github/myparcelnl/vue-form-builder/commit/170f60b9a4f2658234bdb618907adc7408dc665f))
+* ensure errors are reset at plain validation ([d1bc217](https://github/myparcelnl/vue-form-builder/commit/d1bc217f31a24d560e3dc7105e703f88e92eae31))
+* reverted usage of SafeTeleport ([c82471b](https://github/myparcelnl/vue-form-builder/commit/c82471b0bacae0b9127522533fe7d1301a885f53))
+
+
+
+
 ## [1.0.0-alpha.14](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.13...@myparcel/vue-form-builder@1.0.0-alpha.14) "@myparcel/vue-form-builder" (2022-11-18)
 
 

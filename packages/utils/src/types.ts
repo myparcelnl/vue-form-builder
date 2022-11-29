@@ -28,3 +28,5 @@ export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true;
 export type UnionToArray<T, A extends unknown[] = []> = IsUnion<T> extends true
   ? UnionToArray<Exclude<T, PopUnion<T>>, [PopUnion<T>, ...A]>
   : [T, ...A];
+
+export type FunctionOr<T> = (() => T) | T;

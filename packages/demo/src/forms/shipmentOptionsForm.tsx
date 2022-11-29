@@ -174,7 +174,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
                 ref: ref(''),
                 label: `Copy Name ${i + 1}`,
                 validate: (field: InteractiveElementInstance, value: string) => {
-                  return !field.form.fields.value.some((otherField: AnyElementInstance) => {
+                  return !field.form.fields.value.some((otherField: InteractiveElementInstance) => {
                     const isDifferentField = otherField.name !== field.name;
                     const isCopyNameField: boolean | undefined = otherField.name?.startsWith('copyName_');
                     const valueMatches = otherField.ref === value;

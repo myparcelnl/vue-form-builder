@@ -24,7 +24,7 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   /**
    * Filtered array of fields that have a name and a ref.
    */
-  protected fieldsWithNamesAndRefs: ComputedRef<InteractiveElementInstance[]>;
+  protected fieldsWithNamesAndRefs: ComputedRef<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>;
 
   public constructor(name: FN, formConfig: FC & FormHooks) {
     const {fields, ...config} = formConfig;

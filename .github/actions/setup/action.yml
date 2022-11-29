@@ -7,6 +7,10 @@ inputs:
     description: 'GitHub token'
     required: true
 
+  cache:
+    description: 'Enable cache'
+    required: true
+
 runs:
   using: composite
   steps:
@@ -17,6 +21,7 @@ runs:
     - uses: myparcelnl/actions/yarn2-install@v2
 
     - uses: myparcelnl/actions/cache-nx@v2
+      if: inputs.cache == 'true'
       with:
         lockfile: '**/yarn.lock'
 

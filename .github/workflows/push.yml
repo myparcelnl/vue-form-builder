@@ -6,6 +6,14 @@ on:
       - alpha
       - beta
 
+  workflow_dispatch:
+    inputs:
+      cache:
+        description: 'Enable cache'
+        required: true
+        type: boolean
+        default: true
+
 jobs:
   test:
     uses: ./.github/workflows/--test.yml
@@ -24,6 +32,7 @@ jobs:
 
       - uses: ./.github/actions/setup
         with:
+          cache: ${{ github.event.inputs.cache }}
           token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: 'Run monodeploy'

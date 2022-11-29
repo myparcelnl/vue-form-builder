@@ -60,8 +60,9 @@ export default defineComponent({
     return {
       fields,
       fieldsAreResolved,
-      plainFields: computed(() => fields.value.filter((field) => !field.teleportSelector)),
-      teleportFields: computed(() => fields.value.filter((field) => Boolean(field.teleportSelector))),
+      // todo: (fields.value ?? fields) is a hack to make the tests and the actual code work.
+      plainFields: computed(() => (fields.value ?? fields).filter((field) => !field.teleportSelector)),
+      teleportFields: computed(() => (fields.value ?? fields).filter((field) => Boolean(field.teleportSelector))),
     };
   },
 });

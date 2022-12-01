@@ -24,7 +24,9 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   /**
    * Filtered array of fields that have a name and a ref.
    */
-  protected fieldsWithNamesAndRefs: ComputedRef<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>;
+  protected fieldsWithNamesAndRefs: ComputedRef<
+    UnwrapNestedRefs<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>
+  >;
 
   public constructor(name: FN, formConfig: FC & FormHooks) {
     const {fields, ...config} = formConfig;
@@ -108,7 +110,10 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   }
 
   public getValues(): Record<string, unknown> {
-    return this.fieldsWithNamesAndRefs.value.reduce((acc, field) => {
+    // TODO: sometimes the ref is unwrapped, sometimes not.
+    const fields = this.fieldsWithNamesAndRefs.value ?? this.fieldsWithNamesAndRefs;
+
+    return fields.reduce((acc, field) => {
       if (field.isDisabled) {
         return acc;
       }

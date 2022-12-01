@@ -133,6 +133,37 @@ describe('Form and field validation', () => {
     expect(form.model.element.errors).toEqual([]);
   });
 
+  it('moves the erorr message to another field', async () => {
+    expect.assertions(6);
+
+    const form = generateForm([
+      defineField({
+        component: 'div',
+        name: 'target',
+      }),
+      defineField({
+        component: 'input',
+        name: 'element',
+        ref: ref(''),
+        validate: (_, value) => String(value).startsWith('J'),
+        errorMessage: 'Field must start with "J"',
+        errorsTarget: 'target',
+      })
+    ]);
+
+    form.model.element.ref = 'Peter';
+    await form.submit();
+    expect(form.isValid.value).toBe(false);
+    expect(form.model.target.errors.value).toEqual(['Field must start with "J"']);
+    expect(form.model.element.errors).toEqual([]);
+
+    form.model.element.ref = 'Joe Mater';
+    await form.submit();
+    expect(form.isValid.value).toBe(true);
+    expect(form.model.target.errors.value).toEqual([]);
+    expect(form.model.element.errors).toEqual([]);
+  });
+
   it('validates using an array of validators', async () => {
     expect.assertions(1);
 

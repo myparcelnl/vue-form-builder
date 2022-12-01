@@ -80,14 +80,14 @@ export class InteractiveElement<
       const valid = await validator.validate(this, this.ref.value);
 
       if (!valid && validator.errorMessage) {
-        this.errors.value.push(validator.errorMessage);
-
         if (this.errorsTarget) {
           const target = this.form.fields.value.find((field) => field.name === this.errorsTarget);
 
           if (isOfType<InteractiveElementInstance>(target, 'errors')) {
             target.errors.value.push(validator.errorMessage);
           }
+        } else {
+          this.errors.value.push(validator.errorMessage);
         }
       }
 

@@ -22,8 +22,9 @@ jobs:
   release:
     name: 'Publish new release 🚀'
     runs-on: ubuntu-22.04
-    # TODO: uncomment when working from main branch
-    # needs: test
+    needs: test
+    # TODO: remove the next line when updating to 1.0.0
+    if: always()
     steps:
       - uses: actions/checkout@v3
         with:

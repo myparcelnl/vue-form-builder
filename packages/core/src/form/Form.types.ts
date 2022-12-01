@@ -1,6 +1,6 @@
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, ElementName} from '../types';
+import {ComputedRef, Ref, UnwrapNestedRefs} from 'vue';
 import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
-import {Ref, UnwrapNestedRefs} from 'vue';
 import {FunctionOr} from '@myparcel-vfb/utils';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {InteractiveElementInstance} from './interactive-element';
@@ -65,12 +65,37 @@ export type FormHooks<I extends BaseFormInstance = BaseFormInstance> = {
  * The instance of a form.
  */
 export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> = {
+  /**
+   * The name of the form.
+   */
   readonly name: string;
 
+  /**
+   * Form configuration.
+   */
   readonly config: Omit<FC, 'fields'>;
-  readonly fields: Ref<UnwrapNestedRefs<AnyElementInstance>[]>;
+
+  /**
+   * Hooks that are registered for this form.
+   */
   readonly hooks: HookManagerInstance<FormHooks>;
+
+  /**
+   * An object containing all named fields in the form as {name: field} pairs.
+   */
   readonly model: FieldsToModel;
+
+  /**
+   * All fields in the form.
+   */
+  readonly fields: Ref<UnwrapNestedRefs<AnyElementInstance>[]>;
+
+  /**
+   * All fields in the form that have a name and a ref.
+   */
+  readonly fieldsWithNamesAndRefs: ComputedRef<
+    UnwrapNestedRefs<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>
+  >;
 
   /**
    * Determines whether the form is valid.

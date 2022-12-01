@@ -1,32 +1,26 @@
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement} from '../types';
-import {ComputedRef, UnwrapNestedRefs, computed, markRaw, reactive, ref} from 'vue';
 import {FormConfiguration, FormHooks, FormInstance} from './Form.types';
 import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
 import {PlainElement, PlainElementConfiguration, PlainElementInstance} from './plain-element';
+import {UnwrapNestedRefs, computed, markRaw, reactive, ref} from 'vue';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
 
 export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'] as const;
 
+/**
+ * @see FormInstance
+ */
 export class Form<FC extends FormConfiguration = FormConfiguration, FN extends string = string> {
   public readonly name: FN;
 
   public readonly config: Omit<FC, 'fields'>;
-  public readonly fields: FormInstance<FC>['fields'] = ref([]);
   public readonly hooks: FormInstance<FC>['hooks'];
   public readonly model = {} as FormInstance<FC>['model'];
+  public readonly fields: FormInstance<FC>['fields'] = ref([]);
+  public readonly fieldsWithNamesAndRefs: FormInstance<FC>['fieldsWithNamesAndRefs'];
 
-  /**
-   * Whether all fields in the form are valid.
-   */
   public isValid: FormInstance<FC>['isValid'] = ref(true);
-
-  /**
-   * Filtered array of fields that have a name and a ref.
-   */
-  protected fieldsWithNamesAndRefs: ComputedRef<
-    UnwrapNestedRefs<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>
-  >;
 
   public constructor(name: FN, formConfig: FC & FormHooks) {
     const {fields, ...config} = formConfig;
@@ -80,11 +74,6 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
     await this.hooks.execute('afterSubmit', this);
   }
 
-  /**
-   * Validate all fields.
-   *
-   * @returns {Promise<void>}
-   */
   public async validate(): Promise<boolean> {
     await this.hooks.execute('beforeValidate', this);
     const result = await Promise.all(
@@ -125,7 +114,7 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
 
   private createFieldInstance(
     field: AnyElementConfiguration,
-    form: FormInstance,
+    form: FormInstance<FC>,
   ): UnwrapNestedRefs<AnyElementInstance> {
     let instance: InteractiveElementInstance | PlainElementInstance;
 

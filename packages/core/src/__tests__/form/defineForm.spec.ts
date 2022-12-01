@@ -91,7 +91,7 @@ describe('defining a form', () => {
       expect(form.model.field.isOptional).toBe(true);
     });
 
-    it('calls renderLabel if defined when rendering a label', async () => {
+    it('calls renderLabel if defined when rendering a label', () => {
       expect.assertions(1);
       const renderLabel = vi.fn((value: string): string => value.toUpperCase());
 

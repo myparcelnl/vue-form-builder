@@ -148,7 +148,7 @@ describe('Form and field validation', () => {
         validate: (_, value) => String(value).startsWith('J'),
         errorMessage: 'Field must start with "J"',
         errorsTarget: 'target',
-      })
+      }),
     ]);
 
     form.model.element.ref = 'Peter';

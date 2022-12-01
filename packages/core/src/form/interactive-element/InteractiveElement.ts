@@ -1,11 +1,11 @@
 import {ComponentOrHtmlElement, ElementName} from '../../types';
-import {Ref, ref, watch} from 'vue';
 import {
   INTERACTIVE_ELEMENT_HOOKS,
   InteractiveElementConfiguration,
   InteractiveElementInstance,
 } from './InteractiveElement.types';
 import {MultiValidator, SingleValidator, Validator, ValidatorWithPrecedence, isRequired} from '../validator';
+import {Ref, ref, watch} from 'vue';
 import {asyncEvery, isOfType} from '@myparcel/ts-utils';
 import {FormInstance} from '../Form.types';
 import {PlainElement} from '../plain-element';

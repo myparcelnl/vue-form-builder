@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.18](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.17...@myparcel/vue-form-builder@1.0.0-alpha.18) "@myparcel/vue-form-builder" (2022-12-01)
+
+
+### Bug Fixes
+
+* fix error because variable is unwrapped sometimes ([f652b7a](https://github/myparcelnl/vue-form-builder/commit/f652b7a47eb1c22417a0a54697e2f828415a9fd9))
+
+
+
+
 ## [1.0.0-alpha.17](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.16...@myparcel/vue-form-builder@1.0.0-alpha.17) "@myparcel/vue-form-builder" (2022-11-29)
 
 

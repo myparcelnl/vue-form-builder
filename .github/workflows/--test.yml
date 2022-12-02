@@ -2,6 +2,12 @@ name: '🔸 Run tests 🧪'
 
 on:
   workflow_call:
+    inputs:
+      reset-nx-cache:
+        description: 'Reset Nx cache'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   test:
@@ -14,6 +20,7 @@ jobs:
 
       - uses: ./.github/actions/setup
         with:
+          reset-nx-cache: ${{ github.event.inputs.reset-nx-cache }}
           token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: 'Run tests'

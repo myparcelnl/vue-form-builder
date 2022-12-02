@@ -73,6 +73,11 @@ export class PlainElement<
   }
 
   public resetValidation(): void {
-    this.errors.value = [];
+    // Todo: fix the .value issue similar to the one in the Form class
+    if (this.errors.value) {
+      this.errors.value = [];
+    } else {
+      this.errors = [];
+    }
   }
 }

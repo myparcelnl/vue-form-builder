@@ -2,6 +2,17 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.20](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.19...@myparcel/vue-form-builder@1.0.0-alpha.20) "@myparcel/vue-form-builder" (2022-12-02)
+
+
+### Bug Fixes
+
+* errorsTarget band-aid ([4a93d74](https://github/myparcelnl/vue-form-builder/commit/4a93d74b234c365f7d4fa80fdb40717a4afc90c0))
+* errorsTarget, add unit test ([68047ad](https://github/myparcelnl/vue-form-builder/commit/68047ad38d723a916929602b00a4f048fe110102))
+
+
+
+
 ## [1.0.0-alpha.19](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.18...@myparcel/vue-form-builder@1.0.0-alpha.19) "@myparcel/vue-form-builder" (2022-12-01)
 
 

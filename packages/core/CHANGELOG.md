@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.21](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.20...@myparcel/vue-form-builder@1.0.0-alpha.21) "@myparcel/vue-form-builder" (2022-12-02)
+
+
+### Bug Fixes
+
+* prevent persistence of old field errors ([d40b64c](https://github/myparcelnl/vue-form-builder/commit/d40b64c332dc93bb0bd46fdfac1de22ffef85d46))
+
+
+
+
 ## [1.0.0-alpha.20](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.19...@myparcel/vue-form-builder@1.0.0-alpha.20) "@myparcel/vue-form-builder" (2022-12-02)
 
 

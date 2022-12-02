@@ -128,6 +128,8 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
       markRaw(instance.component);
     }
 
+    // TODO: Figure out whether or not we can live without the reactive() to retain original
+    // refs and instance methods.
     const reactiveInstance = reactive(instance);
 
     if (isOfType<PlainElementConfiguration<ComponentOrHtmlElement, string>>(field, 'name')) {

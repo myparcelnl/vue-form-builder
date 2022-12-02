@@ -5,10 +5,10 @@ import {
   InteractiveElementInstance,
 } from './InteractiveElement.types';
 import {MultiValidator, SingleValidator, Validator, ValidatorWithPrecedence, isRequired} from '../validator';
+import {PlainElement, PlainElementInstance} from '../plain-element';
 import {Ref, ref, watch} from 'vue';
 import {asyncEvery, isOfType} from '@myparcel/ts-utils';
 import {FormInstance} from '../Form.types';
-import {PlainElement} from '../plain-element';
 import {useDynamicWatcher} from '../../utils/useDynamicWatcher';
 
 export class InteractiveElement<
@@ -83,8 +83,10 @@ export class InteractiveElement<
         if (this.errorsTarget) {
           const target = this.form.fields.value.find((field) => field.name === this.errorsTarget);
 
-          if (isOfType<InteractiveElementInstance>(target, 'errors')) {
-            target.errors.value.push(validator.errorMessage);
+          if (isOfType<PlainElementInstance>(target, 'errors')) {
+            // TODO: figure out how to properly push errors to the errors as a ref with .value
+            // See Form.ts for the related issue with reactive()
+            target.errors.push(validator.errorMessage);
           }
         } else {
           this.errors.value.push(validator.errorMessage);

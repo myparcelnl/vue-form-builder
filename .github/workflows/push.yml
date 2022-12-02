@@ -19,7 +19,7 @@ jobs:
     uses: ./.github/workflows/--test.yml
     secrets: inherit
     with:
-      reset-nx-cache: ${{ github.event.inputs.reset-nx-cache || false }}
+      reset-nx-cache: ${{ github.event.inputs.reset-nx-cache && true || false }}
 
   release:
     name: 'Publish new release 🚀'

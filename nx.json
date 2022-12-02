@@ -23,7 +23,7 @@
         "^build:dev"
       ],
       "outputs": [
-        "default"
+        "{projectRoot}/lib"
       ]
     },
     "build": {
@@ -31,7 +31,7 @@
         "^build"
       ],
       "outputs": [
-        "default"
+        "{projectRoot}/lib"
       ]
     },
     "buildOnly": {
@@ -39,7 +39,7 @@
         "^buildOnly"
       ],
       "outputs": [
-        "default"
+        "{projectRoot}/lib"
       ]
     },
     "serve": {
@@ -47,7 +47,7 @@
         "build:dev"
       ],
       "outputs": [
-        "default"
+        "{projectRoot}/lib"
       ]
     },
     "test": {

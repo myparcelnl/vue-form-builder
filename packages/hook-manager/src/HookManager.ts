@@ -47,11 +47,6 @@ export class HookManager<HC extends HookManagerConfiguration = HookManagerConfig
   }
 
   public async execute<N extends HN>(name: N, ...args: GetParameters<HC[N]>): Promise<GetReturnType<HC[N]>> {
-    if (import.meta.env.MODE === 'development' && this.has(name)) {
-      // eslint-disable-next-line no-console
-      console.info(`%c@${name}`, 'color: yellow', ...args);
-    }
-
     const returnValue = await Promise.all(
       this.registeredHooks.filter((hook) => hook.name === name).map((hook) => hook.callback(...args)),
     );

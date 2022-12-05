@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.7](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.6...@myparcel-vfb/hook-manager@1.0.0-alpha.7) "@myparcel-vfb/hook-manager" (2022-12-05)
+
+
+### Bug Fixes
+
+* remove broken import.meta.env in hook-manager ([8af45e2](https://github/myparcelnl/vue-form-builder/commit/8af45e26c3a2651ca01ff2bbc094b0efe471ba1e))
+
+
+
+
 ## [1.0.0-alpha.6](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.5...@myparcel-vfb/hook-manager@1.0.0-alpha.6) "@myparcel-vfb/hook-manager" (2022-11-18)
 
 

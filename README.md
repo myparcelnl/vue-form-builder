@@ -242,6 +242,41 @@ const myField = defineField({
 });
 ```
 
+**validator precedence**
+
+In order to define specific validation functions, a `precedence` integer can be passed to a validator function to denote the priority of the validation to trigger, in order. This prevents from showing too many validation warnings at once, when they are not relevant (yet). Best shown in the following example:
+
+```ts
+import {defineField} from '@myparcel/vue-form-builder';
+import {ref} from 'vue';
+
+const myField = defineField({
+  name: 'email',
+  component: 'input',
+  ref: ref(''),
+  validators: [
+    {
+      precedence: 1
+      validate: (instance, value) => validateEmail(value),
+      errorMessage: 'The e-mail address is invalid',
+    },
+    {
+      precedence: 2,
+      validate: (field, value) => !String(value).includes('john.mack'),
+      errorMessage: 'We do not send to John Mack',
+    },
+  ],
+});
+```
+
+In the example, in order: the following errors are triggered:
+
+1. (no input) => Field is required
+2. ('a') => The e-mail address is invalid
+3. ('john.mack@example.com') => We do not send to John Mack
+
+This way, error nr 3 is not shown until error 2 is resolved, which is not shown until error 1 is resolved.
+
 **isValid**
 
 The `isValid` property accepts a computed ref that returns a boolean. This is useful when you want to use a computed property to determine the validity of the field.

@@ -20,8 +20,3 @@ jobs:
       - uses: myparcelnl/actions/update-coverage@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-
-  docker:
-    container:
-      image: docker/docker:20.10.8
-    runs-on: ubuntu-22.04

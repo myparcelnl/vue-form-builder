@@ -3,20 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@myparcel-vfb/build-*": [
-        "./packages/build/*/src"
-      ],
-      "@myparcel-vfb/*": [
-        "./packages/*/src"
-      ],
-      "@myparcel/vue-form-builder": [
-        "./packages/core/src"
-      ]
+      "@myparcel-vfb/build-*": ["./libs/build/*/src"],
+      "@myparcel-vfb/*": ["./libs/*/src"],
+      "@myparcel/vue-form-builder": ["./apps/vue-form-builder/src"]
     }
-  },
-  "references": [
-    {
-      "path": "./packages/tsconfig.json"
-    }
-  ]
+  }
 }

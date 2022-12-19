@@ -5,7 +5,8 @@
   "repository": "github:myparcelnl/vue-form-builder",
   "type": "module",
   "workspaces": [
-    "packages/**"
+    "libs/**",
+    "apps/**"
   ],
   "scripts": {
     "build": "nx build",
@@ -32,6 +33,7 @@
     "ws:vite:watch": "cd $0 && vite build --mode development --watch"
   },
   "lint-staged": {
+    "*.{json,md}": "prettier --write",
     "*.{ts,vue}": "eslint --fix",
     "package.json": "npx sort-package-json"
   },
@@ -50,6 +52,7 @@
     "@vue/tsconfig": "^0.1.3",
     "conventional-changelog-conventionalcommits": "^5.0.0",
     "eslint": "^8.28.0",
+    "eslint-plugin-sort-exports": "^0.8.0",
     "happy-dom": "^7.7.0",
     "husky": "^8.0.2",
     "is-ci": "^3.0.1",
@@ -60,7 +63,7 @@
     "prettier": "^2.8.0",
     "rimraf": "^3.0.2",
     "tsup": "^6.5.0",
-    "typescript": "^4.9.3",
+    "typescript": "^4.9.4",
     "vitest": "^0.25.3",
     "vue": "^3.2.45"
   },

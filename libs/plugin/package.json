@@ -1,0 +1,31 @@
+{
+  "name": "@myparcel-vfb/plugin",
+  "version": "1.0.0-alpha.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "run ws:tsup:build \"$(pwd)\"",
+    "build:dev": "run ws:tsup:build:dev \"$(pwd)\"",
+    "buildOnly": "run ws:tsup:buildOnly \"$(pwd)\"",
+    "clean": "run ws:clean \"$(pwd)\"",
+    "typecheck": "run ws:tsup:typecheck \"$(pwd)\"",
+    "watch": "run ws:tsup:watch \"$(pwd)\""
+  },
+  "dependencies": {
+    "@myparcel-vfb/core": "workspace:*",
+    "@myparcel/ts-utils": "^1.1.0",
+    "@vue/devtools-api": "^6.4.5"
+  },
+  "devDependencies": {
+    "@myparcel-vfb/build-tsup": "workspace:*",
+    "typescript": "^4.9.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

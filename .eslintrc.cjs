@@ -6,6 +6,13 @@ module.exports = {
   },
   overrides: [
     {
+      files: ['./**/index.ts'],
+      plugins: ['sort-exports'],
+      rules: {
+        'sort-exports/sort-exports': ['warn', {sortDir: 'asc', sortExportKindFirst: 'type'}],
+      },
+    },
+    {
       files: ['./**/*.vue'],
       extends: '@myparcel-eslint/eslint-config-prettier-typescript-vue',
     },
@@ -14,7 +21,7 @@ module.exports = {
       extends: '@myparcel-eslint/eslint-config-prettier-typescript',
       parserOptions: {
         tsconfigRootDir: __dirname,
-        project: ['./tsconfig.base.json'],
+        project: ['tsconfig.base.json'],
         extraFileExtensions: ['.vue'],
       },
       rules: {
@@ -31,6 +38,7 @@ module.exports = {
         '@typescript-eslint/no-magic-numbers': 'off',
         'max-len': 'off',
         'max-lines-per-function': 'off',
+        'max-nested-callbacks': 'off',
         'vue/no-bare-strings-in-template': 'off',
       },
     },

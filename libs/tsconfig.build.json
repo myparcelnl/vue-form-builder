@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.base.json",
+  "references": [
+    {
+      "path": "./build/tsconfig.json"
+    },
+    {
+      "path": "./core/tsconfig.json"
+    },
+    {
+      "path": "./hook-manager/tsconfig.json"
+    },
+    {
+      "path": "./plugin/tsconfig.json"
+    },
+    {
+      "path": "./utils/tsconfig.json"
+    }
+  ]
+}

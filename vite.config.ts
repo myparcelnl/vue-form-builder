@@ -7,7 +7,7 @@ const config: UserConfig = {
     environment: 'happy-dom',
     coverage: {
       enabled: false,
-      exclude: ['packages/demo/**', '**/lib/**', '**/__tests__/**', '**/*.spec.*'],
+      exclude: ['apps/demo/**', '**/lib/**', '**/__tests__/**', '**/*.spec.*'],
       reporter: ['text', 'clover', 'html'],
     },
   },

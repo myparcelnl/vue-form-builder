@@ -3,14 +3,8 @@
   "defaultBase": "main",
   "defaultProject": "@myparcel/vue-form-builder",
   "npmScope": "myparcel-vfb",
-  "workspaceLayout": {
-    "appsDir": "packages",
-    "libsDir": "packages"
-  },
   "namedInputs": {
-    "default": [
-      "{projectRoot}/lib"
-    ],
+    "default": ["{projectRoot}/lib"],
     "src": [
       "{projectRoot}/src",
       "{projectRoot}/package.json",
@@ -19,44 +13,24 @@
   },
   "targetDefaults": {
     "build:dev": {
-      "dependsOn": [
-        "^build:dev"
-      ],
-      "outputs": [
-        "{projectRoot}/lib"
-      ]
+      "dependsOn": ["^build:dev"],
+      "outputs": ["{projectRoot}/lib"]
     },
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "{projectRoot}/lib"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/lib"]
     },
     "buildOnly": {
-      "dependsOn": [
-        "^buildOnly"
-      ],
-      "outputs": [
-        "{projectRoot}/lib"
-      ]
+      "dependsOn": ["^buildOnly"],
+      "outputs": ["{projectRoot}/lib"]
     },
     "serve": {
-      "dependsOn": [
-        "build:dev"
-      ],
-      "outputs": [
-        "{projectRoot}/lib"
-      ]
+      "dependsOn": ["build:dev"],
+      "outputs": ["{projectRoot}/lib"]
     },
     "test": {
-      "inputs": [
-        "{workspaceRoot}/packages/**/*"
-      ],
-      "outputs": [
-        "{workspaceRoot}/coverage"
-      ]
+      "inputs": ["{workspaceRoot}/packages/**/*"],
+      "outputs": ["{workspaceRoot}/coverage"]
     }
   },
   "tasksRunnerOptions": {

@@ -7,7 +7,7 @@
 
 ## Features
 
-- 
+-
 
 ## Getting Started
 
@@ -46,7 +46,7 @@ pnpm add @myparcel/vue-form-builder
 `myForm.js`
 
 ```js
-import { defineForm } from '@myparcel/vue-form-builder';
+import {defineForm} from '@myparcel/vue-form-builder';
 
 export const myForm = defineForm('my-form', {
   fields: [
@@ -90,9 +90,10 @@ A form is defined using the `defineForm` function. This function takes two argum
 
 1. The name of the form
 2. An object with the following properties:
-    - `fields`: An array of fields
+   - `fields`: An array of fields
 
 ```js
+
 ```
 
 ### Defining fields
@@ -108,9 +109,9 @@ A field is defined using the `defineField` function. This function takes one arg
 - `name`: The name of the field
 - `props`: The props to pass to the component
 - One of the following:
-    - `validator`: A function that takes the value of the field and returns a boolean. This goes together with the property `errorMessage`.
-    - `validators`: An array of validators
-    - `isValid`: A computed ref that returns a boolean
+  - `validator`: A function that takes the value of the field and returns a boolean. This goes together with the property `errorMessage`.
+  - `validators`: An array of validators
+  - `isValid`: A computed ref that returns a boolean
 
 Fields are categorized into three types based on the passed options:
 
@@ -118,7 +119,7 @@ Fields are categorized into three types based on the passed options:
 - `interactiveElement`: A field with a [name] and a ref to hold a reactive value.
 
 ```js
-import { defineField } from '@myparcel/vue-form-builder';
+import {defineField} from '@myparcel/vue-form-builder';
 
 const emailField = defineField({
   name: 'email',
@@ -185,8 +186,9 @@ import {Validator} from '@myparcel/vue-form-builder';
 
 const validator: Validator = {
   validate: (instance, value) => true,
-  errorMessage: 'This message is added to field.errors when the validator returns false',
-}
+  errorMessage:
+    'This message is added to field.errors when the validator returns false',
+};
 ```
 
 The `validate` function takes two arguments:
@@ -213,7 +215,8 @@ const myField = defineField({
   component: 'input',
   ref: ref(20),
   validate: (instance, value) => value > 10,
-  errorMessage: 'This message is added to field.errors when the validator returns false',
+  errorMessage:
+    'This message is added to field.errors when the validator returns false',
 });
 ```
 
@@ -236,7 +239,8 @@ const myField = defineField({
     },
     {
       validate: (instance, value) => !value.includes('e'),
-      errorMessage: 'The most common letter in the English language is not allowed, please be more creative.',
+      errorMessage:
+        'The most common letter in the English language is not allowed, please be more creative.',
     },
   ],
 });
@@ -256,7 +260,7 @@ const myField = defineField({
   ref: ref(''),
   validators: [
     {
-      precedence: 1
+      precedence: 1,
       validate: (instance, value) => validateEmail(value),
       errorMessage: 'The e-mail address is invalid',
     },
@@ -313,4 +317,4 @@ defineField({
 });
 ```
 
-[Validator]: #validation
+[validator]: #validation

@@ -77,7 +77,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       label: 'DHL Only Options',
       component: TTextInput,
       ref: ref<string>(),
-      visibleCb: (field) => field.form.model.carrier.ref?.includes('dhl'),
+      visibleWhen: (field) => field.form.model.carrier.ref?.includes('dhl'),
     }),
 
     defineField({
@@ -164,8 +164,8 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       props: {
         max: 10,
       },
-      disabledCb: (instance) => instance.form.model.labelAmount.ref < 5,
-      visibleCb: (instance) => instance.form.model.labelAmount.ref > 4,
+      disabledWhen: (instance) => instance.form.model.labelAmount.ref < 5,
+      visibleWhen: (instance) => instance.form.model.labelAmount.ref > 4,
       afterUpdate: (instance, newValue: number) => {
         // collect all fields named `copyName_${value}`;
         const copyNameFields = instance.form.fields.value.filter((field: Int) => field.name?.startsWith('copyName_'));
@@ -233,7 +233,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(true),
       label: 'shipment_option_signature',
-      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -241,7 +241,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_only_recipient',
-      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -249,7 +249,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_age_check',
-      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -258,7 +258,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       ref: ref(false),
       label: 'shipment_option_return',
       teleportSelector: '#return-shipment',
-      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -266,7 +266,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_large_format',
-      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -274,7 +274,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_same_day_delivery',
-      visibleCb: ({form}) => {
+      visibleWhen: ({form}) => {
         const {packageType, carrier} = form.model;
 
         return (
@@ -290,8 +290,8 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       label: 'shipment_option_insurance',
       validate: (field, value) => value > 100,
       errorMessage: 'Insurance must be at least 100',
-      visibleCb: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
-      optionalCb: () => true,
+      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      optionalWhen: () => true,
     }),
 
     defineField({

@@ -54,10 +54,10 @@ export class PlainElement<
       return this.errors.value.map((error) => (typeof error === 'function' ? error() : error));
     });
 
-    if ('visibleCb' in config) {
+    if ('visibleWhen' in config) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      useDynamicWatcher(() => this.config.visibleCb(this), this.isVisible);
+      useDynamicWatcher(() => this.config.visibleWhen(this), this.isVisible);
     }
 
     if (typeof config.component === 'string') {

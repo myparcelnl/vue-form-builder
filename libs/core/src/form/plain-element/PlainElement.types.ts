@@ -33,7 +33,7 @@ export type PlainElementHooks<
   click?(instance: I, event: MouseEvent): PromiseOr<void>;
   afterClick?(instance: I): PromiseOr<void>;
 
-  visibleCb?(field: I): PromiseOr<boolean>;
+  visibleWhen?(field: I): PromiseOr<boolean>;
 };
 
 export type BasePlainElementInstance<

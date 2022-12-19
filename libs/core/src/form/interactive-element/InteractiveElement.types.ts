@@ -74,9 +74,9 @@ export type InteractiveElementHooks<
   click?(instance: I, event: MouseEvent): PromiseOr<void>;
   afterClick?(instance: I): PromiseOr<void>;
 
-  disabledCb?(field: I): PromiseOr<boolean>;
-  optionalCb?(field: I): PromiseOr<boolean>;
-  visibleCb?(field: I): PromiseOr<boolean>;
+  disabledWhen?(field: I): PromiseOr<boolean>;
+  optionalWhen?(field: I): PromiseOr<boolean>;
+  visibleWhen?(field: I): PromiseOr<boolean>;
 };
 
 export type BaseInteractiveElementInstance<

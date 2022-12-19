@@ -153,16 +153,16 @@ export class InteractiveElement<
       return sanitizedValue;
     };
 
-    if (config.disabledCb) {
+    if (config.disabledWhen) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      useDynamicWatcher(() => config.disabledCb(this), this.isDisabled);
+      useDynamicWatcher(() => config.disabledWhen(this), this.isDisabled);
     }
 
-    if (config.optionalCb) {
+    if (config.optionalWhen) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      useDynamicWatcher(() => config.optionalCb(this), this.isOptional);
+      useDynamicWatcher(() => config.optionalWhen(this), this.isOptional);
     }
 
     this.createValidators(config);

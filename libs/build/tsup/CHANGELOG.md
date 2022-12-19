@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.5](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/build-tsup@1.0.0-alpha.4...@myparcel-vfb/build-tsup@1.0.0-alpha.5) "@myparcel-vfb/build-tsup" (2022-12-19)
+
+
+### Features
+
+* separate apps and libs ([1bc04c7](https://github/myparcelnl/vue-form-builder/commit/1bc04c7625e0036bb3d72c40f471902e8232ce71))
+
+
+
+
 ## [1.0.0-alpha.4](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/build-tsup@1.0.0-alpha.3...@myparcel-vfb/build-tsup@1.0.0-alpha.4) "@myparcel-vfb/build-tsup" (2022-11-16)
 
 ## [1.0.0-alpha.3](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/build-tsup@1.0.0-alpha.2...@myparcel-vfb/build-tsup@1.0.0-alpha.3) "@myparcel-vfb/build-tsup" (2022-11-15)

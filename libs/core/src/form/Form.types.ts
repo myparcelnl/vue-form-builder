@@ -8,7 +8,7 @@ import {InteractiveElementInstance} from './interactive-element';
 /**
  * The input configuration for a Form.
  */
-export type FormConfiguration = {
+export type FormConfiguration = FormHooks & {
   /**
    * Fields in the form.
    */
@@ -50,15 +50,15 @@ export type FormConfiguration = {
   fieldsLazy?: boolean;
 };
 
-export type FormHooks<I extends BaseFormInstance = BaseFormInstance> = {
-  beforeSubmit?(form: I): PromiseOr<void>;
-  afterSubmit?(form: I): PromiseOr<void>;
+export type FormHooks = {
+  beforeSubmit?(form: FormInstance): PromiseOr<void>;
+  afterSubmit?(form: FormInstance): PromiseOr<void>;
 
-  beforeReset?(form: I): PromiseOr<void>;
-  afterReset?(form: I): PromiseOr<void>;
+  beforeReset?(form: FormInstance): PromiseOr<void>;
+  afterReset?(form: FormInstance): PromiseOr<void>;
 
-  beforeValidate?(form: I): PromiseOr<void>;
-  afterValidate?(form: I): PromiseOr<void>;
+  beforeValidate?(form: FormInstance): PromiseOr<void>;
+  afterValidate?(form: FormInstance): PromiseOr<void>;
 };
 
 /**
@@ -134,7 +134,7 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   validate(): PromiseOr<boolean>;
 };
 
-export type FormInstance<FC extends FormConfiguration = FormConfiguration> = BaseFormInstance<FC> & FormHooks;
+export type FormInstance<FC extends FormConfiguration = FormConfiguration> = BaseFormInstance<FC>;
 
 /**
  * TODO: This is a temporary solution to avoid errors.

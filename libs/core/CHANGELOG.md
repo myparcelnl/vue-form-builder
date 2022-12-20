@@ -2,6 +2,20 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.2](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.1...@myparcel-vfb/core@1.0.0-alpha.2) "@myparcel-vfb/core" (2022-12-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename <property>Cb to <property>When
+
+### Code Refactoring
+
+* rename <property>Cb to <property>When ([1bee3ed](https://github/myparcelnl/vue-form-builder/commit/1bee3ed05cd9a8637ddc59689d7195d2a2f8b544))
+
+
+
+
 ## [1.0.0-alpha.1](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.0...@myparcel-vfb/core@1.0.0-alpha.1) "@myparcel-vfb/core" (2022-12-19)
 
 

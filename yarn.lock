@@ -806,7 +806,7 @@ __metadata:
     rimraf: ^3.0.2
     tsup: ^6.5.0
     typescript: ^4.9.4
-    vitest: ^0.26.0
+    vitest: ^0.26.2
     vue: ^3.2.45
   languageName: unknown
   linkType: soft
@@ -4376,7 +4376,7 @@ __metadata:
 
 "fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
   dependencies:
     node-gyp: latest
   conditions: os=darwin
@@ -6916,7 +6916,7 @@ __metadata:
 
 "resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
   version: 1.22.1
-  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=07638b"
   dependencies:
     is-core-module: ^2.9.0
     path-parse: ^1.0.7
@@ -6929,7 +6929,7 @@ __metadata:
 
 "resolve@patch:resolve@~1.17.0#~builtin<compat/resolve>":
   version: 1.17.0
-  resolution: "resolve@patch:resolve@npm%3A1.17.0#~builtin<compat/resolve>::version=1.17.0&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.17.0#~builtin<compat/resolve>::version=1.17.0&hash=07638b"
   dependencies:
     path-parse: ^1.0.6
   checksum: 6fd799f282ddf078c4bc20ce863e3af01fa8cb218f0658d9162c57161a2dbafe092b13015b9a4c58d0e1e801cf7aa7a4f13115fea9db98c3f9a0c43e429bad6f
@@ -6938,7 +6938,7 @@ __metadata:
 
 "resolve@patch:resolve@~1.19.0#~builtin<compat/resolve>":
   version: 1.19.0
-  resolution: "resolve@patch:resolve@npm%3A1.19.0#~builtin<compat/resolve>::version=1.19.0&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.19.0#~builtin<compat/resolve>::version=1.19.0&hash=07638b"
   dependencies:
     is-core-module: ^2.1.0
     path-parse: ^1.0.6
@@ -7947,7 +7947,7 @@ __metadata:
 
 "typescript@patch:typescript@^4.9.4#~builtin<compat/typescript>":
   version: 4.9.4
-  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=d73830"
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
@@ -7957,7 +7957,7 @@ __metadata:
 
 "typescript@patch:typescript@~4.8.4#~builtin<compat/typescript>":
   version: 4.8.4
-  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=0102e9"
+  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
@@ -8118,6 +8118,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vite-node@npm:0.26.2":
+  version: 0.26.2
+  resolution: "vite-node@npm:0.26.2"
+  dependencies:
+    debug: ^4.3.4
+    mlly: ^1.0.0
+    pathe: ^0.2.0
+    source-map: ^0.6.1
+    source-map-support: ^0.5.21
+    vite: ^3.0.0 || ^4.0.0
+  bin:
+    vite-node: vite-node.mjs
+  checksum: 83105cdf05c8a0673d1d939af864324d0468c225b2f126eaa8f039d16c66a6831ddf1367c62320f2ea0d8e987a872e5c67bddfa88ec7775fdf6433da23edc715
+  languageName: node
+  linkType: hard
+
 "vite-plugin-custom-tsconfig@npm:^1.0.2":
   version: 1.0.2
   resolution: "vite-plugin-custom-tsconfig@npm:1.0.2"
@@ -8181,7 +8197,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:0.26.0, vitest@npm:^0.26.0":
+"vitest@npm:0.26.0":
   version: 0.26.0
   resolution: "vitest@npm:0.26.0"
   dependencies:
@@ -8220,6 +8236,48 @@ __metadata:
   bin:
     vitest: vitest.mjs
   checksum: 5a603e57f6016d77dedc39d9cb61e618bf84fd08e955cdd299001f5213018fb446d1d88916fc70d1ff8184c72592ed88a773d36e38b29d713bae9960f6249836
+  languageName: node
+  linkType: hard
+
+"vitest@npm:^0.26.2":
+  version: 0.26.2
+  resolution: "vitest@npm:0.26.2"
+  dependencies:
+    "@types/chai": ^4.3.4
+    "@types/chai-subset": ^1.3.3
+    "@types/node": "*"
+    acorn: ^8.8.1
+    acorn-walk: ^8.2.0
+    chai: ^4.3.7
+    debug: ^4.3.4
+    local-pkg: ^0.4.2
+    source-map: ^0.6.1
+    strip-literal: ^1.0.0
+    tinybench: ^2.3.1
+    tinypool: ^0.3.0
+    tinyspy: ^1.0.2
+    vite: ^3.0.0 || ^4.0.0
+    vite-node: 0.26.2
+  peerDependencies:
+    "@edge-runtime/vm": "*"
+    "@vitest/browser": "*"
+    "@vitest/ui": "*"
+    happy-dom: "*"
+    jsdom: "*"
+  peerDependenciesMeta:
+    "@edge-runtime/vm":
+      optional: true
+    "@vitest/browser":
+      optional: true
+    "@vitest/ui":
+      optional: true
+    happy-dom:
+      optional: true
+    jsdom:
+      optional: true
+  bin:
+    vitest: vitest.mjs
+  checksum: 2adc5fcead5b8b942e87d2ea6b2183baf0dc4728136758646bb674441d10a809bb6ff5bd1dc8f6a6e019f133b8537ddef770c9a1705d4cc9714411083581ab6e
   languageName: node
   linkType: hard
 

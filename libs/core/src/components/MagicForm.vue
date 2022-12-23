@@ -9,34 +9,38 @@
       },
     ]"
     @submit.prevent="form.submit">
-    <Suspense @resolve="fieldsAreResolved = true">
-      <template
-        v-for="(field, index) in plainFields"
-        :key="`field--${field.name ?? 'unnamed'}--${index}`">
-        <FormElement :field="field" />
+    <WrappedForm>
+      <Suspense @resolve="fieldsAreResolved = true">
+        <template
+          v-for="(field, index) in plainFields"
+          :key="`field--${field.name ?? 'unnamed'}--${index}`">
+          <WrappedFormElement :field="field" />
+        </template>
+      </Suspense>
+      <template v-if="fieldsAreResolved">
+        <template
+          v-for="(field, index) in teleportFields"
+          :key="`field--${field.name ?? 'unnamed'}--${index}`">
+          <WrappedFormElement :field="field" />
+        </template>
       </template>
-    </Suspense>
-    <template v-if="fieldsAreResolved">
-      <template
-        v-for="(field, index) in teleportFields"
-        :key="`field--${field.name ?? 'unnamed'}--${index}`">
-        <FormElement :field="field" />
-      </template>
-    </template>
+    </WrappedForm>
   </form>
 </template>
 
 <script lang="ts">
 import {PropType, computed, defineComponent, provide, ref, toRefs} from 'vue';
-import FormElement from './FormElement.vue';
 import {FormInstance} from '../form';
 import {INJECT_FORM} from '../services';
+import {WrappedForm} from './WrappedForm';
+import {WrappedFormElement} from './WrappedFormElement';
 import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'MagicForm',
   components: {
-    FormElement,
+    WrappedFormElement,
+    WrappedForm,
   },
 
   props: {

@@ -1,21 +1,18 @@
 <template>
-  <div
+  <component
+    :is="element.component"
     v-show="element.isVisible"
-    :id="elementId"
-    :class="element.isVisible ? element.form.config.fieldClass : null">
-    <component
-      :is="element.component"
-      :id="element.name ?? element.name"
-      v-model="model"
-      :label="element.label"
-      :name="element.name"
-      :errors="element.formattedErrors"
-      :disabled="element.isDisabled"
-      :valid="element.isValid"
-      :suspended="element.isSuspended"
-      v-bind="{...$attrs, ...element.props}"
-      v-on="hooks" />
-  </div>
+    :id="element.name ?? elementId"
+    v-model="model"
+    :class="element.isVisible ? element.form.config.fieldClass : null"
+    :label="element.label"
+    :name="element.name"
+    :errors="element.formattedErrors"
+    :disabled="element.isDisabled"
+    :valid="element.isValid"
+    :suspended="element.isSuspended"
+    v-bind="{...$attrs, ...element.props}"
+    v-on="hooks" />
 </template>
 
 <script lang="ts">

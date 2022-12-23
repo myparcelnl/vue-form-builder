@@ -10,34 +10,19 @@ import {InteractiveElementInstance} from './interactive-element';
  */
 export type FormConfiguration = FormHooks & {
   /**
-   * Fields in the form.
-   */
-  fields: ReadonlyOr<AnyElementConfiguration[]>;
-
-  /**
-   * Function executed when any label is rendered.
-   */
-  renderLabel?: (input: string) => string;
-
-  /**
    * Classes that are applied to each field.
    */
   fieldClass?: string | string[] | Record<string, string>;
 
   /**
-   * Classes that are applied to the form.
+   * Fields in the form.
    */
-  formClass?: string | string[] | Record<string, string>;
+  fields: ReadonlyOr<AnyElementConfiguration[]>;
 
   /**
-   * Messages that are used for built-in validations.
+   * Whether fields are lazy by default. Defaults to false.
    */
-  validationMessages?: Record<'required' | string, FunctionOr<string>>;
-
-  /**
-   * Names of hooks to register.
-   */
-  hookNames?: readonly string[] | string[];
+  fieldsLazy?: boolean;
 
   /**
    * Whether fields are optional by default. Defaults to false.
@@ -45,9 +30,44 @@ export type FormConfiguration = FormHooks & {
   fieldsOptional?: boolean;
 
   /**
-   * Whether fields are lazy by default. Defaults to false.
+   * Classes that are applied to the form.
    */
-  fieldsLazy?: boolean;
+  formClass?: string | string[] | Record<string, string>;
+
+  /**
+   * Component or html element of a form element wrapper.
+   */
+  formElementWrapper?: ComponentOrHtmlElement;
+
+  /**
+   * Classes to apply to the element wrapping each form element.
+   */
+  formElementWrapperClass?: string;
+
+  /**
+   * Component or html element of a form wrapper.
+   */
+  formWrapper?: ComponentOrHtmlElement;
+
+  /**
+   * Classes to apply to the element wrapping a form.
+   */
+  formWrapperClass?: string;
+
+  /**
+   * Names of hooks to register.
+   */
+  hookNames?: readonly string[] | string[];
+
+  /**
+   * Function executed when any label is rendered.
+   */
+  renderLabel?: (input: string) => string;
+
+  /**
+   * Messages that are used for built-in validations.
+   */
+  validationMessages?: Record<'required' | string, FunctionOr<string>>;
 };
 
 export type FormHooks = {

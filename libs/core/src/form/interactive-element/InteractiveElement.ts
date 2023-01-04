@@ -1,4 +1,4 @@
-import {ComponentOrHtmlElement, ElementName} from '../../types';
+import {AnyElementInstance, ComponentOrHtmlElement} from '../../types';
 import {
   INTERACTIVE_ELEMENT_HOOKS,
   InteractiveElementConfiguration,
@@ -13,7 +13,7 @@ import {useDynamicWatcher} from '../../utils';
 
 export class InteractiveElement<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
+  N extends string = string,
   RT = unknown,
 > extends PlainElement<C, N> {
   public isDirty = ref(false);
@@ -81,11 +81,10 @@ export class InteractiveElement<
 
       if (!valid && validator.errorMessage) {
         if (this.errorsTarget) {
-          const target = this.form.fields.value.find((field) => field.name === this.errorsTarget);
+          const target = this.form.fields.value.find((field: AnyElementInstance) => field.name === this.errorsTarget);
 
           if (isOfType<PlainElementInstance>(target, 'errors')) {
-            // TODO: figure out how to properly push errors to the errors as a ref with .value
-            // See Form.ts for the related issue with reactive()
+            // @ts-expect-error todo: fix schrodinger's ref
             target.errors.push(validator.errorMessage);
           }
         } else {
@@ -121,15 +120,13 @@ export class InteractiveElement<
   public constructor(form: FormInstance, name: N, config: InteractiveElementConfiguration<C, N, RT>) {
     super(form, {...config, hookNames: INTERACTIVE_ELEMENT_HOOKS});
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     this.ref = config.ref;
     this.initialValue = this.ref.value;
 
-    this.lazy = config.lazy ?? form.config.fieldsLazy ?? false;
+    this.lazy = config.lazy ?? false;
 
     this.isDisabled.value = config.disabled ?? false;
-    this.isOptional.value = config.optional ?? form.config.fieldsOptional ?? false;
+    this.isOptional.value = config.optional ?? false;
 
     this.errorsTarget = config.errorsTarget;
 

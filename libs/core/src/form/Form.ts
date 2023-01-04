@@ -1,17 +1,18 @@
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement} from '../types';
-import {FormConfiguration, FormHooks, FormInstance} from './Form.types';
+import {FormHooks, FormInstance, InstanceFormConfiguration} from './Form.types';
 import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
 import {PlainElement, PlainElementConfiguration, PlainElementInstance} from './plain-element';
-import {UnwrapNestedRefs, computed, markRaw, reactive, ref} from 'vue';
+import {UnwrapNestedRefs, computed, reactive, ref} from 'vue';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
+import {markComponentAsRaw} from '../utils';
 
 export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'] as const;
 
 /**
  * @see FormInstance
  */
-export class Form<FC extends FormConfiguration = FormConfiguration, FN extends string = string> {
+export class Form<FC extends InstanceFormConfiguration = InstanceFormConfiguration, FN extends string = string> {
   public readonly name: FN;
 
   public readonly config: Omit<FC, 'fields'>;
@@ -79,12 +80,13 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
     const result = await Promise.all(
       this.fields.value.map((field) => {
         if (!isOfType<InteractiveElementInstance>(field, 'ref')) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
           field.resetValidation();
           return true;
         }
 
+        // TODO: infinitely deep type error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         return field.validate();
       }),
     );
@@ -118,24 +120,32 @@ export class Form<FC extends FormConfiguration = FormConfiguration, FN extends s
   ): UnwrapNestedRefs<AnyElementInstance> {
     let instance: InteractiveElementInstance | PlainElementInstance;
 
-    if (isOfType<InteractiveElementConfiguration<ComponentOrHtmlElement, string>>(field, 'ref')) {
-      instance = new InteractiveElement<ComponentOrHtmlElement, string>(form, field.name, field);
+    const elementConfig = {
+      ...form.config.fieldDefaults,
+      ...field,
+      attributes: {
+        ...form.config.fieldDefaults.attributes,
+        ...field.attributes,
+      },
+    } as AnyElementConfiguration;
+
+    if (isOfType<InteractiveElementConfiguration>(elementConfig, 'ref')) {
+      instance = new InteractiveElement<ComponentOrHtmlElement, string>(form, elementConfig.name, elementConfig);
     } else {
-      instance = new PlainElement(form, field as PlainElementConfiguration);
+      instance = new PlainElement(form, elementConfig as PlainElementConfiguration);
     }
 
-    if (typeof instance.component !== 'string') {
-      markRaw(instance.component);
-    }
+    markComponentAsRaw(instance.component);
+    markComponentAsRaw(instance.wrapper);
 
     // TODO: Figure out whether or not we can live without the reactive() to retain original
     // refs and instance methods.
     const reactiveInstance = reactive(instance);
 
-    if (isOfType<PlainElementConfiguration<ComponentOrHtmlElement, string>>(field, 'name')) {
+    if (isOfType<PlainElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'name')) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      this.model[field.name] = reactiveInstance;
+      this.model[elementConfig.name] = reactiveInstance;
     }
 
     return reactiveInstance;

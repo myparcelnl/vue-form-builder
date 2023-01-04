@@ -1,17 +1,16 @@
 <template>
   <component
     :is="element.component"
-    v-show="element.isVisible"
-    :id="element.name ?? elementId"
+    :id="element.name"
     v-model="model"
-    :class="element.isVisible ? element.form.config.fieldClass : null"
+    :class="element.isVisible ? element.attributes.class : null"
     :label="element.label"
     :name="element.name"
     :errors="element.formattedErrors"
     :disabled="element.isDisabled"
     :valid="element.isValid"
     :suspended="element.isSuspended"
-    v-bind="{...$attrs, ...element.props}"
+    v-bind="{...element.attributes, ...element.props}"
     v-on="hooks" />
 </template>
 
@@ -23,7 +22,6 @@ import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'InteractiveElement',
-  inheritAttrs: false,
   props: {
     element: {
       type: Object as PropType<InteractiveElementInstance>,
@@ -72,8 +70,6 @@ export default defineComponent({
           props.element.ref = value;
         },
       }),
-
-      elementId: computed(() => (props.element.name ? `${props.element.name}__wrapper` : '')),
     };
   },
 });

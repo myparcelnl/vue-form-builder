@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {AllowedComponentProps, Component, ComputedRef, Ref, VNodeProps} from 'vue';
+import {AllowedComponentProps, Component, ComputedRef, HTMLAttributes, Ref, VNodeProps} from 'vue';
 
 export type ComponentProps<C extends Component> = C extends new (...args: any) => any
   ? Omit<
@@ -30,3 +30,5 @@ export type UnionToArray<T, A extends unknown[] = []> = IsUnion<T> extends true
   : [T, ...A];
 
 export type FunctionOr<T> = (() => T) | T;
+
+export type AnyAttributes = HTMLAttributes & Record<string, unknown>;

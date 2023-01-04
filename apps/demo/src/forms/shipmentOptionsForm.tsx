@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import {CARRIERS, CarrierName, PACKAGE_TYPES} from '@myparcel/sdk';
 import {InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder';
+import Bonnetje from '../components/Bonnetje.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import Heading from '../components/Heading.vue';
-import PTextInput from '../components/template/PTextInput.vue';
 import THiddenInput from '../components/template/THiddenInput.vue';
 import TNumberInput from '../components/template/TNumberInput.vue';
 import TSelect from '../components/template/TSelect.vue';
 import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TTextInput from '../components/template/TTextInput.vue';
 import TToggleSwitch from '../components/template/TToggleSwitch.vue';
+import TableFormGroup from '../components/template/TableFormGroup.vue';
 import {isOfType} from '@myparcel/ts-utils';
 import {ref} from 'vue';
 import {translate} from '../translate';
@@ -37,11 +38,33 @@ const validateName = (field: InteractiveElementInstance) => {
 
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
   renderLabel: translate,
-  fieldClass: ['flex', 'items-center', 'py-1', 'pb-2', 'duration-100', 'group', 'transition-colors'],
-  formClass: ['border', 'border-gray-600', 'rounded-xl', 'p-4'],
+
+  // formWrapper: 'table',
+  // formWrapperClass: ['table', 'w-full'],
+  // formElementWrapper: TableFormGroup,
+
+  form: {
+    attributes: {
+      class: ['border', 'border-gray-600', 'p-4'],
+    },
+    wrapper: 'table',
+  },
+
+  fieldDefaults: {
+    attributes: {
+      class: ['py-1', 'pb-2', 'duration-100', 'group', 'transition-colors'],
+    },
+    wrapper: TableFormGroup,
+  },
+
   validationMessages: {
     required: 'This field is required',
   },
+
+  afterSubmit(form) {
+    console.log('afterSubmit', form);
+  },
+
   fields: [
     defineField({
       component: Heading,
@@ -61,8 +84,11 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       },
 
       onBeforeMount: async (field) => {
+        console.log('onBeforeMount', field);
         const carriers = useFetchCarriers();
         await carriers.suspense();
+
+        console.log(carriers.data);
 
         field.props.options =
           carriers.data.value?.map((carrier) => ({
@@ -82,14 +108,9 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
 
     defineField({
       name: 'name',
-      component: FormGroup,
+      wrapper: false,
+      component: () => h('tr', [h('td', {id: 'teleport--firstname'}), h('td', {id: 'teleport--lastname'})]),
       label: 'name',
-      slots: {
-        default: h('div', {class: 'flex flex-row gap-2'}, [
-          h('div', {id: 'teleport--firstname'}),
-          h('div', {id: 'teleport--lastname'}),
-        ]),
-      },
       props: {
         label: 'Naam',
       },
@@ -97,9 +118,10 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
 
     defineField({
       name: 'firstname',
-      component: PTextInput,
+      component: TTextInput,
       ref: firstname,
       label: 'firstname',
+      wrapper: FormGroup,
       teleportSelector: '#teleport--firstname',
       validators: [
         {
@@ -126,9 +148,10 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
 
     defineField({
       name: 'lastname',
-      component: PTextInput,
+      component: TTextInput,
       ref: lastname,
       label: 'lastname',
+      wrapper: FormGroup,
       teleportSelector: '#teleport--lastname',
       validators: [
         {
@@ -168,7 +191,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       visibleWhen: (instance) => instance.form.model.labelAmount.ref > 4,
       afterUpdate: (instance, newValue: number) => {
         // collect all fields named `copyName_${value}`;
-        const copyNameFields = instance.form.fields.value.filter((field: Int) => field.name?.startsWith('copyName_'));
+        const copyNameFields = instance.form.fields.value.filter((field) => field.name?.startsWith('copyName_'));
 
         if (copyNameFields.length < newValue) {
           // add new fields
@@ -292,10 +315,21 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       errorMessage: 'Insurance must be at least 100',
       visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
       optionalWhen: () => true,
+      props: {
+        step: 100,
+        min: 100,
+      },
     }),
 
     defineField({
       component: TSubmitButton,
+    }),
+
+    defineField({
+      name: 'bonnetje',
+      component: Bonnetje,
+      wrapper: false,
+      teleportSelector: '#bonnetje',
     }),
   ],
 });

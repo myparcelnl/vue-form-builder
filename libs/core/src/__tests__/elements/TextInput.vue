@@ -4,7 +4,6 @@
     v-model="model"
     type="text"
     :name="name"
-    v-bind="$attrs"
     :disabled="disabled"
     :class="{
       'border-red-500': valid === false,
@@ -37,7 +36,6 @@ import {PropType, computed, defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'TextInput',
-  inheritAttrs: false,
   props: {
     disabled: {
       type: Boolean,

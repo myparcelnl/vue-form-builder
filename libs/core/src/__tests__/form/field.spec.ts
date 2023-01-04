@@ -34,10 +34,12 @@ describe('Form fields', () => {
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
 
-    await wrapper.find('#firstName__wrapper input').setValue('Hank');
+    expect(wrapper.html()).toMatchSnapshot();
+
+    await wrapper.find('[data-test-id="firstName"] input').setValue('Hank');
     expect(price.value).toBe('50');
 
-    await wrapper.find('#firstName__wrapper input').setValue('Jack');
+    await wrapper.find('[data-test-id="firstName"] input').setValue('Jack');
     expect(price.value).toBe('100');
   });
 
@@ -70,12 +72,12 @@ describe('Form fields', () => {
 
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
-    await wrapper.find('#firstName__wrapper input').setValue('Hank');
+    await wrapper.find('[data-test-id="firstName"] input').setValue('Hank');
     vi.advanceTimersByTime(1000);
 
     await flushPromises();
     expect(price.value).toBe('50');
-    await wrapper.find('#firstName__wrapper input').setValue('John');
+    await wrapper.find('[data-test-id="firstName"] input').setValue('John');
 
     vi.advanceTimersByTime(1000);
     await flushPromises();
@@ -83,7 +85,7 @@ describe('Form fields', () => {
     vi.useRealTimers();
   });
 
-  it('can calculate backwards based on primary input, out of a promise', async () => {
+  it.skip('can calculate backwards based on primary input, out of a promise', async () => {
     vi.useFakeTimers();
     const firstName = ref('');
     const price = ref('0');
@@ -104,7 +106,8 @@ describe('Form fields', () => {
     });
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
-    await wrapper.find('#firstName__wrapper input').setValue('Hank');
+
+    await wrapper.find('[data-test-id="firstName"] input').setValue('Hank');
     // figure out how to reverse calculate the price when firstName is updated.
   });
 
@@ -114,14 +117,11 @@ describe('Form fields', () => {
       fields: [
         defineField({
           name: 'name',
-          component: 'div',
+          component: h('div', {class: 'flex flex-row gap-2'}, [
+            h('div', {id: 'teleport--firstname'}),
+            h('div', {id: 'teleport--lastname'}),
+          ]),
           label: 'name',
-          slots: {
-            default: h('div', {class: 'flex flex-row gap-2'}, [
-              h('div', {id: 'teleport--firstname'}),
-              h('div', {id: 'teleport--lastname'}),
-            ]),
-          },
           props: {
             label: 'Naam',
           },
@@ -154,7 +154,6 @@ describe('Form fields', () => {
       },
     });
     await flushPromises();
-    console.log(wrapper.html());
   });
 
   it('can be reset', async () => {

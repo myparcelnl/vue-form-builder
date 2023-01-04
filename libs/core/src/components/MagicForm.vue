@@ -1,46 +1,53 @@
 <template>
-  <form
+  <component
+    :is="form.config.form.tag"
     :id="form.name"
-    :class="[
-      form.config.formClass,
-      {
-        valid: form.isValid,
-        invalid: !form.isValid,
-      },
-    ]"
-    @submit.prevent="form.submit">
-    <WrappedForm>
-      <Suspense @resolve="fieldsAreResolved = true">
+    v-bind="form.config.form.attributes"
+    :class="{
+      valid: form.isValid,
+      invalid: !form.isValid,
+    }"
+    @submit.prevent="handleSubmit">
+    <Fragment :component="form.config.form.wrapper">
+      <Suspense @resolve="elementsAreResolved = true">
         <template
-          v-for="(field, index) in plainFields"
-          :key="`field--${field.name ?? 'unnamed'}--${index}`">
-          <WrappedFormElement :field="field" />
+          v-for="(element, index) in plainFields"
+          :key="`element--${element.name ?? 'unnamed'}--${index}`">
+          <FormElement
+            :form="form"
+            :element="element"
+            @submit="handleSubmit" />
         </template>
       </Suspense>
-      <template v-if="fieldsAreResolved">
+
+      <template v-if="elementsAreResolved">
         <template
-          v-for="(field, index) in teleportFields"
-          :key="`field--${field.name ?? 'unnamed'}--${index}`">
-          <WrappedFormElement :field="field" />
+          v-for="(element, index) in teleportFields"
+          :key="`element--${element.name ?? 'unnamed'}--${index}`">
+          <FormElement
+            :form="form"
+            :element="element"
+            @submit="handleSubmit" />
         </template>
       </template>
-    </WrappedForm>
-  </form>
+    </Fragment>
+  </component>
 </template>
 
 <script lang="ts">
-import {PropType, computed, defineComponent, provide, ref, toRefs} from 'vue';
+import {PropType, computed, defineComponent, provide, ref} from 'vue';
+import {AnyElementInstance} from '../types';
+import FormElement from './FormElement';
 import {FormInstance} from '../form';
+import Fragment from './Fragment.vue';
 import {INJECT_FORM} from '../services';
-import {WrappedForm} from './WrappedForm';
-import {WrappedFormElement} from './WrappedFormElement';
 import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'MagicForm',
   components: {
-    WrappedFormElement,
-    WrappedForm,
+    Fragment,
+    FormElement,
   },
 
   props: {
@@ -53,20 +60,25 @@ export default defineComponent({
   setup: (props) => {
     provide(INJECT_FORM, props.form);
 
-    const propRefs = toRefs(props);
-    const fieldsAreResolved = ref(false);
+    const elementsAreResolved = ref(false);
     const lifeCycleHooks = useLifeCycleHooks();
 
     lifeCycleHooks.register(props.form.hooks, props.form);
 
-    const {fields} = propRefs.form.value;
+    const fields = computed(() => {
+      return (props.form.fields.value ?? props.form.fields) as unknown as AnyElementInstance[];
+    });
 
     return {
       fields,
-      fieldsAreResolved,
-      // todo: (fields.value ?? fields) is a hack to make the tests and the actual code work.
-      plainFields: computed(() => (fields.value ?? fields).filter((field) => !field.teleportSelector)),
-      teleportFields: computed(() => (fields.value ?? fields).filter((field) => Boolean(field.teleportSelector))),
+      elementsAreResolved,
+      // todo: (elements.value ?? elements) is a hack to make the tests and the actual code work.
+      plainFields: computed(() => fields.value.filter((element) => !element.teleportSelector)),
+      teleportFields: computed(() => fields.value.filter((element) => Boolean(element.teleportSelector))),
+
+      async handleSubmit() {
+        await props.form.submit();
+      },
     };
   },
 });

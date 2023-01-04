@@ -1,9 +1,21 @@
 <template>
-  <h1>Behold, a form</h1>
-  <div id="return-shipment"></div>
-  <MagicForm :form="shipmentOptionsForm" />
+  <div>
+    <h1>Behold, a form</h1>
 
-  <pre v-text="values" />
+    <div class="relative">
+      <div
+        id="bonnetje"
+        class="fixed gap-4 grid grid-cols-1 right-4 top-4 w-64">
+        <div
+          id="return-shipment"
+          class="bg-pink-900 outline outline-2 outline-offset-2 outline-pink-900 p-3 rounded-lg" />
+      </div>
+
+      <MagicForm :form="shipmentOptionsForm" />
+    </div>
+
+    <pre v-text="values" />
+  </div>
 </template>
 
 <script lang="ts">

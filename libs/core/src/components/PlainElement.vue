@@ -3,14 +3,13 @@
     :is="element.component"
     :id="element.name ?? element.name"
     :name="element.name"
-    :class="element.isVisible ? element.form.config.fieldClass : null"
+    :class="element.isVisible ? element.attributes.class : null"
     :label="element.label"
     :errors="element.formattedErrors"
-    v-bind="{...$attrs, ...element.props}"
+    v-bind="{...element.attributes, ...element.props}"
     v-on="hooks">
     <template
       v-for="(slot, key) in element.slots"
-      #[key]
       :key="key">
       <component :is="slot" />
     </template>
@@ -23,7 +22,6 @@ import {PlainElementInstance} from '../form';
 
 export default defineComponent({
   name: 'PlainElement',
-  inheritAttrs: false,
   props: {
     element: {
       type: Object as PropType<PlainElementInstance>,

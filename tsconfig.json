@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@myparcel-vfb/build-*": ["./libs/build/*/src"],
       "@myparcel-vfb/*": ["./libs/*/src"],

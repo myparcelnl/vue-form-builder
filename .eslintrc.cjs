@@ -4,6 +4,11 @@ module.exports = {
   rules: {
     'class-methods-use-this': 'off',
   },
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: ['tsconfig.json'],
+    extraFileExtensions: ['.vue'],
+  },
   overrides: [
     {
       files: ['./**/index.ts'],
@@ -19,11 +24,6 @@ module.exports = {
     {
       files: ['./**/*.ts', './**/*.tsx'],
       extends: '@myparcel-eslint/eslint-config-prettier-typescript',
-      parserOptions: {
-        tsconfigRootDir: __dirname,
-        project: ['tsconfig.base.json'],
-        extraFileExtensions: ['.vue'],
-      },
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
       },

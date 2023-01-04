@@ -113,9 +113,18 @@ export type BaseInteractiveElementInstance<
 
   /**
    * Validates the field.
-   * @returns {Promise<boolean>}
    */
   validate(): Promise<boolean>;
+
+  /**
+   * Focuses on the field.
+   */
+  focus(): PromiseOr<void>;
+
+  /**
+   * Blurs the field.
+   */
+  blur(): PromiseOr<void>;
 
   setOptional(optional: boolean): void;
   setDisabled(disabled: boolean): void;

@@ -1,6 +1,6 @@
 import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils';
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, ElementName} from '../types';
-import {ComputedRef, Ref, UnwrapNestedRefs} from 'vue';
+import {ComputedRef, Ref} from 'vue';
 import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {InteractiveElementInstance} from './interactive-element';
@@ -115,14 +115,12 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   /**
    * All fields in the form.
    */
-  readonly fields: Ref<UnwrapNestedRefs<AnyElementInstance>[]>;
+  readonly fields: Ref<AnyElementInstance[]>;
 
   /**
    * All fields in the form that have a name and a ref.
    */
-  readonly fieldsWithNamesAndRefs: ComputedRef<
-    UnwrapNestedRefs<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>
-  >;
+  readonly fieldsWithNamesAndRefs: ComputedRef<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>;
 
   /**
    * Determines whether the form is valid.
@@ -187,5 +185,5 @@ export type FieldsToModel<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   RT = any,
 > = {
-  [K in N extends string ? N | string : string]: UnwrapNestedRefs<InteractiveElementInstance<C, N, RT>>;
+  [K in N extends string ? N | string : string]: InteractiveElementInstance<C, N, RT>;
 };

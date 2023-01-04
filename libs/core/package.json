@@ -12,7 +12,6 @@
   "scripts": {
     "build": "run ws:vite:build \"$(pwd)\"",
     "build:dev": "run ws:vite:build:dev \"$(pwd)\"",
-    "buildOnly": "run ws:vite:buildOnly \"$(pwd)\"",
     "clean": "rimraf dist",
     "serve": "run ws:vite:serve \"$(pwd)\"",
     "typecheck": "run ws:vite:typecheck \"$(pwd)\"",

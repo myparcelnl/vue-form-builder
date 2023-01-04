@@ -19,12 +19,11 @@ import {useFetchCarriers} from '../queries/fetchCarriers';
 // eslint-disable-next-line id-length
 declare const h: typeof import('vue').h;
 
-// todo: form groups?
-
-const firstname = ref('');
-const lastname = ref('');
+const firstName = ref('');
+const lastName = ref('');
 
 const validateName = (field: InteractiveElementInstance) => {
+  console.log(field.form.fields.value);
   const nameField = field.form.fields.value.find((field) => field.name === 'name');
   const firstNameField = field.form.fields.value.find((field) => field.name === 'firstname');
   const lastNameField = field.form.fields.value.find((field) => field.name === 'lastname');
@@ -84,11 +83,8 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       },
 
       onBeforeMount: async (field) => {
-        console.log('onBeforeMount', field);
         const carriers = useFetchCarriers();
         await carriers.suspense();
-
-        console.log(carriers.data);
 
         field.props.options =
           carriers.data.value?.map((carrier) => ({
@@ -100,10 +96,10 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
 
     defineField({
       name: 'dhlOptions',
-      label: 'DHL Only Options',
+      label: 'dhl_only_options',
       component: TTextInput,
       ref: ref<string>(),
-      visibleWhen: (field) => field.form.model.carrier.ref?.includes('dhl'),
+      visibleWhen: (field) => field.form.model.carrier.ref.value?.includes('dhl'),
     }),
 
     defineField({
@@ -112,15 +108,15 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: () => h('tr', [h('td', {id: 'teleport--firstname'}), h('td', {id: 'teleport--lastname'})]),
       label: 'name',
       props: {
-        label: 'Naam',
+        label: 'naam',
       },
     }),
 
     defineField({
-      name: 'firstname',
+      name: 'firstName',
       component: TTextInput,
-      ref: firstname,
-      label: 'firstname',
+      ref: firstName,
+      label: 'first_name',
       wrapper: FormGroup,
       teleportSelector: '#teleport--firstname',
       validators: [
@@ -147,10 +143,10 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
     }),
 
     defineField({
-      name: 'lastname',
+      name: 'lastName',
       component: TTextInput,
-      ref: lastname,
-      label: 'lastname',
+      ref: lastName,
+      label: 'last_name',
       wrapper: FormGroup,
       teleportSelector: '#teleport--lastname',
       validators: [
@@ -187,8 +183,8 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       props: {
         max: 10,
       },
-      disabledWhen: (instance) => instance.form.model.labelAmount.ref < 5,
-      visibleWhen: (instance) => instance.form.model.labelAmount.ref > 4,
+      disabledWhen: (instance) => instance.form.model.labelAmount.ref.value < 5,
+      visibleWhen: (instance) => instance.form.model.labelAmount.ref.value > 4,
       afterUpdate: (instance, newValue: number) => {
         // collect all fields named `copyName_${value}`;
         const copyNameFields = instance.form.fields.value.filter((field) => field.name?.startsWith('copyName_'));
@@ -210,7 +206,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
 
                     const isDifferentField = otherField.name !== field.name;
                     const isCopyNameField = otherField.name?.startsWith('copyName_');
-                    const valueMatches = otherField.ref === value;
+                    const valueMatches = otherField.ref.value === value;
 
                     return isDifferentField && isCopyNameField && valueMatches;
                   });
@@ -244,7 +240,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       validators: [
         {
           validate: (field, value) => {
-            return !(field.form.model.name.ref === 'Mack' && String(value).startsWith('letter'));
+            return !(field.form.model.firstName.ref.value === 'Mack' && String(value).startsWith('letter'));
           },
           errorMessage: 'Forget about letters, Mack does not like them.',
         },
@@ -256,7 +252,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(true),
       label: 'shipment_option_signature',
-      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -264,7 +260,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_only_recipient',
-      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -272,7 +268,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_age_check',
-      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -281,7 +277,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       ref: ref(false),
       label: 'shipment_option_return',
       teleportSelector: '#return-shipment',
-      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -289,7 +285,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_large_format',
-      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({
@@ -301,7 +297,8 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         const {packageType, carrier} = form.model;
 
         return (
-          packageType.ref === PACKAGE_TYPES.PACKAGE_NAME && ['dhlforyou', CARRIERS.INSTABOX_NAME].includes(carrier.ref)
+          packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME &&
+          ['dhlforyou', CARRIERS.INSTABOX_NAME].includes(carrier.ref)
         );
       },
     }),
@@ -313,7 +310,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       label: 'shipment_option_insurance',
       validate: (field, value) => value > 100,
       errorMessage: 'Insurance must be at least 100',
-      visibleWhen: (field) => field.form.model.packageType.ref === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
       optionalWhen: () => true,
       props: {
         step: 100,

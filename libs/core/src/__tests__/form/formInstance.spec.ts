@@ -1,7 +1,7 @@
 import {InteractiveElement, PlainElement, defineField} from '../../form';
 import {describe, expect, it} from 'vitest';
 import TextInput from '../elements/TextInput.vue';
-import {generateForm} from '../utils/generateForm';
+import {generateForm} from '../utils';
 import {ref} from 'vue';
 
 describe('Form instance', () => {
@@ -24,9 +24,9 @@ describe('Form instance', () => {
     expect(Object.keys(form.model)).toEqual(['test', 'test2']);
     expect(form.model.test).toBeInstanceOf(PlainElement);
     expect(form.model.test2).toBeInstanceOf(InteractiveElement);
-    expect(form.model.test2.ref).toBe('');
-    form.model.test2.ref = 'changed';
-    expect(form.model.test2.ref).toBe('changed');
+    expect(form.model.test2.ref.value).toBe('');
+    form.model.test2.ref.value = 'changed';
+    expect(form.model.test2.ref.value).toBe('changed');
   });
 
   it('can retrieve an object with all non-disabled keys and values', () => {

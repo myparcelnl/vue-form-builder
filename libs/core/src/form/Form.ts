@@ -1,17 +1,15 @@
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement} from '../types';
 import {FormHooks, FormInstance, InstanceFormConfiguration} from './Form.types';
 import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
-import {PlainElement, PlainElementConfiguration, PlainElementInstance} from './plain-element';
-import {UnwrapNestedRefs, computed, reactive, ref} from 'vue';
-import {createHookManager} from '@myparcel-vfb/hook-manager';
+import {PlainElement, PlainElementInstance} from './plain-element';
+import {computed, ref} from 'vue';
+import {createHookManager} from '@myparcel-vfb/hook-manager/src';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
 
 export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'] as const;
 
-/**
- * @see FormInstance
- */
+// noinspection JSUnusedGlobalSymbols
 export class Form<FC extends InstanceFormConfiguration = InstanceFormConfiguration, FN extends string = string> {
   public readonly name: FN;
 
@@ -61,6 +59,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     const index = position === 'after' ? newIndex + 1 : newIndex;
 
     const newElement = this.createFieldInstance(element, this);
+
     this.fields.value.splice(index, 0, newElement);
   }
 
@@ -84,9 +83,6 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
           return true;
         }
 
-        // TODO: infinitely deep type error
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         return field.validate();
       }),
     );
@@ -101,10 +97,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   }
 
   public getValues(): Record<string, unknown> {
-    // TODO: sometimes the ref is unwrapped, sometimes not.
-    const fields = this.fieldsWithNamesAndRefs.value ?? this.fieldsWithNamesAndRefs;
-
-    return fields.reduce((acc, field) => {
+    return this.fieldsWithNamesAndRefs.value.reduce((acc, field) => {
       if (field.isDisabled) {
         return acc;
       }
@@ -114,10 +107,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     }, {} as Record<string, unknown>);
   }
 
-  private createFieldInstance(
-    field: AnyElementConfiguration,
-    form: FormInstance<FC>,
-  ): UnwrapNestedRefs<AnyElementInstance> {
+  private createFieldInstance(field: AnyElementConfiguration, form: FormInstance<FC>): AnyElementInstance {
     let instance: InteractiveElementInstance | PlainElementInstance;
 
     const elementConfig = {
@@ -129,26 +119,22 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
       },
     } as AnyElementConfiguration;
 
-    if (isOfType<InteractiveElementConfiguration>(elementConfig, 'ref')) {
-      instance = new InteractiveElement<ComponentOrHtmlElement, string>(form, elementConfig.name, elementConfig);
+    if (isOfType<InteractiveElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'ref')) {
+      instance = new InteractiveElement(form, elementConfig.name, elementConfig);
     } else {
-      instance = new PlainElement(form, elementConfig as PlainElementConfiguration);
+      instance = new PlainElement(form, elementConfig);
     }
 
     markComponentAsRaw(instance.component);
     markComponentAsRaw(instance.wrapper);
 
-    // TODO: Figure out whether or not we can live without the reactive() to retain original
-    // refs and instance methods.
-    const reactiveInstance = reactive(instance);
-
-    if (isOfType<PlainElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'name')) {
+    if (isOfType<AnyElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'name')) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      this.model[elementConfig.name] = reactiveInstance;
+      this.model[elementConfig.name] = instance;
     }
 
-    return reactiveInstance;
+    return instance;
   }
 
   private createFormInstance(): FormInstance<FC> & {fields: undefined} {

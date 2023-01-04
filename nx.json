@@ -3,25 +3,13 @@
   "defaultBase": "main",
   "defaultProject": "@myparcel/vue-form-builder",
   "npmScope": "myparcel-vfb",
-  "namedInputs": {
-    "default": ["{projectRoot}/lib"],
-    "src": [
-      "{projectRoot}/src",
-      "{projectRoot}/package.json",
-      "{projectRoot}/tsconfig.json"
-    ]
-  },
   "targetDefaults": {
     "build:dev": {
       "dependsOn": ["^build:dev"],
       "outputs": ["{projectRoot}/lib"]
     },
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/lib"]
-    },
-    "buildOnly": {
-      "dependsOn": ["^buildOnly"],
+      "dependsOn": ["^emit", "^build"],
       "outputs": ["{projectRoot}/lib"]
     },
     "serve": {
@@ -38,13 +26,7 @@
       "runner": "nx/tasks-runners/default",
       "options": {
         "parallel": 10,
-        "cacheableOperations": [
-          "build",
-          "build:dev",
-          "buildOnly",
-          "test",
-          "typecheck"
-        ]
+        "cacheableOperations": ["build", "build:dev", "test", "typecheck"]
       }
     }
   }

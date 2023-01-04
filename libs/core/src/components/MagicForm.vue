@@ -34,7 +34,6 @@
 
 <script lang="ts">
 import {PropType, computed, defineComponent, provide, ref} from 'vue';
-import {AnyElementInstance} from '../types';
 import FormElement from './FormElement';
 import {FormInstance} from '../form';
 import Fragment from './Fragment.vue';
@@ -63,16 +62,11 @@ export default defineComponent({
 
     lifeCycleHooks.register(props.form.hooks, props.form);
 
-    const fields = computed(() => {
-      return (props.form.fields.value ?? props.form.fields) as unknown as AnyElementInstance[];
-    });
-
     return {
-      fields,
+      fields: props.form.fields.value,
       elementsAreResolved,
-      // todo: (elements.value ?? elements) is a hack to make the tests and the actual code work.
-      plainFields: computed(() => fields.value.filter((element) => !element.teleportSelector)),
-      teleportFields: computed(() => fields.value.filter((element) => Boolean(element.teleportSelector))),
+      plainFields: computed(() => props.form.fields.value.filter((element) => !element.teleportSelector)),
+      teleportFields: computed(() => props.form.fields.value.filter((element) => Boolean(element.teleportSelector))),
 
       async handleSubmit() {
         await props.form.submit();

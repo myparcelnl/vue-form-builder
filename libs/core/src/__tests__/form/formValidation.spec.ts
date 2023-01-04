@@ -4,15 +4,14 @@ import {
   nameNotDonald,
   nameNotDonaldMack,
 } from './interactive-element/validationData';
-import {canNotContainX, firstNameNotDuane} from '@myparcel-vfb/demo/src/forms/validators';
+import {canNotContainX, firstNameNotDuane} from '../examples/validators';
 import {defineField, defineForm} from '../../form';
 import {describe, expect, it} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
-import {formIsInvalid, formIsValid} from '../utils/formIsValid';
+import {formIsInvalid, formIsValid, generateForm} from '../utils';
 import {MagicForm} from '../../components';
 import SubmitButton from '../elements/SubmitButton.vue';
 import TextInput from '../elements/TextInput.vue';
-import {generateForm} from '../utils/generateForm';
 import {ref} from 'vue';
 
 describe('Form and field validation', () => {
@@ -80,7 +79,7 @@ describe('Form and field validation', () => {
           name: 'lastName',
           component: TextInput,
           ref: lastName,
-          validate: (field, value) => !(field.form.model.firstName.ref === 'Jack' && String(value) === 'McGill'),
+          validate: (field, value) => !(field.form.model.firstName.ref.value === 'Jack' && String(value) === 'McGill'),
           errorMessage: 'Last name cannot be "McGill" if first name is "Jack"',
         }),
         defineField({
@@ -120,19 +119,19 @@ describe('Form and field validation', () => {
       }),
     ]);
 
-    form.model.element.ref = 'Peter';
+    form.model.element.ref.value = 'Peter';
     await form.submit();
     expect(form.isValid.value).toBe(false);
-    expect(form.model.element.errors).toEqual(['Field must start with "J"']);
+    expect(form.model.element.errors.value).toEqual(['Field must start with "J"']);
 
-    form.model.element.ref = 'Joe Mater';
+    form.model.element.ref.value = 'Joe Mater';
     await form.submit();
     expect(form.isValid.value).toBe(true);
-    expect(form.model.element.errors).toEqual([]);
+    expect(form.model.element.errors.value).toEqual([]);
   });
 
-  it.skip('moves the erorr message to another field', async () => {
-    // TODO: fix this unit test to properly deal wikth form.model.target.errors with .value
+  it('moves the error message to another field', async () => {
+    // TODO: fix this unit test to properly deal with form.model.target.errors with .value
     expect.assertions(6);
 
     const form = generateForm([
@@ -150,17 +149,19 @@ describe('Form and field validation', () => {
       }),
     ]);
 
-    form.model.element.ref = 'Peter';
+    form.model.element.ref.value = 'Peter';
     await form.submit();
+    await flushPromises();
     expect(form.isValid.value).toBe(false);
     expect(form.model.target.errors.value).toEqual(['Field must start with "J"']);
-    expect(form.model.element.errors).toEqual([]);
+    expect(form.model.element.errors.value).toEqual([]);
 
-    form.model.element.ref = 'Joe Mater';
+    form.model.element.ref.value = 'Joe Mater';
     await form.submit();
+    await flushPromises();
     expect(form.isValid.value).toBe(true);
     expect(form.model.target.errors.value).toEqual([]);
-    expect(form.model.element.errors).toEqual([]);
+    expect(form.model.element.errors.value).toEqual([]);
   });
 
   it('validates using an array of validators', async () => {
@@ -222,11 +223,11 @@ describe('Form and field validation', () => {
 
     await form.submit();
     expect(form.isValid.value).toBe(true);
-    form.model.element.ref = 'Donald Mack';
+    form.model.element.ref.value = 'Donald Mack';
     await form.submit();
-    expect(form.model.element.errors).toEqual(['Donald Mack, we specifically do not send to you.']);
-    form.model.element.ref = 'Donald';
+    expect(form.model.element.errors.value).toEqual(['Donald Mack, we specifically do not send to you.']);
+    form.model.element.ref.value = 'Donald';
     await form.submit();
-    expect(form.model.element.errors).toEqual(['Donald, we do not send to you.']);
+    expect(form.model.element.errors.value).toEqual(['Donald, we do not send to you.']);
   });
 });

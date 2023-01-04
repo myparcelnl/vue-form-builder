@@ -1,26 +1,26 @@
 import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils';
 import {AnyElementConfiguration, ComponentOrHtmlElement, ElementName} from '../../types';
-import {ComputedRef, computed, isRef, markRaw, ref} from 'vue';
+import {ComputedRef, computed, markRaw, ref} from 'vue';
 import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from './PlainElement.types';
 import {FormInstance} from '../Form.types';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {useDynamicWatcher} from '../../utils';
 
+// noinspection JSUnusedGlobalSymbols
 export class PlainElement<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
 > {
-  public readonly name: N;
-  public readonly component: C;
-
   public declare hooks: PlainElementInstance<C, N>['hooks'];
 
   public errors = ref<FunctionOr<string>[]>([]);
 
   public readonly attributes: AnyAttributes;
+  public readonly component: C;
   public readonly form: FormInstance;
   public readonly formattedErrors: ComputedRef<string[]>;
   public readonly isVisible: PlainElementInstance<C, N>['isVisible'] = ref(true);
+  public readonly name: N;
   public readonly props = {} as PlainElementInstance<C, N>['props'];
   public readonly wrapper: PlainElementInstance<C, N>['wrapper'];
 
@@ -75,12 +75,6 @@ export class PlainElement<
   }
 
   public resetValidation(): void {
-    // Todo: fix the .value issue similar to the one in the Form class
-    if (isRef(this.errors)) {
-      this.errors.value = [];
-    } else {
-      // @ts-expect-error errors is a schrodinger's ref
-      this.errors = [];
-    }
+    this.errors.value = [];
   }
 }

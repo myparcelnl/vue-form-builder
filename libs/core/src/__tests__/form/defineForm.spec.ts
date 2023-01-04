@@ -122,7 +122,7 @@ describe('defining a form', () => {
       formBuilder.defaults.value.fieldDefaults.optional = true;
 
       const form = generateForm(commonFields);
-      expect(form.model.field.isOptional).toBe(true);
+      expect(form.model.field.isOptional.value).toBe(true);
     });
 
     it('calls renderLabel if defined when rendering a label', () => {

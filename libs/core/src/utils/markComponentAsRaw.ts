@@ -1,13 +1,15 @@
+import {Raw, markRaw} from 'vue';
 import {ComponentOrHtmlElement} from '../types';
-import {markRaw} from 'vue';
 
-export const markComponentAsRaw = <T extends boolean | undefined | ComponentOrHtmlElement>(value: T): T | undefined => {
-  if (!value) {
-    return undefined;
-  }
-
+export const markComponentAsRaw = <T extends boolean | undefined | ComponentOrHtmlElement>(
+  value: T,
+): undefined | Raw<T> => {
   if (typeof value === 'string' || typeof value === 'boolean') {
     return value;
+  }
+
+  if (!value) {
+    return undefined;
   }
 
   return markRaw(value);

@@ -13,7 +13,6 @@
   "scripts": {
     "build": "run ws:tsup:build \"$(pwd)\"",
     "build:dev": "run ws:tsup:build:dev \"$(pwd)\"",
-    "buildOnly": "run ws:tsup:buildOnly \"$(pwd)\"",
     "clean": "run ws:clean \"$(pwd)\"",
     "typecheck": "run ws:tsup:typecheck \"$(pwd)\"",
     "watch": "run ws:tsup:watch \"$(pwd)\""

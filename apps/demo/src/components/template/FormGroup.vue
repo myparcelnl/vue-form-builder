@@ -10,15 +10,15 @@
 
     <slot />
 
-    <template
-      v-if="element.errors?.length"
-      class="bg-red-700 border border-red-800 col-span-2 dark:bg-red-900 mt-3 p-5 rounded-lg">
-      <ul>
-        <li
-          v-for="warning in element.errors"
-          :key="warning"
-          v-text="warning" />
-      </ul>
+    <template v-if="element.errors?.length">
+      <div class="bg-red-700 border border-red-800 col-span-2 dark:bg-red-900 mt-3 p-5 rounded-lg">
+        <ul>
+          <li
+            v-for="warning in element.errors"
+            :key="warning"
+            v-text="warning" />
+        </ul>
+      </div>
     </template>
   </div>
 </template>

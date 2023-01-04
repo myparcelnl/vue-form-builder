@@ -9,9 +9,8 @@
     "apps/**"
   ],
   "scripts": {
-    "build": "nx build",
+    "build": "nx run-many --target=build",
     "build:dev": "nx build:dev",
-    "buildOnly": "nx buildOnly",
     "clean": "nx run-many --target=clean --exclude=.",
     "prepare": "is-ci || husky install",
     "serve": "yarn build:dev && npx concurrently yarn:serve:demo yarn:serve:watch",
@@ -23,13 +22,11 @@
     "ws:clean": "cd $0 && rimraf lib",
     "ws:tsup:build": "cd $0 && tsup src/index.ts --dts",
     "ws:tsup:build:dev": "cd $0 && tsup src/index.ts --sourcemap --dts",
-    "ws:tsup:buildOnly": "cd $0 && tsup src/index.ts",
     "ws:tsup:typecheck": "cd $0 && tsc src/index.ts --noEmit",
     "ws:tsup:watch": "cd $0 && tsup src/index.ts --sourcemap --dts --watch",
     "ws:vite:build": "cd $0 && vite build",
     "ws:vite:build:dev": "cd $0 && vite build --mode development",
-    "ws:vite:buildOnly": "cd $0 && vite build",
-    "ws:vite:typecheck": "cd $0 && vue-tsc --noEmit",
+    "ws:vite:typecheck": "cd $0 && vue-tsc --noEmit --declarationMap false -p tsconfig.build.json",
     "ws:vite:watch": "cd $0 && vite build --mode development --watch"
   },
   "lint-staged": {

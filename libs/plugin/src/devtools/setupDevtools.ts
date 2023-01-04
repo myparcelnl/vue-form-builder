@@ -3,7 +3,8 @@ import {App, setupDevtoolsPlugin} from '@vue/devtools-api';
 import {StateBase} from '@vue/devtools-api/lib/esm/api/component';
 import {createFormNode} from './createFormNode';
 import {getComponentName} from './getComponentName';
-import {useFormBuilder} from '@myparcel-vfb/core';
+import {FormInstance, useFormBuilder} from '@myparcel-vfb/core';
+import {UnwrapNestedRefs} from 'vue';
 
 const formInspectorId = `myparcel-form-builder-inspector`;
 
@@ -42,9 +43,9 @@ export const setupDevtools = (app: App): void => {
           const payload = activePayload;
           const data = useFormBuilder();
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
-          payload.rootNodes = Object.entries(data.forms).map(([name, form]) => createFormNode(name, form));
+          payload.rootNodes = Object.entries(data.forms).map(([name, form]) => {
+            return createFormNode(name, form as unknown as UnwrapNestedRefs<FormInstance>);
+          });
         }
       });
 

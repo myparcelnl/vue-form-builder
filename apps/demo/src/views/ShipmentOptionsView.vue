@@ -5,7 +5,7 @@
     <div class="relative">
       <div
         id="bonnetje"
-        class="fixed gap-4 grid grid-cols-1 right-4 top-4 w-64">
+        class="fixed gap-4 grid grid-cols-1 right-4 top-4 w-64 z-50">
         <div
           id="return-shipment"
           class="bg-pink-900 outline outline-2 outline-offset-2 outline-pink-900 p-3 rounded-lg" />

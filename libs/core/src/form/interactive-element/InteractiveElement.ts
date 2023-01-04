@@ -5,40 +5,33 @@ import {
   InteractiveElementInstance,
 } from './InteractiveElement.types';
 import {MultiValidator, SingleValidator, Validator, ValidatorWithPrecedence, isRequired} from '../validator';
-import {PlainElement, PlainElementInstance} from '../plain-element';
 import {Ref, ref, watch} from 'vue';
 import {asyncEvery, isOfType} from '@myparcel/ts-utils';
 import {FormInstance} from '../Form.types';
+import {PlainElement} from '../plain-element';
 import {useDynamicWatcher} from '../../utils';
 
+// noinspection JSUnusedGlobalSymbols
 export class InteractiveElement<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends string = string,
   RT = unknown,
 > extends PlainElement<C, N> {
-  public isDirty = ref(false);
-
-  public isSuspended = ref(false);
-
-  public isTouched = ref(false);
-  public isValid: Ref<boolean> = ref(true);
-  public isOptional = ref(false);
-  public isDisabled = ref(false);
-
-  public label?: string;
-
-  public errorsTarget?: string;
-  public lazy = false;
-
-  public ref: InteractiveElementInstance<C, N, RT>['ref'];
-
-  public validators = ref<Validator<C, N, RT>[]>([]);
-
-  public focus: InteractiveElementConfiguration<C, N, RT>['focus'];
-
+  public declare hooks: InteractiveElementInstance<C, N, RT>['hooks'];
   public declare readonly form: InteractiveElementInstance<C, N, RT>['form'];
 
-  public declare hooks: InteractiveElementInstance<C, N, RT>['hooks'];
+  public errorsTarget?: string;
+  public focus: InteractiveElementConfiguration<C, N, RT>['focus'];
+  public isDirty = ref(false);
+  public isDisabled = ref(false);
+  public isOptional = ref(false);
+  public isSuspended = ref(false);
+  public isTouched = ref(false);
+  public isValid: Ref<boolean> = ref(true);
+  public label?: string;
+  public lazy = false;
+  public ref: InteractiveElementInstance<C, N, RT>['ref'];
+  public validators = ref<Validator<C, N, RT>[]>([]);
 
   protected declare config: InteractiveElementConfiguration<C, N, RT>;
 
@@ -83,10 +76,7 @@ export class InteractiveElement<
         if (this.errorsTarget) {
           const target = this.form.fields.value.find((field: AnyElementInstance) => field.name === this.errorsTarget);
 
-          if (isOfType<PlainElementInstance>(target, 'errors')) {
-            // @ts-expect-error todo: fix schrodinger's ref
-            target.errors.push(validator.errorMessage);
-          }
+          target?.errors.value.push(validator.errorMessage);
         } else {
           this.errors.value.push(validator.errorMessage);
         }
@@ -132,16 +122,14 @@ export class InteractiveElement<
 
     this.label = config.label ? form.config.renderLabel?.(config.label) ?? config.label : undefined;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
+    // @ts-expect-error idk
     this.focus = async (instance, event) => {
       await this.hooks.execute('beforeFocus', this, event);
       await this.hooks.execute('focus', this, event);
       await this.hooks.execute('afterFocus', this, event);
     };
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
+    // @ts-expect-error idk
     this.sanitize = async (instance, value) => {
       await this.hooks.execute('beforeSanitize', this, value);
       const sanitizedValue = await this.hooks.execute('sanitize', this, value);

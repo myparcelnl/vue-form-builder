@@ -1,8 +1,10 @@
 const translations: Record<string, string> = Object.freeze({
   carrier: 'Vervoerder',
+  first_name: 'Voornaam',
   form_optional_suffix: ' (optioneel)',
   form_submit: 'Verzenden',
   label_amount: 'Aantal labels',
+  last_name: 'Achternaam',
   name: 'Naam',
   number: 'Huisnummer',
   package_type: 'Pakkettype',

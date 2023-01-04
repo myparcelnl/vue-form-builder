@@ -1,12 +1,11 @@
 import {defineField, defineForm} from '../../form';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
+import {generateForm, optionData} from '../utils';
 import {h, ref} from 'vue';
 import {MagicForm} from '../../components';
 import TextInput from '../elements/TextInput.vue';
-import {firstNameNotDuane} from '@myparcel-vfb/demo/src/forms/validators';
-import {generateForm} from '../utils/generateForm';
-import {optionData} from '../utils/externalData';
+import {firstNameNotDuane} from '../examples/validators';
 
 describe('Form fields', () => {
   it('can calculate forwards based on primary input', async () => {
@@ -20,7 +19,7 @@ describe('Form fields', () => {
           component: TextInput,
           ref: firstName,
           afterUpdate: (field, newValue) => {
-            field.form.model.price.ref = newValue === 'Jack' ? '100' : '50';
+            field.form.model.price.ref.value = newValue === 'Jack' ? '100' : '50';
           },
         }),
         defineField({
@@ -59,7 +58,7 @@ describe('Form fields', () => {
           afterUpdate: async (field, newValue) => {
             const remote = await optionData(newValue);
 
-            field.form.model.price.ref = remote.price;
+            field.form.model.price.ref.value = remote.price;
           },
         }),
         defineField({

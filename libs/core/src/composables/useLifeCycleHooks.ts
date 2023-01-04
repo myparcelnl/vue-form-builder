@@ -11,28 +11,30 @@ type UseLifeCycleHooks = () => {
   ): void;
 };
 
+const HOOK_ON_CREATED = 'onCreated';
+
 export const useLifeCycleHooks: UseLifeCycleHooks = () => {
   return {
     hooks: COMPONENT_LIFECYCLE_HOOKS,
 
     register(hookManager, args) {
-      if (hookManager.has('onCreated')) {
-        void hookManager.execute('onCreated', args);
+      if (hookManager.has(HOOK_ON_CREATED)) {
+        void hookManager.execute(HOOK_ON_CREATED, args);
       }
 
-      COMPONENT_LIFECYCLE_HOOKS.forEach((hook) => {
-        if (!hookManager.has(hook)) {
-          return;
-        }
-
-        if (hook === 'onCreated') {
-          return;
-        }
-
-        Vue[hook](async () => {
-          await hookManager.execute(hook, args);
+      hookManager
+        .getRegisteredHooks()
+        .filter(
+          (hook) =>
+            COMPONENT_LIFECYCLE_HOOKS.includes(hook.name as keyof ComponentLifecycleHooks) &&
+            hook.name !== HOOK_ON_CREATED,
+        )
+        .forEach((hook) => {
+          // @ts-expect-error hook.name exists on Vue
+          Vue[hook.name](async () => {
+            await hookManager.execute(hook.name, args);
+          });
         });
-      });
     },
   };
 };

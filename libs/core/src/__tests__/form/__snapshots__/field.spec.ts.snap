@@ -1,0 +1,19 @@
+// Vitest Snapshot v1
+
+exports[`Form fields > can calculate backwards based on primary input, out of a promise 1`] = `
+"<form id=\\"validationForm\\" class=\\"valid\\"><input id=\\"firstName\\" type=\\"text\\" name=\\"firstName\\" class=\\"\\">
+  <!--v-if-->
+  <!--v-if--><input id=\\"price\\" type=\\"text\\" name=\\"price\\" class=\\"\\">
+  <!--v-if-->
+  <!--v-if-->
+</form>"
+`;
+
+exports[`Form fields > can calculate forwards based on primary input 1`] = `
+"<form id=\\"validationForm\\" class=\\"valid\\"><input id=\\"firstName\\" type=\\"text\\" name=\\"firstName\\" class=\\"\\">
+  <!--v-if-->
+  <!--v-if--><input id=\\"price\\" type=\\"text\\" name=\\"price\\" class=\\"\\">
+  <!--v-if-->
+  <!--v-if-->
+</form>"
+`;

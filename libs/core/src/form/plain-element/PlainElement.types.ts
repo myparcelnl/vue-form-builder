@@ -1,8 +1,8 @@
+import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils';
 import {BaseElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
-import {ComputedRef, Ref, VNode} from 'vue';
+import {Component, ComputedRef, Ref, VNode} from 'vue';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../../data';
 import {FormInstance} from '../Form.types';
-import {FunctionOr} from '@myparcel-vfb/utils';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {PromiseOr} from '@myparcel/ts-utils';
 
@@ -43,6 +43,8 @@ export type BasePlainElementInstance<
   readonly name: N;
   readonly component: C;
 
+  readonly wrapper: boolean | Component;
+
   readonly hooks: HookManagerInstance<PlainElementHooks<C, N>>;
   readonly form: FormInstance;
   readonly props: ElementProps<C>;
@@ -55,6 +57,8 @@ export type BasePlainElementInstance<
   readonly errorsTarget?: string;
   readonly errors: Ref<FunctionOr<string>[]>;
   readonly formattedErrors: ComputedRef<string[]>;
+
+  readonly attributes: AnyAttributes;
 };
 
 export type PlainElementInstance<

@@ -1,8 +1,8 @@
+import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils';
 import {AnyElementConfiguration, ComponentOrHtmlElement, ElementName} from '../../types';
 import {ComputedRef, computed, isRef, markRaw, ref} from 'vue';
 import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from './PlainElement.types';
 import {FormInstance} from '../Form.types';
-import {FunctionOr} from '@myparcel-vfb/utils';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {useDynamicWatcher} from '../../utils';
 
@@ -12,18 +12,17 @@ export class PlainElement<
 > {
   public readonly name: N;
   public readonly component: C;
-  public readonly form: FormInstance;
+
   public declare hooks: PlainElementInstance<C, N>['hooks'];
 
   public errors = ref<FunctionOr<string>[]>([]);
 
-  public formattedErrors: ComputedRef<string[]>;
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  public isVisible: PlainElementInstance<C, N>['isVisible'] = ref(true);
-
+  public readonly attributes: AnyAttributes;
+  public readonly form: FormInstance;
+  public readonly formattedErrors: ComputedRef<string[]>;
+  public readonly isVisible: PlainElementInstance<C, N>['isVisible'] = ref(true);
   public readonly props = {} as PlainElementInstance<C, N>['props'];
+  public readonly wrapper: PlainElementInstance<C, N>['wrapper'];
 
   protected readonly config: AnyElementConfiguration<C, N>;
 
@@ -45,10 +44,13 @@ export class PlainElement<
         this[key] = config[key];
       });
 
-    this.name = config.name as N;
-    this.form = form;
     this.config = config;
+    this.form = form;
     this.isVisible.value = config.visible ?? true;
+    this.name = config.name as N;
+    this.wrapper = config.wrapper ?? true;
+
+    this.attributes = config.attributes ?? {};
 
     this.formattedErrors = computed(() => {
       return this.errors.value.map((error) => (typeof error === 'function' ? error() : error));
@@ -77,8 +79,7 @@ export class PlainElement<
     if (isRef(this.errors)) {
       this.errors.value = [];
     } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
+      // @ts-expect-error errors is a schrodinger's ref
       this.errors = [];
     }
   }

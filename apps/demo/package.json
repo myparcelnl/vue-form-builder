@@ -13,11 +13,6 @@
     "serve": "vite",
     "typecheck": "run ws:vite:typecheck \"$(pwd)\""
   },
-  "eslintConfig": {
-    "rules": {
-      "vue/no-bare-strings-in-template": "off"
-    }
-  },
   "dependencies": {
     "@myparcel/sdk": "^2.8.1",
     "@myparcel/ts-utils": "^1.1.0",

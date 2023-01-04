@@ -1,7 +1,7 @@
+import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils';
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, ElementName} from '../types';
 import {ComputedRef, Ref, UnwrapNestedRefs} from 'vue';
 import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
-import {FunctionOr} from '@myparcel-vfb/utils';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {InteractiveElementInstance} from './interactive-element';
 
@@ -10,29 +10,56 @@ import {InteractiveElementInstance} from './interactive-element';
  */
 export type FormConfiguration = FormHooks & {
   /**
+   * Global configuration for all fields.
+   */
+  field?: {
+    wrapper?: ComponentOrHtmlElement;
+  };
+
+  /**
+   * Default configuration for all fields.
+   */
+  fieldDefaults?: Partial<AnyElementConfiguration>;
+
+  /**
    * Fields in the form.
    */
   fields: ReadonlyOr<AnyElementConfiguration[]>;
 
   /**
-   * Function executed when any label is rendered.
+   * Configuration for the form element.
    */
-  renderLabel?: (input: string) => string;
+  form?: {
+    /**
+     * Attributes to apply to the outer form element.
+     */
+    attributes?: AnyAttributes;
 
-  /**
-   * Classes that are applied to each field.
-   */
-  fieldClass?: string | string[] | Record<string, string>;
+    /**
+     * Tag to use for the form element. Defaults to 'form'.
+     */
+    tag?: string;
 
-  /**
-   * Classes that are applied to the form.
-   */
-  formClass?: string | string[] | Record<string, string>;
+    /**
+     * Component or html element wrapping all form elements. Defaults to false.
+     */
+    wrapper?: ComponentOrHtmlElement;
+  };
+  //
+  // /**
+  //  * Tag to use for the outer form element. Defaults to 'form'.
+  //  */
+  // formTag?: string;
 
-  /**
-   * Messages that are used for built-in validations.
-   */
-  validationMessages?: Record<'required' | string, FunctionOr<string>>;
+  // /**
+  //  * Component or html element of a form wrapper.
+  //  */
+  // formWrapper?: ComponentOrHtmlElement;
+  //
+  // /**
+  //  * Attributes to apply to the element wrapping a form.
+  //  */
+  // formWrapperAttributes?: Record<string, string>;
 
   /**
    * Names of hooks to register.
@@ -40,14 +67,14 @@ export type FormConfiguration = FormHooks & {
   hookNames?: readonly string[] | string[];
 
   /**
-   * Whether fields are optional by default. Defaults to false.
+   * Function executed when any label is rendered.
    */
-  fieldsOptional?: boolean;
+  renderLabel?: (input: string) => string;
 
   /**
-   * Whether fields are lazy by default. Defaults to false.
+   * Messages that are used for built-in validations.
    */
-  fieldsLazy?: boolean;
+  validationMessages?: Record<'required' | string, FunctionOr<string>>;
 };
 
 export type FormHooks = {
@@ -134,7 +161,21 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   validate(): PromiseOr<boolean>;
 };
 
-export type FormInstance<FC extends FormConfiguration = FormConfiguration> = BaseFormInstance<FC>;
+/**
+ * Initialized form configuration always contains the following properties.
+ */
+export type InstanceFormConfiguration<FC extends FormConfiguration = FormConfiguration> = FC & {
+  fieldDefaults: {
+    attributes: AnyAttributes;
+    wrapper: true;
+  };
+  form: {
+    attributes: AnyAttributes;
+    tag: string;
+  };
+};
+
+export type FormInstance<FC extends InstanceFormConfiguration = InstanceFormConfiguration> = BaseFormInstance<FC>;
 
 /**
  * TODO: This is a temporary solution to avoid errors.

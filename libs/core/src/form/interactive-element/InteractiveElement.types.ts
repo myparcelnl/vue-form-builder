@@ -13,13 +13,11 @@ export type InteractiveElementConfiguration<
 > = BaseElementConfiguration<C> &
   FieldValidator<C, N, RT> &
   InteractiveElementHooks<C, N, RT> & {
-    name: N;
+    name: NonNullable<N>;
     ref: Ref<RT>;
 
     /**
-     * Whether the field is lazy. Defaults to `fieldsLazy` in the form configuration.
-     *
-     * @see FormConfiguration.fieldsLazy
+     * Whether the field is lazy. Defaults to false.
      */
     lazy?: boolean;
 
@@ -29,9 +27,7 @@ export type InteractiveElementConfiguration<
     disabled?: boolean;
 
     /**
-     * Whether the element is optional. Defaults to `fieldsOptional` in the form configuration.
-     *
-     * @see FormConfiguration.fieldsOptional
+     * Whether the element is optional. Defaults to false.
      */
     optional?: boolean;
   };

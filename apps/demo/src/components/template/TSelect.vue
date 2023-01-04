@@ -1,43 +1,40 @@
 <template>
-  <FormGroup v-bind="{label, id, errors}">
-    <select
-      :id="id"
-      v-model="model"
-      :name="name"
-      :disabled="disabled"
-      :class="{
-        'border-red-500': !valid,
-        'opacity-50 cursor-not-allowed': disabled,
-      }"
-      @blur="$emit('blur', $event)"
-      @change="$emit('change', $event)"
-      @click="$emit('click', $event)"
-      @focus="$emit('focus', $event)"
-      @focusin="$emit('focusin', $event)"
-      @focusout="$emit('focusout', $event)">
-      <option
-        v-for="option in options"
-        :key="`${name}__option--${option.value}`"
-        :value="option.value"
-        v-text="option.label"></option>
-    </select>
-  </FormGroup>
+  <select
+    :id="id"
+    v-model="model"
+    :name="name"
+    :disabled="disabled"
+    :class="{
+      'border-red-500': !valid,
+      'opacity-50 cursor-not-allowed': disabled,
+    }"
+    @blur="$emit('blur', $event)"
+    @change="$emit('change', $event)"
+    @click="$emit('click', $event)"
+    @focus="$emit('focus', $event)"
+    @focusin="$emit('focusin', $event)"
+    @focusout="$emit('focusout', $event)">
+    <option
+      v-for="option in options"
+      :key="`${name}__option--${option.value}`"
+      :value="option.value"
+      v-text="option.label"></option>
+  </select>
 </template>
 
 <script lang="ts">
 import {PropType, defineComponent, toRefs, watch} from 'vue';
-import FormGroup from './FormGroup.vue';
 import {SelectOption} from '@myparcel/vue-form-builder';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TSelect',
-  components: {FormGroup},
   props: {
     disabled: {
       type: Boolean,
     },
 
+    // eslint-disable-next-line vue/no-unused-properties
     errors: {
       type: Array as PropType<string[]>,
       default: () => [],

@@ -41,28 +41,27 @@ describe('Form and field validation', () => {
     });
 
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
-    const formElement = wrapper.find('form');
     await flushPromises();
 
     // expect default state to be valid regardless of input
-    formIsValid(formElement, validationForm);
+    formIsValid(validationForm);
 
-    await wrapper.find('#firstName__wrapper input').setValue('Karen');
+    await wrapper.find('[data-test-id="firstName"] input').setValue('Karen');
     expect(firstName.value).toBe('Karen');
 
-    await wrapper.find('#lastName__wrapper input').setValue('Doe');
+    await wrapper.find('[data-test-id="lastName"] input').setValue('Doe');
     expect(lastName.value).toBe('Doe');
 
     await validationForm.submit();
 
-    const firstNameWarning = wrapper.find('#firstName__wrapper .errors');
+    const firstNameWarning = wrapper.find('[data-test-id="firstName"] .errors');
     expect(firstNameWarning.exists()).toBe(true);
     expect(firstNameWarning.text()).toBe('Field must start with "J"');
 
-    const lastNameWarning = wrapper.find('#lastName__wrapper .errors');
+    const lastNameWarning = wrapper.find('[data-test-id="lastName"] .errors');
     expect(lastNameWarning.exists()).toBe(false);
 
-    formIsInvalid(formElement, validationForm);
+    formIsInvalid(validationForm);
   });
 
   it('can determine if a text input is valid based on previous inputs and predicates', async () => {
@@ -91,22 +90,21 @@ describe('Form and field validation', () => {
     });
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
-    const formElement = wrapper.find('form');
-    formIsValid(formElement, validationForm);
+    formIsValid(validationForm);
 
-    await wrapper.find('#firstName__wrapper input').setValue('Jack');
-    await wrapper.find('#lastName__wrapper input').setValue('McGill');
+    await wrapper.find('[data-test-id="firstName"] input').setValue('Jack');
+    await wrapper.find('[data-test-id="lastName"] input').setValue('McGill');
 
     await validationForm.submit();
-    const lastNameWarning = wrapper.find('#lastName__wrapper .errors');
+    const lastNameWarning = wrapper.find('[data-test-id="lastName"] .errors');
     expect(lastNameWarning.text()).toBe('Last name cannot be "McGill" if first name is "Jack"');
 
-    formIsInvalid(formElement, validationForm);
+    formIsInvalid(validationForm);
 
-    await wrapper.find('#lastName__wrapper input').setValue('Taves');
+    await wrapper.find('[data-test-id="lastName"] input').setValue('Taves');
 
     await validationForm.submit();
-    formIsValid(formElement, validationForm);
+    formIsValid(validationForm);
   });
 
   it('validates using a single function', async () => {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Component, VNode} from 'vue';
+import {Component, HTMLAttributes, VNode} from 'vue';
 import {
   InteractiveElementConfiguration,
   InteractiveElementInstance,
@@ -16,7 +16,7 @@ export type ComponentOrHtmlElement = string | Component;
 
 export type ComponentHooks<C extends ComponentOrHtmlElement = ComponentOrHtmlElement, I = unknown> = C extends Component
   ? ComponentLifecycleHooks<I>
-  : unknown;
+  : any;
 
 export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = C extends Component
   ? Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>
@@ -24,13 +24,33 @@ export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlEleme
 
 export type BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
   /**
+   * Attributes to be passed to the component.
+   */
+  attributes?: HTMLAttributes & Record<string, unknown>;
+
+  /**
    * HTML element or Vue component. Can be any type of component that renders as a Vue fragment, including JSX
    * templates.
    */
   component: C;
 
   /**
-   * ElementProps to be passed to the component.
+   * Name of the field to port errors to.
+   */
+  errorsTarget?: string;
+
+  /**
+   * Hooks to be registered.
+   */
+  hookNames?: string[];
+
+  /**
+   * Element label.
+   */
+  label?: string;
+
+  /**
+   * Props to be passed to the component.
    */
   props?: ElementProps<C>;
 
@@ -40,29 +60,19 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
   slots?: Record<string, VNode | VNode[] | string>;
 
   /**
-   * Hooks to be registered.
-   */
-  hookNames?: string[];
-
-  /**
    * Selector to render the field in.
    */
   teleportSelector?: string;
 
   /**
-   * Name of the field to port errors to.
-   */
-  errorsTarget?: string;
-
-  /**
-   * Element label.
-   */
-  label?: string;
-
-  /**
    * Visibility of the element. Defaults to true.
    */
   visible?: boolean;
+
+  /**
+   * Wrap the field in a TableFormGroup. Defaults to true.
+   */
+  wrapper?: boolean | Component;
 };
 
 export type AnyElementInstance<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =

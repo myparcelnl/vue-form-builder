@@ -1,56 +1,39 @@
 <template>
-  <div class="grid grid-cols-2 items-center justify-center relative w-full">
-    <div>
-      <label
-        v-if="label"
-        :for="name"
-        v-text="label" />
-      <span
-        v-if="optional"
-        v-text="translate('form_optional_suffix')" />
-    </div>
+  <div class="flex flex-col">
+    <label
+      v-if="element.label"
+      v-text="element.label" />
 
-    <div>
-      <slot />
-    </div>
+    <span
+      v-if="element.isOptional"
+      v-text="translate('form_optional_suffix')" />
 
-    <div
-      v-if="errors.length"
+    <slot />
+
+    <template
+      v-if="element.errors?.length"
       class="bg-red-700 border border-red-800 col-span-2 dark:bg-red-900 mt-3 p-5 rounded-lg">
       <ul>
         <li
-          v-for="warning in errors"
+          v-for="warning in element.errors"
           :key="warning"
           v-text="warning" />
       </ul>
-    </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent} from 'vue';
+import {PropType, UnwrapNestedRefs, defineComponent} from 'vue';
+import {InteractiveElementInstance} from '@myparcel-vfb/core';
 import {translate} from '../../translate';
 
 export default defineComponent({
   name: 'FormGroup',
   props: {
-    errors: {
-      type: Array as PropType<string[]>,
-      default: () => [],
-    },
-
-    label: {
-      type: String,
-      default: null,
-    },
-
-    name: {
-      type: String,
-      default: null,
-    },
-
-    optional: {
-      type: Boolean,
+    element: {
+      type: Object as PropType<UnwrapNestedRefs<InteractiveElementInstance>>,
+      required: true,
     },
   },
 

@@ -1,24 +1,31 @@
 <template>
-  <FormGroup v-bind="{label, id, errors, optional}">
-    <LoadingOverlay v-if="suspended" />
-    <PTextInput v-bind="{...$attrs, ...$props}" />
-  </FormGroup>
+  <input
+    :id="id"
+    v-model="model"
+    type="text"
+    :name="name"
+    :disabled="disabled"
+    :class="{
+      'border-red-500': valid === false,
+      'opacity-50 cursor-not-allowed': disabled,
+    }"
+    @blur="$emit('blur', $event)"
+    @focus="$emit('focus', $event)"
+    @focusin="$emit('focusin', $event)"
+    @focusout="$emit('focusout', $event)"
+    @click="$emit('click', $event)"
+    @change="$emit('change', $event)" />
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent} from 'vue';
-import FormGroup from './FormGroup.vue';
-import LoadingOverlay from '../LoadingOverlay.vue';
-import PTextInput from './PTextInput.vue';
+import {defineComponent} from 'vue';
+import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TTextInput',
-  components: {LoadingOverlay, FormGroup, PTextInput},
-  inheritAttrs: false,
   props: {
-    errors: {
-      type: Array as PropType<string[]>,
-      default: () => [],
+    disabled: {
+      type: Boolean,
     },
 
     id: {
@@ -26,18 +33,33 @@ export default defineComponent({
       required: true,
     },
 
-    label: {
+    // eslint-disable-next-line vue/no-unused-properties
+    modelValue: {
+      type: [String, Number],
+      default: null,
+    },
+
+    name: {
       type: String,
       default: null,
     },
 
-    optional: {
+    valid: {
       type: Boolean,
     },
 
+    // eslint-disable-next-line vue/no-unused-properties
     suspended: {
       type: Boolean,
     },
+  },
+
+  emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
+
+  setup: (props) => {
+    return {
+      model: useVModel(props, 'modelValue'),
+    };
   },
 });
 </script>

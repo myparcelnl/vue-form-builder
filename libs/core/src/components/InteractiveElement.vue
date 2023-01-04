@@ -1,21 +1,17 @@
 <template>
-  <div
-    v-show="element.isVisible"
-    :id="elementId"
-    :class="element.isVisible ? element.form.config.fieldClass : null">
-    <component
-      :is="element.component"
-      :id="element.name ?? element.name"
-      v-model="model"
-      :label="element.label"
-      :name="element.name"
-      :errors="element.formattedErrors"
-      :disabled="element.isDisabled"
-      :valid="element.isValid"
-      :suspended="element.isSuspended"
-      v-bind="{...$attrs, ...element.props}"
-      v-on="hooks" />
-  </div>
+  <component
+    :is="element.component"
+    :id="element.name"
+    v-model="model"
+    :class="element.isVisible ? element.attributes.class : null"
+    :label="element.label"
+    :name="element.name"
+    :errors="element.formattedErrors"
+    :disabled="element.isDisabled"
+    :valid="element.isValid"
+    :suspended="element.isSuspended"
+    v-bind="{...element.attributes, ...element.props}"
+    v-on="hooks" />
 </template>
 
 <script lang="ts">
@@ -26,7 +22,6 @@ import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'InteractiveElement',
-  inheritAttrs: false,
   props: {
     element: {
       type: Object as PropType<InteractiveElementInstance>,
@@ -35,9 +30,8 @@ export default defineComponent({
   },
 
   setup: (props) => {
-    const lifecycleHooks = useLifeCycleHooks();
     provide(INJECT_ELEMENT, props.element);
-
+    const lifecycleHooks = useLifeCycleHooks();
     lifecycleHooks.register(props.element.hooks, props.element);
 
     const hooks = computed(() => {
@@ -75,8 +69,6 @@ export default defineComponent({
           props.element.ref = value;
         },
       }),
-
-      elementId: computed(() => (props.element.name ? `${props.element.name}__wrapper` : '')),
     };
   },
 });

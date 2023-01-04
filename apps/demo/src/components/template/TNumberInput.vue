@@ -1,44 +1,37 @@
 <template>
-  <FormGroup v-bind="{label, id, errors, optional}">
-    <LoadingOverlay v-if="suspended" />
-    <input
-      :id="id"
-      v-model.number="model"
-      type="number"
-      v-bind="$attrs"
-      :class="{
-        'border-red-500': valid === false,
-        'opacity-50 cursor-not-allowed': disabled,
-      }"
-      :disabled="disabled"
-      :max="max"
-      :min="min"
-      :name="name"
-      :step="step"
-      @blur="$emit('blur', $event)"
-      @change="$emit('change', $event)"
-      @click="$emit('click', $event)"
-      @focus="$emit('focus', $event)"
-      @focusin="$emit('focusin', $event)"
-      @focusout="$emit('focusout', $event)" />
-  </FormGroup>
+  <input
+    :id="id"
+    v-model.number="model"
+    type="number"
+    :class="{
+      'border-red-500': valid === false,
+      'opacity-50 cursor-not-allowed': disabled,
+    }"
+    :disabled="disabled"
+    :max="max"
+    :min="min"
+    :name="name"
+    :step="step"
+    @blur="$emit('blur', $event)"
+    @change="$emit('change', $event)"
+    @click="$emit('click', $event)"
+    @focus="$emit('focus', $event)"
+    @focusin="$emit('focusin', $event)"
+    @focusout="$emit('focusout', $event)" />
 </template>
 
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
-import FormGroup from './FormGroup.vue';
-import LoadingOverlay from '../LoadingOverlay.vue';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TNumberInput',
-  components: {LoadingOverlay, FormGroup},
-  inheritAttrs: false,
   props: {
     disabled: {
       type: Boolean,
     },
 
+    // eslint-disable-next-line vue/no-unused-properties
     errors: {
       type: Array as PropType<string[]>,
       default: () => [],
@@ -49,6 +42,7 @@ export default defineComponent({
       required: true,
     },
 
+    // eslint-disable-next-line vue/no-unused-properties
     label: {
       type: String,
       default: null,
@@ -75,6 +69,7 @@ export default defineComponent({
       required: true,
     },
 
+    // eslint-disable-next-line vue/no-unused-properties
     optional: {
       type: Boolean,
     },
@@ -84,6 +79,7 @@ export default defineComponent({
       default: 1,
     },
 
+    // eslint-disable-next-line vue/no-unused-properties
     suspended: {
       type: Boolean,
     },

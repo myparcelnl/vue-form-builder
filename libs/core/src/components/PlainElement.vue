@@ -17,8 +17,10 @@
 </template>
 
 <script lang="ts">
-import {PropType, computed, defineComponent} from 'vue';
+import {PropType, computed, defineComponent, provide} from 'vue';
+import {INJECT_ELEMENT} from '../services';
 import {PlainElementInstance} from '../form';
+import {useLifeCycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'PlainElement',
@@ -30,6 +32,10 @@ export default defineComponent({
   },
 
   setup: (props) => {
+    provide(INJECT_ELEMENT, props.element);
+    const lifecycleHooks = useLifeCycleHooks();
+    lifecycleHooks.register(props.element.hooks, props.element);
+
     return {
       hooks: computed(() => {
         const registeredHooks = props.element.hooks.getRegisteredHooks();

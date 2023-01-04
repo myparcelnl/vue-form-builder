@@ -30,9 +30,8 @@ export default defineComponent({
   },
 
   setup: (props) => {
-    const lifecycleHooks = useLifeCycleHooks();
     provide(INJECT_ELEMENT, props.element);
-
+    const lifecycleHooks = useLifeCycleHooks();
     lifecycleHooks.register(props.element.hooks, props.element);
 
     const hooks = computed(() => {

@@ -15,8 +15,7 @@
           :key="`element--${element.name ?? 'unnamed'}--${index}`">
           <FormElement
             :form="form"
-            :element="element"
-            @submit="handleSubmit" />
+            :element="element" />
         </template>
       </Suspense>
 
@@ -26,8 +25,7 @@
           :key="`element--${element.name ?? 'unnamed'}--${index}`">
           <FormElement
             :form="form"
-            :element="element"
-            @submit="handleSubmit" />
+            :element="element" />
         </template>
       </template>
     </Fragment>

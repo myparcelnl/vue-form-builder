@@ -2,6 +2,25 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.4](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.3...@myparcel-vfb/core@1.0.0-alpha.4) "@myparcel-vfb/core" (2023-01-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **core:** support form and field wrappers (#84)
+
+### Features
+
+* **core:** support form and field wrappers ([#84](https://github/myparcelnl/vue-form-builder/issues/84)) ([12b199f](https://github/myparcelnl/vue-form-builder/commit/12b199fc2677c02fb9a17d434cc67f62f931715c))
+
+
+### Bug Fixes
+
+* **types:** expose form hook types ([60f7fd4](https://github/myparcelnl/vue-form-builder/commit/60f7fd42fc9428595d1b8364b394c37f61c40b3c))
+
+
+
+
 ## [1.0.0-alpha.3](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.2...@myparcel-vfb/core@1.0.0-alpha.3) "@myparcel-vfb/core" (2023-01-04)
 
 

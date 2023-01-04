@@ -2,6 +2,11 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.9](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.8...@myparcel-vfb/hook-manager@1.0.0-alpha.9) "@myparcel-vfb/hook-manager" (2023-01-04)
+
+
+
+
 ## [1.0.0-alpha.8](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.7...@myparcel-vfb/hook-manager@1.0.0-alpha.8) "@myparcel-vfb/hook-manager" (2022-12-19)
 
 

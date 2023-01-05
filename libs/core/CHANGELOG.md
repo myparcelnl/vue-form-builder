@@ -2,6 +2,20 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.6](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.5...@myparcel-vfb/core@1.0.0-alpha.6) "@myparcel-vfb/core" (2023-01-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* **core:** simplify inner form element
+
+### Features
+
+* **core:** simplify inner form element ([80eb618](https://github/myparcelnl/vue-form-builder/commit/80eb6189bd277f7897b57950b51dacfcfd28f7bb))
+
+
+
+
 ## [1.0.0-alpha.5](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.4...@myparcel-vfb/core@1.0.0-alpha.5) "@myparcel-vfb/core" (2023-01-05)
 
 

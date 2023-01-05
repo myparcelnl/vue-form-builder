@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.10](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.9...@myparcel-vfb/hook-manager@1.0.0-alpha.10) "@myparcel-vfb/hook-manager" (2023-01-05)
+
+
+### Bug Fixes
+
+* remove reactive ([9edf168](https://github/myparcelnl/vue-form-builder/commit/9edf168e5499a6d129e5dcaac818c4e3fc1bce99))
+
+
+
+
 ## [1.0.0-alpha.9](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.8...@myparcel-vfb/hook-manager@1.0.0-alpha.9) "@myparcel-vfb/hook-manager" (2023-01-04)
 
 

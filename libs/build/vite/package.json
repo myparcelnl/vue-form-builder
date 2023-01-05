@@ -1,6 +1,6 @@
 {
   "name": "@myparcel-vfb/build-vite",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "license": "MIT",
   "type": "module",
   "main": "./lib/index.js",

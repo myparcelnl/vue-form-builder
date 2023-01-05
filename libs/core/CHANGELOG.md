@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.5](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.4...@myparcel-vfb/core@1.0.0-alpha.5) "@myparcel-vfb/core" (2023-01-05)
+
+
+### Bug Fixes
+
+* remove reactive ([9edf168](https://github/myparcelnl/vue-form-builder/commit/9edf168e5499a6d129e5dcaac818c4e3fc1bce99))
+
+
+
+
 ## [1.0.0-alpha.4](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.3...@myparcel-vfb/core@1.0.0-alpha.4) "@myparcel-vfb/core" (2023-01-04)
 
 

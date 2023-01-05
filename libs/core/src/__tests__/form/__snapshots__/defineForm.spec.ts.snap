@@ -1,16 +1,3 @@
 // Vitest Snapshot v1
 
-exports[`defining a form > overriding defaults > wraps fields with a wrapper element 1`] = `
-"<div id=\\"form\\" class=\\"my-form valid\\">
-  <div class=\\"inner-wrapper\\"><input id=\\"field\\" modelvalue=\\"\\" label=\\"my_label_1\\" name=\\"field\\" errors=\\"\\" valid=\\"true\\" suspended=\\"false\\" data-test-id=\\"field\\" data-test-type=\\"interactive\\"><input id=\\"named\\" name=\\"named\\" label=\\"my_label_2\\" errors=\\"\\" data-test-id=\\"named\\" data-test-type=\\"plain\\"><br errors=\\"\\" data-test-type=\\"plain\\">
-    <!--v-if-->
-  </div>
-</div>"
-`;
-
-exports[`defining a form > renders html elements 1`] = `
-"<form id=\\"form\\" class=\\"valid\\"><input id=\\"named\\" name=\\"named\\" errors=\\"\\" data-test-id=\\"named\\" data-test-type=\\"plain\\"><br errors=\\"\\" data-test-type=\\"plain\\"><input id=\\"text\\" type=\\"text\\" name=\\"text\\" class=\\"\\">
-  <!--v-if-->
-  <!--v-if-->
-</form>"
-`;
+exports[`defining a form > renders html elements 1`] = `"<form id=\\"form\\" class=\\"valid\\"><input data-test-id=\\"named\\" data-test-type=\\"plain\\"><br data-test-type=\\"plain\\"><input id=\\"text\\" type=\\"text\\" name=\\"text\\" class=\\"\\" data-test-id=\\"text\\" data-test-type=\\"interactive\\"></form>"`;

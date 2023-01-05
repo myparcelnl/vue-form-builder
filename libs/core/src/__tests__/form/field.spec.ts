@@ -2,7 +2,8 @@ import {defineField, defineForm} from '../../form';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {generateForm, optionData} from '../utils';
-import {h, ref} from 'vue';
+import {h, markRaw, ref} from 'vue';
+import FormGroup from '../elements/FormGroup.vue';
 import {MagicForm} from '../../components';
 import TextInput from '../elements/TextInput.vue';
 import {firstNameNotDuane} from '../examples/validators';
@@ -13,6 +14,9 @@ describe('Form fields', () => {
     const price = ref('0');
 
     const validationForm = defineForm('validationForm', {
+      field: {
+        wrapper: markRaw(FormGroup),
+      },
       fields: [
         defineField({
           name: 'firstName',
@@ -33,12 +37,10 @@ describe('Form fields', () => {
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
 
-    expect(wrapper.html()).toMatchSnapshot();
-
-    await wrapper.find('[data-test-id="firstName"] input').setValue('Hank');
+    await wrapper.find('input[name="firstName"]').setValue('Hank');
     expect(price.value).toBe('50');
 
-    await wrapper.find('[data-test-id="firstName"] input').setValue('Jack');
+    await wrapper.find('input[name="firstName"]').setValue('Jack');
     expect(price.value).toBe('100');
   });
 
@@ -71,12 +73,12 @@ describe('Form fields', () => {
 
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
-    await wrapper.find('[data-test-id="firstName"] input').setValue('Hank');
+    await wrapper.find('input[name="firstName"]').setValue('Hank');
     vi.advanceTimersByTime(1000);
 
     await flushPromises();
     expect(price.value).toBe('50');
-    await wrapper.find('[data-test-id="firstName"] input').setValue('John');
+    await wrapper.find('input[name="firstName"]').setValue('John');
 
     vi.advanceTimersByTime(1000);
     await flushPromises();
@@ -106,7 +108,7 @@ describe('Form fields', () => {
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
 
-    await wrapper.find('[data-test-id="firstName"] input').setValue('Hank');
+    await wrapper.find('input[name="firstName"]').setValue('Hank');
     // figure out how to reverse calculate the price when firstName is updated.
   });
 

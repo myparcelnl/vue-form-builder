@@ -2,7 +2,7 @@
   <component
     :is="element.component"
     v-model="model"
-    :element="element"
+    v-bind="attributes"
     v-on="hooks">
     <slot />
   </component>
@@ -41,6 +41,21 @@ export default defineComponent({
           // eslint-disable-next-line vue/no-mutating-props
           props.element.ref = value;
         },
+      }),
+
+      /**
+       * Collect attributes. Always adds `element.attributes`, but only adds `element` and `element.props` if element is a Vue component.
+       */
+      attributes: computed(() => {
+        return {
+          ...props.element.attributes,
+          ...(typeof props.element.component === 'string'
+            ? {}
+            : {
+                ...props.element.props,
+                element: props.element,
+              }),
+        };
       }),
     };
   },

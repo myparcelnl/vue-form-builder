@@ -30,6 +30,9 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     this.name = name;
     this.config = config;
 
+    markComponentAsRaw(this.config.field?.wrapper);
+    markComponentAsRaw(this.config.fieldDefaults.wrapper);
+
     fields.forEach((field) => {
       const instance = this.createFieldInstance(field, this);
 
@@ -119,14 +122,14 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
       },
     } as AnyElementConfiguration;
 
+    markComponentAsRaw(elementConfig.component);
+    markComponentAsRaw(elementConfig.wrapper);
+
     if (isOfType<InteractiveElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'ref')) {
       instance = new InteractiveElement(form, elementConfig.name, elementConfig);
     } else {
       instance = new PlainElement(form, elementConfig);
     }
-
-    markComponentAsRaw(instance.component);
-    markComponentAsRaw(instance.wrapper);
 
     if (isOfType<AnyElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'name')) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

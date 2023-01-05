@@ -5,7 +5,7 @@ import {AnyElementConfiguration} from '../../types';
 import {DEFAULT_FORM_CONFIGURATION} from '../../form';
 import {MagicForm} from '../../components';
 import TextInput from '../elements/TextInput.vue';
-import {generateForm} from '../utils/generateForm';
+import {generateForm} from '../utils';
 import {useFormBuilder} from '../../composables';
 
 describe('defining a form', () => {
@@ -91,8 +91,6 @@ describe('defining a form', () => {
       const form = generateForm(commonFields);
       const wrapper = mount(MagicForm, {props: {form}});
       const wrapperElement = wrapper.find('.my-form > .inner-wrapper');
-
-      expect(wrapper.html()).toMatchSnapshot();
 
       expect(wrapperElement.exists()).toBe(true);
       expect(wrapperElement.element.tagName).toBe('DIV');

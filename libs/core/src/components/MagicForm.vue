@@ -65,8 +65,13 @@ export default defineComponent({
     return {
       fields: props.form.fields.value,
       elementsAreResolved,
-      plainFields: computed(() => props.form.fields.value.filter((element) => !element.teleportSelector)),
-      teleportFields: computed(() => props.form.fields.value.filter((element) => Boolean(element.teleportSelector))),
+      plainFields: computed(() =>
+        (props.form.fields.value ?? props.form.fields).filter((element) => !element.teleportSelector),
+      ),
+
+      teleportFields: computed(() =>
+        (props.form.fields.value ?? props.form.fields).filter((element) => Boolean(element.teleportSelector)),
+      ),
 
       async handleSubmit() {
         await props.form.submit();

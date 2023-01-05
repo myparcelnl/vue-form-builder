@@ -1,13 +1,13 @@
 <template>
   <input
-    :id="id"
+    :id="element.name"
     v-model="model"
     type="text"
-    :name="name"
-    :disabled="disabled"
+    :name="element.name"
+    :disabled="element.isDisabled"
     :class="{
-      'border-red-500': valid === false,
-      'opacity-50 cursor-not-allowed': disabled,
+      'border-red-500': element.isValid === false,
+      'opacity-50 cursor-not-allowed': element.isDisabled,
     }"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"
@@ -15,64 +15,23 @@
     @focusout="$emit('focusout', $event)"
     @click="$emit('click', $event)"
     @change="$emit('change', $event)" />
-  <span
-    v-if="suspended"
-    class="loading-indicator">
-    Loading...
-  </span>
-  <ul
-    v-if="errors.length"
-    class="errors">
-    <li
-      v-for="warning in errors"
-      :key="warning">
-      {{ warning }}
-    </li>
-  </ul>
 </template>
 
 <script lang="ts">
 import {PropType, computed, defineComponent} from 'vue';
+import {InteractiveElementInstance} from '../../form';
 
 export default defineComponent({
   name: 'TextInput',
   props: {
-    disabled: {
-      type: Boolean,
-    },
-
-    errors: {
-      type: Array as PropType<string[]>,
-      default: () => [],
-    },
-
-    id: {
-      type: String,
+    element: {
+      type: Object as PropType<InteractiveElementInstance>,
       required: true,
-    },
-
-    // eslint-disable-next-line vue/no-unused-properties
-    label: {
-      type: String,
-      default: null,
     },
 
     modelValue: {
       type: String,
       default: null,
-    },
-
-    name: {
-      type: String,
-      required: true,
-    },
-
-    suspended: {
-      type: Boolean,
-    },
-
-    valid: {
-      type: Boolean,
     },
   },
 

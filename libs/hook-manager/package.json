@@ -12,6 +12,8 @@
     "build": "run ws:tsup:build \"$(pwd)\"",
     "build:dev": "run ws:tsup:build:dev \"$(pwd)\"",
     "clean": "run ws:clean \"$(pwd)\"",
+    "test": "run ws:test \"$(pwd)\"",
+    "test:run": "run ws:test:run \"$(pwd)\"",
     "typecheck": "run ws:tsup:typecheck \"$(pwd)\"",
     "watch": "run ws:tsup:watch \"$(pwd)\""
   },
@@ -20,7 +22,9 @@
   },
   "devDependencies": {
     "@myparcel-vfb/build-tsup": "workspace:*",
-    "typescript": "^4.9.4"
+    "@vitest/coverage-c8": "^0.26.3",
+    "tsup": "^6.5.0",
+    "vitest": "^0.26.3"
   },
   "publishConfig": {
     "access": "public"

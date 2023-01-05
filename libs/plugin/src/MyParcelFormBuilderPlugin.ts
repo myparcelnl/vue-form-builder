@@ -24,3 +24,9 @@ export const MyParcelFormBuilderPlugin: MyParcelFormBuilderPlugin = {
     setupDevtools(app);
   },
 };
+
+export const createMyParcelFormBuilderPlugin = (
+  options?: MyParcelFormBuilderPluginOptions,
+): MyParcelFormBuilderPlugin => ({
+  install: (app) => MyParcelFormBuilderPlugin.install(app, options),
+});

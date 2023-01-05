@@ -3,7 +3,7 @@ import {FormHooks, FormInstance, InstanceFormConfiguration} from './Form.types';
 import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
 import {PlainElement, PlainElementInstance} from './plain-element';
 import {computed, ref} from 'vue';
-import {createHookManager} from '@myparcel-vfb/hook-manager/src';
+import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
 

@@ -16,7 +16,7 @@
     @focusout="$emit('focusout', $event)">
     <option
       v-for="option in options"
-      :key="`${name}__option--${option.value}`"
+      :key="`${element.name}__option--${option.value}`"
       :value="option.value"
       v-text="option.label"></option>
   </select>

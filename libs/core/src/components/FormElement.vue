@@ -44,17 +44,12 @@ export default defineComponent({
       }),
 
       /**
-       * Collect attributes. Always adds `element.attributes`, but only adds `element` and `element.props` if element is a Vue component.
+       * Collect attributes. Always adds `element.attributes`, but only adds `element` if element is a Vue component.
        */
       attributes: computed(() => {
         return {
           ...props.element.attributes,
-          ...(typeof props.element.component === 'string'
-            ? {}
-            : {
-                ...props.element.props,
-                element: props.element,
-              }),
+          ...(typeof props.element.component === 'string' ? {} : {element: props.element}),
         };
       }),
     };

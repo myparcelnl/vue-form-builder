@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import {PropType, UnwrapNestedRefs, defineComponent} from 'vue';
+import {PropType, defineComponent} from 'vue';
 import {InteractiveElementInstance} from '@myparcel-vfb/core';
 import {translate} from '../../translate';
 
@@ -37,12 +37,12 @@ export default defineComponent({
   name: 'TableFormGroup',
   props: {
     element: {
-      type: Object as PropType<UnwrapNestedRefs<InteractiveElementInstance>>,
+      type: Object as PropType<InteractiveElementInstance>,
       required: true,
     },
   },
 
-  setup: (props, ctx) => {
+  setup: () => {
     return {
       translate,
     };

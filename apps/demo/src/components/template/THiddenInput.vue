@@ -5,12 +5,18 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {PropType, defineComponent} from 'vue';
 import {useVModel} from '@vueuse/core';
+import {InteractiveElementInstance} from '@myparcel-vfb/core';
 
 export default defineComponent({
   name: 'TTextInput',
   props: {
+    element: {
+      type: Object as PropType<InteractiveElementInstance>,
+      required: true,
+    },
+
     // eslint-disable-next-line vue/no-unused-properties
     modelValue: {
       type: [String, Number],

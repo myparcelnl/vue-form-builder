@@ -38,10 +38,6 @@ const validateName = (field: InteractiveElementInstance) => {
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
   renderLabel: translate,
 
-  // formWrapper: 'table',
-  // formWrapperClass: ['table', 'w-full'],
-  // formElementWrapper: TableFormGroup,
-
   form: {
     attributes: {
       class: ['border', 'border-gray-600', 'p-4'],

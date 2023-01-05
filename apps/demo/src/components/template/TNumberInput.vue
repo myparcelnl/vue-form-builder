@@ -1,17 +1,15 @@
 <template>
   <input
-    :id="id"
+    :id="element.name"
     v-model.number="model"
     type="number"
     :class="{
-      'border-red-500': valid === false,
-      'opacity-50 cursor-not-allowed': disabled,
+      'border-red-500': !element.isValid,
+      'opacity-50 cursor-not-allowed': element.isDisabled || element.isSuspended,
     }"
-    :disabled="disabled"
-    :max="max"
-    :min="min"
-    :name="name"
-    :step="step"
+    :disabled="element.isDisabled"
+    :name="element.name"
+    v-bind="element.props"
     @blur="$emit('blur', $event)"
     @change="$emit('change', $event)"
     @click="$emit('click', $event)"
@@ -22,70 +20,21 @@
 
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
+import {InteractiveElementInstance} from '@myparcel-vfb/core';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TNumberInput',
   props: {
-    disabled: {
-      type: Boolean,
-    },
-
-    // eslint-disable-next-line vue/no-unused-properties
-    errors: {
-      type: Array as PropType<string[]>,
-      default: () => [],
-    },
-
-    id: {
-      type: String,
+    element: {
+      type: Object as PropType<InteractiveElementInstance>,
       required: true,
-    },
-
-    // eslint-disable-next-line vue/no-unused-properties
-    label: {
-      type: String,
-      default: null,
-    },
-
-    max: {
-      type: Number,
-      default: null,
-    },
-
-    min: {
-      type: Number,
-      default: 0,
     },
 
     // eslint-disable-next-line vue/no-unused-properties
     modelValue: {
       type: [String, Number],
       default: null,
-    },
-
-    name: {
-      type: String,
-      required: true,
-    },
-
-    // eslint-disable-next-line vue/no-unused-properties
-    optional: {
-      type: Boolean,
-    },
-
-    step: {
-      type: Number,
-      default: 1,
-    },
-
-    // eslint-disable-next-line vue/no-unused-properties
-    suspended: {
-      type: Boolean,
-    },
-
-    valid: {
-      type: Boolean,
     },
   },
 

@@ -13,7 +13,7 @@
         <template
           v-for="(element, index) in plainFields"
           :key="`element--${element.name ?? 'unnamed'}--${index}`">
-          <FormElement
+          <FormElementWrapper
             :form="form"
             :element="element" />
         </template>
@@ -23,7 +23,7 @@
         <template
           v-for="(element, index) in teleportFields"
           :key="`element--${element.name ?? 'unnamed'}--${index}`">
-          <FormElement
+          <FormElementWrapper
             :form="form"
             :element="element" />
         </template>
@@ -34,17 +34,17 @@
 
 <script lang="ts">
 import {PropType, computed, defineComponent, provide, ref} from 'vue';
-import FormElement from './FormElement';
+import FormElementWrapper from './FormElementWrapper';
 import {FormInstance} from '../form';
 import Fragment from './Fragment.vue';
 import {INJECT_FORM} from '../services';
-import {useLifeCycleHooks} from '../composables';
+import {useLifecycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'MagicForm',
   components: {
     Fragment,
-    FormElement,
+    FormElementWrapper,
   },
 
   props: {
@@ -58,7 +58,7 @@ export default defineComponent({
     provide(INJECT_FORM, props.form);
 
     const elementsAreResolved = ref(false);
-    const lifeCycleHooks = useLifeCycleHooks();
+    const lifeCycleHooks = useLifecycleHooks();
 
     lifeCycleHooks.register(props.form.hooks, props.form);
 

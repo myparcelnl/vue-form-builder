@@ -13,7 +13,7 @@ type UseLifeCycleHooks = () => {
 
 const HOOK_ON_CREATED = 'onCreated';
 
-export const useLifeCycleHooks: UseLifeCycleHooks = () => {
+export const useLifecycleHooks: UseLifeCycleHooks = () => {
   return {
     hooks: COMPONENT_LIFECYCLE_HOOKS,
 

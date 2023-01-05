@@ -113,7 +113,7 @@ A field is defined using the `defineField` function. This function takes one arg
   - `validators`: An array of validators
   - `isValid`: A computed ref that returns a boolean
 
-Fields are categorized into three types based on the passed options:
+Fields are categorized into two types based on the passed options:
 
 - `plainElement`: A field that is not a form element and may have a [name].
 - `interactiveElement`: A field with a [name] and a ref to hold a reactive value.

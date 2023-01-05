@@ -1,13 +1,13 @@
 <template>
   <input
-    :id="id"
+    :id="element.name"
     v-model="model"
     type="text"
-    :name="name"
-    :disabled="disabled"
+    :name="element.name"
+    :disabled="element.isDisabled"
     :class="{
-      'border-red-500': valid === false,
-      'opacity-50 cursor-not-allowed': disabled,
+      'border-red-500': !element.isValid,
+      'opacity-50 cursor-not-allowed': element.isDisabled,
     }"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"
@@ -18,18 +18,15 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {PropType, defineComponent} from 'vue';
+import {InteractiveElementInstance} from '@myparcel-vfb/core';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TTextInput',
   props: {
-    disabled: {
-      type: Boolean,
-    },
-
-    id: {
-      type: String,
+    element: {
+      type: Object as PropType<InteractiveElementInstance>,
       required: true,
     },
 
@@ -37,20 +34,6 @@ export default defineComponent({
     modelValue: {
       type: [String, Number],
       default: null,
-    },
-
-    name: {
-      type: String,
-      default: null,
-    },
-
-    valid: {
-      type: Boolean,
-    },
-
-    // eslint-disable-next-line vue/no-unused-properties
-    suspended: {
-      type: Boolean,
     },
   },
 

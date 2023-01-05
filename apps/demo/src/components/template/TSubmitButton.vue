@@ -2,33 +2,31 @@
   <button
     type="submit"
     class="bg-pink-600 inline-flex mt-2 px-5 py-3 rounded-full text-gray-900"
-    :disabled="disabled || suspended"
+    :disabled="element.isDisabled || element.isSuspended"
     :class="{
-      'opacity-50 cursor-not-allowed': disabled,
-      'cursor-wait': suspended,
-      'hover:bg-pink-700': !disabled,
+      'opacity-50 cursor-not-allowed': element.isDisabled,
+      'cursor-wait': element.isSuspended,
+      'hover:bg-pink-700': !element.isDisabled,
     }"
     @click="$emit('submit')">
-    <LoadingOverlay v-if="suspended" />
+    <LoadingOverlay v-if="element.isSuspended" />
     {{ translate('form_submit') }}
   </button>
 </template>
 
 <script lang="ts">
+import {PropType, defineComponent} from 'vue';
+import {InteractiveElementInstance} from '@myparcel-vfb/core';
 import LoadingOverlay from '../LoadingOverlay.vue';
-import {defineComponent} from 'vue';
 import {translate} from '../../translate';
 
 export default defineComponent({
   name: 'TSubmitButton',
   components: {LoadingOverlay},
   props: {
-    disabled: {
-      type: Boolean,
-    },
-
-    suspended: {
-      type: Boolean,
+    element: {
+      type: Object as PropType<InteractiveElementInstance>,
+      required: true,
     },
   },
 

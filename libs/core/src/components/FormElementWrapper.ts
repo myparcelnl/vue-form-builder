@@ -1,14 +1,12 @@
 import {Component, PropType, Teleport, defineComponent, h} from 'vue';
-import {FormInstance, InteractiveElementInstance} from '../form';
 import {AnyElementInstance} from '../types';
-import InteractiveElement from './InteractiveElement.vue';
-import PlainElement from './PlainElement.vue';
-import {isOfType} from '@myparcel/ts-utils';
-import {useTestAttributes} from '../composables/useTestAttributes';
+import FormElement from './FormElement.vue';
+import {FormInstance} from '../form';
+import {useTestAttributes} from '../composables';
 
 // noinspection JSUnusedGlobalSymbols
 export default defineComponent({
-  name: 'FormElement',
+  name: 'FormElementWrapper',
   props: {
     form: {
       type: Object as PropType<FormInstance>,
@@ -21,13 +19,10 @@ export default defineComponent({
   },
 
   render() {
-    let component: Component = h(
-      isOfType<InteractiveElementInstance>(this.element, 'ref') ? InteractiveElement : PlainElement,
-      {
-        ...useTestAttributes(this.element),
-        element: this.element,
-      },
-    );
+    let component: Component = h(FormElement, {
+      ...useTestAttributes(this.element),
+      element: this.element,
+    });
 
     const hasOwnWrapper = typeof this.element.wrapper !== 'boolean';
     const inheritsWrapper = this.element.wrapper === true && this.form.config.field?.wrapper;

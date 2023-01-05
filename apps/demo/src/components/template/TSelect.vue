@@ -1,12 +1,12 @@
 <template>
   <select
-    :id="id"
+    :id="element.name"
     v-model="model"
-    :name="name"
-    :disabled="disabled"
+    :name="element.name"
+    :disabled="element.isDisabled"
     :class="{
-      'border-red-500': !valid,
-      'opacity-50 cursor-not-allowed': disabled,
+      'border-red-500': !element.isValid,
+      'opacity-50 cursor-not-allowed': element.isDisabled || element.isSuspended,
     }"
     @blur="$emit('blur', $event)"
     @change="$emit('change', $event)"
@@ -23,31 +23,16 @@
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent, toRefs, watch} from 'vue';
-import {SelectOption} from '@myparcel/vue-form-builder';
+import {ComputedRef, PropType, computed, defineComponent, watch} from 'vue';
+import {InteractiveElementInstance, SelectOption} from '@myparcel/vue-form-builder';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({
   name: 'TSelect',
   props: {
-    disabled: {
-      type: Boolean,
-    },
-
-    // eslint-disable-next-line vue/no-unused-properties
-    errors: {
-      type: Array as PropType<string[]>,
-      default: () => [],
-    },
-
-    id: {
-      type: String,
+    element: {
+      type: Object as PropType<InteractiveElementInstance>,
       required: true,
-    },
-
-    label: {
-      type: String,
-      default: null,
     },
 
     // eslint-disable-next-line vue/no-unused-properties
@@ -55,48 +40,30 @@ export default defineComponent({
       type: String,
       default: null,
     },
-
-    name: {
-      type: String,
-      required: true,
-    },
-
-    options: {
-      type: Array as PropType<SelectOption[]>,
-      default: () => [],
-    },
-
-    // eslint-disable-next-line vue/no-unused-properties
-    suspended: {
-      type: Boolean,
-    },
-
-    valid: {
-      type: Boolean,
-    },
   },
 
   emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
 
   setup: (props) => {
     const model = useVModel(props, 'modelValue');
-    const propRefs = toRefs(props);
+
+    const options: ComputedRef<SelectOption[]> = computed(() => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return props.element.props.options as SelectOption[];
+    });
 
     // Set the model value to the first option if no value is set
-    watch(
-      propRefs.options,
-      (options) => {
-        if (model.value) {
-          return;
-        }
-
-        model.value = options[0]?.value;
-      },
-      {immediate: true},
-    );
+    watch(options, () => {
+      if (!model.value) {
+        model.value = options.value[0].value;
+      }
+    });
 
     return {
       model,
+
+      options,
     };
   },
 });

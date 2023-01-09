@@ -105,7 +105,7 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   /**
    * All fields in the form that have a name and a ref.
    */
-  readonly fieldsWithNamesAndRefs: ComputedRef<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>;
+  readonly interactiveFields: ComputedRef<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>;
 
   /**
    * Determines whether the form is valid.

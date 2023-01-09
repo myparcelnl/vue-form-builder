@@ -17,7 +17,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   public readonly hooks: FormInstance<FC>['hooks'];
   public readonly model = {} as FormInstance<FC>['model'];
   public readonly fields: FormInstance<FC>['fields'] = ref([]);
-  public readonly fieldsWithNamesAndRefs: FormInstance<FC>['fieldsWithNamesAndRefs'];
+  public readonly interactiveFields: FormInstance<FC>['interactiveFields'];
 
   public isValid: FormInstance<FC>['isValid'] = ref(true);
 
@@ -41,7 +41,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    this.fieldsWithNamesAndRefs = computed(() => {
+    this.interactiveFields = computed(() => {
       return this.fields.value.filter((field) => {
         return isOfType<InteractiveElementInstance>(field, 'ref');
       });
@@ -96,11 +96,11 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   }
 
   public async reset(): Promise<void> {
-    await Promise.all(getValue(this.fieldsWithNamesAndRefs).map((field) => field.reset()));
+    await Promise.all(getValue(this.interactiveFields).map((field) => field.reset()));
   }
 
   public getValues(): Record<string, unknown> {
-    return getValue(this.fieldsWithNamesAndRefs).reduce((acc, field) => {
+    return getValue(this.interactiveFields).reduce((acc, field) => {
       if (field.isDisabled) {
         return acc;
       }

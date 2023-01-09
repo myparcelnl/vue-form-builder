@@ -1,4 +1,4 @@
-import {InteractiveElement, PlainElement, defineField} from '../../form';
+import {FormConfiguration, InteractiveElement, PlainElement, defineField} from '../../form';
 import {describe, expect, it} from 'vitest';
 import TextInput from '../elements/TextInput.vue';
 import {generateForm} from '../utils';
@@ -29,34 +29,36 @@ describe('Form instance', () => {
     expect(form.model.test2.ref.value).toBe('changed');
   });
 
+  const formConfig: FormConfiguration = {
+    fields: [
+      {
+        name: 'named',
+        component: 'input',
+      },
+      {
+        name: 'val',
+        component: 'input',
+        ref: ref(23),
+      },
+      {
+        component: 'br',
+      },
+      {
+        name: 'random',
+        component: TextInput,
+        ref: ref('this is my value'),
+        disabled: true,
+      },
+      {
+        name: 'text',
+        component: TextInput,
+        ref: ref('initial'),
+      },
+    ],
+  };
+
   it('can retrieve an object with all non-disabled keys and values', () => {
-    const form = generateForm({
-      fields: [
-        {
-          name: 'named',
-          component: 'input',
-        },
-        {
-          name: 'val',
-          component: 'input',
-          ref: ref(23),
-        },
-        {
-          component: 'br',
-        },
-        {
-          name: 'random',
-          component: TextInput,
-          ref: ref('this is my value'),
-          disabled: true,
-        },
-        {
-          name: 'text',
-          component: TextInput,
-          ref: ref('initial'),
-        },
-      ],
-    });
+    const form = generateForm(formConfig);
 
     expect(form.getValues()).toEqual({
       val: 23,

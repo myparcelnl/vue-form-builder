@@ -45,21 +45,6 @@ export type FormConfiguration = FormHooks & {
      */
     wrapper?: ComponentOrHtmlElement;
   };
-  //
-  // /**
-  //  * Tag to use for the outer form element. Defaults to 'form'.
-  //  */
-  // formTag?: string;
-
-  // /**
-  //  * Component or html element of a form wrapper.
-  //  */
-  // formWrapper?: ComponentOrHtmlElement;
-  //
-  // /**
-  //  * Attributes to apply to the element wrapping a form.
-  //  */
-  // formWrapperAttributes?: Record<string, string>;
 
   /**
    * Names of hooks to register.
@@ -134,7 +119,6 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
 
   /**
    * Get values from all non-disabled fields.
-   * @returns {Record}
    */
   getValues(): Record<string, unknown>;
 

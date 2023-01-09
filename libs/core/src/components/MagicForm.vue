@@ -38,6 +38,7 @@ import FormElementWrapper from './FormElementWrapper';
 import {FormInstance} from '../form';
 import Fragment from './Fragment.vue';
 import {INJECT_FORM} from '../services';
+import {getValue} from '../utils';
 import {useLifecycleHooks} from '../composables';
 
 export default defineComponent({
@@ -63,14 +64,10 @@ export default defineComponent({
     lifeCycleHooks.register(props.form.hooks, props.form);
 
     return {
-      fields: props.form.fields.value,
       elementsAreResolved,
-      plainFields: computed(() =>
-        (props.form.fields.value ?? props.form.fields).filter((element) => !element.teleportSelector),
-      ),
-
+      plainFields: computed(() => getValue(props.form.fields).filter((element) => !element.teleportSelector)),
       teleportFields: computed(() =>
-        (props.form.fields.value ?? props.form.fields).filter((element) => Boolean(element.teleportSelector)),
+        getValue(props.form.fields).filter((element) => Boolean(element.teleportSelector)),
       ),
 
       async handleSubmit() {

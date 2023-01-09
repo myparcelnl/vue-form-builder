@@ -1,9 +1,9 @@
 import {DEFAULT_FORM_CONFIGURATION, Form, FormConfiguration, FormInstance, InstanceFormConfiguration} from '../form';
-import {Ref, reactive, ref} from 'vue';
+import {Ref, ref} from 'vue';
 import {AnyElementConfiguration} from '../types';
 import {markComponentAsRaw} from '../utils';
 
-let forms: Record<string, FormInstance>;
+let forms: Ref<Record<string, FormInstance>>;
 
 let defaults: Ref<InstanceFormConfiguration>;
 
@@ -32,7 +32,7 @@ export type FormBuilder = {
 export type UseFormBuilder = () => FormBuilder;
 
 export const useFormBuilder: UseFormBuilder = () => {
-  forms ??= reactive({});
+  forms ??= ref({});
 
   // TODO: infinitely deep type error
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -50,7 +50,7 @@ export const useFormBuilder: UseFormBuilder = () => {
     register(name, config) {
       const instance = new Form(name, mergeDefaults(defaults.value, config));
 
-      forms[name] = instance;
+      forms.value[name] = instance;
 
       return instance;
     },

@@ -43,7 +43,7 @@ export const setupDevtools = (app: App): void => {
           const payload = activePayload;
           const data = useFormBuilder();
 
-          payload.rootNodes = Object.entries(data.forms).map(([name, form]) => {
+          payload.rootNodes = Object.entries(data.forms.value).map(([name, form]) => {
             return createFormNode(name, form as unknown as UnwrapNestedRefs<FormInstance>);
           });
         }
@@ -71,7 +71,7 @@ export const setupDevtools = (app: App): void => {
           }
 
           const formBuilder = useFormBuilder();
-          const form = formBuilder.forms[formName];
+          const form = formBuilder.forms.value[formName];
 
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error

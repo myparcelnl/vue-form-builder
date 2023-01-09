@@ -132,7 +132,6 @@ describe('Form and field validation', () => {
   });
 
   it.skip('moves the error message to another field', async () => {
-    // TODO: fix this unit test to properly deal with form.model.target.errors with .value
     expect.assertions(6);
 
     const form = generateForm([

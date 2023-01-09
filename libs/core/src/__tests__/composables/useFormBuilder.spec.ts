@@ -10,7 +10,7 @@ describe('useFormBuilder', () => {
 
     formBuilder.register('test', form);
 
-    expect(formBuilder.forms).toHaveProperty('test');
+    expect(formBuilder.forms.value).toHaveProperty('test');
   });
 
   it('should apply defaults to a form', () => {
@@ -19,8 +19,8 @@ describe('useFormBuilder', () => {
 
     formBuilder.register('test', form);
 
-    expect(formBuilder.forms).toHaveProperty('test');
-    expect(formBuilder.forms.test.config.form.attributes.class).toBe('test-class');
+    expect(formBuilder.forms.value).toHaveProperty('test');
+    expect(formBuilder.forms.value.test.config.form.attributes.class).toBe('test-class');
 
     formBuilder.defaults.value = DEFAULT_FORM_CONFIGURATION;
   });
@@ -28,10 +28,10 @@ describe('useFormBuilder', () => {
   it('should overwrite old form when registering a form with a previously used name', () => {
     const formBuilder = useFormBuilder();
     formBuilder.register('test', form);
-    expect(formBuilder.forms.test.config.validationMessages).toBeFalsy();
+    expect(formBuilder.forms.value.test.config.validationMessages).toBeFalsy();
 
     const otherForm = {fields: [], validationMessages: {test: 'test'}};
     formBuilder.register('test', otherForm);
-    expect(formBuilder.forms.test.config.validationMessages).toEqual({test: 'test'});
+    expect(formBuilder.forms.value.test.config.validationMessages).toEqual({test: 'test'});
   });
 });

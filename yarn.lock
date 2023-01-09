@@ -1128,7 +1128,7 @@ __metadata:
     is-ci: ^3.0.1
     lint-staged: ^13.1.0
     monodeploy: ^3.6.0
-    nx: ^15.4.4
+    nx: ^15.4.5
     prettier: ^2.8.1
     rimraf: ^3.0.2
   languageName: unknown
@@ -1245,23 +1245,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/cli@npm:15.4.4":
-  version: 15.4.4
-  resolution: "@nrwl/cli@npm:15.4.4"
+"@nrwl/cli@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@nrwl/cli@npm:15.4.5"
   dependencies:
-    nx: 15.4.4
-  checksum: 6eedac61585b75291574d15df5e87542718f6e1a7add7b98928631bf028348da70941d185baf44467c86983e25b35db6bf0c2b3ad212ba25f6ff8bdf3b074e5f
+    nx: 15.4.5
+  checksum: f740871fb0b658ac70b25d21d0e70328242ad4f3f7d57e7287d941df61250e273d8f35bc62eff6ad51f758a8d4fa973252e785e5f8573ebe0143372dc97800a7
   languageName: node
   linkType: hard
 
-"@nrwl/tao@npm:15.4.4":
-  version: 15.4.4
-  resolution: "@nrwl/tao@npm:15.4.4"
+"@nrwl/tao@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@nrwl/tao@npm:15.4.5"
   dependencies:
-    nx: 15.4.4
+    nx: 15.4.5
   bin:
     tao: index.js
-  checksum: bdb2a5da4c88d3c76eaba166c55b979b04f90f55d90de6de2303bff698f81e74254b86f2db595a12fb399ef92ad645dd18034b4a4758cc7b507879ee5f6595f0
+  checksum: e9ae7fb1f2ecb13fa191bc9c8c973260d98db196912cbda183885f7648daba482a24138e602d86c052e97d0695e1c5c58c7946f7df9bffcf9174113df60981c1
   languageName: node
   linkType: hard
 
@@ -4644,7 +4644,7 @@ __metadata:
 
 "fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
   dependencies:
     node-gyp: latest
   conditions: os=darwin
@@ -6338,12 +6338,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:15.4.4, nx@npm:^15.4.4":
-  version: 15.4.4
-  resolution: "nx@npm:15.4.4"
+"nx@npm:15.4.5, nx@npm:^15.4.5":
+  version: 15.4.5
+  resolution: "nx@npm:15.4.5"
   dependencies:
-    "@nrwl/cli": 15.4.4
-    "@nrwl/tao": 15.4.4
+    "@nrwl/cli": 15.4.5
+    "@nrwl/tao": 15.4.5
     "@parcel/watcher": 2.0.4
     "@yarnpkg/lockfile": ^1.1.0
     "@yarnpkg/parsers": ^3.0.0-rc.18
@@ -6387,7 +6387,7 @@ __metadata:
       optional: true
   bin:
     nx: bin/nx.js
-  checksum: 72d5c151d3667c83f1d9e11585a2cd87d45359886416c436e0d6a5be7f8fe7bbcace39a7a67f982e7dab55d25dcc613f8c44d2703d7507d3b0ec1abc45fc06ff
+  checksum: b643ccbdc3c99950abc9d7ad59eced62f70edf97936c518c6d8fd95fe4b349fc78e7b48477f9a50521f38064ccbd1303e2b1a25c224ab38a91329965d775c2f6
   languageName: node
   linkType: hard
 
@@ -7098,7 +7098,7 @@ __metadata:
 
 "resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
   version: 1.22.1
-  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=07638b"
   dependencies:
     is-core-module: ^2.9.0
     path-parse: ^1.0.7
@@ -7111,7 +7111,7 @@ __metadata:
 
 "resolve@patch:resolve@~1.17.0#~builtin<compat/resolve>":
   version: 1.17.0
-  resolution: "resolve@patch:resolve@npm%3A1.17.0#~builtin<compat/resolve>::version=1.17.0&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.17.0#~builtin<compat/resolve>::version=1.17.0&hash=07638b"
   dependencies:
     path-parse: ^1.0.6
   checksum: 6fd799f282ddf078c4bc20ce863e3af01fa8cb218f0658d9162c57161a2dbafe092b13015b9a4c58d0e1e801cf7aa7a4f13115fea9db98c3f9a0c43e429bad6f
@@ -7120,7 +7120,7 @@ __metadata:
 
 "resolve@patch:resolve@~1.19.0#~builtin<compat/resolve>":
   version: 1.19.0
-  resolution: "resolve@patch:resolve@npm%3A1.19.0#~builtin<compat/resolve>::version=1.19.0&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.19.0#~builtin<compat/resolve>::version=1.19.0&hash=07638b"
   dependencies:
     is-core-module: ^2.1.0
     path-parse: ^1.0.6
@@ -8115,17 +8115,17 @@ __metadata:
 
 "typescript@patch:typescript@^4.9.4#~builtin<compat/typescript>":
   version: 4.9.4
-  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=ad5954"
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1caaea6cb7f813e64345190fddc4e6c924d0b698ab81189b503763c4a18f7f5501c69362979d36e19c042d89d936443e768a78b0675690b35eb663d19e0eae71
+  checksum: 37f6e2c3c5e2aa5934b85b0fddbf32eeac8b1bacf3a5b51d01946936d03f5377fe86255d4e5a4ae628fd0cd553386355ad362c57f13b4635064400f3e8e05b9d
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@~4.8.4#~builtin<compat/typescript>":
   version: 4.8.4
-  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=0102e9"
+  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver

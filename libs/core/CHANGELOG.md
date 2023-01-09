@@ -2,6 +2,26 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.7](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.6...@myparcel-vfb/core@1.0.0-alpha.7) "@myparcel-vfb/core" (2023-01-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **core:** rename fieldsWithNamesAndRefs to interactiveFields
+
+### Bug Fixes
+
+* **core:** leave adding element props to the user ([9faa181](https://github/myparcelnl/vue-form-builder/commit/9faa181840497fa860bd6aee9d79a90f635788ee))
+* **core:** reduce issues with refs sometimes being unwrapped ([fa645cd](https://github/myparcelnl/vue-form-builder/commit/fa645cd03f24c080ccb53ff3d368f8c771d93a64))
+
+
+### Code Refactoring
+
+* **core:** rename fieldsWithNamesAndRefs to interactiveFields ([89f4ab1](https://github/myparcelnl/vue-form-builder/commit/89f4ab1cd1f4cb1d9a6d02cc2c008c4977dad448))
+
+
+
+
 ## [1.0.0-alpha.6](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.5...@myparcel-vfb/core@1.0.0-alpha.6) "@myparcel-vfb/core" (2023-01-05)
 
 

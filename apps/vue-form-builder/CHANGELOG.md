@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.29](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.28...@myparcel/vue-form-builder@1.0.0-alpha.29) "@myparcel/vue-form-builder" (2023-01-09)
+
+
+### Features
+
+* **plugin:** add createMyParcelFormBuilderPlugin ([af207cd](https://github/myparcelnl/vue-form-builder/commit/af207cd1cc1810484b08386ce259f3fd9dce5d2e))
+
+
+
+
 ## [1.0.0-alpha.27](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.26...@myparcel/vue-form-builder@1.0.0-alpha.27) "@myparcel/vue-form-builder" (2023-01-05)
 
 

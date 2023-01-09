@@ -2,6 +2,21 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.7](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-alpha.6...@myparcel-vfb/plugin@1.0.0-alpha.7) "@myparcel-vfb/plugin" (2023-01-09)
+
+
+### Features
+
+* **plugin:** add createMyParcelFormBuilderPlugin ([af207cd](https://github/myparcelnl/vue-form-builder/commit/af207cd1cc1810484b08386ce259f3fd9dce5d2e))
+
+
+### Bug Fixes
+
+* **core:** reduce issues with refs sometimes being unwrapped ([fa645cd](https://github/myparcelnl/vue-form-builder/commit/fa645cd03f24c080ccb53ff3d368f8c771d93a64))
+
+
+
+
 ## [1.0.0-alpha.5](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-alpha.4...@myparcel-vfb/plugin@1.0.0-alpha.5) "@myparcel-vfb/plugin" (2023-01-05)
 
 

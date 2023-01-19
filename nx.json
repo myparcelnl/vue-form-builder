@@ -9,7 +9,7 @@
       "outputs": ["{projectRoot}/lib"]
     },
     "build": {
-      "dependsOn": ["^emit", "^build"],
+      "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/lib"]
     },
     "serve": {
@@ -17,16 +17,16 @@
       "outputs": ["{projectRoot}/lib"]
     },
     "test": {
-      "inputs": ["{workspaceRoot}/packages/**/*"],
       "outputs": ["{workspaceRoot}/coverage"]
     }
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
         "parallel": 10,
-        "cacheableOperations": ["build", "build:dev", "test", "typecheck"]
+        "cacheableOperations": ["build", "build:dev", "test", "typecheck"],
+        "accessToken": "ODE1MmI4YjctMmFiZC00YzNlLTg5YjUtMGIzNjgyMjI3NjhkfHJlYWQtd3JpdGU="
       }
     }
   }

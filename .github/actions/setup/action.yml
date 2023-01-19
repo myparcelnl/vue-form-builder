@@ -3,37 +3,29 @@ name: 'Set up environment'
 description: 'Sets up environment by setting up credentials, installing dependencies and creating a build'
 
 inputs:
-  token:
-    description: 'GitHub token'
+  app-id:
+    description: 'The app ID of the GitHub app to authenticate with.'
     required: true
 
-  reset-nx-cache:
-    description: 'Reset Nx cache'
-    required: false
+  private-key:
+    description: 'The private key of the GitHub app to authenticate with.'
+    required: true
+
+outputs:
+  token:
+    description: 'The token of the GitHub app.'
+    value: ${{ steps.credentials.outputs.token }}
 
 runs:
   using: composite
   steps:
-    - uses: myparcelnl/actions/setup-git-credentials@v2
+    - uses: myparcelnl/actions/setup-git-credentials@v3
+      id: credentials
       with:
-        token: ${{ inputs.token }}
+        app-id: ${{ inputs.app-id }}
+        private-key: ${{ inputs.private-key }}
 
-    - uses: myparcelnl/actions/yarn2-install@v2
-
-    - name: 'Cache Nx'
-      uses: actions/cache@v3
-      with:
-        path: node_modules/.cache/nx
-        key: ${{ runner.os }}-cache-nx-${{ hashFiles('**/yarn.lock') }}-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-cache-nx-${{ hashFiles('**/yarn.lock') }}-
-          ${{ runner.os }}-cache-nx-
-
-    - name: 'Reset NX cache'
-      if: inputs.reset-nx-cache
-      shell: bash
-      run: |
-        yarn nx reset
+    - uses: myparcelnl/actions/yarn2-install@v3
 
     - name: 'Build packages'
       shell: bash

@@ -7,19 +7,11 @@ on:
       - beta
 
   workflow_dispatch:
-    inputs:
-      reset-nx-cache:
-        description: 'Reset Nx cache'
-        required: false
-        type: boolean
-        default: false
 
 jobs:
   test:
     uses: ./.github/workflows/--test.yml
     secrets: inherit
-    with:
-      reset-nx-cache: ${{ github.event.inputs.reset-nx-cache && true || false }}
 
   release:
     name: 'Publish new release 🚀'
@@ -30,13 +22,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-          token: ${{ secrets.GH_REPO_TOKEN }}
+          persist-credentials: false
 
       - uses: ./.github/actions/setup
+        id: setup
         with:
-          reset-nx-cache: ${{ github.event.inputs.reset-nx-cache }}
-          token: ${{ secrets.GH_REPO_TOKEN }}
+          app-id: ${{ secrets.MYPARCEL_APP_ID }}
+          private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ steps.setup.outputs.token }}
 
       - name: 'Run monodeploy'
         run: |
@@ -44,5 +41,5 @@ jobs:
             --config-file monodeploy.config.cjs \
             --log-level 0
         env:
-          GH_TOKEN: ${{ secrets.GH_REPO_TOKEN }}
+          GH_TOKEN: ${{ steps.setup.outputs.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

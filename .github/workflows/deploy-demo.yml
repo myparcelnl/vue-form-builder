@@ -18,17 +18,19 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: ./.github/actions/setup
-        id: setup
+      - uses: myparcelnl/actions/setup-git-credentials@v3
+        id: credentials
         with:
           app-id: ${{ secrets.MYPARCEL_APP_ID }}
           private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
 
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ steps.credentials.outputs.token }}
+
       - uses: actions/configure-pages@v2
         with:
-          token: ${{ steps.setup.outputs.token }}
+          token: ${{ steps.credentials.outputs.token }}
 
       - uses: actions/upload-pages-artifact@v1
         with:
@@ -37,4 +39,4 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v1
         with:
-          token: ${{ steps.setup.outputs.token }}
+          token: ${{ steps.credentials.outputs.token }}

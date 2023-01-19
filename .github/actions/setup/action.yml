@@ -2,32 +2,12 @@ name: 'Set up environment'
 
 description: 'Sets up environment by setting up credentials, installing dependencies and creating a build'
 
-inputs:
-  app-id:
-    description: 'The app ID of the GitHub app to authenticate with.'
-    required: true
-
-  private-key:
-    description: 'The private key of the GitHub app to authenticate with.'
-    required: true
-
-outputs:
-  token:
-    description: 'The token of the GitHub app.'
-    value: ${{ steps.credentials.outputs.token }}
-
 runs:
   using: composite
   steps:
-    - uses: myparcelnl/actions/setup-git-credentials@v3
-      id: credentials
-      with:
-        app-id: ${{ inputs.app-id }}
-        private-key: ${{ inputs.private-key }}
-
     - uses: myparcelnl/actions/yarn2-install@v3
 
     - name: 'Build packages'
       shell: bash
       run: |
-        yarn build --output-style stream
+        yarn nx run-many --target build --output-style stream

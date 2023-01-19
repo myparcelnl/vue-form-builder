@@ -1,0 +1,40 @@
+name: 'Deploy demo to GitHub Pages'
+
+on:
+  repository_dispatch:
+    types: [ deploy-demo ]
+
+  workflow_dispatch:
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: 'Create build'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/actions/setup
+        id: setup
+        with:
+          app-id: ${{ secrets.MYPARCEL_APP_ID }}
+          private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
+
+      - uses: actions/configure-pages@v2
+        with:
+          token: ${{ steps.setup.outputs.token }}
+
+      - uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./apps/demo/dist
+
+      - id: deployment
+        uses: actions/deploy-pages@v1
+        with:
+          token: ${{ steps.setup.outputs.token }}

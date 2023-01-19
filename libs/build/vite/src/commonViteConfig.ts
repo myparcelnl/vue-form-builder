@@ -28,7 +28,6 @@ export const commonViteConfig: UserConfigFn = (env) => ({
   test: {
     coverage: {
       enabled: false,
-      // exclude: ['**/lib/**', '**/__tests__/**', '**/*.spec.*'],
       reporter: ['text', 'clover'],
     },
     dir: 'src',

@@ -8,6 +8,9 @@ on:
 
   workflow_dispatch:
 
+concurrency:
+  group: release-${{ github.ref }}
+
 jobs:
   test:
     name: 'Run unit tests 🧪'
@@ -21,7 +24,11 @@ jobs:
           private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
 
       - name: 'Run tests'
-        run: yarn test:run --output-style static
+        run: |
+          yarn nx run-many \
+            --target=test:run \
+            --parallel \
+            --output-style=static
 
   release:
     name: 'Publish new release 🚀'
@@ -30,20 +37,18 @@ jobs:
     # TODO: remove the next line when updating to 1.0.0
     if: always()
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-
-      - uses: ./.github/actions/setup
-        id: setup
+      - uses: myparcelnl/actions/setup-git-credentials@v3
+        id: credentials
         with:
           app-id: ${{ secrets.MYPARCEL_APP_ID }}
           private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
 
       - uses: actions/checkout@v3
         with:
+          token: ${{ steps.credentials.outputs.token }}
           fetch-depth: 0
-          token: ${{ steps.setup.outputs.token }}
+
+      - uses: ./.github/actions/setup
 
       - name: 'Run monodeploy'
         run: |
@@ -51,5 +56,11 @@ jobs:
             --config-file monodeploy.config.cjs \
             --log-level 0
         env:
-          GH_TOKEN: ${{ steps.setup.outputs.token }}
+          GH_TOKEN: ${{ steps.credentials.outputs.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: 'Dispatch deploy demo command'
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ steps.credentials.outputs.token }}
+          event-type: deploy-demo

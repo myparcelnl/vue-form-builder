@@ -2,12 +2,6 @@ name: '🔸 Run tests 🧪'
 
 on:
   workflow_call:
-    inputs:
-      reset-nx-cache:
-        description: 'Reset Nx cache'
-        required: false
-        type: boolean
-        default: false
 
 jobs:
   test:
@@ -15,16 +9,14 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GH_REPO_TOKEN }}
 
       - uses: ./.github/actions/setup
         with:
-          reset-nx-cache: ${{ github.event.inputs.reset-nx-cache }}
-          token: ${{ secrets.GH_REPO_TOKEN }}
+          app-id: ${{ secrets.MYPARCEL_APP_ID }}
+          private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
 
       - name: 'Run tests'
-        run: yarn test:run
+        run: yarn test:run --output-style static
 
       # TODO: uncomment when repo is public
       # - uses: codecov/codecov-action@v3

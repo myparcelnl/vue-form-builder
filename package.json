@@ -38,6 +38,9 @@
     "package.json": "npx sort-package-json"
   },
   "prettier": "@myparcel/prettier-config",
+  "dependencies": {
+    "@nrwl/nx-cloud": "^15.0.2"
+  },
   "devDependencies": {
     "@monodeploy/plugin-github": "^0.8.0",
     "@myparcel-eslint/eslint-config-esnext": "^1.2.0",
@@ -45,6 +48,7 @@
     "@myparcel-eslint/eslint-config-prettier": "^1.2.0",
     "@myparcel-eslint/eslint-config-prettier-typescript": "^1.2.0",
     "@myparcel-eslint/eslint-config-prettier-typescript-vue": "^1.2.0",
+    "@nrwl/workspace": "^15.5.2",
     "@tsconfig/recommended": "^1.0.1",
     "@types/node": "^18.11.18",
     "@vue/tsconfig": "^0.1.3",

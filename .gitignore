@@ -7,6 +7,8 @@ coverage
 lib
 dist
 
+vite.config.ts.timestamp-*
+
 !.vscode/extensions.json
 *.local
 *.log

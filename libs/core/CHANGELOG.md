@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.9](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.8...@myparcel-vfb/core@1.0.0-alpha.9) "@myparcel-vfb/core" (2023-01-23)
+
+
+### Bug Fixes
+
+* pass element children components ([fb9f819](https://github/myparcelnl/vue-form-builder/commit/fb9f819b4fd7f513bb0e5cb2c41ada8174b2bbc3))
+
+
+
+
 ## [1.0.0-alpha.8](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.7...@myparcel-vfb/core@1.0.0-alpha.8) "@myparcel-vfb/core" (2023-01-19)
 
 

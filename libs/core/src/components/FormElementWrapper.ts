@@ -19,10 +19,14 @@ export default defineComponent({
   },
 
   render() {
-    let component: Component = h(FormElement, {
-      ...useTestAttributes(this.element),
-      element: this.element,
-    });
+    let component: Component = h(
+      FormElement,
+      {
+        ...useTestAttributes(this.element),
+        element: this.element,
+      },
+      this.element.component.children,
+    );
 
     const hasOwnWrapper = typeof this.element.wrapper !== 'boolean';
     const inheritsWrapper = this.element.wrapper === true && this.form.config.field?.wrapper;

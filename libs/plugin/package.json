@@ -24,7 +24,7 @@
     "@myparcel-vfb/build-tsup": "workspace:*",
     "@vitest/coverage-c8": "^0.28.1",
     "tsup": "^6.5.0",
-    "vitest": "^0.28.1"
+    "vitest": "^0.28.2"
   },
   "publishConfig": {
     "access": "public"

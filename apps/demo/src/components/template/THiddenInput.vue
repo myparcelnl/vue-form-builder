@@ -7,7 +7,7 @@
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
 import {useVModel} from '@vueuse/core';
-import {InteractiveElementInstance} from '@myparcel-vfb/core';
+import {InteractiveElementInstance} from '@myparcel/vue-form-builder';
 
 export default defineComponent({
   name: 'TTextInput',

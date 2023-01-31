@@ -22,7 +22,7 @@
 <script lang="ts">
 /* eslint-disable vue/no-unused-properties */
 import {PropType, defineComponent} from 'vue';
-import {InteractiveElementInstance} from '@myparcel-vfb/core';
+import {InteractiveElementInstance} from '@myparcel/vue-form-builder';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({

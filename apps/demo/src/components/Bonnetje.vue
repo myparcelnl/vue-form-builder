@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, inject} from 'vue';
-import {INJECT_FORM} from '@myparcel-vfb/core';
+import {INJECT_FORM} from '@myparcel/vue-form-builder';
 
 export default defineComponent({
   name: 'Bonnetje',

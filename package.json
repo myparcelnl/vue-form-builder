@@ -9,12 +9,13 @@
     "apps/**"
   ],
   "scripts": {
-    "build": "nx build",
-    "build:demo": "nx build demo",
-    "build:dev": "nx build:dev",
+    "build": "nx build --runner=cloud",
+    "build:demo": "nx build demo --runner=cloud",
+    "build:dev": "yarn build:dev:default --runner=cloud",
+    "build:dev:default": "nx build:dev",
     "clean": "nx run-many --target=clean",
     "prepare": "is-ci || husky install",
-    "serve": "yarn build:dev && npx concurrently yarn:serve:demo yarn:serve:watch",
+    "serve": "yarn build:dev:default && npx concurrently yarn:serve:demo yarn:serve:watch",
     "serve:demo": "nx serve demo",
     "serve:watch": "nx run-many --target=watch",
     "test": "nx run-many --target=test --parallel --output-style=stream",

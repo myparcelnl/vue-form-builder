@@ -3,6 +3,9 @@ lib/
 logs/
 node_modules/
 
+apps/**/tsconfig.json
+libs/**/tsconfig.json
+
 coverage
 lib
 dist

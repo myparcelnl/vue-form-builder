@@ -1,9 +1,5 @@
 module.exports = {
   root: true,
-  extends: ['@myparcel-eslint/eslint-config-esnext', '@myparcel-eslint/eslint-config-prettier'],
-  rules: {
-    'class-methods-use-this': 'off',
-  },
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: ['tsconfig.json'],

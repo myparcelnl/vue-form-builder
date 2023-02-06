@@ -22,9 +22,9 @@
   },
   "devDependencies": {
     "@myparcel-vfb/build-tsup": "workspace:*",
-    "@vitest/coverage-c8": "^0.28.3",
+    "@vitest/coverage-c8": "^0.28.4",
     "tsup": "^6.5.0",
-    "vitest": "^0.28.3"
+    "vitest": "^0.28.4"
   },
   "publishConfig": {
     "access": "public"

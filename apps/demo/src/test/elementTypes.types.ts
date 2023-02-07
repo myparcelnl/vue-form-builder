@@ -5,7 +5,7 @@ import {
   PlainElementConfiguration,
   defineField,
   defineForm,
-} from '@myparcel/vue-form-builder';
+} from '@myparcel/vue-form-builder/src';
 import {ref} from 'vue';
 
 const interactiveFieldConfig = {

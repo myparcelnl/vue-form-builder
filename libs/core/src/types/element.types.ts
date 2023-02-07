@@ -7,7 +7,7 @@ import {
   PlainElementInstance,
 } from '../form';
 import {ComponentLifecycleHooks} from './other.types';
-import {ComponentProps} from '@myparcel-vfb/utils';
+import {ComponentProps} from '@myparcel-vfb/utils/src';
 import {MakeOptional} from '@myparcel/ts-utils';
 
 export type ElementName = string | undefined;

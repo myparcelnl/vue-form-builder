@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import {CARRIERS, CarrierName, PACKAGE_TYPES} from '@myparcel/sdk';
-import {InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder';
+import {InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder/src';
 import Bonnetje from '../components/Bonnetje.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import Heading from '../components/Heading.vue';

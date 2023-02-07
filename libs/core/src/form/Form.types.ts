@@ -1,8 +1,8 @@
-import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils';
+import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils/src';
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, ElementName} from '../types';
 import {ComputedRef, Ref} from 'vue';
 import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
-import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
+import {HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
 import {InteractiveElementInstance} from './interactive-element';
 
 /**

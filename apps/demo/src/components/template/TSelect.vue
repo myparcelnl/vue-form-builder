@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import {ComputedRef, PropType, computed, defineComponent, watch} from 'vue';
-import {InteractiveElementInstance, SelectOption} from '@myparcel/vue-form-builder';
+import {InteractiveElementInstance, SelectOption} from '@myparcel/vue-form-builder/src';
 import {useVModel} from '@vueuse/core';
 
 export default defineComponent({

@@ -1,6 +1,6 @@
 import {ComponentOrHtmlElement, ElementName} from '../../types';
 import {ComputedRef} from 'vue';
-import {FunctionOr} from '@myparcel-vfb/utils';
+import {FunctionOr} from '@myparcel-vfb/utils/src';
 import {InteractiveElementInstance} from '../interactive-element';
 import {PromiseOr} from '@myparcel/ts-utils';
 

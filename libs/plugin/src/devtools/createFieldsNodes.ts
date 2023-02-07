@@ -1,6 +1,6 @@
 import {CYAN_400} from './types';
 import {CustomInspectorNode} from '@vue/devtools-api';
-import {FormInstance} from '@myparcel-vfb/core';
+import {FormInstance} from '@myparcel-vfb/core/src';
 import {UnwrapNestedRefs} from 'vue';
 import {getComponentName} from './getComponentName';
 

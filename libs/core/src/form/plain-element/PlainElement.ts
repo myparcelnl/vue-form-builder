@@ -1,9 +1,9 @@
-import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils';
+import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils/src';
 import {AnyElementConfiguration, ComponentOrHtmlElement, ElementName} from '../../types';
 import {ComputedRef, computed, markRaw, ref} from 'vue';
 import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from './PlainElement.types';
 import {FormInstance} from '../Form.types';
-import {createHookManager} from '@myparcel-vfb/hook-manager';
+import {createHookManager} from '@myparcel-vfb/hook-manager/src';
 import {useDynamicWatcher} from '../../utils';
 
 // noinspection JSUnusedGlobalSymbols

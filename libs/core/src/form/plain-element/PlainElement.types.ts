@@ -1,9 +1,9 @@
-import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils';
+import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils/src';
 import {BaseElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
 import {Component, ComputedRef, Ref, VNode} from 'vue';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../../data';
 import {FormInstance} from '../Form.types';
-import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
+import {HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
 import {PromiseOr} from '@myparcel/ts-utils';
 
 export type PlainElementConfiguration<

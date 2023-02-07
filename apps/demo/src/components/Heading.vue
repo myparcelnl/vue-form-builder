@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
-import {InteractiveElementInstance} from '@myparcel/vue-form-builder';
+import {InteractiveElementInstance} from '@myparcel/vue-form-builder/src';
 
 export default defineComponent({
   name: 'Heading',

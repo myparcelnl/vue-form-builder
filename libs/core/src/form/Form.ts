@@ -4,7 +4,7 @@ import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementI
 import {PlainElement, PlainElementInstance} from './plain-element';
 import {computed, ref} from 'vue';
 import {getValue, markComponentAsRaw} from '../utils';
-import {createHookManager} from '@myparcel-vfb/hook-manager';
+import {createHookManager} from '@myparcel-vfb/hook-manager/src';
 import {isOfType} from '@myparcel/ts-utils';
 
 export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'] as const;

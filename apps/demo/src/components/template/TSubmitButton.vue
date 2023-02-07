@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
-import {InteractiveElementInstance} from '@myparcel/vue-form-builder';
+import {InteractiveElementInstance} from '@myparcel/vue-form-builder/src';
 import LoadingOverlay from '../LoadingOverlay.vue';
 import {translate} from '../../translate';
 

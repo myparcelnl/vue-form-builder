@@ -2,7 +2,7 @@ import {BaseElementConfiguration, ComponentHooks, ComponentOrHtmlElement, Elemen
 import {FieldValidator, Validator} from '../validator';
 import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from '../plain-element';
 import {FormInstance} from '../Form.types';
-import {HookManagerInstance} from '@myparcel-vfb/hook-manager';
+import {HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
 import {PromiseOr} from '@myparcel/ts-utils';
 import {Ref} from 'vue';
 

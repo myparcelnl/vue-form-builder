@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import {computed, defineComponent} from 'vue';
-import {MagicForm} from '@myparcel/vue-form-builder';
+import {MagicForm} from '@myparcel/vue-form-builder/src';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';
 
 export default defineComponent({

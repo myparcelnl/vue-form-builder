@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import {App, setupDevtoolsPlugin} from '@vue/devtools-api';
-import {FormInstance, useFormBuilder} from '@myparcel-vfb/core';
+import {FormInstance, useFormBuilder} from '@myparcel-vfb/core/src';
 import {PINK_500} from './types';
 import {StateBase} from '@vue/devtools-api/lib/esm/api/component';
 import {UnwrapNestedRefs} from 'vue';

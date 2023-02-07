@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,no-underscore-dangle,@typescript-eslint/naming-convention */
+/* eslint-disable */
 // noinspection JSUnusedGlobalSymbols
 
 declare module '*.vue' {

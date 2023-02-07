@@ -1,6 +1,6 @@
 {
   "name": "@myparcel-vfb/plugin",
-  "version": "1.0.0-alpha.10",
+  "version": "1.0.0-alpha.11",
   "license": "MIT",
   "type": "module",
   "main": "./lib/index.js",
@@ -17,7 +17,7 @@
     "watch": "run ws:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/core": "workspace:^1.0.0-alpha.10",
+    "@myparcel-vfb/core": "workspace:^1.0.0-alpha.11",
     "@myparcel/ts-utils": "^1.5.1",
     "@vue/devtools-api": "^6.5.0"
   },

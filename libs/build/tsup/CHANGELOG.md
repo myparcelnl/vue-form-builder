@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.8](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/build-tsup@1.0.0-alpha.7...@myparcel-vfb/build-tsup@1.0.0-alpha.8) "@myparcel-vfb/build-tsup" (2023-02-07)
+
+
+### Features
+
+* add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
+
+
+
+
 ## [1.0.0-alpha.7](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/build-tsup@1.0.0-alpha.6...@myparcel-vfb/build-tsup@1.0.0-alpha.7) "@myparcel-vfb/build-tsup" (2023-01-31)
 
 

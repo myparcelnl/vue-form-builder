@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.33](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.32...@myparcel/vue-form-builder@1.0.0-alpha.33) "@myparcel/vue-form-builder" (2023-02-07)
+
+
+### Features
+
+* add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
+
+
+
+
 ## [1.0.0-alpha.32](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.31...@myparcel/vue-form-builder@1.0.0-alpha.32) "@myparcel/vue-form-builder" (2023-01-31)
 
 

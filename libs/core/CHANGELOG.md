@@ -2,6 +2,21 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.11](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.10...@myparcel-vfb/core@1.0.0-alpha.11) "@myparcel-vfb/core" (2023-02-07)
+
+
+### Features
+
+* add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
+
+
+### Bug Fixes
+
+* **core:** fix component events ([4de71b5](https://github/myparcelnl/vue-form-builder/commit/4de71b5b5faaefc270221c1e14c1debe3dc00a1d))
+
+
+
+
 ## [1.0.0-alpha.10](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.9...@myparcel-vfb/core@1.0.0-alpha.10) "@myparcel-vfb/core" (2023-01-31)
 
 

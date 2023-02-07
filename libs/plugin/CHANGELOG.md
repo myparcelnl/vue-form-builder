@@ -2,6 +2,22 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.11](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-alpha.10...@myparcel-vfb/plugin@1.0.0-alpha.11) "@myparcel-vfb/plugin" (2023-02-07)
+
+
+### Features
+
+* add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
+
+
+### Bug Fixes
+
+* only register devtools when needed ([e848e08](https://github/myparcelnl/vue-form-builder/commit/e848e080362f134ede3f09ef24df6078d5541788))
+* **plugin:** update devtools integration ([83ac07c](https://github/myparcelnl/vue-form-builder/commit/83ac07c9d0ffb4d6cb011bceb7e254fc39d5f072))
+
+
+
+
 ## [1.0.0-alpha.10](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-alpha.9...@myparcel-vfb/plugin@1.0.0-alpha.10) "@myparcel-vfb/plugin" (2023-01-31)
 
 

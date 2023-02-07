@@ -83,6 +83,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         const carriers = useFetchCarriers();
         await carriers.suspense();
 
+        field.props ??= {};
         field.props.options =
           carriers.data.value?.map((carrier) => ({
             label: carrier.human,
@@ -178,6 +179,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       ref: ref(0),
       label: 'copy_amount',
       props: {
+        min: 0,
         max: 10,
       },
       disabledWhen: (instance) => instance.form.model.labelAmount.ref.value < 5,

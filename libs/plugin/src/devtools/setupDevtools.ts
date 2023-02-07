@@ -1,21 +1,24 @@
 /* eslint-disable max-lines-per-function */
 import {App, setupDevtoolsPlugin} from '@vue/devtools-api';
+import {FormInstance, useFormBuilder} from '@myparcel-vfb/core';
+import {PINK_500} from './types';
 import {StateBase} from '@vue/devtools-api/lib/esm/api/component';
+import {UnwrapNestedRefs} from 'vue';
 import {createFormNode} from './createFormNode';
 import {getComponentName} from './getComponentName';
-import {FormInstance, useFormBuilder} from '@myparcel-vfb/core';
-import {UnwrapNestedRefs} from 'vue';
 
-const formInspectorId = `myparcel-form-builder-inspector`;
+const PREFIX = `myparcel-form-builder`;
+
+const TIMELINE_ID = `${PREFIX}-events`;
+const INSPECTOR_ID = `${PREFIX}-inspector`;
 
 // eslint-disable-next-line max-lines-per-function
 export const setupDevtools = (app: App): void => {
   setupDevtoolsPlugin(
     {
       id: `myparcel-form-builder`,
-      // componentStateTypes: [stateType],
       label: 'MyParcel Form builder',
-      packageName: '@myparcel-vfb/core',
+      packageName: '@myparcel/vue-form-builder',
       homepage: 'https://github.com/myparcelnl/vue-form-builder',
       logo: 'https://backoffice.myparcel.nl/static/myparcel-nederland/skin/images/logo-icon.svg',
       app,
@@ -24,8 +27,14 @@ export const setupDevtools = (app: App): void => {
     (api) => {
       let activePayload;
 
+      api.addTimelineLayer({
+        id: TIMELINE_ID,
+        color: PINK_500,
+        label: 'Forms',
+      });
+
       api.addInspector({
-        id: formInspectorId,
+        id: INSPECTOR_ID,
         noSelectionText: 'No form selected',
         label: 'Forms',
         icon: 'view_list',
@@ -35,7 +44,7 @@ export const setupDevtools = (app: App): void => {
       api.on.getInspectorTree((payload) => {
         activePayload = payload;
 
-        if (payload.app === app && payload.inspectorId === formInspectorId) {
+        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
           if (!activePayload) {
             return;
           }
@@ -50,7 +59,7 @@ export const setupDevtools = (app: App): void => {
       });
 
       api.on.getInspectorState((payload) => {
-        if (payload.inspectorId === formInspectorId) {
+        if (payload.inspectorId === INSPECTOR_ID) {
           const split = payload.nodeId.split('|');
 
           const {form: formName, field: fieldName} = split.reduce(

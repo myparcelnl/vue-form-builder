@@ -12,7 +12,7 @@
 import {PropType, computed, defineComponent, provide} from 'vue';
 import {AnyElementInstance} from '../types';
 import {INJECT_ELEMENT} from '../services';
-import {useElementHooks} from '../composables';
+import {createElementHooks} from '../composables';
 
 export default defineComponent({
   name: 'FormElement',
@@ -23,11 +23,13 @@ export default defineComponent({
     },
   },
 
+  emits: ['blur', 'focus', 'click'],
+
   setup: (props) => {
     provide(INJECT_ELEMENT, props.element);
 
     return {
-      hooks: useElementHooks(props.element, {
+      hooks: createElementHooks(props.element, {
         blur: props.element.blur,
         focus: props.element.focus,
         click: props.element.click,

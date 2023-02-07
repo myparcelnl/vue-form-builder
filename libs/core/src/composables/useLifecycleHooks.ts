@@ -7,7 +7,7 @@ type UseLifeCycleHooks = () => {
   hooks: typeof COMPONENT_LIFECYCLE_HOOKS;
   register(
     hookManager: HookManagerInstance<Partial<ComponentLifecycleHooks>> & Record<string, unknown>,
-    args?: unknown,
+    ...args: unknown[]
   ): void;
 };
 
@@ -17,9 +17,9 @@ export const useLifecycleHooks: UseLifeCycleHooks = () => {
   return {
     hooks: COMPONENT_LIFECYCLE_HOOKS,
 
-    register(hookManager, args) {
+    register(hookManager, ...args) {
       if (hookManager.has(HOOK_ON_CREATED)) {
-        void hookManager.execute(HOOK_ON_CREATED, args);
+        void hookManager.execute(HOOK_ON_CREATED, ...args);
       }
 
       hookManager
@@ -32,7 +32,7 @@ export const useLifecycleHooks: UseLifeCycleHooks = () => {
         .forEach((hook) => {
           // @ts-expect-error hook.name exists on Vue
           Vue[hook.name](async () => {
-            await hookManager.execute(hook.name, args);
+            await hookManager.execute(hook.name, ...args);
           });
         });
     },

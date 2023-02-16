@@ -9,9 +9,9 @@
 </template>
 
 <script lang="ts">
-import {PropType, computed, defineComponent, provide} from 'vue';
+import {INJECT_ELEMENT, INJECT_FORM} from '../services';
+import {PropType, computed, defineComponent, inject, provide} from 'vue';
 import {AnyElementInstance} from '../types';
-import {INJECT_ELEMENT} from '../services';
 import {createElementHooks} from '../composables';
 
 export default defineComponent({
@@ -27,6 +27,8 @@ export default defineComponent({
 
   setup: (props) => {
     provide(INJECT_ELEMENT, props.element);
+
+    const form = inject(INJECT_FORM);
 
     return {
       hooks: createElementHooks(props.element, {
@@ -49,9 +51,12 @@ export default defineComponent({
        * Collect attributes. Always adds `element.attributes`, but only adds `element` if element is a Vue component.
        */
       attributes: computed(() => {
+        const elementProp = form?.config.field?.elementProp;
+
         return {
           ...props.element.attributes,
-          ...(typeof props.element.component === 'string' ? {} : {element: props.element}),
+
+          ...(typeof props.element.component === 'string' || !elementProp ? {} : {element: props.element}),
         };
       }),
     };

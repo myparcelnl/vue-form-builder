@@ -17,6 +17,11 @@
           to="/addresses/new">
           Create address
         </NLink>
+        <NLink
+          class="hover:text-pink-200 transition-colors"
+          to="/forms/no-prop">
+          Form without element props
+        </NLink>
       </nav>
     </div>
   </header>

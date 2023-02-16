@@ -1,7 +1,9 @@
 import {InstanceFormConfiguration} from './Form.types';
 
 export const DEFAULT_FORM_CONFIGURATION: InstanceFormConfiguration = {
-  field: {},
+  field: {
+    elementProp: true,
+  },
 
   fieldDefaults: {
     attributes: {},

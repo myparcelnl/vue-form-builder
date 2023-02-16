@@ -18,6 +18,11 @@ const router = createRouter({
       name: 'addresses-new',
       component: () => import('../views/EditAddressView.vue'),
     },
+    {
+      path: '/forms/no-prop',
+      name: 'forms-no-prop',
+      component: () => import('../views/NoPropView.vue'),
+    },
   ],
 });
 

@@ -4,6 +4,10 @@
   "repository": "github:myparcelnl/vue-form-builder",
   "license": "MIT",
   "type": "module",
+  "exports": {
+    ".": "./lib/index.js",
+    "./src": "./src/index.ts"
+  },
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [

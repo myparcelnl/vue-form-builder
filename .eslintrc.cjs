@@ -1,10 +1,5 @@
 module.exports = {
   root: true,
-  parserOptions: {
-    tsconfigRootDir: __dirname,
-    project: ['tsconfig.json'],
-    extraFileExtensions: ['.vue'],
-  },
   overrides: [
     {
       files: ['./**/index.ts'],
@@ -26,7 +21,17 @@ module.exports = {
     },
     {
       files: ['./**/*.js', './**/*.cjs', './**/*.mjs'],
-      extends: '@myparcel-eslint/eslint-config-node',
+      extends: [
+        '@myparcel-eslint/eslint-config-node',
+        '@myparcel-eslint/eslint-config-prettier',
+        '@myparcel-eslint/eslint-config-esnext',
+      ],
+    },
+    {
+      files: ['./**/*.js', './**/*.mjs'],
+      parserOptions: {
+        sourceType: 'module',
+      },
     },
     {
       files: ['./**/*.spec.*', './**/*.test.*', './**/__tests__/**/*'],

@@ -9,7 +9,6 @@
     "target": "ESNext",
     "types": ["vite/client", "node"]
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
   "exclude": [
     "libs/**/dist",
     "libs/**/lib",

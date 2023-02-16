@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
+  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
   "compilerOptions": {
     "paths": {
       "@myparcel-vfb/build-*": ["./libs/build/*/src"],

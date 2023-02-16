@@ -1,25 +1,19 @@
 {
   "name": "@myparcel-vfb/build-tsup",
   "version": "1.0.0-alpha.9",
+  "private": true,
   "license": "MIT",
   "type": "module",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
-  "scripts": {
-    "build": "run ws:tsup:build \"$(pwd)\"",
-    "build:dev": "run ws:tsup:build:dev \"$(pwd)\"",
-    "clean": "run ws:clean \"$(pwd)\"",
-    "typecheck": "run ws:tsup:typecheck \"$(pwd)\"",
-    "watch": "run ws:tsup:watch \"$(pwd)\""
+  "exports": {
+    ".": "./index.js"
   },
+  "types": "./index.d.ts",
   "dependencies": {
-    "tsup": "^6.6.3"
+    "fast-glob": "^3.2.12",
+    "typescript": "^4.9.5"
   },
   "devDependencies": {
-    "typescript": "^4.9.5"
+    "@myparcel/ts-utils": "^1.6.0"
   },
   "publishConfig": {
     "access": "public"

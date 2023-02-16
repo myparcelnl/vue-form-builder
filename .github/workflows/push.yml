@@ -53,9 +53,9 @@ jobs:
             --config-file monodeploy.config.cjs \
             --log-level 0
         env:
-          GH_TOKEN: ${{ steps.credentials.outputs.token }}
+          # TODO: Switch to app token when GitHub apps are allowed to bypass status checks. https://github.com/orgs/community/discussions/43460
+          GH_TOKEN: ${{ secrets.GH_REPO_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: 'Dispatch deploy demo command'
         uses: peter-evans/repository-dispatch@v2
         with:

@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@myparcel-vfb/core": "workspace:^1.0.0-alpha.12",
-    "@myparcel/ts-utils": "^1.5.1",
+    "@myparcel/ts-utils": "^1.6.0",
     "@vue/devtools-api": "^6.5.0"
   },
   "devDependencies": {

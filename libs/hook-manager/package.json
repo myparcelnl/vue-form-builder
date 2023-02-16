@@ -19,7 +19,7 @@
     "watch": "run ws:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel/ts-utils": "^1.5.1"
+    "@myparcel/ts-utils": "^1.6.0"
   },
   "devDependencies": {
     "@myparcel-vfb/build-tsup": "workspace:*",

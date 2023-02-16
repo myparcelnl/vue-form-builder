@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.12](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.11...@myparcel-vfb/core@1.0.0-alpha.12) "@myparcel-vfb/core" (2023-02-16)
+
+
+### Features
+
+* add option to not pass element as prop to custom elements ([38b007d](https://github/myparcelnl/vue-form-builder/commit/38b007d2e472f0c99ee769d0cb11ab17abcd2580))
+
+
+
+
 ## [1.0.0-alpha.11](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.10...@myparcel-vfb/core@1.0.0-alpha.11) "@myparcel-vfb/core" (2023-02-07)
 
 

@@ -38,8 +38,8 @@ import FormElementWrapper from './FormElementWrapper';
 import {FormInstance} from '../form';
 import Fragment from './Fragment.vue';
 import {INJECT_FORM} from '../services';
-import {getValue} from '../utils';
 import {useLifecycleHooks} from '../composables';
+import {get} from '@vueuse/core';
 
 export default defineComponent({
   name: 'MagicForm',
@@ -65,10 +65,8 @@ export default defineComponent({
 
     return {
       elementsAreResolved,
-      plainFields: computed(() => getValue(props.form.fields).filter((element) => !element.teleportSelector)),
-      teleportFields: computed(() =>
-        getValue(props.form.fields).filter((element) => Boolean(element.teleportSelector)),
-      ),
+      plainFields: computed(() => get(props.form.fields).filter((element) => !element.teleportSelector)),
+      teleportFields: computed(() => get(props.form.fields).filter((element) => Boolean(element.teleportSelector))),
 
       async handleSubmit() {
         await props.form.submit();

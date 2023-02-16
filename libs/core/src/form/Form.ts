@@ -3,9 +3,10 @@ import {FormHooks, FormInstance, InstanceFormConfiguration} from './Form.types';
 import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
 import {PlainElement, PlainElementInstance} from './plain-element';
 import {computed, ref} from 'vue';
-import {getValue, markComponentAsRaw} from '../utils';
 import {createHookManager} from '@myparcel-vfb/hook-manager/src';
+import {get} from '@vueuse/core';
 import {isOfType} from '@myparcel/ts-utils';
+import {markComponentAsRaw} from '../utils';
 
 export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'] as const;
 
@@ -80,7 +81,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   public async validate(): Promise<boolean> {
     await this.hooks.execute('beforeValidate', this);
     const result = await Promise.all(
-      getValue(this.fields).map((field) => {
+      get(this.fields).map((field) => {
         if (!isOfType<InteractiveElementInstance>(field, 'ref')) {
           field.resetValidation();
           return true;
@@ -96,11 +97,11 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   }
 
   public async reset(): Promise<void> {
-    await Promise.all(getValue(this.interactiveFields).map((field) => field.reset()));
+    await Promise.all(get(this.interactiveFields).map((field) => field.reset()));
   }
 
   public getValues(): Record<string, unknown> {
-    return getValue(this.interactiveFields).reduce((acc, field) => {
+    return get(this.interactiveFields).reduce((acc, field) => {
       if (field.isDisabled) {
         return acc;
       }

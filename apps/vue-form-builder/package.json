@@ -29,10 +29,10 @@
     "watch": "run ws:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/core": "workspace:^1.0.0-alpha.12",
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.15",
-    "@myparcel-vfb/plugin": "workspace:^1.0.0-alpha.12",
-    "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.15",
+    "@myparcel-vfb/core": "workspace:*",
+    "@myparcel-vfb/hook-manager": "workspace:*",
+    "@myparcel-vfb/plugin": "workspace:*",
+    "@myparcel-vfb/utils": "workspace:*",
     "@myparcel/ts-utils": "^1.6.0"
   },
   "devDependencies": {

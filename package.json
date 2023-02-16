@@ -19,7 +19,7 @@
     "serve:demo": "nx serve demo",
     "serve:watch": "run build:dev:default --output-style=stream && nx watch --all -d -- nx run \\$NX_PROJECT_NAME:build:dev --output-style=stream",
     "test": "nx run-many --target=test --parallel --output-style=stream",
-    "test:run": "nx run-many --target=test:run --output-style=stream",
+    "test:run": "nx run-many --target=test:run --parallel=false --output-style=stream",
     "typecheck": "nx run-many --target=typecheck",
     "ws:clean": "cd $0 && rimraf lib",
     "ws:test": "cd $0 && vitest",

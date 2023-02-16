@@ -16,7 +16,7 @@
     "watch": "run ws:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "tsup": "^6.5.0"
+    "tsup": "^6.6.3"
   },
   "devDependencies": {
     "typescript": "^4.9.5"

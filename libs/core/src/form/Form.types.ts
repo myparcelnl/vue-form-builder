@@ -155,9 +155,13 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
  * Initialized form configuration always contains the following properties.
  */
 export type InstanceFormConfiguration<FC extends FormConfiguration = FormConfiguration> = FC & {
+  field: {
+    elementProp: boolean;
+    wrapper?: ComponentOrHtmlElement;
+  };
   fieldDefaults: {
     attributes: AnyAttributes;
-    wrapper: true;
+    wrapper: boolean;
   };
   form: {
     attributes: AnyAttributes;

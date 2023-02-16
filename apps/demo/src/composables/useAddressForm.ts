@@ -3,7 +3,6 @@
 import {defineForm, Form, SelectOption} from '@myparcel/vue-form-builder';
 
 const postcodeHousenumberValidation = async (form: Form) => {
-  console.log(form);
   form.model.postcodeHousenumberValidation.visible = false;
 
   if (form.model.postcode && form.model.housenumber && form.model.country === 'NL') {

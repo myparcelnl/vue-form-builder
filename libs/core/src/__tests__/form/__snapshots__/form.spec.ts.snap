@@ -1,0 +1,75 @@
+// Vitest Snapshot v1
+
+exports[`rendering a form > defaults to no inner wrapper 1`] = `
+<form
+  class="valid"
+  id="form"
+>
+  
+  
+  <div
+    data-test-id="field"
+    data-test-type="interactive"
+  />
+  <input
+    data-test-id="named"
+    data-test-type="plain"
+  >
+    
+    
+  </input>
+  <br
+    data-test-type="plain"
+  >
+    
+    
+  </br>
+  
+  <!--v-if-->
+  
+</form>
+`;
+
+exports[`rendering a form > renders html elements 1`] = `
+"<form id=\\"form\\" class=\\"valid\\">
+  <div data-test-id=\\"field\\" data-test-type=\\"interactive\\"></div><input data-test-id=\\"named\\" data-test-type=\\"plain\\"><br data-test-type=\\"plain\\">
+  <!--v-if-->
+</form>"
+`;
+
+exports[`rendering a form > renders html elements 2`] = `
+"<form id=\\"form\\" class=\\"valid\\">
+  <div data-test-id=\\"field\\" data-test-type=\\"interactive\\"></div><input data-test-id=\\"named\\" data-test-type=\\"plain\\"><br data-test-type=\\"plain\\">
+</form>"
+`;
+
+exports[`rendering a form > renders html elements 3`] = `
+"<form id=\\"form\\" class=\\"valid\\">
+  <div data-test-id=\\"field\\" data-test-type=\\"interactive\\"></div><input data-test-id=\\"named\\" data-test-type=\\"plain\\"><br data-test-type=\\"plain\\">
+</form>"
+`;
+
+exports[`rendering a form > wraps fields with a wrapper element 1`] = `
+<form
+  class="valid"
+  id="form"
+>
+  
+  
+  <span
+    class="inner-wrapper"
+    element="[object Object]"
+  />
+  <span
+    class="inner-wrapper"
+    element="[object Object]"
+  />
+  <span
+    class="inner-wrapper"
+    element="[object Object]"
+  />
+  
+  <!--v-if-->
+  
+</form>
+`;

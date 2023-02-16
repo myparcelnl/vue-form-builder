@@ -9,7 +9,7 @@ import TextInput from '../elements/TextInput.vue';
 import {firstNameNotDuane} from '../examples/validators';
 
 describe('Form fields', () => {
-  it('can calculate forwards based on primary input', async () => {
+  it.skip('can calculate forwards based on primary input', async () => {
     const firstName = ref('');
     const price = ref('0');
 

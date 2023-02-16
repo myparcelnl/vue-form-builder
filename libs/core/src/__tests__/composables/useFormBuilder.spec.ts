@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest';
-import {DEFAULT_FORM_CONFIGURATION} from '../../form';
+import {getDefaultFormConfiguration} from '../../form';
 import {useFormBuilder} from '../../composables';
 
 describe('useFormBuilder', () => {
@@ -22,7 +22,7 @@ describe('useFormBuilder', () => {
     expect(formBuilder.forms.value).toHaveProperty('test');
     expect(formBuilder.forms.value.test.config.form.attributes.class).toBe('test-class');
 
-    formBuilder.defaults.value = DEFAULT_FORM_CONFIGURATION;
+    formBuilder.defaults.value = getDefaultFormConfiguration();
   });
 
   it('should overwrite old form when registering a form with a previously used name', () => {

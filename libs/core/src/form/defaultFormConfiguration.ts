@@ -1,6 +1,6 @@
 import {InstanceFormConfiguration} from './Form.types';
 
-export const DEFAULT_FORM_CONFIGURATION: InstanceFormConfiguration = {
+export const getDefaultFormConfiguration = (): InstanceFormConfiguration => ({
   field: {
     elementProp: true,
   },
@@ -16,4 +16,4 @@ export const DEFAULT_FORM_CONFIGURATION: InstanceFormConfiguration = {
     attributes: {},
     tag: 'form',
   },
-};
+});

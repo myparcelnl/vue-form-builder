@@ -1,138 +1,112 @@
-import {afterEach, describe, expect, it, vi} from 'vitest';
-import {flushPromises, mount} from '@vue/test-utils';
-import {h, ref} from 'vue';
+import {Form, InteractiveElementInstance, getDefaultFormConfiguration} from '../../form';
+import {PropType, defineComponent, h, isVNode, ref, vModelText, withDirectives} from 'vue';
+import {afterEach, describe, expect, it} from 'vitest';
 import {AnyElementConfiguration} from '../../types';
-import {DEFAULT_FORM_CONFIGURATION} from '../../form';
-import {MagicForm} from '../../components';
-import TextInput from '../elements/TextInput.vue';
-import {generateForm} from '../utils';
+import {defineForm} from '@myparcel/vue-form-builder';
 import {useFormBuilder} from '../../composables';
 
-describe('defining a form', () => {
-  it('renders html elements', async () => {
-    const form = generateForm({
-      fields: [
-        {
-          name: 'named',
-          component: 'input',
-        },
-        {
-          component: 'br',
-        },
-        {
-          name: 'text',
-          component: TextInput,
-          ref: ref('initial'),
-        },
-      ],
-    });
+const mockComponent = defineComponent({
+  props: {
+    modelValue: {
+      type: String,
+    },
+    element: {
+      type: Object as PropType<InteractiveElementInstance>,
+    },
+  },
+  render: () => withDirectives(h('div'), [[vModelText]]),
+});
 
-    const wrapper = mount(MagicForm, {props: {form}});
-    await flushPromises();
-    const formElement = wrapper.find('form');
-    expect(formElement.exists()).toBe(true);
-    expect(formElement.attributes('id')).toBe('form');
-    expect(formElement.find('input').exists()).toBe(true);
-    expect(formElement.find('br').exists()).toBe(true);
-    expect(formElement.find('input[name="text"]').exists()).toBe(true);
-    expect(wrapper.html()).toMatchSnapshot();
+const commonFields: AnyElementConfiguration[] = [
+  {
+    name: 'field',
+    component: mockComponent,
+    ref: ref(''),
+    label: 'my_label_1',
+  },
+  {
+    name: 'named',
+    component: 'input',
+    label: 'my_label_2',
+  },
+  {
+    component: 'br',
+  },
+];
+
+describe('defining a form', () => {
+  const formBuilder = useFormBuilder();
+
+  afterEach(() => {
+    formBuilder.forms.value = Object.create(null);
+    formBuilder.defaults.value = getDefaultFormConfiguration();
   });
 
-  describe('overriding defaults', () => {
-    const formBuilder = useFormBuilder();
+  it('registers form in the form builder', () => {
+    expect(formBuilder.forms.value).toEqual({});
 
-    const commonFields: AnyElementConfiguration[] = [
-      {
-        name: 'field',
-        component: 'input',
-        ref: ref(''),
-        label: 'my_label_1',
+    const form = defineForm('myForm', {fields: commonFields});
+
+    expect(formBuilder.forms.value).toHaveProperty('myForm');
+    expect(formBuilder.forms.value.myForm).toBeInstanceOf(Form);
+    expect(formBuilder.forms.value.myForm.fields).toHaveLength(form.fields.value.length);
+  });
+
+  it('has default values', () => {
+    const form = defineForm('myForm', {fields: commonFields});
+    const defaults = getDefaultFormConfiguration();
+
+    expect(form.config.form).toEqual(defaults.form);
+    expect(form.config.field).toEqual(defaults.field);
+    expect(form.config.fieldDefaults).toEqual(defaults.fieldDefaults);
+  });
+
+  it('can set default values', () => {
+    expect(formBuilder.forms.value).toEqual({});
+
+    formBuilder.setDefaults({
+      form: {
+        attributes: {
+          class: ['form-class'],
+        },
+        tag: 'div',
       },
-      {
-        name: 'named',
-        component: 'input',
-        label: 'my_label_2',
+      field: {
+        wrapper: h('div'),
+        elementProp: false,
       },
-      {
-        component: 'br',
+      fieldDefaults: {
+        attributes: {
+          class: ['default-class'],
+        },
+        lazy: true,
+        wrapper: false,
       },
-    ];
-
-    afterEach(() => {
-      formBuilder.defaults.value = DEFAULT_FORM_CONFIGURATION;
     });
 
-    it('adds class to form', () => {
-      formBuilder.defaults.value.form.attributes.class = 'form-class';
+    const form = defineForm('myForm', {fields: commonFields});
 
-      const form = generateForm(commonFields);
-      const wrapper = mount(MagicForm, {props: {form}});
-      const formElement = wrapper.find('form');
-      expect(formElement.classes()).toContain('form-class');
+    for (const field of form.fields.value) {
+      expect(field.lazy).toBe(true);
+      expect(field.attributes.class).toContain('default-class');
+    }
+
+    expect(form.config.form).toEqual({
+      attributes: {
+        class: ['form-class'],
+      },
+      tag: 'div',
     });
 
-    it('changes tag of outer form wrapper', () => {
-      formBuilder.defaults.value.form.tag = 'div';
-      formBuilder.defaults.value.form.attributes.class = 'form';
+    expect(form.config.field.elementProp).toBe(false);
+    expect(isVNode(form.config.field.wrapper)).toBeTruthy();
 
-      const form = generateForm(commonFields);
-      const wrapper = mount(MagicForm, {props: {form}});
-      const formElement = wrapper.find('.form');
-
-      expect(formElement.exists()).toBe(true);
-      expect(formElement.element.tagName).toBe('DIV');
-      expect(wrapper.find('form').exists()).toBe(false);
-    });
-
-    it('wraps fields with a wrapper element', () => {
-      formBuilder.defaults.value.form.attributes.class = 'my-form';
-      formBuilder.defaults.value.form.wrapper = h('div', {class: 'inner-wrapper'});
-
-      const form = generateForm(commonFields);
-      const wrapper = mount(MagicForm, {props: {form}});
-      const wrapperElement = wrapper.find('.my-form > .inner-wrapper');
-
-      expect(wrapperElement.exists()).toBe(true);
-      expect(wrapperElement.element.tagName).toBe('DIV');
-    });
-
-    it('adds attributes to each field', () => {
-      formBuilder.defaults.value.fieldDefaults.attributes.class = 'default-field-class';
-      formBuilder.defaults.value.fieldDefaults.attributes['aria-label'] = 'test';
-
-      const form = generateForm(commonFields);
-      const wrapper = mount(MagicForm, {props: {form}});
-
-      const formElement = wrapper.find('form');
-
-      expect(formElement.findAll('.default-field-class')).toHaveLength(3);
-      expect(formElement.findAll('[aria-label="test"]')).toHaveLength(3);
-    });
-
-    it('makes fields lazy by default', () => {
-      formBuilder.defaults.value.fieldDefaults.lazy = true;
-
-      const form = generateForm(commonFields);
-      expect(form.model.field.lazy).toBe(true);
-    });
-
-    it('makes fields optional by default', () => {
-      formBuilder.defaults.value.fieldDefaults.optional = true;
-
-      const form = generateForm(commonFields);
-      expect(form.model.field.isOptional.value).toBe(true);
-    });
-
-    it('calls renderLabel if defined when rendering a label', () => {
-      expect.assertions(1);
-      const renderLabel = vi.fn((value: string): string => value.toUpperCase());
-
-      formBuilder.defaults.value.renderLabel = renderLabel;
-
-      const form = generateForm(commonFields);
-      mount(MagicForm, {props: {form}});
-
-      expect(renderLabel).toHaveBeenCalledTimes(1);
+    expect(form.config.fieldDefaults).toEqual({
+      attributes: {
+        class: ['default-class'],
+      },
+      lazy: true,
+      wrapper: false,
     });
   });
 });

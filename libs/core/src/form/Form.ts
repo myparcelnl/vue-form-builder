@@ -31,7 +31,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     this.name = name;
     this.config = config;
 
-    markComponentAsRaw(this.config.field?.wrapper);
+    markComponentAsRaw(this.config.field.wrapper);
     markComponentAsRaw(this.config.fieldDefaults.wrapper);
 
     fields.forEach((field) => {

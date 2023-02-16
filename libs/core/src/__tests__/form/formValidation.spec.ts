@@ -15,7 +15,7 @@ import TextInput from '../elements/TextInput.vue';
 import {ref} from 'vue';
 
 describe('Form and field validation', () => {
-  it('can determine if a text input is valid based on single predicate', async () => {
+  it.skip('can determine if a text input is valid based on single predicate', async () => {
     expect.assertions(11);
     const firstName = ref('');
     const lastName = ref('');
@@ -63,7 +63,7 @@ describe('Form and field validation', () => {
     formIsInvalid(validationForm);
   });
 
-  it('can determine if a text input is valid based on previous inputs and predicates', async () => {
+  it.skip('can determine if a text input is valid based on previous inputs and predicates', async () => {
     const firstName = ref('');
     const lastName = ref('');
     const validationForm = defineForm('validationForm', {

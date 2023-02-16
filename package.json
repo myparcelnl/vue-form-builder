@@ -34,8 +34,11 @@
     "ws:vite:watch": "cd $0 && vite build --mode development --watch"
   },
   "lint-staged": {
-    "*.{json,md}": "prettier --write",
-    "*.{ts,vue}": "eslint --fix",
+    "*.{json,md,html}": "prettier --write",
+    "*.{ts,vue}": [
+      "eslint --fix --cache",
+      "nx affected --uncommitted --target=test:run --parallel=false --output-style=stream"
+    ],
     "package.json": "npx sort-package-json"
   },
   "prettier": "@myparcel/prettier-config",

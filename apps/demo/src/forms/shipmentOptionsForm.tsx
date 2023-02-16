@@ -24,7 +24,6 @@ const firstName = ref('');
 const lastName = ref('');
 
 const validateName = (field: InteractiveElementInstance) => {
-  console.log(field.form.fields.value);
   const nameField = field.form.fields.value.find((field) => field.name === 'name');
   const firstNameField = field.form.fields.value.find((field) => field.name === 'firstname');
   const lastNameField = field.form.fields.value.find((field) => field.name === 'lastname');
@@ -55,10 +54,6 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
 
   validationMessages: {
     required: 'This field is required',
-  },
-
-  afterSubmit(form) {
-    console.log('afterSubmit', form);
   },
 
   fields: [

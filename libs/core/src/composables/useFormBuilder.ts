@@ -1,4 +1,4 @@
-import {DEFAULT_FORM_CONFIGURATION, Form, FormConfiguration, FormInstance, InstanceFormConfiguration} from '../form';
+import {Form, FormConfiguration, FormInstance, InstanceFormConfiguration, getDefaultFormConfiguration} from '../form';
 import {Ref, ref} from 'vue';
 import {AnyElementConfiguration} from '../types';
 import {markComponentAsRaw} from '../utils';
@@ -37,7 +37,7 @@ export const useFormBuilder: UseFormBuilder = () => {
   // TODO: infinitely deep type error
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  defaults ??= ref(DEFAULT_FORM_CONFIGURATION);
+  defaults ??= ref(getDefaultFormConfiguration());
 
   return {
     defaults,

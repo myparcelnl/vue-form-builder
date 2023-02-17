@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.13](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-alpha.12...@myparcel-vfb/plugin@1.0.0-alpha.13) "@myparcel-vfb/plugin" (2023-02-17)
+
+
+### Bug Fixes
+
+* **plugin:** add missing const declaration ([7f9a782](https://github/myparcelnl/vue-form-builder/commit/7f9a7829015e9dfa84ac93a4107c702b4c285609))
+
+
+
+
 ## [1.0.0-alpha.12](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-alpha.11...@myparcel-vfb/plugin@1.0.0-alpha.12) "@myparcel-vfb/plugin" (2023-02-16)
 
 

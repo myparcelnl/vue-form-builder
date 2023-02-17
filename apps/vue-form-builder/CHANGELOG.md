@@ -2,6 +2,11 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.35](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.34...@myparcel/vue-form-builder@1.0.0-alpha.35) "@myparcel/vue-form-builder" (2023-02-17)
+
+
+
+
 ## [1.0.0-alpha.34](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.33...@myparcel/vue-form-builder@1.0.0-alpha.34) "@myparcel/vue-form-builder" (2023-02-16)
 
 

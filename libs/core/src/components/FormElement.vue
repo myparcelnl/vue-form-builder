@@ -9,8 +9,7 @@
 </template>
 
 <script lang="ts">
-import {INJECT_ELEMENT, INJECT_FORM} from '../services';
-import {PropType, computed, defineComponent, inject, provide} from 'vue';
+import {PropType, computed, defineComponent} from 'vue';
 import {AnyElementInstance} from '../types';
 import {createElementHooks} from '../composables';
 
@@ -26,10 +25,6 @@ export default defineComponent({
   emits: ['blur', 'focus', 'click'],
 
   setup: (props) => {
-    provide(INJECT_ELEMENT, props.element);
-
-    const form = inject(INJECT_FORM);
-
     return {
       hooks: createElementHooks(props.element, {
         blur: props.element.blur,
@@ -51,7 +46,7 @@ export default defineComponent({
        * Collect attributes. Always adds `element.attributes`, but only adds `element` if element is a Vue component.
        */
       attributes: computed(() => {
-        const elementProp = form?.config.field?.elementProp;
+        const elementProp = props.element.form?.config.field?.elementProp;
 
         return {
           ...props.element.attributes,

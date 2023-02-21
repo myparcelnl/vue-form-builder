@@ -34,14 +34,14 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, inject} from 'vue';
-import {INJECT_FORM} from '@myparcel/vue-form-builder/src';
+import {computed, defineComponent} from 'vue';
+import {useForm} from '@myparcel/vue-form-builder/src';
 
 export default defineComponent({
   name: 'Bonnetje',
 
   setup: () => {
-    const form = inject(INJECT_FORM);
+    const form = useForm();
 
     const values = computed(() => {
       return form?.getValues();

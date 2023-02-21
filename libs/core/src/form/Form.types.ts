@@ -18,8 +18,8 @@ export type FormConfiguration = FormHooks & {
     /**
      * Whether to use the element as a prop on custom elements. Defaults to true. If set to false, your component
      * boilerplate can be more concise and omit the "element" prop without getting it as an extraneous attribute in
-     * your html. You can still access the element using inject().
-     * @see INJECT_ELEMENT
+     * your html. You can still access the element via injection using useElement().
+     * @see useElement
      */
     elementProp?: boolean;
   };

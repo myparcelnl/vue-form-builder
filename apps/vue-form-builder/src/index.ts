@@ -15,6 +15,6 @@ export type {
 
 export type {SelectOption} from '@myparcel-vfb/utils/src';
 
-export {INJECT_ELEMENT, INJECT_FORM, MagicForm, defineField, defineForm, useFormBuilder} from '@myparcel-vfb/core/src';
+export {MagicForm, defineField, defineForm, useElement, useForm, useFormBuilder} from '@myparcel-vfb/core/src';
 
 export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from '@myparcel-vfb/plugin/src';

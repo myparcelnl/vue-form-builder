@@ -11,8 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import {INJECT_ELEMENT} from '@myparcel-vfb/core/src';
-import {inject} from 'vue';
+import {useElement} from '@myparcel/vue-form-builder/src';
 import {useVModel} from '@vueuse/core';
 
 // eslint-disable-next-line vue/no-unused-properties
@@ -21,5 +20,5 @@ const emit = defineEmits<(event: 'update:modelValue', value: string) => void>();
 
 const model = useVModel(props, undefined, emit);
 
-const element = inject(INJECT_ELEMENT);
+const element = useElement();
 </script>

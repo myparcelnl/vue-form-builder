@@ -3,9 +3,8 @@
   "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
   "compilerOptions": {
     "paths": {
-      "@myparcel-vfb/build-*": ["./libs/build/*/src"],
-      "@myparcel-vfb/*": ["./libs/*/src"],
-      "@myparcel/vue-form-builder": ["./apps/vue-form-builder/src"]
+      "@myparcel/vue-form-builder": ["./apps/vue-form-builder/src"],
+      "@myparcel-vfb/*": ["./libs/*/src"]
     }
   }
 }

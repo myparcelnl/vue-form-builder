@@ -32,8 +32,6 @@ jobs:
     name: 'Publish new release 🚀'
     runs-on: ubuntu-22.04
     needs: test
-    # TODO: remove the next line when updating to 1.0.0
-    if: always()
     steps:
       - uses: myparcelnl/actions/setup-git-credentials@v3
         id: credentials
@@ -48,6 +46,10 @@ jobs:
 
       - uses: ./.github/actions/setup
 
+      - uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./apps/demo/dist
+
       - uses: myparcelnl/actions/bundlewatch@v3
         with:
           token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
@@ -61,8 +63,16 @@ jobs:
           # TODO: Switch to app token when GitHub apps are allowed to bypass status checks. https://github.com/orgs/community/discussions/43460
           GH_TOKEN: ${{ secrets.GH_REPO_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: 'Dispatch deploy demo command'
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ steps.credentials.outputs.token }}
-          event-type: deploy-demo
+
+  deploy:
+    needs: release
+    runs-on: ubuntu-22.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v1

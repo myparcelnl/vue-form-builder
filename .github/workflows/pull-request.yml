@@ -13,27 +13,13 @@ concurrency:
 
 jobs:
   test:
-    name: 'Run affected unit tests 🧪'
     runs-on: ubuntu-22.04
     steps:
-      - uses: myparcelnl/actions/setup-git-credentials@v3
-        id: credentials
-        with:
-          app-id: ${{ secrets.MYPARCEL_APP_ID }}
-          private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
-
       - uses: actions/checkout@v3
-        with:
-          token: ${{ steps.credentials.outputs.token }}
 
-      - uses: ./.github/actions/setup
+      - uses: myparcelnl/actions/yarn-install@v3
         with:
-          app-id: ${{ secrets.MYPARCEL_APP_ID }}
-          private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
-
-      - uses: myparcelnl/actions/bundlewatch@v3
-        with:
-          token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
+          node-version: 18
 
       - name: 'Run tests'
         run: |
@@ -41,3 +27,14 @@ jobs:
             --target=test:run \
             --parallel \
             --output-style=static
+
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/actions/setup
+
+      - uses: myparcelnl/actions/bundlewatch@v3
+        with:
+          token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}

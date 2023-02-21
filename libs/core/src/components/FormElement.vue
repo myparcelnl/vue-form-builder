@@ -50,7 +50,6 @@ export default defineComponent({
 
         return {
           ...props.element.attributes,
-
           ...(typeof props.element.component === 'string' || !elementProp ? {} : {element: props.element}),
         };
       }),

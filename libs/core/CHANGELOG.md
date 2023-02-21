@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.15](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.14...@myparcel-vfb/core@1.0.0-alpha.15) "@myparcel-vfb/core" (2023-02-21)
+
+
+### Features
+
+* expose useForm and useElement ([a9df264](https://github/myparcelnl/vue-form-builder/commit/a9df2643ead2bd9ca976f1a158761acb4c34cf83))
+
+
+
+
 ## [1.0.0-alpha.14](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.13...@myparcel-vfb/core@1.0.0-alpha.14) "@myparcel-vfb/core" (2023-02-21)
 
 

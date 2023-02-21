@@ -5,8 +5,10 @@ on:
     branches:
       - main
 
+  merge_group:
+
 concurrency:
-  group: pull-request-${{ github.head_ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -28,6 +30,10 @@ jobs:
         with:
           app-id: ${{ secrets.MYPARCEL_APP_ID }}
           private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
+
+      - uses: myparcelnl/actions/bundlewatch@v3
+        with:
+          token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
 
       - name: 'Run tests'
         run: |

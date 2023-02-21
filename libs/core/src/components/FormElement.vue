@@ -8,52 +8,35 @@
   </component>
 </template>
 
-<script lang="ts">
-import {PropType, computed, defineComponent} from 'vue';
+<script lang="ts" setup>
+import {computed, defineEmits, defineProps} from 'vue';
 import {AnyElementInstance} from '../types';
 import {createElementHooks} from '../composables';
+import {useVModel} from '@vueuse/core';
 
-export default defineComponent({
-  name: 'FormElement',
-  props: {
-    element: {
-      type: Object as PropType<AnyElementInstance>,
-      required: true,
-    },
-  },
+const props = defineProps<{
+  element: AnyElementInstance;
+}>();
 
-  emits: ['blur', 'focus', 'click'],
+const emit = defineEmits<(event: 'blur' | 'focus' | 'click', value: boolean) => void>();
 
-  setup: (props) => {
-    return {
-      hooks: createElementHooks(props.element, {
-        blur: props.element.blur,
-        focus: props.element.focus,
-        click: props.element.click,
-      }),
-
-      model: computed({
-        get() {
-          return props.element.ref;
-        },
-        set(value) {
-          // eslint-disable-next-line vue/no-mutating-props
-          props.element.ref = value;
-        },
-      }),
-
-      /**
-       * Collect attributes. Always adds `element.attributes`, but only adds `element` if element is a Vue component.
-       */
-      attributes: computed(() => {
-        const elementProp = props.element.form?.config.field?.elementProp;
-
-        return {
-          ...props.element.attributes,
-          ...(typeof props.element.component === 'string' || !elementProp ? {} : {element: props.element}),
-        };
-      }),
-    };
-  },
+const hooks = createElementHooks(props.element, {
+  blur: props.element.blur,
+  focus: props.element.focus,
+  click: props.element.click,
 });
+
+/**
+ * Collect attributes. Always adds `element.attributes`, but only adds `element` if element is a Vue component.
+ */
+const attributes = computed(() => {
+  const elementProp = props.element.form?.config.field?.elementProp;
+
+  return {
+    ...props.element.attributes,
+    ...(typeof props.element.component === 'string' || !elementProp ? {} : {element: props.element}),
+  };
+});
+
+const model = useVModel(props, undefined, emit);
 </script>

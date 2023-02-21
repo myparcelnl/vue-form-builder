@@ -48,6 +48,10 @@ jobs:
 
       - uses: ./.github/actions/setup
 
+      - uses: myparcelnl/actions/bundlewatch@v3
+        with:
+          token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
+
       - name: 'Run monodeploy'
         run: |
           yarn monodeploy \

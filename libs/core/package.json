@@ -1,6 +1,6 @@
 {
   "name": "@myparcel-vfb/core",
-  "version": "1.0.0-alpha.13",
+  "version": "1.0.0-alpha.14",
   "repository": "github:myparcelnl/vue-form-builder",
   "license": "MIT",
   "type": "module",

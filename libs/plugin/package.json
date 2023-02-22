@@ -1,6 +1,6 @@
 {
   "name": "@myparcel-vfb/plugin",
-  "version": "1.0.0-alpha.14",
+  "version": "1.0.0-alpha.16",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -21,7 +21,7 @@
     "watch": "run ws:tsup:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/core": "workspace:^1.0.0-alpha.14",
+    "@myparcel-vfb/core": "workspace:^1.0.0-alpha.16",
     "@myparcel/ts-utils": "^1.6.0",
     "@vue/devtools-api": "^6.5.0"
   },

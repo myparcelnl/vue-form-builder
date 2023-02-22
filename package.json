@@ -21,7 +21,7 @@
     "test": "nx run-many --target=test --parallel --output-style=stream",
     "test:run": "nx run-many --target=test:run --parallel=false --output-style=stream",
     "typecheck": "nx run-many --target=typecheck",
-    "ws:clean": "cd $0 && rimraf lib",
+    "ws:clean": "cd $0 && rimraf dist",
     "ws:test": "cd $0 && vitest",
     "ws:test:run": "cd $0 && vitest run --coverage",
     "ws:tsup:build": "cd $0 && tsup-node src/index.ts --dts",
@@ -69,6 +69,7 @@
     "rimraf": "^4.1.2",
     "typescript": "^4.9.5"
   },
+  "packageManager": "yarn@3.4.1",
   "bundlewatch": {
     "ci": {
       "trackBranches": [
@@ -79,21 +80,20 @@
     },
     "files": [
       {
-        "path": "./apps/vue-form-builder/lib/**/*.js"
+        "path": "./apps/vue-form-builder/dist/**/*.js"
       },
       {
-        "path": "./libs/core/lib/**/*.js"
+        "path": "./libs/core/dist/**/*.js"
       },
       {
-        "path": "./libs/hook-manager/lib/**/*.js"
+        "path": "./libs/hook-manager/dist/**/*.js"
       },
       {
-        "path": "./libs/plugin/lib/**/*.js"
+        "path": "./libs/plugin/dist/**/*.js"
       },
       {
-        "path": "./libs/utils/lib/**/*.js"
+        "path": "./libs/utils/dist/**/*.js"
       }
     ]
-  },
-  "packageManager": "yarn@3.4.1"
+  }
 }

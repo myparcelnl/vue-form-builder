@@ -9,7 +9,6 @@ const createCommonViteConfig = (env) => {
     plugins: [dts({entryRoot: 'src'}), customTsConfig()],
 
     build: {
-      outDir: 'lib',
       minify: isProd,
       sourcemap: !isProd,
       lib: {

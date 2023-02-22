@@ -9,15 +9,15 @@
   "targetDefaults": {
     "build:dev": {
       "dependsOn": ["^build:dev"],
-      "outputs": ["{projectRoot}/lib"]
+      "outputs": ["{projectRoot}/dist"]
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/lib"]
+      "outputs": ["{projectRoot}/dist"]
     },
     "serve": {
       "dependsOn": ["build:dev"],
-      "outputs": ["{projectRoot}/lib"]
+      "outputs": ["{projectRoot}/dist"]
     },
     "test:run": {
       "outputs": ["{workspaceRoot}/coverage"]

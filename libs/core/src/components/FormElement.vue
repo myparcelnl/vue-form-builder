@@ -9,16 +9,15 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, defineEmits, defineProps} from 'vue';
 import {AnyElementInstance} from '../types';
+import {computed} from 'vue';
 import {createElementHooks} from '../composables';
-import {useVModel} from '@vueuse/core';
 
 const props = defineProps<{
   element: AnyElementInstance;
 }>();
 
-const emit = defineEmits<(event: 'blur' | 'focus' | 'click', value: boolean) => void>();
+defineEmits<(event: 'blur' | 'focus' | 'click', value: boolean) => void>();
 
 const hooks = createElementHooks(props.element, {
   blur: props.element.blur,
@@ -38,5 +37,14 @@ const attributes = computed(() => {
   };
 });
 
-const model = useVModel(props, undefined, emit);
+const model = computed({
+  get() {
+    return props.element.ref;
+  },
+
+  set(value) {
+    // eslint-disable-next-line vue/no-mutating-props
+    props.element.ref = value;
+  },
+});
 </script>

@@ -1,6 +1,6 @@
 {
   "name": "@myparcel-vfb/core",
-  "version": "1.0.0-alpha.16",
+  "version": "1.0.0-alpha.17",
   "repository": "github:myparcelnl/vue-form-builder",
   "license": "MIT",
   "type": "module",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@myparcel-vfb/build-vite": "workspace:*",
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.17",
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.18",
     "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.17",
     "@myparcel/ts-utils": "^1.6.0"
   },

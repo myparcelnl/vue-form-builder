@@ -1186,12 +1186,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/core@workspace:^1.0.0-alpha.16, @myparcel-vfb/core@workspace:libs/core":
+"@myparcel-vfb/core@workspace:^1.0.0-alpha.17, @myparcel-vfb/core@workspace:libs/core":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/core@workspace:libs/core"
   dependencies:
     "@myparcel-vfb/build-vite": "workspace:*"
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.17"
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.18"
     "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.17"
     "@myparcel/ts-utils": ^1.6.0
     "@vitejs/plugin-vue": ^4.0.0
@@ -1230,7 +1230,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/hook-manager@workspace:^1.0.0-alpha.17, @myparcel-vfb/hook-manager@workspace:libs/hook-manager":
+"@myparcel-vfb/hook-manager@workspace:^1.0.0-alpha.18, @myparcel-vfb/hook-manager@workspace:libs/hook-manager":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/hook-manager@workspace:libs/hook-manager"
   dependencies:
@@ -1272,12 +1272,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/plugin@workspace:^1.0.0-alpha.16, @myparcel-vfb/plugin@workspace:libs/plugin":
+"@myparcel-vfb/plugin@workspace:^1.0.0-alpha.17, @myparcel-vfb/plugin@workspace:libs/plugin":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/plugin@workspace:libs/plugin"
   dependencies:
     "@myparcel-vfb/build-tsup": "workspace:*"
-    "@myparcel-vfb/core": "workspace:^1.0.0-alpha.16"
+    "@myparcel-vfb/core": "workspace:^1.0.0-alpha.17"
     "@myparcel/ts-utils": ^1.6.0
     "@vitest/coverage-c8": ^0.28.5
     "@vue/devtools-api": ^6.5.0
@@ -1325,9 +1325,9 @@ __metadata:
   resolution: "@myparcel/vue-form-builder@workspace:apps/vue-form-builder"
   dependencies:
     "@myparcel-vfb/build-tsup": "workspace:*"
-    "@myparcel-vfb/core": "workspace:^1.0.0-alpha.16"
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.17"
-    "@myparcel-vfb/plugin": "workspace:^1.0.0-alpha.16"
+    "@myparcel-vfb/core": "workspace:^1.0.0-alpha.17"
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-alpha.18"
+    "@myparcel-vfb/plugin": "workspace:^1.0.0-alpha.17"
     "@myparcel-vfb/utils": "workspace:^1.0.0-alpha.17"
     "@myparcel/ts-utils": ^1.6.0
     tsup: ^6.6.3

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.17](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.16...@myparcel-vfb/core@1.0.0-alpha.17) "@myparcel-vfb/core" (2023-02-23)
+
+
+### Features
+
+* **form:** expose html element and emit component events ([7e3c33b](https://github/myparcelnl/vue-form-builder/commit/7e3c33bb9655cd00eb13add07a812667752a9867))
+
+
+
+
 ## [1.0.0-alpha.16](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.15...@myparcel-vfb/core@1.0.0-alpha.16) "@myparcel-vfb/core" (2023-02-22)
 
 

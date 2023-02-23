@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.18](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.17...@myparcel-vfb/hook-manager@1.0.0-alpha.18) "@myparcel-vfb/hook-manager" (2023-02-23)
+
+
+### Features
+
+* **hook-manager:** ignore duplicate hooks in register method ([4935a8a](https://github/myparcelnl/vue-form-builder/commit/4935a8ae99d0fb631ab27d8da7455645de5dfd73))
+
+
+
+
 ## [1.0.0-alpha.17](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.16...@myparcel-vfb/hook-manager@1.0.0-alpha.17) "@myparcel-vfb/hook-manager" (2023-02-22)
 
 

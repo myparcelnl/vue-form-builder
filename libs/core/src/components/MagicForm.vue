@@ -3,10 +3,7 @@
     :is="form.config.form.tag"
     :id="form.name"
     v-bind="form.config.form.attributes"
-    :class="{
-      valid: form.isValid,
-      invalid: !form.isValid,
-    }"
+    ref="formElement"
     @submit.prevent="handleSubmit">
     <Fragment :component="form.config.form.wrapper">
       <Suspense @resolve="elementsAreResolved = true">
@@ -33,9 +30,9 @@
 </template>
 
 <script lang="ts">
-import {PropType, computed, defineComponent, provide, ref} from 'vue';
+import {PropType, computed, defineComponent, onMounted, provide, ref} from 'vue';
 import FormElementWrapper from './FormElementWrapper';
-import {FormInstance} from '../form';
+import {FORM_HOOKS, FormInstance} from '../form';
 import Fragment from './Fragment.vue';
 import {INJECT_FORM} from '../services';
 import {useLifecycleHooks} from '../composables';
@@ -55,15 +52,35 @@ export default defineComponent({
     },
   },
 
-  setup: (props) => {
+  emits: ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'],
+
+  setup: (props, ctx) => {
+    const formElement = ref<HTMLFormElement | null>(null);
+
+    onMounted(() => {
+      if (!formElement.value) {
+        return;
+      }
+
+      props.form.element = formElement.value;
+    });
+
     provide(INJECT_FORM, props.form);
 
     const elementsAreResolved = ref(false);
+
+    FORM_HOOKS.forEach((hook) => {
+      props.form.on(hook, (form) => {
+        ctx.emit(hook, form);
+      });
+    });
+
     const lifeCycleHooks = useLifecycleHooks();
 
     lifeCycleHooks.register(props.form.hooks, props.form);
 
     return {
+      formElement,
       elementsAreResolved,
       plainFields: computed(() => get(props.form.fields).filter((element) => !element.teleportSelector)),
       teleportFields: computed(() => get(props.form.fields).filter((element) => Boolean(element.teleportSelector))),

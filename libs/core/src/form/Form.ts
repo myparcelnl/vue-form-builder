@@ -20,6 +20,9 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   public readonly fields: FormInstance<FC>['fields'] = ref([]);
   public readonly interactiveFields: FormInstance<FC>['interactiveFields'];
 
+  // @ts-expect-error This is initialized this on render.
+  public element: FormInstance<FC>['element'];
+
   public isValid: FormInstance<FC>['isValid'] = ref(true);
 
   public constructor(name: FN, formConfig: FC & FormHooks) {
@@ -47,6 +50,10 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
         return isOfType<InteractiveElementInstance>(field, 'ref');
       });
     });
+  }
+
+  public on(event: keyof FormHooks, callback: (form: FormInstance<FC>) => void): void {
+    this.hooks.register(event, callback);
   }
 
   public addElement(element: AnyElementConfiguration, sibling?: string, position: 'before' | 'after' = 'after'): void {

@@ -116,6 +116,11 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   readonly interactiveFields: ComputedRef<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>;
 
   /**
+   * The outer HTML element.
+   */
+  element: HTMLElement;
+
+  /**
    * Determines whether the form is valid.
    */
   isValid: Ref<boolean>;
@@ -129,6 +134,11 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
    * Get values from all non-disabled fields.
    */
   getValues(): Record<string, unknown>;
+
+  /**
+   * Add an event listener to the form.
+   */
+  on(event: string, callback: (form: FormInstance) => void): void;
 
   /**
    * Remove an element from the form by name.

@@ -11,7 +11,10 @@
           class="bg-pink-900 outline outline-2 outline-offset-2 outline-pink-900 p-3 rounded-lg" />
       </div>
 
-      <MagicForm :form="shipmentOptionsForm" />
+      <MagicForm
+        :form="shipmentOptionsForm"
+        :class="formClasses"
+        @afterValidate="afterValidate" />
     </div>
 
     <pre v-text="values" />
@@ -19,8 +22,10 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from 'vue';
+import {computed, defineComponent, ref} from 'vue';
+import {FormInstance} from '@myparcel-vfb/core';
 import {MagicForm} from '@myparcel/vue-form-builder/src';
+import {get} from '@vueuse/core';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';
 
 export default defineComponent({
@@ -34,7 +39,14 @@ export default defineComponent({
       return shipmentOptionsForm.getValues();
     });
 
+    const formClasses = ref<string[]>([]);
+
     return {
+      afterValidate(form: FormInstance) {
+        formClasses.value = get(form.isValid) ? ['border-green-500'] : ['border-red-500'];
+      },
+
+      formClasses,
       shipmentOptionsForm,
       values,
     };

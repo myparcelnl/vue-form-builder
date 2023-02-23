@@ -57,4 +57,14 @@ describe('Hookable', () => {
     expect(DEFAULT_CONFIG.afterStart).toHaveBeenCalledTimes(1);
     expect(DEFAULT_CONFIG.sanitize).toBeCalledTimes(0);
   });
+
+  it('ignores duplicate hooks', () => {
+    const instance = new Throwaway({});
+
+    instance.hooks.register('myHook', () => true);
+    instance.hooks.register('myHook', () => 'this callback is different');
+    instance.hooks.register('myHook', () => true);
+
+    expect(instance.hooks.getRegisteredHooks().filter((hook) => hook.name === 'myHook')).toHaveLength(2);
+  });
 });

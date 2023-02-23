@@ -19,7 +19,7 @@ export type HookManagerInstance<
 
   getRegisteredHooks(): CustomHookItem[];
 
-  has(name: HN): boolean;
+  has(name: HN, predicate?: (hook: CustomHookItem) => boolean): boolean;
 
   register(name: HN, callback: HookCallback): void;
 };
@@ -54,12 +54,16 @@ export class HookManager<HC extends HookManagerConfiguration = HookManagerConfig
     return returnValue[returnValue.length - 1];
   }
 
-  public has(name: HN | string): boolean {
-    return this.registeredHooks.some((hook) => hook.name === name);
+  public has(name: HN | string, predicate?: (hook: CustomHookItem) => boolean): boolean {
+    return this.registeredHooks.some((hook) => hook.name === name && predicate?.(hook));
   }
 
   public register(name: HN | string, callback: HookCallback): void {
     if (!callback) {
+      return;
+    }
+
+    if (this.has(name, (hook) => hook.callback.toString() === callback.toString())) {
       return;
     }
 

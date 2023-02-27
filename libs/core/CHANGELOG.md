@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.18](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.17...@myparcel-vfb/core@1.0.0-alpha.18) "@myparcel-vfb/core" (2023-02-27)
+
+
+### Bug Fixes
+
+* **core:** only turn off element prop when value is false ([dd3ebae](https://github/myparcelnl/vue-form-builder/commit/dd3ebaeac88dafe914e81a0764c0f71e4242c3b7))
+
+
+
+
 ## [1.0.0-alpha.17](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.16...@myparcel-vfb/core@1.0.0-alpha.17) "@myparcel-vfb/core" (2023-02-23)
 
 

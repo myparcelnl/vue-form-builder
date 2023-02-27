@@ -33,7 +33,7 @@ const attributes = computed(() => {
 
   return {
     ...props.element.attributes,
-    ...(typeof props.element.component === 'string' || !elementProp ? {} : {element: props.element}),
+    ...(typeof props.element.component === 'string' || elementProp === false ? {} : {element: props.element}),
   };
 });
 

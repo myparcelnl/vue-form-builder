@@ -1255,7 +1255,7 @@ __metadata:
     "@nrwl/nx-cloud": ^15.1.0
     "@nrwl/workspace": ^15.7.2
     "@tsconfig/recommended": ^1.0.2
-    "@types/node": ^18.14.0
+    "@types/node": ^18.15.2
     "@vue/tsconfig": ^0.1.3
     bundlewatch: ^0.3.3
     conventional-changelog-conventionalcommits: ^5.0.0
@@ -1930,10 +1930,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.14.0":
-  version: 18.14.0
-  resolution: "@types/node@npm:18.14.0"
-  checksum: d83fcf5e4ed544755dd9028f5cbb6b9d46235043159111bb2ad62223729aee581c0144a9f6df8ba73d74011db9ed4ebd7af2fd5e0996714e3beb508a5da8ac5c
+"@types/node@npm:^18.15.2":
+  version: 18.15.2
+  resolution: "@types/node@npm:18.15.2"
+  checksum: 6db83062d295f9da63e7b24477f734b497170a577b21e0c13637d6f355d53713f875536e52ff02938221330d919700b5ed787dc493e32624a3ecb6c86105cfc8
   languageName: node
   linkType: hard
 

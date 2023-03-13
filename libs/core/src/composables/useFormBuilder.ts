@@ -1,11 +1,14 @@
 import {Form, FormConfiguration, FormInstance, InstanceFormConfiguration, getDefaultFormConfiguration} from '../form';
 import {Ref, ref} from 'vue';
 import {AnyElementConfiguration} from '../types';
+import {HookManager} from '@myparcel-vfb/hook-manager/src';
 import {markComponentAsRaw} from '../utils';
 
 let forms: Ref<Record<string, FormInstance>>;
 
 let defaults: Ref<InstanceFormConfiguration>;
+
+let hookManager: HookManager;
 
 export type FormBuilder = {
   /**
@@ -17,6 +20,9 @@ export type FormBuilder = {
    * Default settings to apply to newly registered forms.
    */
   defaults: Ref<InstanceFormConfiguration>;
+
+  on(hook: 'beforeRegister', callback: () => void): void;
+  on(hook: 'afterRegister', callback: (form: FormInstance) => void): void;
 
   /**
    * Register a new form. If a form with the same name already exists, it will be overwritten.
@@ -31,6 +37,8 @@ export type FormBuilder = {
 
 export type UseFormBuilder = () => FormBuilder;
 
+const HOOK_REGISTER = 'register';
+
 export const useFormBuilder: UseFormBuilder = () => {
   forms ??= ref({});
 
@@ -39,20 +47,31 @@ export const useFormBuilder: UseFormBuilder = () => {
   // @ts-ignore
   defaults ??= ref(getDefaultFormConfiguration());
 
+  hookManager ??= new HookManager({
+    hookNames: [HOOK_REGISTER] as const,
+  });
+
   return {
     defaults,
     forms,
 
-    setDefaults(options) {
-      defaults.value = mergeDefaults(defaults.value, options);
+    on(hook, callback) {
+      hookManager.register(hook, callback);
     },
 
     register(name, config) {
+      void hookManager.execute('beforeRegister');
       const instance = new Form(name, mergeDefaults(defaults.value, config));
 
       forms.value[name] = instance;
 
+      void hookManager.execute('afterRegister', instance);
+
       return instance;
+    },
+
+    setDefaults(options) {
+      defaults.value = mergeDefaults(defaults.value, options);
     },
   };
 };

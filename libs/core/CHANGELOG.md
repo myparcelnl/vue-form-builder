@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.19](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.18...@myparcel-vfb/core@1.0.0-alpha.19) "@myparcel-vfb/core" (2023-03-13)
+
+
+### Features
+
+* **form-builder:** add hooks to register method ([#149](https://github/myparcelnl/vue-form-builder/issues/149)) ([87ef607](https://github/myparcelnl/vue-form-builder/commit/87ef6074fa8e73ce2a4983dd593b23adb2d8520f))
+
+
+
+
 ## [1.0.0-alpha.18](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.17...@myparcel-vfb/core@1.0.0-alpha.18) "@myparcel-vfb/core" (2023-02-27)
 
 

@@ -40,13 +40,13 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     fields.forEach((field) => {
       const instance = this.createFieldInstance(field, this);
 
-      this.fields.value.push(instance);
+      get(this.fields).push(instance);
     });
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     this.interactiveFields = computed(() => {
-      return this.fields.value.filter((field) => {
+      return get(this.fields).filter((field) => {
         return isOfType<InteractiveElementInstance>(field, 'ref');
       });
     });
@@ -57,9 +57,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   }
 
   public addElement(element: AnyElementConfiguration, sibling?: string, position: 'before' | 'after' = 'after'): void {
-    const newIndex = sibling
-      ? this.fields.value.findIndex((field) => field.name === sibling)
-      : this.fields.value.length;
+    const newIndex = sibling ? get(this.fields).findIndex((field) => field.name === sibling) : get(this.fields).length;
 
     if (newIndex === -1) {
       // eslint-disable-next-line no-console
@@ -71,12 +69,13 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
 
     const newElement = this.createFieldInstance(element, this);
 
-    this.fields.value.splice(index, 0, newElement);
+    get(this.fields).splice(index, 0, newElement);
   }
 
   public removeElement(name: string): void {
-    const index = this.fields.value.findIndex((field) => field.name === name);
-    this.fields.value.splice(index, 1);
+    const index = get(this.fields).findIndex((field) => field.name === name);
+
+    get(this.fields).splice(index, 1);
   }
 
   public async submit(): Promise<void> {
@@ -87,6 +86,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
 
   public async validate(): Promise<boolean> {
     await this.hooks.execute('beforeValidate', this);
+
     const result = await Promise.all(
       get(this.fields).map((field) => {
         if (!isOfType<InteractiveElementInstance>(field, 'ref')) {
@@ -99,8 +99,10 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     );
 
     this.isValid.value = result.every(Boolean);
+
     await this.hooks.execute('afterValidate', this);
-    return this.isValid.value;
+
+    return get(this.isValid);
   }
 
   public async reset(): Promise<void> {
@@ -146,9 +148,5 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     }
 
     return instance;
-  }
-
-  private createFormInstance(): FormInstance<FC> & {fields: undefined} {
-    return {...this, fields: undefined};
   }
 }

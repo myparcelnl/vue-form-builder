@@ -5,6 +5,7 @@ import {PINK_500} from './types';
 import {StateBase} from '@vue/devtools-api/lib/esm/api/component';
 import {UnwrapNestedRefs} from 'vue';
 import {createFormNode} from './createFormNode';
+import {get} from '@vueuse/core';
 import {getComponentName} from './getComponentName';
 
 const PREFIX = `myparcel-form-builder`;
@@ -52,7 +53,7 @@ export const setupDevtools = (app: App): void => {
           const payload = activePayload;
           const data = useFormBuilder();
 
-          payload.rootNodes = Object.entries(data.forms.value).map(([name, form]) => {
+          payload.rootNodes = Object.entries(get(data.forms)).map(([name, form]) => {
             return createFormNode(name, form as unknown as UnwrapNestedRefs<FormInstance>);
           });
         }
@@ -80,7 +81,7 @@ export const setupDevtools = (app: App): void => {
           }
 
           const formBuilder = useFormBuilder();
-          const form = formBuilder.forms.value[formName];
+          const form = get(formBuilder.forms)[formName];
 
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error

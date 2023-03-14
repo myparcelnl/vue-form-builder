@@ -1,3 +1,0 @@
-// Vitest Snapshot v1
-
-exports[`Form and field validation > can determine if a text input is valid based on previous inputs and predicates 1`] = `"<form id=\\"validationForm\\" class=\\"invalid\\"><input id=\\"firstName\\" type=\\"text\\" name=\\"firstName\\" class=\\"\\" data-test-id=\\"firstName\\" data-test-type=\\"interactive\\"><input id=\\"lastName\\" type=\\"text\\" name=\\"lastName\\" class=\\"border-red-500\\" data-test-id=\\"lastName\\" data-test-type=\\"interactive\\"><button type=\\"submit\\" data-test-type=\\"plain\\">Submit</button></form>"`;

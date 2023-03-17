@@ -10,7 +10,7 @@ type GetParameters<T> = T extends (...args: any[]) => any ? Parameters<T> : any[
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GetReturnType<T> = ResolvePromise<T extends (...args: any[]) => any ? ReturnType<T> : Promise<any>>;
 
-export type HookUnregisterHandler = void | (() => void);
+export type HookUnregisterHandler = () => void;
 
 export type HookManagerInstance<
   HC extends HookManagerConfiguration = HookManagerConfiguration,
@@ -65,17 +65,15 @@ export class HookManager<HC extends HookManagerConfiguration = HookManagerConfig
   }
 
   public register(name: HN | string, callback: HookCallback): HookUnregisterHandler {
-    if (!callback) {
-      return;
-    }
+    const unregisterCallback = () => this.unregister(name, callback);
 
     if (this.has(name, (hook) => this.callbackMatches(hook, callback))) {
-      return;
+      return unregisterCallback;
     }
 
     this.registeredHooks.push({name, callback});
 
-    return () => this.unregister(name, callback);
+    return unregisterCallback;
   }
 
   public unregister(name: HN | string, callback?: HookCallback): void {

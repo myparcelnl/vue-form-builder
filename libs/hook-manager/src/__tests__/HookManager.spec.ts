@@ -75,7 +75,7 @@ describe('HookManager', () => {
 
     const unregister = instance.hooks.register('start', () => true);
 
-    unregister?.();
+    unregister();
 
     expect(instance.hooks.getRegisteredHooks()).toHaveLength(3);
   });

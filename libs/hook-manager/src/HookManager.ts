@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import {CustomHookItem, HookCallback, HookManagerConfiguration} from './types';
 import {ReadonlyOr, ResolvePromise} from '@myparcel/ts-utils';
 import {filterMatchingHooks} from './utils/filterMatchingHooks';
@@ -7,6 +9,8 @@ type GetParameters<T> = T extends (...args: any[]) => any ? Parameters<T> : any[
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GetReturnType<T> = ResolvePromise<T extends (...args: any[]) => any ? ReturnType<T> : Promise<any>>;
+
+export type HookUnregisterHandler = void | (() => void);
 
 export type HookManagerInstance<
   HC extends HookManagerConfiguration = HookManagerConfiguration,
@@ -21,7 +25,9 @@ export type HookManagerInstance<
 
   has(name: HN, predicate?: (hook: CustomHookItem) => boolean): boolean;
 
-  register(name: HN, callback: HookCallback): void;
+  register(name: HN, callback: HookCallback): HookUnregisterHandler;
+
+  unregister(name: HN, callback?: HookCallback): void;
 };
 
 export class HookManager<HC extends HookManagerConfiguration = HookManagerConfiguration, HN extends string = string> {
@@ -58,15 +64,36 @@ export class HookManager<HC extends HookManagerConfiguration = HookManagerConfig
     return this.registeredHooks.some((hook) => hook.name === name && predicate?.(hook));
   }
 
-  public register(name: HN | string, callback: HookCallback): void {
+  public register(name: HN | string, callback: HookCallback): HookUnregisterHandler {
     if (!callback) {
       return;
     }
 
-    if (this.has(name, (hook) => hook.callback.toString() === callback.toString())) {
+    if (this.has(name, (hook) => this.callbackMatches(hook, callback))) {
       return;
     }
 
     this.registeredHooks.push({name, callback});
+
+    return () => this.unregister(name, callback);
+  }
+
+  public unregister(name: HN | string, callback?: HookCallback): void {
+    const findHookIndex = () => {
+      return this.registeredHooks.findIndex((hook) => {
+        return hook.name === name && (!callback || this.callbackMatches(hook, callback));
+      });
+    };
+
+    let hookIndex: number;
+
+    while ((hookIndex = findHookIndex()) > -1) {
+      this.registeredHooks.splice(hookIndex, 1);
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private callbackMatches(hook: CustomHookItem, callback: HookCallback): boolean {
+    return hook.callback.toString() === callback.toString();
   }
 }

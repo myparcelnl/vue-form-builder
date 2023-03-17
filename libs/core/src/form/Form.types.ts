@@ -1,8 +1,8 @@
 import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils/src';
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, ElementName} from '../types';
 import {ComputedRef, Ref} from 'vue';
+import {HookManagerInstance, HookUnregisterHandler} from '@myparcel-vfb/hook-manager/src';
 import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
-import {HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
 import {InteractiveElementInstance} from './interactive-element';
 
 /**
@@ -138,7 +138,12 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   /**
    * Add an event listener to the form.
    */
-  on(event: string, callback: (form: FormInstance) => void): void;
+  on(event: keyof FormHooks, callback: (form: FormInstance) => void): HookUnregisterHandler;
+
+  /**
+   * Remove one or more event listeners from the form.
+   */
+  off(event: keyof FormHooks, callback?: (form: FormInstance) => void): void;
 
   /**
    * Remove an element from the form by name.

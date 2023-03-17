@@ -2,6 +2,7 @@ import {Form, FormConfiguration, FormInstance, InstanceFormConfiguration, getDef
 import {Ref, ref} from 'vue';
 import {AnyElementConfiguration} from '../types';
 import {HookManager} from '@myparcel-vfb/hook-manager/src';
+import {get} from '@vueuse/core';
 import {markComponentAsRaw} from '../utils';
 
 let forms: Ref<Record<string, FormInstance>>;
@@ -61,9 +62,9 @@ export const useFormBuilder: UseFormBuilder = () => {
 
     register(name, config) {
       void hookManager.execute('beforeRegister');
-      const instance = new Form(name, mergeDefaults(defaults.value, config));
+      const instance = new Form(name, mergeDefaults(get(defaults), config));
 
-      forms.value[name] = instance;
+      get(forms)[name] = instance;
 
       void hookManager.execute('afterRegister', instance);
 
@@ -71,7 +72,7 @@ export const useFormBuilder: UseFormBuilder = () => {
     },
 
     setDefaults(options) {
-      defaults.value = mergeDefaults(defaults.value, options);
+      defaults.value = mergeDefaults(get(defaults), options);
     },
   };
 };

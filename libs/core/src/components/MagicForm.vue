@@ -30,13 +30,13 @@
 </template>
 
 <script lang="ts">
+import {FORM_HOOKS, FormInstance} from '../form';
 import {PropType, computed, defineComponent, onMounted, provide, ref} from 'vue';
 import FormElementWrapper from './FormElementWrapper';
-import {FORM_HOOKS, FormInstance} from '../form';
 import Fragment from './Fragment.vue';
 import {INJECT_FORM} from '../services';
-import {useLifecycleHooks} from '../composables';
 import {get} from '@vueuse/core';
+import {useLifecycleHooks} from '../composables';
 
 export default defineComponent({
   name: 'MagicForm',
@@ -58,11 +58,14 @@ export default defineComponent({
     const formElement = ref<HTMLFormElement | null>(null);
 
     onMounted(() => {
-      if (!formElement.value) {
+      const value = get(formElement);
+
+      if (!value) {
         return;
       }
 
-      props.form.element = formElement.value;
+      // eslint-disable-next-line vue/no-mutating-props
+      props.form.element = value;
     });
 
     provide(INJECT_FORM, props.form);

@@ -9,6 +9,7 @@ import {Ref, ref, watch} from 'vue';
 import {asyncEvery, isOfType} from '@myparcel/ts-utils';
 import {FormInstance} from '../Form.types';
 import {PlainElement} from '../plain-element';
+import {get} from '@vueuse/core';
 import {useDynamicWatcher} from '../../utils';
 
 // noinspection JSUnusedGlobalSymbols
@@ -43,42 +44,42 @@ export class InteractiveElement<
   protected sanitize: InteractiveElementConfiguration<C, N, RT>['sanitize'];
 
   public blur = async (): Promise<void> => {
-    await this.hooks.execute('beforeBlur', this, this.ref.value);
+    await this.hooks.execute('beforeBlur', this, get(this.ref));
 
     this.isSuspended.value = true;
+    this.ref.value = ((await this.hooks.execute('sanitize', this, get(this.ref))) as RT) ?? get(this.ref);
 
-    this.ref.value = ((await this.hooks.execute('sanitize', this, this.ref.value)) as RT) ?? this.ref.value;
-
-    if (this.isDirty.value) {
+    if (get(this.isDirty)) {
       await this.validate();
     }
 
     this.isTouched.value = true;
     this.isSuspended.value = false;
-    await this.hooks.execute('afterBlur', this, this.ref.value);
+
+    await this.hooks.execute('afterBlur', this, get(this.ref));
   };
 
   public validate = async (): Promise<boolean> => {
     this.resetValidation();
-    await this.hooks.execute('beforeValidate', this, this.ref.value);
+    await this.hooks.execute('beforeValidate', this, get(this.ref));
 
-    if (this.isDisabled.value) {
+    if (get(this.isDisabled)) {
       this.isValid.value = true;
-      return this.isValid.value;
+      return get(this.isValid);
     }
 
     const doValidate = async (validator: Validator<C, N, RT>) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      const valid = await validator.validate(this, this.ref.value);
+      const valid = await validator.validate(this, get(this.ref));
 
       if (!valid && validator.errorMessage) {
         if (this.errorsTarget) {
-          const target = this.form.fields.value.find((field: AnyElementInstance) => field.name === this.errorsTarget);
+          const target = get(this.form.fields).find((field: AnyElementInstance) => field.name === this.errorsTarget);
 
-          target?.errors.value.push(validator.errorMessage);
+          get(target?.errors).push(validator.errorMessage);
         } else {
-          this.errors.value.push(validator.errorMessage);
+          get(this.errors).push(validator.errorMessage);
         }
       }
 
@@ -87,17 +88,17 @@ export class InteractiveElement<
 
     // validation schema: 1) validators without precedence 2) validators with precedence
     // if a validator with precedence fails, the rest of the validators are not executed.
-    const withoutPrecedence = this.validators.value.filter((validator) => !validator.precedence);
-    const withPrecedence = this.validators.value
+    const withoutPrecedence = get(this.validators).filter((validator) => !validator.precedence);
+    const withPrecedence = get(this.validators)
       .filter((validator) => isOfType<ValidatorWithPrecedence<C, N, RT>>(validator, 'precedence'))
       .sort((validatorA, validatorB) => (validatorA.precedence ?? 0) - (validatorB.precedence ?? 0));
 
     this.isValid.value =
       (await asyncEvery(withoutPrecedence, doValidate)) && (await asyncEvery(withPrecedence, doValidate));
 
-    await this.hooks.execute('afterValidate', this, this.ref.value, this.isValid.value);
+    await this.hooks.execute('afterValidate', this, get(this.ref), get(this.isValid));
 
-    return this.isValid.value;
+    return get(this.isValid);
   };
 
   public reset = (): void => {
@@ -111,7 +112,7 @@ export class InteractiveElement<
     super(form, {...config, hookNames: INTERACTIVE_ELEMENT_HOOKS});
 
     this.ref = config.ref;
-    this.initialValue = this.ref.value;
+    this.initialValue = get(this.ref);
 
     this.lazy = config.lazy ?? false;
 
@@ -183,7 +184,7 @@ export class InteractiveElement<
       validators = config.validators ?? [];
     }
 
-    if (!this.isOptional.value) {
+    if (!get(this.isOptional)) {
       validators.push(isRequired<C, N, RT>(this.form.config.validationMessages?.required ?? ''));
     }
 

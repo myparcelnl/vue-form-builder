@@ -138,12 +138,12 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   /**
    * Add an event listener to the form.
    */
-  on(event: string, callback: (form: FormInstance) => void): HookUnregisterHandler;
+  on(event: keyof FormHooks, callback: (form: FormInstance) => void): HookUnregisterHandler;
 
   /**
    * Remove one or more event listeners from the form.
    */
-  off(event: string, callback?: (form: FormInstance) => void): void;
+  off(event: keyof FormHooks, callback?: (form: FormInstance) => void): void;
 
   /**
    * Remove an element from the form by name.

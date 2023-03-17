@@ -20,6 +20,9 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   public readonly fields: FormInstance<FC>['fields'] = ref([]);
   public readonly interactiveFields: FormInstance<FC>['interactiveFields'];
 
+  public readonly on: FormInstance<FC>['on'];
+  public readonly off: FormInstance<FC>['off'];
+
   // @ts-expect-error This is initialized this on render.
   public element: FormInstance<FC>['element'];
 
@@ -30,6 +33,9 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
 
     formConfig.hookNames = [...FORM_HOOKS, ...(formConfig.hookNames ?? [])];
     this.hooks = createHookManager(formConfig);
+
+    this.on = this.hooks.register.bind(this.hooks);
+    this.off = this.hooks.unregister.bind(this.hooks);
 
     this.name = name;
     this.config = config;
@@ -50,10 +56,6 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
         return isOfType<InteractiveElementInstance>(field, 'ref');
       });
     });
-  }
-
-  public on(event: keyof FormHooks, callback: (form: FormInstance<FC>) => void): void {
-    this.hooks.register(event, callback);
   }
 
   public addElement(element: AnyElementConfiguration, sibling?: string, position: 'before' | 'after' = 'after'): void {

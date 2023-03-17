@@ -34,7 +34,7 @@ const DEFAULT_CONFIG = {
   notAHook: vi.fn(),
 };
 
-describe('Hookable', () => {
+describe('HookManager', () => {
   beforeEach(() => {
     Object.values(DEFAULT_CONFIG).forEach((fn) => fn.mockClear());
   });
@@ -66,5 +66,44 @@ describe('Hookable', () => {
     instance.hooks.register('myHook', () => true);
 
     expect(instance.hooks.getRegisteredHooks().filter((hook) => hook.name === 'myHook')).toHaveLength(2);
+  });
+
+  it('can unregister a hook via callback returned from register', () => {
+    const instance = new Throwaway(DEFAULT_CONFIG);
+
+    expect(instance.hooks.getRegisteredHooks()).toHaveLength(3);
+
+    const unregister = instance.hooks.register('start', () => true);
+
+    unregister();
+
+    expect(instance.hooks.getRegisteredHooks()).toHaveLength(3);
+  });
+
+  it('can unregister hooks by callback', () => {
+    const instance = new Throwaway(DEFAULT_CONFIG);
+
+    instance.hooks.register('start', () => true);
+
+    expect(instance.hooks.getRegisteredHooks()).toHaveLength(4);
+
+    instance.hooks.unregister('start', DEFAULT_CONFIG.start);
+    instance.hooks.unregister('afterStart', DEFAULT_CONFIG.afterStart);
+
+    expect(instance.hooks.getRegisteredHooks()).toHaveLength(2);
+  });
+
+  it('can unregister hooks by name', () => {
+    const instance = new Throwaway(DEFAULT_CONFIG);
+
+    instance.hooks.register('start', () => true);
+    instance.hooks.register('afterStart', () => true);
+
+    expect(instance.hooks.getRegisteredHooks()).toHaveLength(5);
+
+    instance.hooks.unregister('start');
+    instance.hooks.unregister('afterStart');
+
+    expect(instance.hooks.getRegisteredHooks()).toHaveLength(1);
   });
 });

@@ -2,80 +2,49 @@
 
 <!-- MONODEPLOY:BELOW -->
 
-## [1.0.0-alpha.18](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.17...@myparcel-vfb/hook-manager@1.0.0-alpha.18) "@myparcel-vfb/hook-manager" (2023-02-23)
-
+## [1.0.0-alpha.19](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.18...@myparcel-vfb/hook-manager@1.0.0-alpha.19) "@myparcel-vfb/hook-manager" (2023-03-17)
 
 ### Features
 
-* **hook-manager:** ignore duplicate hooks in register method ([4935a8a](https://github/myparcelnl/vue-form-builder/commit/4935a8ae99d0fb631ab27d8da7455645de5dfd73))
+- **hook-manager:** add ability to unregister hooks ([#154](https://github/myparcelnl/vue-form-builder/issues/154)) ([42d597d](https://github/myparcelnl/vue-form-builder/commit/42d597d7cc9965da27bcaef5b13e2c165b8f2a4d))
 
+## [1.0.0-alpha.18](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.17...@myparcel-vfb/hook-manager@1.0.0-alpha.18) "@myparcel-vfb/hook-manager" (2023-02-23)
 
+### Features
 
+- **hook-manager:** ignore duplicate hooks in register method ([4935a8a](https://github/myparcelnl/vue-form-builder/commit/4935a8ae99d0fb631ab27d8da7455645de5dfd73))
 
 ## [1.0.0-alpha.17](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.16...@myparcel-vfb/hook-manager@1.0.0-alpha.17) "@myparcel-vfb/hook-manager" (2023-02-22)
 
-
-
-
 ## [1.0.0-alpha.16](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.15...@myparcel-vfb/hook-manager@1.0.0-alpha.16) "@myparcel-vfb/hook-manager" (2023-02-17)
-
-
-
 
 ## [1.0.0-alpha.15](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.14...@myparcel-vfb/hook-manager@1.0.0-alpha.15) "@myparcel-vfb/hook-manager" (2023-02-07)
 
-
 ### Features
 
-* add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
-
-
-
+- add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
 
 ## [1.0.0-alpha.14](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.13...@myparcel-vfb/hook-manager@1.0.0-alpha.14) "@myparcel-vfb/hook-manager" (2023-01-31)
 
-
-
-
 ## [1.0.0-alpha.13](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.12...@myparcel-vfb/hook-manager@1.0.0-alpha.13) "@myparcel-vfb/hook-manager" (2023-01-23)
-
-
-
 
 ## [1.0.0-alpha.12](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.11...@myparcel-vfb/hook-manager@1.0.0-alpha.12) "@myparcel-vfb/hook-manager" (2023-01-19)
 
-
-
-
 ## [1.0.0-alpha.11](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.10...@myparcel-vfb/hook-manager@1.0.0-alpha.11) "@myparcel-vfb/hook-manager" (2023-01-09)
-
-
-
 
 ## [1.0.0-alpha.10](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.9...@myparcel-vfb/hook-manager@1.0.0-alpha.10) "@myparcel-vfb/hook-manager" (2023-01-05)
 
-
 ### Bug Fixes
 
-* remove reactive ([9edf168](https://github/myparcelnl/vue-form-builder/commit/9edf168e5499a6d129e5dcaac818c4e3fc1bce99))
-
-
-
+- remove reactive ([9edf168](https://github/myparcelnl/vue-form-builder/commit/9edf168e5499a6d129e5dcaac818c4e3fc1bce99))
 
 ## [1.0.0-alpha.9](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.8...@myparcel-vfb/hook-manager@1.0.0-alpha.9) "@myparcel-vfb/hook-manager" (2023-01-04)
 
-
-
-
 ## [1.0.0-alpha.8](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.7...@myparcel-vfb/hook-manager@1.0.0-alpha.8) "@myparcel-vfb/hook-manager" (2022-12-19)
-
 
 ### Features
 
-* separate apps and libs ([1bc04c7](https://github/myparcelnl/vue-form-builder/commit/1bc04c7625e0036bb3d72c40f471902e8232ce71))
-
-
-
+- separate apps and libs ([1bc04c7](https://github/myparcelnl/vue-form-builder/commit/1bc04c7625e0036bb3d72c40f471902e8232ce71))
 
 ## [1.0.0-alpha.7](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.6...@myparcel-vfb/hook-manager@1.0.0-alpha.7) "@myparcel-vfb/hook-manager" (2022-12-05)
 

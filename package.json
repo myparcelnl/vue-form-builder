@@ -43,7 +43,7 @@
   },
   "prettier": "@myparcel/prettier-config",
   "dependencies": {
-    "@nrwl/nx-cloud": "^15.1.0"
+    "@nrwl/nx-cloud": "^15.2.3"
   },
   "devDependencies": {
     "@monodeploy/plugin-github": "^0.9.0",

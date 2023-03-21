@@ -1252,7 +1252,7 @@ __metadata:
     "@myparcel-eslint/eslint-config-prettier": ^1.2.0
     "@myparcel-eslint/eslint-config-prettier-typescript": ^1.2.0
     "@myparcel-eslint/eslint-config-prettier-typescript-vue": ^1.2.0
-    "@nrwl/nx-cloud": ^15.1.0
+    "@nrwl/nx-cloud": ^15.2.3
     "@nrwl/workspace": ^15.7.2
     "@tsconfig/recommended": ^1.0.2
     "@types/node": ^18.14.0
@@ -1425,9 +1425,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/nx-cloud@npm:^15.1.0":
-  version: 15.1.0
-  resolution: "@nrwl/nx-cloud@npm:15.1.0"
+"@nrwl/nx-cloud@npm:^15.2.3":
+  version: 15.2.3
+  resolution: "@nrwl/nx-cloud@npm:15.2.3"
   dependencies:
     axios: ^0.21.2
     chalk: 4.1.0
@@ -1439,7 +1439,7 @@ __metadata:
     yargs-parser: ">=21.0.1"
   bin:
     nx-cloud: bin/nx-cloud.js
-  checksum: 9774f961e509503fe14455d677e6eb808b0e7beaeb7e9a286aafcc6ecc08c1cdab24686850656b6e1eeb7db854c3dc2da9e508f7e3667e0c26dec81277c4f584
+  checksum: 66cc05cf5c492fd2e5643bf424f6a6d881449497a5d3b39bd654617dcb656350cc61720852ea98e31b450468d2ad9c0c195668dd21c296900ae14fb7eb4d5c36
   languageName: node
   linkType: hard
 

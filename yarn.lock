@@ -2090,7 +2090,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/demo@workspace:apps/demo"
   dependencies:
-    "@myparcel/sdk": ^2.11.0
+    "@myparcel/sdk": ^3.0.0
     "@myparcel/ts-utils": ^1.6.0
     "@myparcel/vue-form-builder": "workspace:*"
     "@tanstack/vue-query": ^4.24.9
@@ -2176,6 +2176,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@myparcel/constants@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "@myparcel/constants@npm:1.1.0"
+  dependencies:
+    "@myparcel/ts-utils": ^1.7.0
+  checksum: 2e0db6b0ceb7edd0887e3e98ff00a55f8c2697b6a549e476f4122f9329316d202ca3602cf435c95a42e1ed071977337397f0db9612c49e64d842e1673cdf7b79
+  languageName: node
+  linkType: hard
+
 "@myparcel/prettier-config@npm:*":
   version: 1.1.0
   resolution: "@myparcel/prettier-config@npm:1.1.0"
@@ -2183,16 +2192,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@myparcel/sdk@npm:^2.11.0":
-  version: 2.11.0
-  resolution: "@myparcel/sdk@npm:2.11.0"
+"@myparcel/sdk@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@myparcel/sdk@npm:3.0.0"
   dependencies:
+    "@myparcel/constants": ^1.0.0
     "@myparcel/ts-utils": ^1.6.0
-  checksum: cb5786cd9a03bd35aa27ba57375b096ed87d5fb3aa4733f8f614b721ce7affe3b9d155b425e1515b9ef5ae0ca0c459a679ebf988e2387ecd6d9f5b31940d47f4
+  checksum: 6a84c8f6fb21a1b9dab4016b3ce10e502c21d4ce38cc8b4c8c62035007467433fd27acd8722bb03a22ae53443b48d6c731cc054a40e49ddc6833d0018e27dbcd
   languageName: node
   linkType: hard
 
-"@myparcel/ts-utils@npm:^1.6.0":
+"@myparcel/ts-utils@npm:^1.6.0, @myparcel/ts-utils@npm:^1.7.0":
   version: 1.7.0
   resolution: "@myparcel/ts-utils@npm:1.7.0"
   checksum: 8cad8c20cf039de196113febe2ed430e695866cd851ee3cd827118e5f6ca29315ce8b626ad7583a7d64fdc5353a2430f2729d195b2ffd6e90dfc620a9a35e114

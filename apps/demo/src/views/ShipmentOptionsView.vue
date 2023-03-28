@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, ref} from 'vue';
-import {FormInstance} from '@myparcel-vfb/core';
+import {FormInstance} from '@myparcel-vfb/core/src';
 import {MagicForm} from '@myparcel/vue-form-builder/src';
 import {get} from '@vueuse/core';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';

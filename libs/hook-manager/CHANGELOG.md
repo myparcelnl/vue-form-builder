@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.19](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.18...@myparcel-vfb/hook-manager@1.0.0-alpha.19) "@myparcel-vfb/hook-manager" (2023-03-28)
+
+
+### Features
+
+* **hook-manager:** add ability to unregister hooks ([#154](https://github/myparcelnl/vue-form-builder/issues/154)) ([42d597d](https://github/myparcelnl/vue-form-builder/commit/42d597d7cc9965da27bcaef5b13e2c165b8f2a4d))
+
+
+
+
 ## [1.0.0-alpha.19](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.18...@myparcel-vfb/hook-manager@1.0.0-alpha.19) "@myparcel-vfb/hook-manager" (2023-03-17)
 
 ### Features

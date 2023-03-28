@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.22](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.21...@myparcel-vfb/core@1.0.0-alpha.22) "@myparcel-vfb/core" (2023-03-28)
+
+
+### Features
+
+* **form:** add ability to unregister hooks ([#155](https://github/myparcelnl/vue-form-builder/issues/155)) ([c4aa533](https://github/myparcelnl/vue-form-builder/commit/c4aa533e6e43af2f5dc422236eec2da1b4cf0bf1))
+
+
+
+
 ## [1.0.0-alpha.22](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.21...@myparcel-vfb/core@1.0.0-alpha.22) "@myparcel-vfb/core" (2023-03-17)
 
 ### Features

@@ -65,4 +65,12 @@ describe('Form instance', () => {
       text: 'initial',
     });
   });
+
+  it('can retrieve the value of a field by the field name', () => {
+    const form = generateForm(formConfig);
+
+    expect(form.getFieldValue('val')).toBe(23);
+    expect(form.getFieldValue('text')).toBe('initial');
+    expect(form.getFieldValue('nothing')).toBe(undefined);
+  });
 });

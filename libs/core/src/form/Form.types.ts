@@ -136,6 +136,11 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   getValues(): Record<string, unknown>;
 
   /**
+   * Get the value of a field by name.
+   */
+  getValue(name: string): unknown;
+
+  /**
    * Add an event listener to the form.
    */
   on(event: keyof FormHooks, callback: (form: FormInstance) => void): HookUnregisterHandler;

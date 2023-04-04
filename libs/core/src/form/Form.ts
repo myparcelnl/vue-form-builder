@@ -122,6 +122,18 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     }, {} as Record<string, unknown>);
   }
 
+  public getFieldValue(field: string): unknown {
+    const fieldInstance = this.model[field];
+
+    if (!fieldInstance) {
+      // eslint-disable-next-line no-console
+      console.error(`Field ${field} not found in form ${this.name}`);
+      return;
+    }
+
+    return get(fieldInstance.ref);
+  }
+
   private createFieldInstance(field: AnyElementConfiguration, form: FormInstance<FC>): AnyElementInstance {
     let instance: InteractiveElementInstance | PlainElementInstance;
 

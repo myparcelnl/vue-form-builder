@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-col">
+  <div
+    v-show="element.isVisible"
+    class="flex flex-col">
     <label
       v-if="element.label"
       v-text="element.label" />

@@ -21,7 +21,6 @@ jobs:
       - uses: ./.github/actions/setup
 
       - name: 'Run tests'
-        continue-on-error: true
         run: |
           yarn nx run-many \
             --target=test:run \

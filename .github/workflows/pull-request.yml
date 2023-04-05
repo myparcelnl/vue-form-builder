@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+      - alpha
+      - beta
 
   merge_group:
 
@@ -25,7 +27,7 @@ jobs:
         run: |
           yarn nx affected \
             --target=test:run \
-            --parallel \
+            --parallel=false \
             --output-style=static
 
   build:

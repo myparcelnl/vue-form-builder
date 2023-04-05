@@ -122,7 +122,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     }, {} as Record<string, unknown>);
   }
 
-  public getFieldValue(field: string): unknown {
+  public getValue(field: string): unknown {
     const fieldInstance = this.model[field];
 
     if (!fieldInstance) {

@@ -279,7 +279,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_large_format',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
+      visibleWhen: (field) => field.form.getFieldValue('packageType') === PACKAGE_TYPES.PACKAGE_NAME,
     }),
 
     defineField({

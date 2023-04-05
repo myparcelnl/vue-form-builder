@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import {CARRIERS, CarrierName, PACKAGE_TYPES} from '@myparcel/sdk';
+import {CarrierName, PACKAGE_TYPE_IDS_TO_NAMES, PackageTypeName} from '@myparcel/constants';
 import {InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder/src';
 import Bonnetje from '../components/Bonnetje.vue';
 import FormGroup from '../components/template/FormGroup.vue';
@@ -226,9 +226,9 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       ref: ref('package'),
       label: 'package_type',
       props: {
-        options: PACKAGE_TYPES.ALL.map((type) => ({
-          label: translate(`package_type_${type.NAME}`),
-          value: type.NAME,
+        options: Object.values(PACKAGE_TYPE_IDS_TO_NAMES).map((name) => ({
+          label: translate(`package_type_${name}`),
+          value: name,
         })),
       },
       validators: [
@@ -246,7 +246,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(true),
       label: 'shipment_option_signature',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
     }),
 
     defineField({
@@ -254,7 +254,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_only_recipient',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
     }),
 
     defineField({
@@ -262,7 +262,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_age_check',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
     }),
 
     defineField({
@@ -271,7 +271,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       ref: ref(false),
       label: 'shipment_option_return',
       teleportSelector: '#return-shipment',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
     }),
 
     defineField({
@@ -279,7 +279,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_large_format',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
     }),
 
     defineField({
@@ -290,10 +290,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       visibleWhen: ({form}) => {
         const {packageType, carrier} = form.model;
 
-        return (
-          packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME &&
-          ['dhlforyou', CARRIERS.INSTABOX_NAME].includes(carrier.ref)
-        );
+        return packageType.ref.value === PackageTypeName.Package && ['dhlforyou'].includes(carrier.ref);
       },
     }),
 
@@ -304,7 +301,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       label: 'shipment_option_insurance',
       validate: (field, value) => value > 100,
       errorMessage: 'Insurance must be at least 100',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PACKAGE_TYPES.PACKAGE_NAME,
+      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
       optionalWhen: () => true,
       props: {
         step: 100,

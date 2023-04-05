@@ -66,33 +66,11 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
     }),
 
     defineField({
-      name: 'carrier',
-      label: 'carrier',
-      component: TSelect,
-      ref: ref<CarrierName>(),
-      props: {
-        options: [],
+      component: h('h3'),
+      slots: {
+        default: () => [h('marquee', translate('contact_details_title'))],
       },
-
-      onBeforeMount: async (field) => {
-        const carriers = useFetchCarriers();
-        await carriers.suspense();
-
-        field.props ??= {};
-        field.props.options =
-          carriers.data.value?.map((carrier) => ({
-            label: carrier.human,
-            value: carrier.name,
-          })) ?? [];
-      },
-    }),
-
-    defineField({
-      name: 'dhlOptions',
-      label: 'dhl_only_options',
-      component: TTextInput,
-      ref: ref<string>(),
-      visibleWhen: (field) => field.form.getValue('carrier')?.includes('dhl'),
+      wrapper: false,
     }),
 
     defineField({
@@ -152,9 +130,45 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
     }),
 
     defineField({
+      component: h('h3'),
+      slots: {default: () => translate('package_info_title')},
+      wrapper: false,
+    }),
+
+    defineField({
       name: 'orderId',
       component: THiddenInput,
       ref: ref(1),
+    }),
+
+    defineField({
+      name: 'carrier',
+      label: 'carrier',
+      component: TSelect,
+      ref: ref<CarrierName>(),
+      props: {
+        options: [],
+      },
+
+      onBeforeMount: async (field) => {
+        const carriers = useFetchCarriers();
+        await carriers.suspense();
+
+        field.props ??= {};
+        field.props.options =
+          carriers.data.value?.map((carrier) => ({
+            label: carrier.human,
+            value: carrier.name,
+          })) ?? [];
+      },
+    }),
+
+    defineField({
+      name: 'dhlOptions',
+      label: 'dhl_only_options',
+      component: TTextInput,
+      ref: ref<string>(),
+      visibleWhen: (field) => field.form.getValue('carrier')?.includes('dhl'),
     }),
 
     defineField({
@@ -239,6 +253,12 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
           errorMessage: 'Forget about letters, Mack does not like them.',
         },
       ],
+    }),
+
+    defineField({
+      component: h('h3'),
+      slots: {default: () => translate('shipment_options_title')},
+      wrapper: false,
     }),
 
     defineField({

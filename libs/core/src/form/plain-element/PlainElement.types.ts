@@ -1,6 +1,13 @@
 import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils/src';
-import {BaseElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName, ElementProps} from '../../types';
-import {Component, ComputedRef, Ref, VNode} from 'vue';
+import {
+  BaseElementConfiguration,
+  ComponentHooks,
+  ComponentOrHtmlElement,
+  ElementName,
+  ElementProps,
+  ElementSlots,
+} from '../../types';
+import {Component, ComputedRef, Ref} from 'vue';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../../data';
 import {FormInstance} from '../Form.types';
 import {HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
@@ -48,7 +55,7 @@ export type BasePlainElementInstance<
   readonly hooks: HookManagerInstance<PlainElementHooks<C, N>>;
   readonly form: FormInstance;
   readonly props: ElementProps<C>;
-  readonly slots?: Record<string, VNode | VNode[] | string>;
+  readonly slots?: ElementSlots;
 
   readonly isVisible: Ref<boolean>;
   readonly teleportSelector?: string;

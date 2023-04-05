@@ -22,6 +22,8 @@ export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlEleme
   ? Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>
   : Record<string, unknown>;
 
+export type ElementSlots = Record<string, (() => VNode | string | VNode[]) | VNode | string | VNode[]>;
+
 export type BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
   /**
    * Attributes to be passed to the component.
@@ -57,7 +59,7 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
   /**
    * Slot content to be passed to the component.
    */
-  slots?: Record<string, VNode | VNode[] | string>;
+  slots?: ElementSlots;
 
   /**
    * Selector to render the field in.

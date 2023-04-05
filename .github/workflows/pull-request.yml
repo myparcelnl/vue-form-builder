@@ -25,7 +25,7 @@ jobs:
 
       - name: 'Run tests'
         run: |
-          yarn nx affected \
+          yarn nx run-many \
             --target=test:run \
             --parallel=false \
             --output-style=static

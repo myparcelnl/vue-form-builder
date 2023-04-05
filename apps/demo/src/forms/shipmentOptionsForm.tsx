@@ -92,7 +92,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       label: 'dhl_only_options',
       component: TTextInput,
       ref: ref<string>(),
-      visibleWhen: (field) => field.form.model.carrier.ref.value?.includes('dhl'),
+      visibleWhen: (field) => field.form.getValue('carrier')?.includes('dhl'),
     }),
 
     defineField({
@@ -246,7 +246,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(true),
       label: 'shipment_option_signature',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
+      visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
     }),
 
     defineField({
@@ -254,7 +254,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_only_recipient',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
+      visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
     }),
 
     defineField({
@@ -262,7 +262,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_age_check',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
+      visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
     }),
 
     defineField({
@@ -271,7 +271,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       ref: ref(false),
       label: 'shipment_option_return',
       teleportSelector: '#return-shipment',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
+      visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
     }),
 
     defineField({
@@ -279,7 +279,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_large_format',
-      visibleWhen: (field) => field.form.getFieldValue('packageType') === PackageTypeName.Package,
+      visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
     }),
 
     defineField({
@@ -301,7 +301,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       label: 'shipment_option_insurance',
       validate: (field, value) => value > 100,
       errorMessage: 'Insurance must be at least 100',
-      visibleWhen: (field) => field.form.model.packageType.ref.value === PackageTypeName.Package,
+      visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
       optionalWhen: () => true,
       props: {
         step: 100,

@@ -2,6 +2,27 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.0](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/utils@1.0.0-alpha.1...@myparcel-vfb/utils@1.0.0-beta.0) "@myparcel-vfb/utils" (2023-04-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **core:** support form and field wrappers (#84)
+
+### Features
+
+* add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
+* **core:** support form and field wrappers ([#84](https://github/myparcelnl/vue-form-builder/issues/84)) ([12b199f](https://github/myparcelnl/vue-form-builder/commit/12b199fc2677c02fb9a17d434cc67f62f931715c))
+* separate apps and libs ([1bc04c7](https://github/myparcelnl/vue-form-builder/commit/1bc04c7625e0036bb3d72c40f471902e8232ce71))
+
+
+### Bug Fixes
+
+* remove reactive ([9edf168](https://github/myparcelnl/vue-form-builder/commit/9edf168e5499a6d129e5dcaac818c4e3fc1bce99))
+
+
+
+
 ## [1.0.0-alpha.17](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/utils@1.0.0-alpha.16...@myparcel-vfb/utils@1.0.0-alpha.17) "@myparcel-vfb/utils" (2023-02-22)
 
 

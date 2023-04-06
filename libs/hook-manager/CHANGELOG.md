@@ -2,6 +2,24 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.0](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.1...@myparcel-vfb/hook-manager@1.0.0-beta.0) "@myparcel-vfb/hook-manager" (2023-04-06)
+
+
+### Features
+
+* add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
+* **hook-manager:** add ability to unregister hooks ([#154](https://github/myparcelnl/vue-form-builder/issues/154)) ([42d597d](https://github/myparcelnl/vue-form-builder/commit/42d597d7cc9965da27bcaef5b13e2c165b8f2a4d))
+* **hook-manager:** ignore duplicate hooks in register method ([4935a8a](https://github/myparcelnl/vue-form-builder/commit/4935a8ae99d0fb631ab27d8da7455645de5dfd73))
+* separate apps and libs ([1bc04c7](https://github/myparcelnl/vue-form-builder/commit/1bc04c7625e0036bb3d72c40f471902e8232ce71))
+
+
+### Bug Fixes
+
+* remove reactive ([9edf168](https://github/myparcelnl/vue-form-builder/commit/9edf168e5499a6d129e5dcaac818c4e3fc1bce99))
+
+
+
+
 ## [1.0.0-alpha.19](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-alpha.18...@myparcel-vfb/hook-manager@1.0.0-alpha.19) "@myparcel-vfb/hook-manager" (2023-03-28)
 
 

@@ -2,6 +2,51 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.0](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.1...@myparcel-vfb/core@1.0.0-beta.0) "@myparcel-vfb/core" (2023-04-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename <property>Cb to <property>When
+* **core:** support form and field wrappers (#84)
+* **core:** simplify inner form element
+* **core:** rename fieldsWithNamesAndRefs to interactiveFields
+
+### Features
+
+* add option to not pass element as prop to custom elements ([38b007d](https://github/myparcelnl/vue-form-builder/commit/38b007d2e472f0c99ee769d0cb11ab17abcd2580))
+* add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
+* **core:** simplify inner form element ([80eb618](https://github/myparcelnl/vue-form-builder/commit/80eb6189bd277f7897b57950b51dacfcfd28f7bb))
+* **core:** support form and field wrappers ([#84](https://github/myparcelnl/vue-form-builder/issues/84)) ([12b199f](https://github/myparcelnl/vue-form-builder/commit/12b199fc2677c02fb9a17d434cc67f62f931715c))
+* expose useForm and useElement ([a9df264](https://github/myparcelnl/vue-form-builder/commit/a9df2643ead2bd9ca976f1a158761acb4c34cf83))
+* **form-builder:** add hooks to register method ([#149](https://github/myparcelnl/vue-form-builder/issues/149)) ([87ef607](https://github/myparcelnl/vue-form-builder/commit/87ef6074fa8e73ce2a4983dd593b23adb2d8520f))
+* **form:** add ability to unregister hooks ([#155](https://github/myparcelnl/vue-form-builder/issues/155)) ([c4aa533](https://github/myparcelnl/vue-form-builder/commit/c4aa533e6e43af2f5dc422236eec2da1b4cf0bf1))
+* **form:** add method to get a field's value by name ([#169](https://github/myparcelnl/vue-form-builder/issues/169)) ([a558bdb](https://github/myparcelnl/vue-form-builder/commit/a558bdbdfb88df94b474eab1080c686a0df72914))
+* **form:** expose html element and emit component events ([7e3c33b](https://github/myparcelnl/vue-form-builder/commit/7e3c33bb9655cd00eb13add07a812667752a9867))
+* separate apps and libs ([1bc04c7](https://github/myparcelnl/vue-form-builder/commit/1bc04c7625e0036bb3d72c40f471902e8232ce71))
+
+
+### Bug Fixes
+
+* **core:** fix component events ([4de71b5](https://github/myparcelnl/vue-form-builder/commit/4de71b5b5faaefc270221c1e14c1debe3dc00a1d))
+* **core:** leave adding element props to the user ([9faa181](https://github/myparcelnl/vue-form-builder/commit/9faa181840497fa860bd6aee9d79a90f635788ee))
+* **core:** only turn off element prop when value is false ([dd3ebae](https://github/myparcelnl/vue-form-builder/commit/dd3ebaeac88dafe914e81a0764c0f71e4242c3b7))
+* **core:** reduce issues with refs sometimes being unwrapped ([fa645cd](https://github/myparcelnl/vue-form-builder/commit/fa645cd03f24c080ccb53ff3d368f8c771d93a64))
+* **element:** fix slots property not rendering ([#172](https://github/myparcelnl/vue-form-builder/issues/172)) ([841a9e9](https://github/myparcelnl/vue-form-builder/commit/841a9e99d5f8a06d9d4294bde0a90c6078fe28ed))
+* fix computed model in form element ([30fd3da](https://github/myparcelnl/vue-form-builder/commit/30fd3da4dc8f31956fee74ee4ef66057bff2ad74))
+* pass element children components ([fb9f819](https://github/myparcelnl/vue-form-builder/commit/fb9f819b4fd7f513bb0e5cb2c41ada8174b2bbc3))
+* remove reactive ([9edf168](https://github/myparcelnl/vue-form-builder/commit/9edf168e5499a6d129e5dcaac818c4e3fc1bce99))
+* **types:** expose form hook types ([60f7fd4](https://github/myparcelnl/vue-form-builder/commit/60f7fd42fc9428595d1b8364b394c37f61c40b3c))
+
+
+### Code Refactoring
+
+* **core:** rename fieldsWithNamesAndRefs to interactiveFields ([89f4ab1](https://github/myparcelnl/vue-form-builder/commit/89f4ab1cd1f4cb1d9a6d02cc2c008c4977dad448))
+* rename <property>Cb to <property>When ([1bee3ed](https://github/myparcelnl/vue-form-builder/commit/1bee3ed05cd9a8637ddc59689d7195d2a2f8b544))
+
+
+
+
 ## [1.0.0-alpha.25](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.24...@myparcel-vfb/core@1.0.0-alpha.25) "@myparcel-vfb/core" (2023-04-06)
 
 

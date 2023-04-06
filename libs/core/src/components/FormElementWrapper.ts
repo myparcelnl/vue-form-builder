@@ -30,7 +30,10 @@ export default defineComponent({
         ...useTestAttributes(this.element),
         element: this.element,
       },
-      this.element.component.children,
+      {
+        ...this.element.component.children,
+        ...this.element.slots,
+      },
     );
 
     const hasOwnWrapper = typeof this.element.wrapper !== 'boolean';

@@ -152,4 +152,19 @@ describe('rendering a form', () => {
 
     expect(input.props('element')).toBeUndefined();
   });
+
+  it('renders content in slot of element', () => {
+    const wrapper = mountForm([
+      {
+        component: h('div'),
+        slots: {
+          default: () => h('p', 'appelboom'),
+        },
+      },
+    ]);
+
+    const paragraph = wrapper.find('p');
+
+    expect(paragraph.text()).toBe('appelboom');
+  });
 });

@@ -1,5 +1,6 @@
 const translations: Record<string, string> = Object.freeze({
   carrier: 'Vervoerder',
+  contact_details_title: 'Contactgegevens',
   first_name: 'Voornaam',
   form_optional_suffix: ' (optioneel)',
   form_submit: 'Verzenden',
@@ -7,6 +8,7 @@ const translations: Record<string, string> = Object.freeze({
   last_name: 'Achternaam',
   name: 'Naam',
   number: 'Huisnummer',
+  package_info_title: 'Zendinginformatie',
   package_type: 'Pakkettype',
   package_type_digital_stamp: 'Digitale Postzegel',
   package_type_letter: 'Brief',
@@ -20,6 +22,7 @@ const translations: Record<string, string> = Object.freeze({
   shipment_option_return: 'Direct retour',
   shipment_option_same_day_delivery: 'Zelfde dag bezorgd',
   shipment_option_signature: 'Handtekening',
+  shipment_options_title: 'Verzendopties',
   street: 'Straat',
 });
 

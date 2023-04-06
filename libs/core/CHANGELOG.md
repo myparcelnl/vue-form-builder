@@ -2,6 +2,21 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-alpha.25](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.24...@myparcel-vfb/core@1.0.0-alpha.25) "@myparcel-vfb/core" (2023-04-06)
+
+
+### Features
+
+* **form:** add method to get a field's value by name ([#169](https://github/myparcelnl/vue-form-builder/issues/169)) ([a558bdb](https://github/myparcelnl/vue-form-builder/commit/a558bdbdfb88df94b474eab1080c686a0df72914))
+
+
+### Bug Fixes
+
+* **element:** fix slots property not rendering ([#172](https://github/myparcelnl/vue-form-builder/issues/172)) ([841a9e9](https://github/myparcelnl/vue-form-builder/commit/841a9e99d5f8a06d9d4294bde0a90c6078fe28ed))
+
+
+
+
 ## [1.0.0-alpha.22](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.21...@myparcel-vfb/core@1.0.0-alpha.22) "@myparcel-vfb/core" (2023-03-28)
 
 

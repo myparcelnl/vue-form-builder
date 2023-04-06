@@ -2,6 +2,25 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.0](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.1...@myparcel/vue-form-builder@1.0.0-beta.0) "@myparcel/vue-form-builder" (2023-04-06)
+
+
+### Features
+
+* add src to module files ([c14626a](https://github/myparcelnl/vue-form-builder/commit/c14626a2ab1c98464611f83978575a2ce84c53a2))
+* expose useForm and useElement ([a9df264](https://github/myparcelnl/vue-form-builder/commit/a9df2643ead2bd9ca976f1a158761acb4c34cf83))
+* **plugin:** add createMyParcelFormBuilderPlugin ([af207cd](https://github/myparcelnl/vue-form-builder/commit/af207cd1cc1810484b08386ce259f3fd9dce5d2e))
+* separate apps and libs ([1bc04c7](https://github/myparcelnl/vue-form-builder/commit/1bc04c7625e0036bb3d72c40f471902e8232ce71))
+
+
+### Bug Fixes
+
+* export vue injections ([b95dfc6](https://github/myparcelnl/vue-form-builder/commit/b95dfc6a7a12eb654d7ef8d976689ee56862cc9e))
+* remove reactive ([9edf168](https://github/myparcelnl/vue-form-builder/commit/9edf168e5499a6d129e5dcaac818c4e3fc1bce99))
+
+
+
+
 ## [1.0.0-alpha.44](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-alpha.43...@myparcel/vue-form-builder@1.0.0-alpha.44) "@myparcel/vue-form-builder" (2023-03-28)
 
 

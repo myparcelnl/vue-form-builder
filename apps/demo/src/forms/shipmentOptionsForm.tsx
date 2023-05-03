@@ -262,9 +262,17 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
     }),
 
     defineField({
+      name: 'bsn',
+      component: TTextInput,
+      ref: ref(''),
+      label: 'bsn',
+      optionalWhen: (field) => field.form.getValue('ageCheck') === false,
+    }),
+
+    defineField({
       name: 'signature',
       component: TToggleSwitch,
-      ref: ref(true),
+      ref: ref(false),
       label: 'shipment_option_signature',
       visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
     }),
@@ -322,11 +330,18 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       validate: (field, value) => value > 100,
       errorMessage: 'Insurance must be at least 100',
       visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
-      optionalWhen: () => true,
       props: {
         step: 100,
         min: 100,
       },
+    }),
+
+    defineField({
+      name: 'deliveryMessage',
+      component: TTextInput,
+      ref: ref(''),
+      label: 'delivery_message',
+      optionalWhen: (field) => !field.form.getValue('signature'),
     }),
 
     defineField({

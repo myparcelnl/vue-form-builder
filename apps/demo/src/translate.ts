@@ -24,6 +24,8 @@ const translations: Record<string, string> = Object.freeze({
   shipment_option_signature: 'Handtekening',
   shipment_options_title: 'Verzendopties',
   street: 'Straat',
+  delivery_message: 'Bericht aan de bezorger',
+  bsn: 'BSN',
 });
 
 export function translate(key: string): string {

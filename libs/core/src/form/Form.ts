@@ -14,6 +14,7 @@ export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'aft
 export class Form<FC extends InstanceFormConfiguration = InstanceFormConfiguration, FN extends string = string> {
   public readonly name: FN;
 
+  public readonly stable: FormInstance<FC>['stable'] = ref(false);
   public readonly config: Omit<FC, 'fields'>;
   public readonly hooks: FormInstance<FC>['hooks'];
   public readonly model = {} as FormInstance<FC>['model'];
@@ -56,6 +57,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
         return isOfType<InteractiveElementInstance>(field, 'ref');
       });
     });
+    this.stable.value = true;
   }
 
   public addElement(element: AnyElementConfiguration, sibling?: string, position: 'before' | 'after' = 'after'): void {

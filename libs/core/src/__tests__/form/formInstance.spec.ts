@@ -34,6 +34,7 @@ describe('Form instance', () => {
       {
         name: 'named',
         component: 'input',
+        ref: ref(''),
       },
       {
         name: 'val',
@@ -61,6 +62,7 @@ describe('Form instance', () => {
     const form = generateForm(formConfig);
 
     expect(form.getValues()).toEqual({
+      named: '',
       val: 23,
       text: 'initial',
     });
@@ -72,5 +74,30 @@ describe('Form instance', () => {
     expect(form.getValue('val')).toBe(23);
     expect(form.getValue('text')).toBe('initial');
     expect(form.getValue('nothing')).toBe(undefined);
+  });
+
+  it('can make a field optional based on a predicate', async () => {
+    let expectation: boolean;
+    const newFormConfig = {...formConfig};
+    // specifically make the predicate rely on a field further down the form:
+    newFormConfig.fields[0].optionalWhen = (field) => field.form.getValue('val') === 24;
+
+    newFormConfig.afterSubmit = (form) => {
+      expect(form.fields.value[0].isOptional).toBe(expectation);
+    };
+
+    const form = generateForm(newFormConfig);
+
+    // at start, it is not optional
+    expect(form.fields.value[0].isOptional).toBe(false);
+
+    form.fields.value[1].ref = 24;
+    expectation = true;
+    await form.submit();
+
+    // change it back, will be optional again
+    form.fields.value[1].ref = 23;
+    expectation = false;
+    await form.submit();
   });
 });

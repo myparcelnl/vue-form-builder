@@ -93,8 +93,14 @@ export class InteractiveElement<
       .filter((validator) => isOfType<ValidatorWithPrecedence<C, N, RT>>(validator, 'precedence'))
       .sort((validatorA, validatorB) => (validatorA.precedence ?? 0) - (validatorB.precedence ?? 0));
 
-    this.isValid.value =
-      (await asyncEvery(withoutPrecedence, doValidate)) && (await asyncEvery(withPrecedence, doValidate));
+    // add the isRequired validator in-line when the field is not optional
+    if (!get(this.isOptional)) {
+      withoutPrecedence.push(isRequired<C, N, RT>(this.form.config.validationMessages?.required ?? ''));
+    }
+
+    const validatedWithoutPrecedence = await asyncEvery(withoutPrecedence, doValidate);
+    const validatedWithPrecedence = await asyncEvery(withPrecedence, doValidate);
+    this.isValid.value = validatedWithoutPrecedence && validatedWithPrecedence;
 
     await this.hooks.execute('afterValidate', this, get(this.ref), get(this.isValid));
 
@@ -139,24 +145,29 @@ export class InteractiveElement<
       return sanitizedValue;
     };
 
-    if (config.disabledWhen) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      useDynamicWatcher(() => config.disabledWhen(this), this.isDisabled);
-    }
-
-    if (config.optionalWhen) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      useDynamicWatcher(() => config.optionalWhen(this), this.isOptional);
-    }
-
     this.createValidators(config);
 
     watch(this.ref, async (value: RT, oldValue: RT) => {
       await this.hooks.execute('beforeUpdate', this, value, oldValue);
       this.isDirty.value = true;
       await this.hooks.execute('afterUpdate', this, value, oldValue);
+    });
+
+    // initialize dynamic field checks when the form is stable:
+    watch(form.stable, (value: boolean) => {
+      if (!value) return;
+
+      if (config.disabledWhen) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        useDynamicWatcher(() => config.disabledWhen(this), this.isDisabled);
+      }
+
+      if (config.optionalWhen) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        useDynamicWatcher(() => config.optionalWhen(this), this.isOptional);
+      }
     });
   }
 
@@ -182,10 +193,6 @@ export class InteractiveElement<
 
     if (isOfType<MultiValidator<C, N, RT>>(config, 'validators')) {
       validators = config.validators ?? [];
-    }
-
-    if (!get(this.isOptional)) {
-      validators.push(isRequired<C, N, RT>(this.form.config.validationMessages?.required ?? ''));
     }
 
     this.validators.value = validators;

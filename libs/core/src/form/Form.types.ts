@@ -91,6 +91,11 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   readonly name: string;
 
   /**
+   * Whether the form is stable. A form is stable when it is done first initialization and all fields are available.
+   */
+  readonly stable: Ref<boolean>;
+
+  /**
    * Form configuration.
    */
   readonly config: Omit<FC, 'fields'>;

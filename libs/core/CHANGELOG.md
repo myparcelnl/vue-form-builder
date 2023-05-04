@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.1](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.0...@myparcel-vfb/core@1.0.0-beta.1) "@myparcel-vfb/core" (2023-05-04)
+
+
+### Features
+
+* add form stability bit, improved optional validation ([#189](https://github/myparcelnl/vue-form-builder/issues/189)) ([9b964b4](https://github/myparcelnl/vue-form-builder/commit/9b964b4e200feacd8d3734b052e389658861532a))
+
+
+
+
 ## [1.0.0-beta.0](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-alpha.1...@myparcel-vfb/core@1.0.0-beta.0) "@myparcel-vfb/core" (2023-04-06)
 
 

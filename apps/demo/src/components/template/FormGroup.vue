@@ -5,12 +5,13 @@
     <label
       v-if="element.label"
       v-text="element.label" />
-
+    <slot name="info-before" />
     <span
       v-if="element.isOptional"
       v-text="translate('form_optional_suffix')" />
 
     <slot />
+    <slot name="info-after" />
 
     <template v-if="element.errors?.length">
       <div class="bg-red-700 border border-red-800 col-span-2 dark:bg-red-900 mt-3 p-5 rounded-lg">

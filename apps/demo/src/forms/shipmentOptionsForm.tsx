@@ -111,6 +111,9 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         },
       ],
       afterValidate: validateName,
+      slots: {
+        'info-after': () => h('div', {class: 'text-xs'}, translate('name_all_firstnames')),
+      },
     }),
 
     defineField({
@@ -127,6 +130,9 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         },
       ],
       afterValidate: validateName,
+      slots: {
+        'info-after': () => h('div', {class: 'text-xs'}, translate('name_as_in_passport')),
+      },
     }),
 
     defineField({

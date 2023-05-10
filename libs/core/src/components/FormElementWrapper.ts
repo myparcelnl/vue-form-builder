@@ -49,7 +49,7 @@ export default defineComponent({
           ...this.form.config.fieldDefaults.attributes,
           element: this.element,
         },
-        () => [childComponent],
+        {...this.element.slots, default: () => childComponent},
       );
     }
 

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.2](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.1...@myparcel-vfb/core@1.0.0-beta.2) "@myparcel-vfb/core" (2023-05-11)
+
+
+### Features
+
+* named slot propagation to wrapper component ([#193](https://github/myparcelnl/vue-form-builder/issues/193)) ([049cdbe](https://github/myparcelnl/vue-form-builder/commit/049cdbe835473677507118172613bbe6acdab795))
+
+
+
+
 ## [1.0.0-beta.1](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.0...@myparcel-vfb/core@1.0.0-beta.1) "@myparcel-vfb/core" (2023-05-04)
 
 

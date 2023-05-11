@@ -26,6 +26,8 @@ const translations: Record<string, string> = Object.freeze({
   street: 'Straat',
   delivery_message: 'Bericht aan de bezorger',
   bsn: 'BSN',
+  name_as_in_passport: 'Naam zoals in paspoort',
+  name_all_firstnames: 'Alle voornamen',
 });
 
 export function translate(key: string): string {

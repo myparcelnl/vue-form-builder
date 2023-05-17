@@ -1,7 +1,9 @@
 import {FormConfiguration, InteractiveElement, PlainElement, defineField} from '../../form';
 import {describe, expect, it} from 'vitest';
 import TextInput from '../elements/TextInput.vue';
+import {flushPromises} from '@vue/test-utils';
 import {generateForm} from '../utils';
+import {get} from '@vueuse/core';
 import {ref} from 'vue';
 
 describe('Form instance', () => {
@@ -99,5 +101,48 @@ describe('Form instance', () => {
     form.fields.value[1].ref = 23;
     expectation = false;
     await form.submit();
+  });
+
+  describe('isDirty', () => {
+    it('is false when the form is not dirty', () => {
+      const form = generateForm(formConfig);
+
+      expect(get(form.isDirty)).toBe(false);
+    });
+
+    it('is true when the form is dirty', async () => {
+      expect.assertions(2);
+      const form = generateForm(formConfig);
+
+      expect(get(form.isDirty)).toBe(false);
+
+      form.model.named.ref.value = 'changed';
+      await flushPromises();
+      expect(get(form.isDirty)).toBe(true);
+    });
+
+    it.todo('reverts to false when the form is submitted', async () => {
+      expect.assertions(3);
+      const form = generateForm(formConfig);
+
+      form.model.named.ref.value = 'changed';
+      await flushPromises();
+      expect(get(form.isDirty)).toBe(true);
+
+      await form.submit();
+      expect(get(form.isDirty)).toBe(false);
+    });
+
+    it.todo('reverts to false when the form is reset', async () => {
+      expect.assertions(3);
+      const form = generateForm(formConfig);
+
+      form.model.named.ref.value = 'changed';
+      await flushPromises();
+      expect(get(form.isDirty)).toBe(true);
+
+      await form.reset();
+      expect(get(form.isDirty)).toBe(false);
+    });
   });
 });

@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/unified-signatures */
 import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils/src';
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, ElementName} from '../types';
 import {ComputedRef, Ref} from 'vue';
 import {HookManagerInstance, HookUnregisterHandler} from '@myparcel-vfb/hook-manager/src';
 import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
 import {InteractiveElementInstance} from './interactive-element';
+import {FormHook} from './hooks';
 
 /**
  * The input configuration for a Form.
@@ -71,14 +73,19 @@ export type FormConfiguration = FormHooks & {
 };
 
 export type FormHooks = {
-  beforeSubmit?(form: FormInstance): PromiseOr<void>;
-  afterSubmit?(form: FormInstance): PromiseOr<void>;
+  [FormHook.BeforeSubmit]?(form: FormInstance): PromiseOr<void>;
+  [FormHook.AfterSubmit]?(form: FormInstance): PromiseOr<void>;
 
-  beforeReset?(form: FormInstance): PromiseOr<void>;
-  afterReset?(form: FormInstance): PromiseOr<void>;
+  [FormHook.BeforeReset]?(form: FormInstance): PromiseOr<void>;
+  [FormHook.AfterReset]?(form: FormInstance): PromiseOr<void>;
 
-  beforeValidate?(form: FormInstance): PromiseOr<void>;
-  afterValidate?(form: FormInstance): PromiseOr<void>;
+  [FormHook.BeforeValidate]?(form: FormInstance): PromiseOr<void>;
+  [FormHook.AfterValidate]?(form: FormInstance): PromiseOr<void>;
+
+  [FormHook.BeforeAddElement]?(form: FormInstance, field: AnyElementInstance): PromiseOr<void>;
+  [FormHook.AfterAddElement]?(form: FormInstance, field: AnyElementInstance): PromiseOr<void>;
+
+  [FormHook.ElementChange]?(form: FormInstance, field: AnyElementInstance, value: unknown): PromiseOr<void>;
 };
 
 /**
@@ -131,6 +138,11 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   isValid: Ref<boolean>;
 
   /**
+   * Exposes whether the form is dirty.
+   */
+  isDirty: ComputedRef<boolean>;
+
+  /**
    * Add a new element to the form at the end, or before or after an existing element.
    */
   addElement(element: AnyElementConfiguration, sibling?: string, position?: 'before' | 'after'): void;
@@ -174,6 +186,11 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
    * Validate all fields in the form.
    */
   validate(): PromiseOr<boolean>;
+
+  /**
+   * @internal
+   */
+  emit(event: keyof FormHooks, ...args: unknown[]): void;
 };
 
 /**

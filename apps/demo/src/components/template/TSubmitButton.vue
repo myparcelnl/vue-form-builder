@@ -7,8 +7,7 @@
       'opacity-50 cursor-not-allowed': element.isDisabled,
       'cursor-wait': element.isSuspended,
       'hover:bg-pink-700': !element.isDisabled,
-    }"
-    @click="$emit('submit')">
+    }">
     <LoadingOverlay v-if="element.isSuspended" />
     {{ translate('form_submit') }}
   </button>
@@ -29,8 +28,6 @@ export default defineComponent({
       required: true,
     },
   },
-
-  emits: ['submit'],
 
   setup: () => ({
     translate,

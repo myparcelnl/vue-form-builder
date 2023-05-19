@@ -17,15 +17,31 @@
         @afterValidate="afterValidate" />
     </div>
 
+    <p>
+      <b>This form is currently {{ dirty ? 'dirty! 🤢' : 'clean! ✨' }}</b>
+    </p>
+
     <pre v-text="values" />
+
+    <div>
+      <h3>Form event log</h3>
+
+      <textarea
+        v-model="eventLog"
+        class="font-mono w-full"
+        rows="10"
+        readonly />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, ref} from 'vue';
-import {FormInstance} from '@myparcel-vfb/core/src';
+import {FormHook, FormInstance} from '@myparcel-vfb/core/src';
+import {computed, defineComponent, ref, watch} from 'vue';
+import {InteractiveElement} from '@myparcel-vfb/core';
 import {MagicForm} from '@myparcel/vue-form-builder/src';
 import {get} from '@vueuse/core';
+import {isOfType} from '@myparcel/ts-utils';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';
 
 export default defineComponent({
@@ -40,8 +56,39 @@ export default defineComponent({
     });
 
     const formClasses = ref<string[]>([]);
+    const eventLog = ref<string>('');
+
+    Object.values(FormHook).forEach((hook) => {
+      shipmentOptionsForm.on(hook, (form, ...args) => {
+        const additionalArgs = args as unknown as [unknown, unknown];
+        let log = `${new Date().toISOString()} | ${hook}`;
+
+        if (additionalArgs.length && isOfType<InteractiveElement>(additionalArgs[0], 'ref')) {
+          log += ` (${additionalArgs[0].name}, ${additionalArgs[1]})`;
+        }
+
+        eventLog.value = `${log}\n${eventLog.value}`;
+      });
+    });
+
+    const dirty = computed(() => get(shipmentOptionsForm.isDirty));
+
+    // Ask an user to confirm leaving the page when the form is dirty
+    // TODO: Should this be a built-in option?
+    watch(dirty, (isDirty) => {
+      window.onbeforeunload = isDirty
+        ? () => {
+            // eslint-disable-next-line no-console
+            console.warn('Form is dirty:', shipmentOptionsForm.getValues());
+            // Change to true to enable the warning
+            return null;
+          }
+        : null;
+    });
 
     return {
+      eventLog,
+
       afterValidate(form: FormInstance) {
         formClasses.value = get(form.isValid) ? ['border-green-500'] : ['border-red-500'];
       },
@@ -49,6 +96,7 @@ export default defineComponent({
       formClasses,
       shipmentOptionsForm,
       values,
+      dirty,
     };
   },
 });

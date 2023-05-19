@@ -1,14 +1,13 @@
 import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement} from '../types';
+import {FORM_HOOKS, FormHook} from './hooks';
 import {FormHooks, FormInstance, InstanceFormConfiguration} from './Form.types';
 import {InteractiveElement, InteractiveElementConfiguration, InteractiveElementInstance} from './interactive-element';
 import {PlainElement, PlainElementInstance} from './plain-element';
-import {computed, ref} from 'vue';
+import {computed, ref, watch} from 'vue';
 import {createHookManager} from '@myparcel-vfb/hook-manager/src';
 import {get} from '@vueuse/core';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
-
-export const FORM_HOOKS = ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'] as const;
 
 // noinspection JSUnusedGlobalSymbols
 export class Form<FC extends InstanceFormConfiguration = InstanceFormConfiguration, FN extends string = string> {
@@ -28,6 +27,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   public element: FormInstance<FC>['element'];
 
   public isValid: FormInstance<FC>['isValid'] = ref(true);
+  public isDirty: FormInstance<FC>['isDirty'];
 
   public constructor(name: FN, formConfig: FC & FormHooks) {
     const {fields, ...config} = formConfig;
@@ -45,7 +45,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     markComponentAsRaw(this.config.fieldDefaults.wrapper);
 
     fields.forEach((field) => {
-      const instance = this.createFieldInstance(field, this);
+      const instance = this.createFieldInstance(field, this as unknown as FormInstance<FC>);
 
       get(this.fields).push(instance);
     });
@@ -57,10 +57,18 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
         return isOfType<InteractiveElementInstance>(field, 'ref');
       });
     });
+
+    this.isDirty = computed(() => get(this.interactiveFields).some((field) => get(field.isDirty)));
+
     this.stable.value = true;
   }
 
-  public addElement(element: AnyElementConfiguration, sibling?: string, position: 'before' | 'after' = 'after'): void {
+  public async addElement(
+    element: AnyElementConfiguration,
+    sibling?: string,
+    position: 'before' | 'after' = 'after',
+  ): Promise<void> {
+    await this.hooks.execute(FormHook.BeforeAddElement, this, element);
     const newIndex = sibling ? get(this.fields).findIndex((field) => field.name === sibling) : get(this.fields).length;
 
     if (newIndex === -1) {
@@ -71,9 +79,10 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
 
     const index = position === 'after' ? newIndex + 1 : newIndex;
 
-    const newElement = this.createFieldInstance(element, this);
+    const newElement = this.createFieldInstance(element, this as unknown as FormInstance<FC>);
 
     get(this.fields).splice(index, 0, newElement);
+    await this.hooks.execute(FormHook.AfterAddElement, this, element);
   }
 
   public removeElement(name: string): void {
@@ -83,13 +92,13 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
   }
 
   public async submit(): Promise<void> {
-    await this.hooks.execute('beforeSubmit', this);
+    await this.hooks.execute(FormHook.BeforeSubmit, this);
     await this.validate();
-    await this.hooks.execute('afterSubmit', this);
+    await this.hooks.execute(FormHook.AfterSubmit, this);
   }
 
   public async validate(): Promise<boolean> {
-    await this.hooks.execute('beforeValidate', this);
+    await this.hooks.execute(FormHook.BeforeValidate, this);
 
     const result = await Promise.all(
       get(this.fields).map((field) => {
@@ -104,13 +113,15 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
 
     this.isValid.value = result.every(Boolean);
 
-    await this.hooks.execute('afterValidate', this);
+    await this.hooks.execute(FormHook.AfterValidate, this);
 
     return get(this.isValid);
   }
 
   public async reset(): Promise<void> {
+    await this.hooks.execute(FormHook.BeforeReset, this);
     await Promise.all(get(this.interactiveFields).map((field) => field.reset()));
+    await this.hooks.execute(FormHook.AfterReset, this);
   }
 
   public getValues(): Record<string, unknown> {
@@ -153,6 +164,10 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
 
     if (isOfType<InteractiveElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'ref')) {
       instance = new InteractiveElement(form, elementConfig.name, elementConfig);
+
+      watch(elementConfig.ref, async (value: unknown) => {
+        await this.hooks.execute(FormHook.ElementChange, this, instance, value);
+      });
     } else {
       instance = new PlainElement(form, elementConfig);
     }

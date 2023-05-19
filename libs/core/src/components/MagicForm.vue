@@ -4,7 +4,8 @@
     :id="form.name"
     v-bind="form.config.form.attributes"
     ref="formElement"
-    @submit.prevent="handleSubmit">
+    @submit.prevent="() => form.submit()"
+    @reset.prevent="() => form.reset()">
     <Fragment :component="form.config.form.wrapper">
       <Suspense @resolve="elementsAreResolved = true">
         <template
@@ -30,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import {FORM_HOOKS, FormInstance} from '../form';
+import {FORM_HOOKS, FormHook, FormInstance} from '../form';
 import {PropType, computed, defineComponent, onMounted, provide, ref} from 'vue';
 import FormElementWrapper from './FormElementWrapper';
 import Fragment from './Fragment.vue';
@@ -52,7 +53,7 @@ export default defineComponent({
     },
   },
 
-  emits: ['beforeSubmit', 'afterSubmit', 'beforeValidate', 'afterValidate'],
+  emits: FORM_HOOKS as FormHook[],
 
   setup: (props, ctx) => {
     const formElement = ref<HTMLFormElement | null>(null);
@@ -87,10 +88,6 @@ export default defineComponent({
       elementsAreResolved,
       plainFields: computed(() => get(props.form.fields).filter((element) => !element.teleportSelector)),
       teleportFields: computed(() => get(props.form.fields).filter((element) => Boolean(element.teleportSelector))),
-
-      async handleSubmit() {
-        await props.form.submit();
-      },
     };
   },
 });

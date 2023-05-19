@@ -4,9 +4,9 @@ import {InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue
 import Bonnetje from '../components/Bonnetje.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import Heading from '../components/Heading.vue';
-import TButton from '../components/template/TButton.vue';
 import THiddenInput from '../components/template/THiddenInput.vue';
 import TNumberInput from '../components/template/TNumberInput.vue';
+import TResetButton from '../components/template/TResetButton.vue';
 import TSelect from '../components/template/TSelect.vue';
 import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TTextInput from '../components/template/TTextInput.vue';
@@ -355,7 +355,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
     }),
 
     defineField({
-      component: h(TButton, {}, () => 'Cancel'),
+      component: TResetButton,
     }),
 
     defineField({

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.3](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.2...@myparcel-vfb/core@1.0.0-beta.3) "@myparcel-vfb/core" (2023-05-23)
+
+
+### Features
+
+* **form:** add more hooks ([#199](https://github/myparcelnl/vue-form-builder/issues/199)) ([ae2ab0e](https://github/myparcelnl/vue-form-builder/commit/ae2ab0e4fbe99d27041f08dc5a6db0f61ffa3e86))
+
+
+
+
 ## [1.0.0-beta.2](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.1...@myparcel-vfb/core@1.0.0-beta.2) "@myparcel-vfb/core" (2023-05-11)
 
 

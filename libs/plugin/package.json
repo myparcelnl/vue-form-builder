@@ -30,7 +30,7 @@
     "@vitest/coverage-c8": "^0.28.5",
     "@vueuse/core": "^10.1.2",
     "tsup": "^6.6.3",
-    "vitest": "^0.28.5"
+    "vitest": "^0.31.1"
   },
   "publishConfig": {
     "access": "public"

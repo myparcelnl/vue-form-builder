@@ -6,8 +6,7 @@ import {mergeConfig} from 'vite';
 const createCommonViteConfig = (env) => {
   const isProd = env.mode === 'production';
   return {
-    plugins: [dts({entryRoot: 'src'}), customTsConfig()],
-
+    plugins: [dts({entryRoot: 'src', copyDtsFiles: true}), customTsConfig()],
     build: {
       minify: isProd,
       sourcemap: !isProd,

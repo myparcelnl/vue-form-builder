@@ -1,7 +1,6 @@
 {
   "name": "@myparcel-vfb/core",
   "version": "1.0.0-beta.3",
-  "repository": "github:myparcelnl/vue-form-builder",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -25,7 +24,7 @@
     "watch": "run ws:vite:watch \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/build-vite": "workspace:*",
+    "@myparcel-vfb/build-vite": "workspace:^1.0.0-alpha.1",
     "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.1",
     "@myparcel-vfb/utils": "workspace:^1.0.0-beta.1",
     "@myparcel/ts-utils": "^1.6.0"
@@ -34,7 +33,7 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitest/coverage-c8": "^0.28.5",
     "@vue/test-utils": "^2.3.0",
-    "happy-dom": "^8.7.1",
+    "happy-dom": "^9.20.3",
     "typescript": "^5.0.0",
     "vite": "^4.1.4",
     "vite-plugin-dts": "^2.1.0",

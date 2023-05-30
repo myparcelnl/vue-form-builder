@@ -7,7 +7,6 @@
     "form",
     "vue3"
   ],
-  "repository": "github:myparcelnl/vue-form-builder",
   "license": "MIT",
   "type": "module",
   "exports": {

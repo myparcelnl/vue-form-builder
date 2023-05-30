@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.4](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.3...@myparcel/vue-form-builder@1.0.0-beta.4) "@myparcel/vue-form-builder" (2023-05-30)
+
+
+### Bug Fixes
+
+* add FormHook enum to exports ([364732d](https://github/myparcelnl/vue-form-builder/commit/364732d580518d77304b393d03ab37f47cf64c68))
+
+
+
+
 ## [1.0.0-beta.3](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.2...@myparcel/vue-form-builder@1.0.0-beta.3) "@myparcel/vue-form-builder" (2023-05-23)
 
 

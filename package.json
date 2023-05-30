@@ -24,9 +24,9 @@
     "ws:clean": "cd $0 && rimraf dist coverage tsconfig.build.tsbuildinfo",
     "ws:test": "cd $0 && vitest",
     "ws:test:run": "cd $0 && vitest run --coverage",
-    "ws:ts:build": "cd $0 && tsc -p tsconfig.build.json --incremental --emitDeclarationOnly --declarationDir dist && (cp -r src/**/*.d.ts dist || true)",
+    "ws:ts:build": "cd $0 && tsc -p tsconfig.build.json --emitDeclarationOnly --declarationDir dist && (cp -r src/**/*.d.ts dist || true)",
     "ws:ts:typecheck": "cd $0 && tsc -p tsconfig.build.json --noEmit",
-    "ws:vue:build": "cd $0 && vue-tsc -p tsconfig.build.json --incremental --emitDeclarationOnly --declarationDir dist && (cp -r src/**/*.d.ts dist || true)",
+    "ws:vue:build": "cd $0 && vue-tsc -p tsconfig.build.json --emitDeclarationOnly --declarationDir dist && (cp -r src/**/*.d.ts dist || true)",
     "ws:vue:typecheck": "cd $0 && vue-tsc -p tsconfig.build.json --noEmit"
   },
   "lint-staged": {

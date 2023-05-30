@@ -2,6 +2,11 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.3](///compare/@myparcel-vfb/hook-manager@1.0.0-beta.2...@myparcel-vfb/hook-manager@1.0.0-beta.3) "@myparcel-vfb/hook-manager" (2023-05-30)
+
+
+
+
 ## [1.0.0-beta.2](///compare/@myparcel-vfb/hook-manager@1.0.0-beta.1...@myparcel-vfb/hook-manager@1.0.0-beta.2) "@myparcel-vfb/hook-manager" (2023-05-30)
 
 

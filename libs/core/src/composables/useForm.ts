@@ -1,6 +1,6 @@
-import {FormInstance} from '../form';
-import {INJECT_FORM} from '../services';
 import {inject} from 'vue';
+import {INJECT_FORM} from '../services';
+import {type FormInstance} from '../form';
 
 export const useForm = (): FormInstance => {
   const form = inject(INJECT_FORM);

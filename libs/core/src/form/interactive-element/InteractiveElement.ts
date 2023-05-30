@@ -1,16 +1,22 @@
-import {AnyElementInstance, ComponentOrHtmlElement} from '../../types';
+import {type Ref, ref, watch} from 'vue';
+import {get} from '@vueuse/core';
+import {asyncEvery, isOfType} from '@myparcel/ts-utils';
+import {
+  type MultiValidator,
+  type SingleValidator,
+  type Validator,
+  type ValidatorWithPrecedence,
+  isRequired,
+} from '../validator';
+import {PlainElement} from '../plain-element';
+import {type FormInstance} from '../Form.types';
+import {useDynamicWatcher} from '../../utils';
+import {type AnyElementInstance, type ComponentOrHtmlElement} from '../../types';
 import {
   INTERACTIVE_ELEMENT_HOOKS,
-  InteractiveElementConfiguration,
-  InteractiveElementInstance,
+  type InteractiveElementConfiguration,
+  type InteractiveElementInstance,
 } from './InteractiveElement.types';
-import {MultiValidator, SingleValidator, Validator, ValidatorWithPrecedence, isRequired} from '../validator';
-import {Ref, ref, watch} from 'vue';
-import {asyncEvery, isOfType} from '@myparcel/ts-utils';
-import {FormInstance} from '../Form.types';
-import {PlainElement} from '../plain-element';
-import {get} from '@vueuse/core';
-import {useDynamicWatcher} from '../../utils';
 
 // noinspection JSUnusedGlobalSymbols
 export class InteractiveElement<

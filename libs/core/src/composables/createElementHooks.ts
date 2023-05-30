@@ -1,6 +1,6 @@
+import {type HookCallback} from '@myparcel-vfb/hook-manager/src';
 import {isUndefined, removePropertiesWith} from '@myparcel/ts-utils';
-import {AnyElementInstance} from '../types';
-import {HookCallback} from '@myparcel-vfb/hook-manager/src';
+import {type AnyElementInstance} from '../types';
 import {useLifecycleHooks} from './useLifecycleHooks';
 
 type HookObject = Record<string, HookCallback | undefined>;

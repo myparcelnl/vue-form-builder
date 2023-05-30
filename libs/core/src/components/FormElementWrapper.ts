@@ -1,9 +1,9 @@
-import {Component, PropType, Teleport, defineComponent, h, provide} from 'vue';
-import {AnyElementInstance} from '../types';
-import FormElement from './FormElement.vue';
-import {FormInstance} from '../form';
+import {type Component, type PropType, Teleport, defineComponent, h, provide} from 'vue';
+import {type AnyElementInstance} from '../types';
 import {INJECT_ELEMENT} from '../services';
+import {type FormInstance} from '../form';
 import {useTestAttributes} from '../composables';
+import FormElement from './FormElement.vue';
 
 // noinspection JSUnusedGlobalSymbols
 export default defineComponent({

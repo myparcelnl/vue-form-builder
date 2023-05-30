@@ -1,6 +1,6 @@
-import {AnyElementInstance} from '../types';
-import {INJECT_ELEMENT} from '../services';
 import {inject} from 'vue';
+import {type AnyElementInstance} from '../types';
+import {INJECT_ELEMENT} from '../services';
 
 export const useElement = (): AnyElementInstance => {
   const element = inject(INJECT_ELEMENT);

@@ -31,13 +31,13 @@
 </template>
 
 <script lang="ts">
-import {FORM_HOOKS, FormHook, FormInstance} from '../form';
-import {PropType, computed, defineComponent, onMounted, provide, ref} from 'vue';
-import FormElementWrapper from './FormElementWrapper';
-import Fragment from './Fragment.vue';
-import {INJECT_FORM} from '../services';
+import {type PropType, computed, defineComponent, onMounted, provide, ref} from 'vue';
 import {get} from '@vueuse/core';
+import {INJECT_FORM} from '../services';
+import {FORM_HOOKS, type FormHook, type FormInstance} from '../form';
 import {useLifecycleHooks} from '../composables';
+import Fragment from './Fragment.vue';
+import FormElementWrapper from './FormElementWrapper';
 
 export default defineComponent({
   name: 'MagicForm',

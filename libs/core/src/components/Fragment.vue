@@ -8,8 +8,8 @@
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent} from 'vue';
-import {ComponentOrHtmlElement} from '../types';
+import {type PropType, defineComponent} from 'vue';
+import {type ComponentOrHtmlElement} from '../types';
 
 export default defineComponent({
   name: 'Fragment',

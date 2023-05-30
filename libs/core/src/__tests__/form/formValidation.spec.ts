@@ -1,18 +1,18 @@
+import {ref} from 'vue';
+import {describe, expect, it} from 'vitest';
+import {flushPromises, mount} from '@vue/test-utils';
+import {formIsInvalid, formIsValid, generateForm} from '../utils';
+import {canNotContainX, firstNameNotDuane} from '../examples/validators';
+import TextInput from '../elements/TextInput.vue';
+import SubmitButton from '../elements/SubmitButton.vue';
+import {defineField, defineForm} from '../../form';
+import {MagicForm} from '../../components';
 import {
   canNotContainLetterValidator,
   firstNameNotJohnValidator,
   nameNotDonald,
   nameNotDonaldMack,
 } from './interactive-element/validationData';
-import {canNotContainX, firstNameNotDuane} from '../examples/validators';
-import {defineField, defineForm} from '../../form';
-import {describe, expect, it} from 'vitest';
-import {flushPromises, mount} from '@vue/test-utils';
-import {formIsInvalid, formIsValid, generateForm} from '../utils';
-import {MagicForm} from '../../components';
-import SubmitButton from '../elements/SubmitButton.vue';
-import TextInput from '../elements/TextInput.vue';
-import {ref} from 'vue';
 
 describe('Form and field validation', () => {
   it.skip('can determine if a text input is valid based on single predicate', async () => {

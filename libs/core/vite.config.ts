@@ -1,5 +1,5 @@
-import {createViteConfig} from '@myparcel-vfb/build-vite';
 import vue from '@vitejs/plugin-vue';
+import {createViteConfig} from '@myparcel-vfb/build-vite';
 
 export default createViteConfig({
   plugins: [vue()],

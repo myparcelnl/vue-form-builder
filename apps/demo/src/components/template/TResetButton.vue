@@ -8,10 +8,10 @@
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent} from 'vue';
-import {InteractiveElementInstance} from '@myparcel/vue-form-builder/src';
-import TButton from './TButton.vue';
+import {type PropType, defineComponent} from 'vue';
+import {type InteractiveElementInstance} from '@myparcel/vue-form-builder/src';
 import {translate} from '../../translate';
+import TButton from './TButton.vue';
 
 export default defineComponent({
   name: 'TSubmitButton',

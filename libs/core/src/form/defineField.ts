@@ -1,4 +1,9 @@
-import {AnyElementConfiguration, ComponentOrHtmlElement, ElementName, ResolvedElementConfiguration} from '../types';
+import {
+  type AnyElementConfiguration,
+  type ComponentOrHtmlElement,
+  type ElementName,
+  type ResolvedElementConfiguration,
+} from '../types';
 
 /**
  * Define a field for use in a form.

@@ -1,10 +1,15 @@
-import {BaseElementConfiguration, ComponentHooks, ComponentOrHtmlElement, ElementName} from '../../types';
-import {FieldValidator, Validator} from '../validator';
-import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from '../plain-element';
-import {FormInstance} from '../Form.types';
-import {HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
-import {PromiseOr} from '@myparcel/ts-utils';
-import {Ref} from 'vue';
+import {type Ref} from 'vue';
+import {type HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
+import {type PromiseOr} from '@myparcel/ts-utils';
+import {type FieldValidator, type Validator} from '../validator';
+import {PLAIN_ELEMENT_HOOKS, type PlainElementInstance} from '../plain-element';
+import {type FormInstance} from '../Form.types';
+import {
+  type BaseElementConfiguration,
+  type ComponentHooks,
+  type ComponentOrHtmlElement,
+  type ElementName,
+} from '../../types';
 
 export type InteractiveElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,

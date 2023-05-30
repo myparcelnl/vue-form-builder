@@ -1,5 +1,5 @@
-import customTsConfig from 'vite-plugin-custom-tsconfig';
 import dts from 'vite-plugin-dts';
+import customTsConfig from 'vite-plugin-custom-tsconfig';
 import {mergeConfig} from 'vite';
 
 /** @type {import('vitest/config').UserConfigFn} */

@@ -1,11 +1,11 @@
-import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils/src';
-import {AnyElementConfiguration, ComponentOrHtmlElement, ElementName} from '../../types';
-import {ComputedRef, computed, markRaw, ref} from 'vue';
-import {PLAIN_ELEMENT_HOOKS, PlainElementInstance} from './PlainElement.types';
-import {FormInstance} from '../Form.types';
-import {createHookManager} from '@myparcel-vfb/hook-manager/src';
+import {type ComputedRef, computed, markRaw, ref} from 'vue';
 import {get} from '@vueuse/core';
+import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils/src';
+import {createHookManager} from '@myparcel-vfb/hook-manager/src';
+import {type FormInstance} from '../Form.types';
 import {useDynamicWatcher} from '../../utils';
+import {type AnyElementConfiguration, type ComponentOrHtmlElement, type ElementName} from '../../types';
+import {PLAIN_ELEMENT_HOOKS, type PlainElementInstance} from './PlainElement.types';
 
 // noinspection JSUnusedGlobalSymbols
 export class PlainElement<

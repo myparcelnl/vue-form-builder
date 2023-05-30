@@ -1,4 +1,4 @@
-import {DOMWrapper} from '@vue/test-utils';
+import {type DOMWrapper} from '@vue/test-utils';
 
 declare module '@vue/test-utils' {
   type TestInput = string | (Record<string, string> & {id?: string; type?: string});

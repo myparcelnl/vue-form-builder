@@ -1,5 +1,5 @@
-import {ComponentOrHtmlElement, ElementName} from '../../types';
-import {Validator} from '../../form';
+import {type ComponentOrHtmlElement, type ElementName} from '../../types';
+import {type Validator} from '../../form';
 
 export const firstNameNotDuane = (): Validator<ComponentOrHtmlElement, ElementName, string> => ({
   validate: (_, value) => !String(value).startsWith('Duane'),

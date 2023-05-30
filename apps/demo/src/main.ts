@@ -1,9 +1,9 @@
 import './assets/main.scss';
-import App from './App.vue';
-import {MyParcelFormBuilderPlugin} from '@myparcel/vue-form-builder/src';
-import {VueQueryPlugin} from '@tanstack/vue-query';
 import {createApp} from 'vue';
+import {VueQueryPlugin} from '@tanstack/vue-query';
+import {MyParcelFormBuilderPlugin} from '@myparcel/vue-form-builder/src';
 import router from './router';
+import App from './App.vue';
 
 const app = createApp(App);
 

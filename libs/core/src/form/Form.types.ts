@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/unified-signatures */
-import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils/src';
-import {AnyElementConfiguration, AnyElementInstance, ComponentOrHtmlElement, ElementName} from '../types';
-import {ComputedRef, Ref} from 'vue';
-import {HookManagerInstance, HookUnregisterHandler} from '@myparcel-vfb/hook-manager/src';
-import {PromiseOr, ReadonlyOr} from '@myparcel/ts-utils';
-import {InteractiveElementInstance} from './interactive-element';
+import {type ComputedRef, type Ref} from 'vue';
+import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils/src';
+import {type HookManagerInstance, type HookUnregisterHandler} from '@myparcel-vfb/hook-manager/src';
+import {type PromiseOr, type ReadonlyOr} from '@myparcel/ts-utils';
+import {
+  type AnyElementConfiguration,
+  type AnyElementInstance,
+  type ComponentOrHtmlElement,
+  type ElementName,
+} from '../types';
+import {type InteractiveElementInstance} from './interactive-element';
 import {FormHook} from './hooks';
 
 /**

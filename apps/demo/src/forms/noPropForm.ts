@@ -1,7 +1,7 @@
-import {defineField, defineForm} from '@myparcel/vue-form-builder/src';
-import ComponentWithoutElementProp from '../components/ComponentWithoutElementProp.vue';
-import FormGroupWithoutElementProp from '../components/FormGroupWithoutElementProp.vue';
 import {ref} from 'vue';
+import {defineField, defineForm} from '@myparcel/vue-form-builder/src';
+import FormGroupWithoutElementProp from '../components/FormGroupWithoutElementProp.vue';
+import ComponentWithoutElementProp from '../components/ComponentWithoutElementProp.vue';
 
 export const noPropForm = defineForm('noProps', {
   field: {

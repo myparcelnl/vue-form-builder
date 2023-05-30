@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {ReadonlyOr} from '@myparcel/ts-utils';
+import {type ReadonlyOr} from '@myparcel/ts-utils';
 
 export type HookCallback = (...args: any[]) => any;
 

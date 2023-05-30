@@ -1,7 +1,7 @@
+import {type UnwrapNestedRefs} from 'vue';
+import {type CustomInspectorNode} from '@vue/devtools-api';
+import {type FormInstance} from '@myparcel-vfb/core/src';
 import {CYAN_400} from './types';
-import {CustomInspectorNode} from '@vue/devtools-api';
-import {FormInstance} from '@myparcel-vfb/core/src';
-import {UnwrapNestedRefs} from 'vue';
 import {getComponentName} from './getComponentName';
 
 export const createFieldsNodes = (form: UnwrapNestedRefs<FormInstance>): CustomInspectorNode[] => {

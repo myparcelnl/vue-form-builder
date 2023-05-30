@@ -1,11 +1,11 @@
-import {InteractiveElement, InteractiveElementInstance, getDefaultFormConfiguration} from '../../form';
-import {PropType, defineComponent, h, ref, vModelText, withDirectives} from 'vue';
+import {type PropType, defineComponent, h, ref, vModelText, withDirectives} from 'vue';
 import {afterEach, describe, expect, it, vi} from 'vitest';
-import {generateForm, mountForm} from '../utils';
-import {AnyElementConfiguration} from '../../types';
-import {MagicForm} from '../../components';
 import {mount} from '@vue/test-utils';
+import {generateForm, mountForm} from '../utils';
+import {type AnyElementConfiguration} from '../../types';
+import {InteractiveElement, type InteractiveElementInstance, getDefaultFormConfiguration} from '../../form';
 import {useFormBuilder} from '../../composables';
+import {MagicForm} from '../../components';
 
 const mockComponent = defineComponent({
   props: {

@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {AllowedComponentProps, Component, ComputedRef, HTMLAttributes, Ref, VNodeProps} from 'vue';
+import {
+  type AllowedComponentProps,
+  type Component,
+  type ComputedRef,
+  type HTMLAttributes,
+  type Ref,
+  type VNodeProps,
+} from 'vue';
 
 export type ComponentProps<C extends Component> = C extends new (...args: any) => any
   ? Omit<

@@ -1,6 +1,6 @@
-import {Ref, watchEffect} from 'vue';
-import {PromiseOr} from '@myparcel/ts-utils';
+import {type Ref, watchEffect} from 'vue';
 import {toPromise} from '@myparcel-vfb/utils/src';
+import {type PromiseOr} from '@myparcel/ts-utils';
 
 export const useDynamicWatcher = (callback: () => PromiseOr<boolean>, property: Ref): void => {
   if (!callback) {

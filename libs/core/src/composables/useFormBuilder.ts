@@ -1,9 +1,15 @@
-import {Form, FormConfiguration, FormInstance, InstanceFormConfiguration, getDefaultFormConfiguration} from '../form';
-import {Ref, ref} from 'vue';
-import {AnyElementConfiguration} from '../types';
-import {HookManager} from '@myparcel-vfb/hook-manager/src';
+import {type Ref, ref} from 'vue';
 import {get} from '@vueuse/core';
+import {HookManager} from '@myparcel-vfb/hook-manager/src';
 import {markComponentAsRaw} from '../utils';
+import {type AnyElementConfiguration} from '../types';
+import {
+  Form,
+  type FormConfiguration,
+  type FormInstance,
+  type InstanceFormConfiguration,
+  getDefaultFormConfiguration,
+} from '../form';
 
 let forms: Ref<Record<string, FormInstance>>;
 

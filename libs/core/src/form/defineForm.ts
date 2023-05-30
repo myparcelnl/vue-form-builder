@@ -1,5 +1,5 @@
-import {FormConfiguration, FormInstance, InstanceFormConfiguration} from './Form.types';
 import {useFormBuilder} from '../composables';
+import {type FormConfiguration, type FormInstance, type InstanceFormConfiguration} from './Form.types';
 
 export const defineForm = <FC extends FormConfiguration>(
   name: string,

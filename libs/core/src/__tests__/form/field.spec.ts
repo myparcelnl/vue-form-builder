@@ -1,12 +1,12 @@
-import {defineField, defineForm} from '../../form';
+import {h, markRaw, ref} from 'vue';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {generateForm, optionData} from '../utils';
-import {h, markRaw, ref} from 'vue';
-import FormGroup from '../elements/FormGroup.vue';
-import {MagicForm} from '../../components';
-import TextInput from '../elements/TextInput.vue';
 import {firstNameNotDuane} from '../examples/validators';
+import TextInput from '../elements/TextInput.vue';
+import FormGroup from '../elements/FormGroup.vue';
+import {defineField, defineForm} from '../../form';
+import {MagicForm} from '../../components';
 
 describe('Form fields', () => {
   it.skip('can calculate forwards based on primary input', async () => {

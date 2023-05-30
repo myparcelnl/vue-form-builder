@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {FetchClient, GetCarriers, createMyParcelSdk} from '@myparcel/sdk';
 import {useQuery} from '@tanstack/vue-query';
+import {FetchClient, GetCarriers, createMyParcelSdk} from '@myparcel/sdk';
 
 export const useFetchCarriers = () => {
   return useQuery(['carriers'], async () => {

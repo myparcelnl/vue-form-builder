@@ -1,7 +1,7 @@
 import * as Vue from 'vue';
+import {type HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
+import {type ComponentLifecycleHooks} from '../types';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../data';
-import {ComponentLifecycleHooks} from '../types';
-import {HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
 
 type UseLifeCycleHooks = () => {
   hooks: typeof COMPONENT_LIFECYCLE_HOOKS;

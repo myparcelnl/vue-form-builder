@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent} from 'vue';
-import {InteractiveElementInstance} from '../../form';
+import {type PropType, defineComponent} from 'vue';
+import {type InteractiveElementInstance} from '../../form';
 
 export default defineComponent({
   name: 'SubmitButton',

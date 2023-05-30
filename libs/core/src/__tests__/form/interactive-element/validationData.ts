@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {Validator, defineField} from '../../../form';
 import {ref} from 'vue';
+import {type Validator, defineField} from '../../../form';
 
 export const firstNameNotJohnValidator = (): Validator => ({
   validate: (_, value) => !String(value).startsWith('John'),

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {FormConfiguration, defineForm} from '../../form';
-import {AnyElementConfiguration} from '../../types';
 import {isOfType} from '@myparcel/ts-utils';
+import {type AnyElementConfiguration} from '../../types';
+import {type FormConfiguration, defineForm} from '../../form';
 
 export const generateForm = (
   config: FormConfiguration | AnyElementConfiguration[] = [],

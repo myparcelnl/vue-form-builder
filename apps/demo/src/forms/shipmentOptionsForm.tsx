@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import {CarrierName, PACKAGE_TYPE_IDS_TO_NAMES, PackageTypeName} from '@myparcel/constants';
-import {InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder/src';
-import Bonnetje from '../components/Bonnetje.vue';
-import FormGroup from '../components/template/FormGroup.vue';
-import Heading from '../components/Heading.vue';
-import THiddenInput from '../components/template/THiddenInput.vue';
-import TNumberInput from '../components/template/TNumberInput.vue';
-import TResetButton from '../components/template/TResetButton.vue';
-import TSelect from '../components/template/TSelect.vue';
-import TSubmitButton from '../components/template/TSubmitButton.vue';
-import TTextInput from '../components/template/TTextInput.vue';
-import TToggleSwitch from '../components/template/TToggleSwitch.vue';
-import TableFormGroup from '../components/template/TableFormGroup.vue';
-import {isOfType} from '@myparcel/ts-utils';
 import {ref} from 'vue';
+import {type InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder/src';
+import {isOfType} from '@myparcel/ts-utils';
+import {type CarrierName, PACKAGE_TYPE_IDS_TO_NAMES, PackageTypeName} from '@myparcel/constants';
 import {translate} from '../translate';
 import {useFetchCarriers} from '../queries/fetchCarriers';
+import TableFormGroup from '../components/template/TableFormGroup.vue';
+import TToggleSwitch from '../components/template/TToggleSwitch.vue';
+import TTextInput from '../components/template/TTextInput.vue';
+import TSubmitButton from '../components/template/TSubmitButton.vue';
+import TSelect from '../components/template/TSelect.vue';
+import TResetButton from '../components/template/TResetButton.vue';
+import TNumberInput from '../components/template/TNumberInput.vue';
+import THiddenInput from '../components/template/THiddenInput.vue';
+import FormGroup from '../components/template/FormGroup.vue';
+import Heading from '../components/Heading.vue';
+import Bonnetje from '../components/Bonnetje.vue';
 
 // eslint-disable-next-line id-length
 declare const h: typeof import('vue').h;

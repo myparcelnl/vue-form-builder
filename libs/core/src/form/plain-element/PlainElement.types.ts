@@ -1,17 +1,17 @@
-import {AnyAttributes, FunctionOr} from '@myparcel-vfb/utils/src';
+import {type Component, type ComputedRef, type Ref} from 'vue';
+import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils/src';
+import {type HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
+import {type PromiseOr} from '@myparcel/ts-utils';
+import {type FormInstance} from '../Form.types';
 import {
-  BaseElementConfiguration,
-  ComponentHooks,
-  ComponentOrHtmlElement,
-  ElementName,
-  ElementProps,
-  ElementSlots,
+  type BaseElementConfiguration,
+  type ComponentHooks,
+  type ComponentOrHtmlElement,
+  type ElementName,
+  type ElementProps,
+  type ElementSlots,
 } from '../../types';
-import {Component, ComputedRef, Ref} from 'vue';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../../data';
-import {FormInstance} from '../Form.types';
-import {HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
-import {PromiseOr} from '@myparcel/ts-utils';
 
 export type PlainElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,

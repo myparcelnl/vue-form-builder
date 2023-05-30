@@ -1,7 +1,7 @@
-import {ComponentOrHtmlElement, ElementName} from '../../types';
-import {FunctionOr} from '@myparcel-vfb/utils/src';
-import {InteractiveElementInstance} from '../interactive-element';
-import {Validator} from './validator.types';
+import {type FunctionOr} from '@myparcel-vfb/utils/src';
+import {type InteractiveElementInstance} from '../interactive-element';
+import {type ComponentOrHtmlElement, type ElementName} from '../../types';
+import {type Validator} from './validator.types';
 
 export const isRequired = <
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,

@@ -10,11 +10,15 @@ module.exports = {
     },
     {
       files: ['./**/*.vue'],
-      extends: '@myparcel-eslint/eslint-config-prettier-typescript-vue',
+      extends: ['@myparcel-eslint/eslint-config-prettier-typescript-vue', '@myparcel-eslint/eslint-config-import'],
+      rules: {
+        // Disabled because import messes with multiple component blocks, like when using script setup and inheritAttrs.
+        'import/first': 'off',
+      },
     },
     {
       files: ['./**/*.ts', './**/*.tsx'],
-      extends: '@myparcel-eslint/eslint-config-prettier-typescript',
+      extends: ['@myparcel-eslint/eslint-config-prettier-typescript', '@myparcel-eslint/eslint-config-import'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
       },
@@ -25,6 +29,7 @@ module.exports = {
         '@myparcel-eslint/eslint-config-node',
         '@myparcel-eslint/eslint-config-prettier',
         '@myparcel-eslint/eslint-config-esnext',
+        '@myparcel-eslint/eslint-config-import',
       ],
     },
     {

@@ -23,9 +23,9 @@
 </template>
 
 <script lang="ts">
-import {ComputedRef, PropType, computed, defineComponent, watch} from 'vue';
-import {InteractiveElementInstance, SelectOption} from '@myparcel/vue-form-builder/src';
+import {type ComputedRef, type PropType, computed, defineComponent, watch} from 'vue';
 import {useVModel} from '@vueuse/core';
+import {type InteractiveElementInstance, type SelectOption} from '@myparcel/vue-form-builder/src';
 
 export default defineComponent({
   name: 'TSelect',

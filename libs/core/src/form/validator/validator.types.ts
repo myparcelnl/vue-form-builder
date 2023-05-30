@@ -1,8 +1,8 @@
-import {ComponentOrHtmlElement, ElementName} from '../../types';
-import {ComputedRef} from 'vue';
-import {FunctionOr} from '@myparcel-vfb/utils/src';
-import {InteractiveElementInstance} from '../interactive-element';
-import {PromiseOr} from '@myparcel/ts-utils';
+import {type ComputedRef} from 'vue';
+import {type FunctionOr} from '@myparcel-vfb/utils/src';
+import {type PromiseOr} from '@myparcel/ts-utils';
+import {type InteractiveElementInstance} from '../interactive-element';
+import {type ComponentOrHtmlElement, type ElementName} from '../../types';
 
 export type ValidateFunction<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,

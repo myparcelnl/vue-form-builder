@@ -1,7 +1,7 @@
-import {CustomInspectorNode} from '@vue/devtools-api';
-import {FormInstance} from '@myparcel-vfb/core/src';
+import {type UnwrapNestedRefs} from 'vue';
+import {type CustomInspectorNode} from '@vue/devtools-api';
+import {type FormInstance} from '@myparcel-vfb/core/src';
 import {LIME_500} from './types';
-import {UnwrapNestedRefs} from 'vue';
 import {createFieldsNodes} from './createFieldsNodes';
 
 export const createFormNode = (name: string, form: UnwrapNestedRefs<FormInstance>): CustomInspectorNode => ({

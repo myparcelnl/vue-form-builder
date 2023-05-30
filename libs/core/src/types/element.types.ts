@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Component, HTMLAttributes, VNode} from 'vue';
+import {type Component, type HTMLAttributes, type VNode} from 'vue';
+import {type ComponentProps} from '@myparcel-vfb/utils/src';
+import {type MakeOptional} from '@myparcel/ts-utils';
 import {
-  InteractiveElementConfiguration,
-  InteractiveElementInstance,
-  PlainElementConfiguration,
-  PlainElementInstance,
+  type InteractiveElementConfiguration,
+  type InteractiveElementInstance,
+  type PlainElementConfiguration,
+  type PlainElementInstance,
 } from '../form';
-import {ComponentLifecycleHooks} from './other.types';
-import {ComponentProps} from '@myparcel-vfb/utils/src';
-import {MakeOptional} from '@myparcel/ts-utils';
+import {type ComponentLifecycleHooks} from './other.types';
 
 export type ElementName = string | undefined;
 

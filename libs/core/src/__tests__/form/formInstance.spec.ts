@@ -1,10 +1,10 @@
-import {FormConfiguration, InteractiveElement, PlainElement, defineField} from '../../form';
+import {ref} from 'vue';
 import {describe, expect, it} from 'vitest';
-import TextInput from '../elements/TextInput.vue';
+import {get} from '@vueuse/core';
 import {flushPromises} from '@vue/test-utils';
 import {generateForm} from '../utils';
-import {get} from '@vueuse/core';
-import {ref} from 'vue';
+import TextInput from '../elements/TextInput.vue';
+import {type FormConfiguration, InteractiveElement, PlainElement, defineField} from '../../form';
 
 describe('Form instance', () => {
   it('creates a reactive model from named elements', () => {

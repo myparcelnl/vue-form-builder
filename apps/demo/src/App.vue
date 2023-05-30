@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import NContainer from './components/NContainer.vue';
-import NLink from './components/NLink.vue';
 import {RouterView} from 'vue-router';
+import NLink from './components/NLink.vue';
+import NContainer from './components/NContainer.vue';
 </script>

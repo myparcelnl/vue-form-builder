@@ -1,4 +1,4 @@
-import {PromiseOr} from '@myparcel/ts-utils';
+import {type PromiseOr} from '@myparcel/ts-utils';
 
 export type ComponentLifecycleHooks<I = unknown> = {
   onActivated: (instance: I) => PromiseOr<void>;

@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts" setup>
-import {AnyElementInstance} from '../types';
 import {computed} from 'vue';
+import {type AnyElementInstance} from '../types';
 import {createElementHooks} from '../composables';
 
 const props = defineProps<{

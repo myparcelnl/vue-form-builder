@@ -29,8 +29,8 @@
 </template>
 
 <script lang="ts">
-import {PropType, defineComponent} from 'vue';
-import {InteractiveElementInstance} from '@myparcel/vue-form-builder/src';
+import {type PropType, defineComponent} from 'vue';
+import {type InteractiveElementInstance} from '@myparcel/vue-form-builder/src';
 import {translate} from '../../translate';
 
 export default defineComponent({

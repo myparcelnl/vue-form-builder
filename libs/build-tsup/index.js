@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import glob from 'fast-glob';
 import {spawnSync} from 'child_process';
+import glob from 'fast-glob';
 
 /** @type {CreateCommonTsupConfig} */
 const createCommonTsupConfig = () => {

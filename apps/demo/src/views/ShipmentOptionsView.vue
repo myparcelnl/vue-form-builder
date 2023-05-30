@@ -36,11 +36,11 @@
 </template>
 
 <script lang="ts">
-import {FormHook, FormInstance} from '@myparcel-vfb/core/src';
 import {computed, defineComponent, ref, watch} from 'vue';
-import {InteractiveElement} from '@myparcel-vfb/core';
-import {MagicForm} from '@myparcel/vue-form-builder/src';
 import {get} from '@vueuse/core';
+import {FormHook, type FormInstance} from '@myparcel-vfb/core/src';
+import {type InteractiveElement} from '@myparcel-vfb/core';
+import {MagicForm} from '@myparcel/vue-form-builder/src';
 import {isOfType} from '@myparcel/ts-utils';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';
 

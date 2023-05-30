@@ -1,6 +1,6 @@
 import {beforeEach, describe, expect, it, vi} from 'vitest';
-import {HookManagerInstance} from '../HookManager';
 import {createHookManager} from '../createHookManager';
+import {type HookManagerInstance} from '../HookManager';
 
 const HOOKS = ['start', 'sanitize'] as const;
 

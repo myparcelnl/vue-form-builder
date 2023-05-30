@@ -1,5 +1,5 @@
 import {type ComputedRef} from 'vue';
-import {type FunctionOr} from '@myparcel-vfb/utils/src';
+import {type FunctionOr} from '@myparcel-vfb/utils';
 import {type PromiseOr} from '@myparcel/ts-utils';
 import {type InteractiveElementInstance} from '../interactive-element';
 import {type ComponentOrHtmlElement, type ElementName} from '../../types';

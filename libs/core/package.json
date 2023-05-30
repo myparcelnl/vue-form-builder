@@ -3,40 +3,30 @@
   "version": "1.0.0-beta.5",
   "license": "MIT",
   "type": "module",
-  "exports": {
-    ".": "./dist/index.js",
-    "./src": "./src/index.ts"
-  },
-  "main": "./dist/index.js",
+  "exports": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "files": [
     "./dist",
     "./src"
   ],
   "scripts": {
-    "build": "run ws:vite:build \"$(pwd)\"",
-    "build:dev": "run ws:vite:build:dev \"$(pwd)\"",
+    "build": "run ws:vue:build \"$(pwd)\"",
+    "build:dev": "run ws:vue:build:dev \"$(pwd)\"",
     "clean": "run ws:clean \"$(pwd)\"",
-    "serve": "run ws:vite:serve \"$(pwd)\"",
     "test": "run ws:test \"$(pwd)\"",
     "test:run": "run ws:test:run \"$(pwd)\"",
-    "typecheck": "run ws:vite:typecheck \"$(pwd)\"",
-    "watch": "run ws:vite:watch \"$(pwd)\""
+    "typecheck": "run ws:vue:typecheck \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/build-vite": "workspace:^1.0.0-alpha.1",
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.3",
-    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.2",
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.1",
+    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.1",
     "@myparcel/ts-utils": "^1.6.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
     "@vitest/coverage-c8": "^0.28.5",
     "@vue/test-utils": "^2.3.0",
     "happy-dom": "^9.20.3",
     "typescript": "^5.0.0",
-    "vite": "^4.1.4",
-    "vite-plugin-dts": "^2.1.0",
     "vitest": "^0.28.5",
     "vue": "^3.2.47",
     "vue-tsc": "^1.1.5"

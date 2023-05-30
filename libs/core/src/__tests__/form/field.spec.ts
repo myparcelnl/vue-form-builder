@@ -6,7 +6,7 @@ import {firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
 import FormGroup from '../elements/FormGroup.vue';
 import {defineField, defineForm} from '../../form';
-import {MagicForm} from '../../components';
+import MagicForm from '../../components/MagicForm.vue';
 
 describe('Form fields', () => {
   it.skip('can calculate forwards based on primary input', async () => {

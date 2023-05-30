@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {type Component, type HTMLAttributes, type VNode} from 'vue';
-import {type ComponentProps} from '@myparcel-vfb/utils/src';
+import {type ComponentProps} from '@myparcel-vfb/utils';
 import {type MakeOptional} from '@myparcel/ts-utils';
 import {
   type InteractiveElementConfiguration,

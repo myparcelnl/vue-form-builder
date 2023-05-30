@@ -1,4 +1,4 @@
-import {type FunctionOr} from '@myparcel-vfb/utils/src';
+import {type FunctionOr} from '@myparcel-vfb/utils';
 import {type InteractiveElementInstance} from '../interactive-element';
 import {type ComponentOrHtmlElement, type ElementName} from '../../types';
 import {type Validator} from './validator.types';

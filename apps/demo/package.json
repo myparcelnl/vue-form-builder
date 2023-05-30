@@ -6,9 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
+    "build:dev": "vite build --mode development",
     "clean": "rimraf dist",
     "serve": "vite",
-    "typecheck": "run ws:vite:typecheck \"$(pwd)\""
+    "typecheck": "run ws:vue:typecheck \"$(pwd)\""
   },
   "dependencies": {
     "@myparcel/constants": "^1.1.0",

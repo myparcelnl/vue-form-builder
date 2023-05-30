@@ -1,6 +1,6 @@
 import {computed, ref, watch} from 'vue';
 import {get} from '@vueuse/core';
-import {createHookManager} from '@myparcel-vfb/hook-manager/src';
+import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
 import {type AnyElementConfiguration, type AnyElementInstance, type ComponentOrHtmlElement} from '../types';

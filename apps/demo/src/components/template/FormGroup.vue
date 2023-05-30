@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import {type PropType, type UnwrapNestedRefs, defineComponent} from 'vue';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder/src';
+import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 import {translate} from '../../translate';
 
 export default defineComponent({

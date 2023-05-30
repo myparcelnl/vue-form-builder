@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {type App, type Plugin} from 'vue';
-import {type FormConfiguration, useFormBuilder} from '@myparcel-vfb/core/src';
+import {type FormConfiguration, useFormBuilder} from '@myparcel-vfb/core';
 import {setupDevtools} from './devtools';
 
 export type MyParcelFormBuilderPlugin = Plugin;

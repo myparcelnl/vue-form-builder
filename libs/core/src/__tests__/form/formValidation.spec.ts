@@ -6,7 +6,7 @@ import {canNotContainX, firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
 import SubmitButton from '../elements/SubmitButton.vue';
 import {defineField, defineForm} from '../../form';
-import {MagicForm} from '../../components';
+import MagicForm from '../../components/MagicForm.vue';
 import {
   canNotContainLetterValidator,
   firstNameNotJohnValidator,

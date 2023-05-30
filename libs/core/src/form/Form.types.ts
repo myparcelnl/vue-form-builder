@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unified-signatures */
 import {type ComputedRef, type Ref} from 'vue';
-import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils/src';
-import {type HookManagerInstance, type HookUnregisterHandler} from '@myparcel-vfb/hook-manager/src';
+import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
+import {type HookManagerInstance, type HookUnregisterHandler} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr, type ReadonlyOr} from '@myparcel/ts-utils';
 import {
   type AnyElementConfiguration,
@@ -191,11 +191,6 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
    * Validate all fields in the form.
    */
   validate(): PromiseOr<boolean>;
-
-  /**
-   * @internal
-   */
-  emit(event: keyof FormHooks, ...args: unknown[]): void;
 };
 
 /**

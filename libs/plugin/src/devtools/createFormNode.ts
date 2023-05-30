@@ -1,6 +1,6 @@
 import {type UnwrapNestedRefs} from 'vue';
 import {type CustomInspectorNode} from '@vue/devtools-api';
-import {type FormInstance} from '@myparcel-vfb/core/src';
+import {type FormInstance} from '@myparcel-vfb/core';
 import {LIME_500} from './types';
 import {createFieldsNodes} from './createFieldsNodes';
 

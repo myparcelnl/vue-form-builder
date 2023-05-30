@@ -1,7 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
-    "declarationMap": true,
+    "declaration": true,
     "importsNotUsedAsValues": "remove",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "preserveValueImports": false,
@@ -10,11 +10,11 @@
   },
   "include": [],
   "exclude": [
-    "libs/**/dist",
-    "libs/**/lib",
-    "libs/**/*.snap",
-    "apps/**/dist",
-    "apps/**/lib",
-    "apps/**/*.snap"
+    "**/*.snap",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/__tests__/**",
+    "**/dist",
+    "**/lib"
   ]
 }

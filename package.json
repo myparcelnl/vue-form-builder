@@ -21,17 +21,13 @@
     "test": "nx run-many --target=test --parallel --output-style=stream",
     "test:run": "nx run-many --target=test:run --parallel=false --output-style=stream",
     "typecheck": "nx run-many --target=typecheck",
-    "ws:clean": "cd $0 && rimraf dist",
+    "ws:clean": "cd $0 && rimraf dist coverage tsconfig.build.tsbuildinfo",
     "ws:test": "cd $0 && vitest",
     "ws:test:run": "cd $0 && vitest run --coverage",
-    "ws:tsup:build": "cd $0 && tsup-node src/index.ts --dts",
-    "ws:tsup:build:dev": "cd $0 && NODE_ENV=development tsup-node src/index.ts --sourcemap --dts",
-    "ws:tsup:typecheck": "cd $0 && tsc src/index.ts --noEmit",
-    "ws:tsup:watch": "cd $0 && tsup-node src/index.ts --sourcemap --dts --watch",
-    "ws:vite:build": "cd $0 && vite build",
-    "ws:vite:build:dev": "cd $0 && vite build --mode development",
-    "ws:vite:typecheck": "cd $0 && vue-tsc --noEmit --declarationMap false -p tsconfig.build.json",
-    "ws:vite:watch": "cd $0 && vite build --mode development --watch"
+    "ws:ts:build": "cd $0 && tsc -p tsconfig.build.json --incremental --emitDeclarationOnly --declarationDir dist && (cp -r src/**/*.d.ts dist || true)",
+    "ws:ts:typecheck": "cd $0 && tsc -p tsconfig.build.json --noEmit",
+    "ws:vue:build": "cd $0 && vue-tsc -p tsconfig.build.json --incremental --emitDeclarationOnly --declarationDir dist && (cp -r src/**/*.d.ts dist || true)",
+    "ws:vue:typecheck": "cd $0 && vue-tsc -p tsconfig.build.json --noEmit"
   },
   "lint-staged": {
     "*.{json,md,html}": "prettier --write",
@@ -67,8 +63,7 @@
     "monodeploy": "^4.0.1",
     "nx": "^16.2.1",
     "prettier": "^2.8.4",
-    "rimraf": "^5.0.1",
-    "typescript": "^5.0.0"
+    "rimraf": "^5.0.1"
   },
   "packageManager": "yarn@3.5.1",
   "engines": {

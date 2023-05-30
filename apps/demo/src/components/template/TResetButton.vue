@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import {type PropType, defineComponent} from 'vue';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder/src';
+import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 import {translate} from '../../translate';
 import TButton from './TButton.vue';
 

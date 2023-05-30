@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import {MagicForm} from '@myparcel/vue-form-builder/src';
+import {MagicForm} from '@myparcel/vue-form-builder';
 import {noPropForm} from '../forms/noPropForm';
 
 const form = noPropForm;

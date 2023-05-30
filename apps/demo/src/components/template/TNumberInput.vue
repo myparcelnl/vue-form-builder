@@ -21,7 +21,7 @@
 <script lang="ts">
 import {type PropType, defineComponent} from 'vue';
 import {useVModel} from '@vueuse/core';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder/src';
+import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 
 export default defineComponent({
   name: 'TNumberInput',

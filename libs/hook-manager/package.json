@@ -3,32 +3,26 @@
   "version": "1.0.0-beta.3",
   "license": "MIT",
   "type": "module",
-  "exports": {
-    ".": "./dist/index.js",
-    "./src": "./src/index.ts"
-  },
-  "main": "./dist/index.js",
+  "exports": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "files": [
     "./dist",
     "./src"
   ],
   "scripts": {
-    "build": "run ws:tsup:build \"$(pwd)\"",
-    "build:dev": "run ws:tsup:build:dev \"$(pwd)\"",
+    "build": "run ws:ts:build \"$(pwd)\"",
+    "build:dev": "run ws:ts:build \"$(pwd)\"",
     "clean": "run ws:clean \"$(pwd)\"",
     "test": "run ws:test \"$(pwd)\"",
     "test:run": "run ws:test:run \"$(pwd)\"",
-    "typecheck": "run ws:tsup:typecheck \"$(pwd)\"",
-    "watch": "run ws:tsup:watch \"$(pwd)\""
+    "typecheck": "run ws:ts:typecheck \"$(pwd)\""
   },
   "dependencies": {
     "@myparcel/ts-utils": "^1.6.0"
   },
   "devDependencies": {
-    "@myparcel-vfb/build-tsup": "workspace:*",
     "@vitest/coverage-c8": "^0.28.5",
-    "tsup": "^6.6.3",
+    "typescript": "^5.0.0",
     "vitest": "^0.28.5"
   },
   "publishConfig": {

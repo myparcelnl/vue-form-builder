@@ -1,6 +1,6 @@
 import {type Component, type ComputedRef, type Ref} from 'vue';
-import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils/src';
-import {type HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
+import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
+import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr} from '@myparcel/ts-utils';
 import {type FormInstance} from '../Form.types';
 import {

@@ -1,4 +1,4 @@
-import {type HookCallback} from '@myparcel-vfb/hook-manager/src';
+import {type HookCallback} from '@myparcel-vfb/hook-manager';
 import {isUndefined, removePropertiesWith} from '@myparcel/ts-utils';
 import {type AnyElementInstance} from '../types';
 import {useLifecycleHooks} from './useLifecycleHooks';

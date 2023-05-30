@@ -3,7 +3,7 @@ import {type UnwrapNestedRefs} from 'vue';
 import {get} from '@vueuse/core';
 import {type StateBase} from '@vue/devtools-api/lib/esm/api/component';
 import {type App, setupDevtoolsPlugin} from '@vue/devtools-api';
-import {type FormInstance, useFormBuilder} from '@myparcel-vfb/core/src';
+import {type FormInstance, useFormBuilder} from '@myparcel-vfb/core';
 import {PINK_500} from './types';
 import {getComponentName} from './getComponentName';
 import {createFormNode} from './createFormNode';

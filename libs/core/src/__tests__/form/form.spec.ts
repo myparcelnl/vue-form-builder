@@ -5,7 +5,7 @@ import {generateForm, mountForm} from '../utils';
 import {type AnyElementConfiguration} from '../../types';
 import {InteractiveElement, type InteractiveElementInstance, getDefaultFormConfiguration} from '../../form';
 import {useFormBuilder} from '../../composables';
-import {MagicForm} from '../../components';
+import MagicForm from '../../components/MagicForm.vue';
 
 const mockComponent = defineComponent({
   props: {

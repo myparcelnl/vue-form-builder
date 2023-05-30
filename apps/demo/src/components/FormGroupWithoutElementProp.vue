@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import {useElement} from '@myparcel/vue-form-builder/src';
+import {useElement} from '@myparcel/vue-form-builder';
 
 const element = useElement();
 </script>

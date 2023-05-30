@@ -8,6 +8,7 @@ libs/**/tsconfig.json
 coverage
 dist
 
+*.tsbuildinfo
 vite.config.ts.timestamp-*
 
 !.vscode/extensions.json

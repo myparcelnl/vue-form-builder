@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.4](///compare/@myparcel-vfb/core@1.0.0-beta.3...@myparcel-vfb/core@1.0.0-beta.4) "@myparcel-vfb/core" (2023-05-30)
+
+
+### Bug Fixes
+
+* include .d.ts files in final package 12a9b7b
+
+
+
+
 ## [1.0.0-beta.3](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.2...@myparcel-vfb/core@1.0.0-beta.3) "@myparcel-vfb/core" (2023-05-23)
 
 

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.2](///compare/@myparcel-vfb/hook-manager@1.0.0-beta.1...@myparcel-vfb/hook-manager@1.0.0-beta.2) "@myparcel-vfb/hook-manager" (2023-05-30)
+
+
+### Bug Fixes
+
+* include .d.ts files in final package 12a9b7b
+
+
+
+
 ## [1.0.0-beta.1](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-beta.0...@myparcel-vfb/hook-manager@1.0.0-beta.1) "@myparcel-vfb/hook-manager" (2023-05-04)
 
 

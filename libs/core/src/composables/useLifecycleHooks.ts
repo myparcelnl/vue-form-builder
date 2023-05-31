@@ -1,5 +1,5 @@
 import * as Vue from 'vue';
-import {type HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
+import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {type ComponentLifecycleHooks} from '../types';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../data';
 

@@ -1,7 +1,16 @@
 {
-  "extends": "./tsconfig.base.json",
-  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
+  "extends": "./tsconfig.build.json",
+  "exclude": ["node_modules"],
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "./**/*.vue",
+    "./**/*.js",
+    "./**/*.cjs",
+    "./**/*.mjs"
+  ],
   "compilerOptions": {
+    "noEmit": true,
     "paths": {
       "@myparcel/vue-form-builder": ["./apps/vue-form-builder/src"],
       "@myparcel-vfb/*": ["./libs/*/src"]

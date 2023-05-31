@@ -11,18 +11,10 @@ export type {
   PlainElementInstance,
   ResolvedElementConfiguration,
   Validator,
-} from '@myparcel-vfb/core/src';
+} from '@myparcel-vfb/core';
 
-export type {SelectOption} from '@myparcel-vfb/utils/src';
+export type {SelectOption} from '@myparcel-vfb/utils';
 
-export {
-  FormHook,
-  MagicForm,
-  defineField,
-  defineForm,
-  useElement,
-  useForm,
-  useFormBuilder,
-} from '@myparcel-vfb/core/src';
+export {FormHook, MagicForm, defineField, defineForm, useElement, useForm, useFormBuilder} from '@myparcel-vfb/core';
 
-export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from '@myparcel-vfb/plugin/src';
+export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from '@myparcel-vfb/plugin';

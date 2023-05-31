@@ -1,5 +1,5 @@
 import {type Ref} from 'vue';
-import {type HookManagerInstance} from '@myparcel-vfb/hook-manager/src';
+import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr} from '@myparcel/ts-utils';
 import {type FieldValidator, type Validator} from '../validator';
 import {PLAIN_ELEMENT_HOOKS, type PlainElementInstance} from '../plain-element';

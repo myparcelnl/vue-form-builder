@@ -1,0 +1,42 @@
+{
+  "name": "@myparcel/vue-form-builder-js",
+  "version": "1.0.0-beta.0",
+  "keywords": [
+    "vue",
+    "form-builder",
+    "form",
+    "vue3"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "./dist",
+    "./src"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
+    "clean": "run ws:clean \"$(pwd)\"",
+    "typecheck": "run ws:ts:typecheck \"$(pwd)\""
+  },
+  "dependencies": {
+    "@myparcel/vue-form-builder": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vitest/coverage-c8": "^0.28.5",
+    "typescript": "^5.0.0",
+    "vite": "^4.1.4",
+    "vite-plugin-custom-tsconfig": "^1.0.4",
+    "vite-plugin-dts": "^2.1.0",
+    "vitest": "^0.28.5"
+  },
+  "peerDependencies": {
+    "vue": "^3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

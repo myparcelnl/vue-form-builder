@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils';
 import {type AnyElementConfiguration} from '../../types';
 import {type FormConfiguration} from '../../form';
-import {MagicForm} from '../../components';
+import MagicForm from '../../components/MagicForm.vue';
 import {generateForm} from './generateForm';
 
 export const mountForm = (

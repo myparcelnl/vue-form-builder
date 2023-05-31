@@ -1,7 +1,7 @@
 import {type ComputedRef, computed, markRaw, ref} from 'vue';
 import {get} from '@vueuse/core';
-import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils/src';
-import {createHookManager} from '@myparcel-vfb/hook-manager/src';
+import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
+import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {type FormInstance} from '../Form.types';
 import {useDynamicWatcher} from '../../utils';
 import {type AnyElementConfiguration, type ComponentOrHtmlElement, type ElementName} from '../../types';

@@ -3,22 +3,17 @@
   "version": "1.0.0-beta.5",
   "license": "MIT",
   "type": "module",
-  "exports": {
-    ".": "./dist/index.js",
-    "./src": "./src/index.ts"
-  },
-  "main": "./dist/index.js",
+  "exports": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "files": [
     "./dist",
     "./src"
   ],
   "scripts": {
-    "build": "run ws:tsup:build \"$(pwd)\"",
-    "build:dev": "run ws:tsup:build:dev \"$(pwd)\"",
+    "build": "run ws:ts:build \"$(pwd)\"",
+    "build:dev": "run ws:ts:build:dev \"$(pwd)\"",
     "clean": "run ws:clean \"$(pwd)\"",
-    "typecheck": "run ws:tsup:typecheck \"$(pwd)\"",
-    "watch": "run ws:tsup:watch \"$(pwd)\""
+    "typecheck": "run ws:ts:typecheck \"$(pwd)\""
   },
   "dependencies": {
     "@myparcel-vfb/core": "workspace:^1.0.0-beta.5",
@@ -26,11 +21,9 @@
     "@vue/devtools-api": "^6.5.0"
   },
   "devDependencies": {
-    "@myparcel-vfb/build-tsup": "workspace:*",
     "@vitest/coverage-c8": "^0.28.5",
     "@vueuse/core": "^10.1.2",
-    "tsup": "^6.6.3",
-    "vitest": "^0.28.5"
+    "typescript": "^5.0.0"
   },
   "publishConfig": {
     "access": "public"

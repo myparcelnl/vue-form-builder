@@ -4,19 +4,29 @@
   "affected": {
     "defaultBase": "alpha"
   },
-  "defaultProject": "@myparcel/vue-form-builder",
+  "defaultProject": "@myparcel/vue-form-builder-js",
   "npmScope": "myparcel-vfb",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [
+      "{workspaceRoot}/tsconfig.build.json",
+      "{workspaceRoot}/yarn.lock",
+      "{workspaceRoot}/package.json"
+    ]
+  },
   "targetDefaults": {
     "build:dev": {
+      "inputs": ["default"],
       "dependsOn": ["^build:dev"],
-      "outputs": ["{projectRoot}/dist"]
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
     },
     "build": {
+      "inputs": ["default"],
       "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist"]
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
     },
     "serve": {
-      "dependsOn": ["build:dev"],
+      "dependsOn": ["^build:dev"],
       "outputs": ["{projectRoot}/dist"]
     },
     "test:run": {

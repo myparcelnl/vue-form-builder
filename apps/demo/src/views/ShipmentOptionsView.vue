@@ -38,9 +38,8 @@
 <script lang="ts">
 import {computed, defineComponent, ref, watch} from 'vue';
 import {get} from '@vueuse/core';
-import {FormHook, type FormInstance} from '@myparcel-vfb/core/src';
-import {type InteractiveElement} from '@myparcel-vfb/core';
-import {MagicForm} from '@myparcel/vue-form-builder/src';
+import {FormHook, type FormInstance, type InteractiveElement} from '@myparcel-vfb/core';
+import {MagicForm} from '@myparcel/vue-form-builder';
 import {isOfType} from '@myparcel/ts-utils';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';
 

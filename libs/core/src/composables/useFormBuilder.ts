@@ -1,6 +1,6 @@
 import {type Ref, ref} from 'vue';
 import {get} from '@vueuse/core';
-import {HookManager} from '@myparcel-vfb/hook-manager/src';
+import {HookManager} from '@myparcel-vfb/hook-manager';
 import {markComponentAsRaw} from '../utils';
 import {type AnyElementConfiguration} from '../types';
 import {
@@ -42,11 +42,9 @@ export type FormBuilder = {
   setDefaults(options: Partial<FormConfiguration>): void;
 };
 
-export type UseFormBuilder = () => FormBuilder;
-
 const HOOK_REGISTER = 'register';
 
-export const useFormBuilder: UseFormBuilder = () => {
+export const useFormBuilder = (): FormBuilder => {
   forms ??= ref({});
 
   // TODO: infinitely deep type error

@@ -82,19 +82,7 @@
     },
     "files": [
       {
-        "path": "./apps/vue-form-builder/dist/**/*.js"
-      },
-      {
-        "path": "./libs/core/dist/**/*.js"
-      },
-      {
-        "path": "./libs/hook-manager/dist/**/*.js"
-      },
-      {
-        "path": "./libs/plugin/dist/**/*.js"
-      },
-      {
-        "path": "./libs/utils/dist/**/*.js"
+        "path": "./apps/vue-form-builder-js/dist/**/*.js"
       }
     ]
   }

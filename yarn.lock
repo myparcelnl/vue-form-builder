@@ -1083,12 +1083,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@myparcel-vfb/core@workspace:^1.0.0-beta.5, @myparcel-vfb/core@workspace:libs/core":
+"@myparcel-vfb/core@workspace:^1.0.0-beta.6, @myparcel-vfb/core@workspace:libs/core":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/core@workspace:libs/core"
   dependencies:
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.1"
-    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.1"
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.4"
+    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.3"
     "@myparcel/ts-utils": ^1.6.0
     "@vitest/coverage-c8": ^0.28.5
     "@vue/test-utils": ^2.3.0
@@ -1124,7 +1124,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/hook-manager@workspace:^1.0.0-beta.1, @myparcel-vfb/hook-manager@workspace:^1.0.0-beta.3, @myparcel-vfb/hook-manager@workspace:libs/hook-manager":
+"@myparcel-vfb/hook-manager@workspace:^1.0.0-beta.4, @myparcel-vfb/hook-manager@workspace:libs/hook-manager":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/hook-manager@workspace:libs/hook-manager"
   dependencies:
@@ -1165,11 +1165,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/plugin@workspace:^1.0.0-beta.5, @myparcel-vfb/plugin@workspace:libs/plugin":
+"@myparcel-vfb/plugin@workspace:^1.0.0-beta.6, @myparcel-vfb/plugin@workspace:libs/plugin":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/plugin@workspace:libs/plugin"
   dependencies:
-    "@myparcel-vfb/core": "workspace:^1.0.0-beta.5"
+    "@myparcel-vfb/core": "workspace:^1.0.0-beta.6"
     "@myparcel/ts-utils": ^1.6.0
     "@vitest/coverage-c8": ^0.28.5
     "@vue/devtools-api": ^6.5.0
@@ -1178,7 +1178,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/utils@workspace:^1.0.0-beta.1, @myparcel-vfb/utils@workspace:^1.0.0-beta.2, @myparcel-vfb/utils@workspace:libs/utils":
+"@myparcel-vfb/utils@workspace:^1.0.0-beta.3, @myparcel-vfb/utils@workspace:libs/utils":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/utils@workspace:libs/utils"
   dependencies:
@@ -1224,7 +1224,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@myparcel/vue-form-builder-js@workspace:apps/vue-form-builder-js"
   dependencies:
-    "@myparcel/vue-form-builder": "workspace:*"
+    "@myparcel/vue-form-builder": "workspace:^1.0.0-beta.7"
     "@vitejs/plugin-vue": ^4.0.0
     "@vitest/coverage-c8": ^0.28.5
     typescript: ^5.0.0
@@ -1237,14 +1237,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel/vue-form-builder@workspace:*, @myparcel/vue-form-builder@workspace:apps/vue-form-builder":
+"@myparcel/vue-form-builder@workspace:*, @myparcel/vue-form-builder@workspace:^1.0.0-beta.7, @myparcel/vue-form-builder@workspace:apps/vue-form-builder":
   version: 0.0.0-use.local
   resolution: "@myparcel/vue-form-builder@workspace:apps/vue-form-builder"
   dependencies:
-    "@myparcel-vfb/core": "workspace:^1.0.0-beta.5"
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.3"
-    "@myparcel-vfb/plugin": "workspace:^1.0.0-beta.5"
-    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.2"
+    "@myparcel-vfb/core": "workspace:^1.0.0-beta.6"
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.4"
+    "@myparcel-vfb/plugin": "workspace:^1.0.0-beta.6"
+    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.3"
     "@myparcel/ts-utils": ^1.6.0
     typescript: ^5.0.0
     vue: ^3.2.47

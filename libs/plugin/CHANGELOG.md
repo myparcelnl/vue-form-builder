@@ -2,6 +2,20 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.6](///compare/@myparcel-vfb/plugin@1.0.0-beta.5...@myparcel-vfb/plugin@1.0.0-beta.6) "@myparcel-vfb/plugin" (2023-05-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* **meta:** fix having to use /src in vfb imports (#208)
+
+### Bug Fixes
+
+* **meta:** fix having to use /src in vfb imports ([#208](///issues/208)) 2e52261
+
+
+
+
 ## [1.0.0-beta.5](///compare/@myparcel-vfb/plugin@1.0.0-beta.4...@myparcel-vfb/plugin@1.0.0-beta.5) "@myparcel-vfb/plugin" (2023-05-30)
 
 

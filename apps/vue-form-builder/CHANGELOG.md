@@ -2,6 +2,20 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.7](///compare/@myparcel/vue-form-builder@1.0.0-beta.6...@myparcel/vue-form-builder@1.0.0-beta.7) "@myparcel/vue-form-builder" (2023-05-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* **meta:** fix having to use /src in vfb imports (#208)
+
+### Bug Fixes
+
+* **meta:** fix having to use /src in vfb imports ([#208](///issues/208)) 2e52261
+
+
+
+
 ## [1.0.0-beta.5](///compare/@myparcel/vue-form-builder@1.0.0-beta.4...@myparcel/vue-form-builder@1.0.0-beta.5) "@myparcel/vue-form-builder" (2023-05-30)
 
 

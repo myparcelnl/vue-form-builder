@@ -1,6 +1,6 @@
 {
   "name": "@myparcel/vue-form-builder",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.7",
   "keywords": [
     "vue",
     "form-builder",
@@ -22,10 +22,10 @@
     "typecheck": "run ws:ts:typecheck \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/core": "workspace:^1.0.0-beta.5",
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.3",
-    "@myparcel-vfb/plugin": "workspace:^1.0.0-beta.5",
-    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.2",
+    "@myparcel-vfb/core": "workspace:^1.0.0-beta.6",
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.4",
+    "@myparcel-vfb/plugin": "workspace:^1.0.0-beta.6",
+    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.3",
     "@myparcel/ts-utils": "^1.6.0"
   },
   "devDependencies": {

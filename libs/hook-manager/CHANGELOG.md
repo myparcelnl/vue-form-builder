@@ -2,6 +2,20 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.4](///compare/@myparcel-vfb/hook-manager@1.0.0-beta.3...@myparcel-vfb/hook-manager@1.0.0-beta.4) "@myparcel-vfb/hook-manager" (2023-05-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* **meta:** fix having to use /src in vfb imports (#208)
+
+### Bug Fixes
+
+* **meta:** fix having to use /src in vfb imports ([#208](///issues/208)) 2e52261
+
+
+
+
 ## [1.0.0-beta.3](///compare/@myparcel-vfb/hook-manager@1.0.0-beta.2...@myparcel-vfb/hook-manager@1.0.0-beta.3) "@myparcel-vfb/hook-manager" (2023-05-30)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@myparcel/vue-form-builder-js",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "keywords": [
     "vue",
     "form-builder",
@@ -22,7 +22,7 @@
     "typecheck": "run ws:ts:typecheck \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel/vue-form-builder": "workspace:^1.0.0-beta.7"
+    "@myparcel/vue-form-builder": "workspace:^1.0.0-beta.8"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

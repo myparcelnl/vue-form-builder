@@ -2,6 +2,11 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.7](///compare/@myparcel-vfb/core@1.0.0-beta.6...@myparcel-vfb/core@1.0.0-beta.7) "@myparcel-vfb/core" (2023-06-05)
+
+
+
+
 ## [1.0.0-beta.6](///compare/@myparcel-vfb/core@1.0.0-beta.5...@myparcel-vfb/core@1.0.0-beta.6) "@myparcel-vfb/core" (2023-05-31)
 
 

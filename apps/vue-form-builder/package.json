@@ -17,7 +17,6 @@
   ],
   "scripts": {
     "build": "run ws:ts:build \"$(pwd)\"",
-    "build:dev": "run ws:ts:build:dev \"$(pwd)\"",
     "clean": "run ws:clean \"$(pwd)\"",
     "typecheck": "run ws:ts:typecheck \"$(pwd)\""
   },

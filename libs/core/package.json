@@ -11,7 +11,6 @@
   ],
   "scripts": {
     "build": "run ws:vue:build \"$(pwd)\"",
-    "build:dev": "run ws:vue:build:dev \"$(pwd)\"",
     "clean": "run ws:clean \"$(pwd)\"",
     "test": "run ws:test \"$(pwd)\"",
     "test:run": "run ws:test:run \"$(pwd)\"",

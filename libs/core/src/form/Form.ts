@@ -89,12 +89,12 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
   }
 
-  public getField(name: string): AnyElementInstance | void {
-    return this.model[name] ?? get(this.fields).find((field) => field.name === name);
+  public getField(name: string): AnyElementInstance | null {
+    return this.model[name] ?? get(this.fields).find((field) => field.name === name) ?? null;
   }
 
-  public getValue(field: string): unknown {
-    const fieldInstance = this.ensureGetField(field);
+  public getValue(fieldName: string): unknown {
+    const fieldInstance = this.ensureGetField(fieldName);
 
     return get(fieldInstance.ref);
   }
@@ -116,8 +116,8 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     get(this.fields).splice(index, 1);
   }
 
-  public setValue(field: string, value: unknown): void {
-    const fieldInstance = this.ensureGetField(field);
+  public setValue(fieldName: string, value: unknown): void {
+    const fieldInstance = this.ensureGetField(fieldName);
 
     fieldInstance.ref.value = value;
   }

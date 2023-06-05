@@ -165,12 +165,12 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   /**
    * Get the value of a field by name.
    */
-  getValue(name: string): unknown;
+  getValue(fieldName: string): unknown;
 
   /**
    * Set the value of a field by name.
    */
-  setValue(name: string, value: unknown): void;
+  setValue(fieldName: string, value: unknown): void;
 
   /**
    * Set values for multiple fields at once.

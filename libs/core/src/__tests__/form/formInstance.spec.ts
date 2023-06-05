@@ -78,6 +78,27 @@ describe('Form instance', () => {
     expect(form.getValue('nothing')).toBe(undefined);
   });
 
+  it('can set the value of a field by the field name', async () => {
+    const form = generateForm(formConfig);
+
+    expect(form.getValue('val')).toBe(23);
+    form.setValue('val', 42);
+    expect(form.getValue('val')).toBe(42);
+  });
+
+  it('can set multiple field values by name', async () => {
+    const form = generateForm(formConfig);
+
+    expect(form.getValue('val')).toBe(23);
+    expect(form.getValue('text')).toBe('initial');
+    form.setValues({
+      val: 42,
+      text: 'changed',
+    });
+    expect(form.getValue('val')).toBe(42);
+    expect(form.getValue('text')).toBe('changed');
+  });
+
   it('can make a field optional based on a predicate', async () => {
     let expectation: boolean;
     const newFormConfig = {...formConfig};

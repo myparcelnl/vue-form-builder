@@ -163,6 +163,16 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   getValue(name: string): unknown;
 
   /**
+   * Set the value of a field by name.
+   */
+  setValue(name: string, value: unknown): void;
+
+  /**
+   * Set values for multiple fields at once.
+   */
+  setValues(values: Record<string, unknown>): void;
+
+  /**
    * Add an event listener to the form.
    */
   on(event: keyof FormHooks, callback: (form: FormInstance) => void): HookUnregisterHandler;

@@ -153,6 +153,11 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   addElement(element: AnyElementConfiguration, sibling?: string, position?: 'before' | 'after'): void;
 
   /**
+   * Get a field by name.
+   */
+  getField(name: string): AnyElementInstance | null;
+
+  /**
    * Get values from all non-disabled fields.
    */
   getValues(): Record<string, unknown>;

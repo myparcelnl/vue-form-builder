@@ -153,6 +153,11 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   addElement(element: AnyElementConfiguration, sibling?: string, position?: 'before' | 'after'): void;
 
   /**
+   * Get a field by name.
+   */
+  getField(name: string): AnyElementInstance | null;
+
+  /**
    * Get values from all non-disabled fields.
    */
   getValues(): Record<string, unknown>;
@@ -160,7 +165,17 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   /**
    * Get the value of a field by name.
    */
-  getValue(name: string): unknown;
+  getValue(fieldName: string): unknown;
+
+  /**
+   * Set the value of a field by name.
+   */
+  setValue(fieldName: string, value: unknown): void;
+
+  /**
+   * Set values for multiple fields at once.
+   */
+  setValues(values: Record<string, unknown>): void;
 
   /**
    * Add an event listener to the form.

@@ -297,6 +297,22 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       ref: ref(false),
       label: 'shipment_option_age_check',
       visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
+      afterUpdate: ({form}, value) => {
+        const signature = form.getField('signature');
+        const onlyRecipient = form.getField('onlyRecipient');
+
+        signature?.setDisabled(value);
+        onlyRecipient?.setDisabled(value);
+
+        if (!value) {
+          return;
+        }
+
+        form.setValues({
+          signature: true,
+          onlyRecipient: true,
+        });
+      },
     }),
 
     defineField({

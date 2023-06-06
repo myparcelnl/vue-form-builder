@@ -31,7 +31,7 @@ describe('Form instance', () => {
     expect(form.model.test2.ref.value).toBe('changed');
   });
 
-  const formConfig: FormConfiguration = {
+  const createFormConfig = (): FormConfiguration => ({
     fields: [
       {
         name: 'named',
@@ -58,10 +58,10 @@ describe('Form instance', () => {
         ref: ref('initial'),
       },
     ],
-  };
+  });
 
   it('can retrieve an object with all non-disabled keys and values', () => {
-    const form = generateForm(formConfig);
+    const form = generateForm(createFormConfig());
 
     expect(form.getValues()).toEqual({
       named: '',
@@ -71,16 +71,39 @@ describe('Form instance', () => {
   });
 
   it('can retrieve the value of a field by the field name', () => {
-    const form = generateForm(formConfig);
+    const form = generateForm(createFormConfig());
 
     expect(form.getValue('val')).toBe(23);
     expect(form.getValue('text')).toBe('initial');
-    expect(form.getValue('nothing')).toBe(undefined);
+    expect(() => form.getValue('nothing')).toThrow();
+  });
+
+  it('can set the value of a field by the field name', async () => {
+    const form = generateForm(createFormConfig());
+
+    expect(form.getValue('val')).toBe(23);
+    form.setValue('val', 42);
+    expect(form.getValue('val')).toBe(42);
+  });
+
+  it('can set multiple field values by name', async () => {
+    const form = generateForm(createFormConfig());
+
+    expect(form.getValue('val')).toBe(23);
+    expect(form.getValue('text')).toBe('initial');
+
+    form.setValues({
+      val: 42,
+      text: 'changed',
+    });
+
+    expect(form.getValue('val')).toBe(42);
+    expect(form.getValue('text')).toBe('changed');
   });
 
   it('can make a field optional based on a predicate', async () => {
     let expectation: boolean;
-    const newFormConfig = {...formConfig};
+    const newFormConfig = createFormConfig();
     // specifically make the predicate rely on a field further down the form:
     newFormConfig.fields[0].optionalWhen = (field) => field.form.getValue('val') === 24;
 
@@ -105,14 +128,14 @@ describe('Form instance', () => {
 
   describe('isDirty', () => {
     it('is false when the form is not dirty', () => {
-      const form = generateForm(formConfig);
+      const form = generateForm(createFormConfig());
 
       expect(get(form.isDirty)).toBe(false);
     });
 
     it('is true when the form is dirty', async () => {
       expect.assertions(2);
-      const form = generateForm(formConfig);
+      const form = generateForm(createFormConfig());
 
       expect(get(form.isDirty)).toBe(false);
 
@@ -123,7 +146,7 @@ describe('Form instance', () => {
 
     it.todo('reverts to false when the form is submitted', async () => {
       expect.assertions(3);
-      const form = generateForm(formConfig);
+      const form = generateForm(createFormConfig());
 
       form.model.named.ref.value = 'changed';
       await flushPromises();
@@ -135,7 +158,7 @@ describe('Form instance', () => {
 
     it.todo('reverts to false when the form is reset', async () => {
       expect.assertions(3);
-      const form = generateForm(formConfig);
+      const form = generateForm(createFormConfig());
 
       form.model.named.ref.value = 'changed';
       await flushPromises();

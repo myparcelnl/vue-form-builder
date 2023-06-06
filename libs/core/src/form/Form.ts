@@ -89,10 +89,41 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
   }
 
+  public getField(name: string): AnyElementInstance | null {
+    return this.model[name] ?? get(this.fields).find((field) => field.name === name) ?? null;
+  }
+
+  public getValue(fieldName: string): unknown {
+    const fieldInstance = this.ensureGetField(fieldName);
+
+    return get(fieldInstance.ref);
+  }
+
+  public getValues(): Record<string, unknown> {
+    return get(this.interactiveFields).reduce((acc, field) => {
+      if (field.isDisabled) {
+        return acc;
+      }
+
+      acc[field.name] = field.ref;
+      return acc;
+    }, {} as Record<string, unknown>);
+  }
+
   public removeElement(name: string): void {
     const index = get(this.fields).findIndex((field) => field.name === name);
 
     get(this.fields).splice(index, 1);
+  }
+
+  public setValue(fieldName: string, value: unknown): void {
+    const fieldInstance = this.ensureGetField(fieldName);
+
+    fieldInstance.ref.value = value;
+  }
+
+  public setValues(values: Record<string, unknown>): void {
+    Object.entries(values).forEach(([field, value]) => this.setValue(field, value));
   }
 
   public async submit(): Promise<void> {
@@ -128,27 +159,14 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     await this.hooks.execute(FormHook.AfterReset, this);
   }
 
-  public getValues(): Record<string, unknown> {
-    return get(this.interactiveFields).reduce((acc, field) => {
-      if (field.isDisabled) {
-        return acc;
-      }
+  protected ensureGetField(name: string): AnyElementInstance {
+    const field = this.getField(name);
 
-      acc[field.name] = field.ref;
-      return acc;
-    }, {} as Record<string, unknown>);
-  }
-
-  public getValue(field: string): unknown {
-    const fieldInstance = this.model[field];
-
-    if (!fieldInstance) {
-      // eslint-disable-next-line no-console
-      console.error(`Field ${field} not found in form ${this.name}`);
-      return;
+    if (!field) {
+      throw new Error(`Field ${name} not found in form ${this.name}`);
     }
 
-    return get(fieldInstance.ref);
+    return field;
   }
 
   private createFieldInstance(field: AnyElementConfiguration, form: FormInstance<FC>): AnyElementInstance {

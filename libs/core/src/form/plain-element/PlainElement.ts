@@ -28,8 +28,6 @@ export class PlainElement<
   protected readonly config: AnyElementConfiguration<C, N>;
 
   public constructor(form: FormInstance, config: AnyElementConfiguration<C, N>) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     this.hooks = createHookManager({
       ...config,
       hookNames: [...PLAIN_ELEMENT_HOOKS, ...(config.hookNames ?? [])],

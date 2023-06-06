@@ -2,7 +2,7 @@
   "name": "@myparcel-vfb/monorepo",
   "version": "1.0.0",
   "private": true,
-  "repository": "myparcelnl/vue-form-builder",
+  "repository": "github:myparcelnl/vue-form-builder",
   "type": "module",
   "workspaces": [
     "libs/**",

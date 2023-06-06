@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.8](///compare/@myparcel-vfb/core@1.0.0-beta.7...@myparcel-vfb/core@1.0.0-beta.8) "@myparcel-vfb/core" (2023-06-06)
+
+
+### Features
+
+* **form:** add getField, setValue and setValues methods ([#209](///issues/209)) 9ff246b
+
+
+
+
 ## [1.0.0-beta.7](///compare/@myparcel-vfb/core@1.0.0-beta.6...@myparcel-vfb/core@1.0.0-beta.7) "@myparcel-vfb/core" (2023-06-05)
 
 

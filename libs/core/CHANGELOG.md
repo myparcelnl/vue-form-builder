@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.9](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.8...@myparcel-vfb/core@1.0.0-beta.9) "@myparcel-vfb/core" (2023-06-07)
+
+
+### Bug Fixes
+
+* **types:** allow passing return type to some form methods ([1cce5c0](https://github/myparcelnl/vue-form-builder/commit/1cce5c0c83164c27c6e281aeaeffa8ea660d8071))
+
+
+
+
 ## [1.0.0-beta.8](///compare/@myparcel-vfb/core@1.0.0-beta.7...@myparcel-vfb/core@1.0.0-beta.8) "@myparcel-vfb/core" (2023-06-06)
 
 

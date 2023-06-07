@@ -298,8 +298,8 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       label: 'shipment_option_age_check',
       visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
       afterUpdate: ({form}, value) => {
-        const signature = form.getField('signature');
-        const onlyRecipient = form.getField('onlyRecipient');
+        const signature = form.getField<InteractiveElementInstance>('signature');
+        const onlyRecipient = form.getField<InteractiveElementInstance>('onlyRecipient');
 
         signature?.setDisabled(value);
         onlyRecipient?.setDisabled(value);

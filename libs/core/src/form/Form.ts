@@ -89,25 +89,25 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
   }
 
-  public getField(name: string): AnyElementInstance | null {
-    return this.model[name] ?? get(this.fields).find((field) => field.name === name) ?? null;
+  public getField<F extends AnyElementInstance | null = AnyElementInstance | null>(name: string): F {
+    return (this.model[name] ?? get(this.fields).find((field) => field.name === name) ?? null) as F;
   }
 
-  public getValue(fieldName: string): unknown {
+  public getValue<T = unknown>(fieldName: string): T {
     const fieldInstance = this.ensureGetField(fieldName);
 
     return get(fieldInstance.ref);
   }
 
-  public getValues(): Record<string, unknown> {
+  public getValues<T extends Record<string, unknown> = Record<string, unknown>>(): T {
     return get(this.interactiveFields).reduce((acc, field) => {
       if (field.isDisabled) {
         return acc;
       }
 
-      acc[field.name] = field.ref;
+      acc[field.name as keyof T] = field.ref as T[keyof T];
       return acc;
-    }, {} as Record<string, unknown>);
+    }, {} as T);
   }
 
   public removeElement(name: string): void {

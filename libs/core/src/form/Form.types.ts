@@ -155,17 +155,17 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   /**
    * Get a field by name.
    */
-  getField(name: string): AnyElementInstance | null;
+  getField<F extends AnyElementInstance | null = AnyElementInstance | null>(name: string): F;
 
   /**
    * Get values from all non-disabled fields.
    */
-  getValues(): Record<string, unknown>;
+  getValues<T extends Record<string, unknown> = Record<string, unknown>>(): T;
 
   /**
    * Get the value of a field by name.
    */
-  getValue(fieldName: string): unknown;
+  getValue<T = unknown>(fieldName: string): T;
 
   /**
    * Set the value of a field by name.

@@ -1,0 +1,22 @@
+name: 'Run tests'
+description: 'Run tests and upload coverage'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v3
+
+    - uses: myparcelnl/actions/yarn-install@v3
+      with:
+        node-version: 18
+
+    - name: 'Run tests'
+      shell: bash
+      run: |
+        yarn nx run-many \
+          --target=test:coverage \
+          --parallel=false \
+          --output-style=static
+
+    - uses: codecov/codecov-action@v3
+      continue-on-error: true

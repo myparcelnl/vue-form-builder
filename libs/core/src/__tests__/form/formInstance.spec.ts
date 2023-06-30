@@ -4,7 +4,7 @@ import {get} from '@vueuse/core';
 import {flushPromises} from '@vue/test-utils';
 import {generateForm} from '../utils';
 import TextInput from '../elements/TextInput.vue';
-import {type FormConfiguration, InteractiveElement, PlainElement, defineField} from '../../form';
+import {defineField, type FormConfiguration, InteractiveElement, PlainElement} from '../../form';
 
 describe('Form instance', () => {
   it('creates a reactive model from named elements', () => {
@@ -56,6 +56,7 @@ describe('Form instance', () => {
         name: 'text',
         component: TextInput,
         ref: ref('initial'),
+        readOnly: true,
       },
     ],
   });

@@ -2,11 +2,11 @@ import {type Ref, ref, watch} from 'vue';
 import {get} from '@vueuse/core';
 import {asyncEvery, isOfType} from '@myparcel/ts-utils';
 import {
+  isRequired,
   type MultiValidator,
   type SingleValidator,
   type Validator,
   type ValidatorWithPrecedence,
-  isRequired,
 } from '../validator';
 import {PlainElement} from '../plain-element';
 import {type FormInstance} from '../Form.types';
@@ -32,6 +32,7 @@ export class InteractiveElement<
   public isDirty = ref(false);
   public isDisabled = ref(false);
   public isOptional = ref(false);
+  public isReadOnly = ref(false);
   public isSuspended = ref(false);
   public isTouched = ref(false);
   public isValid: Ref<boolean> = ref(true);
@@ -120,6 +121,7 @@ export class InteractiveElement<
     this.ref.value = this.initialValue;
   };
 
+  // eslint-disable-next-line max-lines-per-function
   public constructor(form: FormInstance, name: N, config: InteractiveElementConfiguration<C, N, RT>) {
     super(form, {...config, hookNames: INTERACTIVE_ELEMENT_HOOKS});
 
@@ -130,6 +132,7 @@ export class InteractiveElement<
 
     this.isDisabled.value = config.disabled ?? false;
     this.isOptional.value = config.optional ?? false;
+    this.isReadOnly.value = config.readOnly ?? false;
 
     this.errorsTarget = config.errorsTarget;
 
@@ -174,15 +177,25 @@ export class InteractiveElement<
         // @ts-expect-error
         useDynamicWatcher(() => config.optionalWhen(this), this.isOptional);
       }
+
+      if (config.readOnlyWhen) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        useDynamicWatcher(() => config.readOnlyWhen(this), this.isReadOnly);
+      }
     });
+  }
+
+  public setDisabled(value: boolean): void {
+    this.isDisabled.value = value;
   }
 
   public setOptional(value: boolean): void {
     this.isOptional.value = value;
   }
 
-  public setDisabled(value: boolean): void {
-    this.isDisabled.value = value;
+  public setReadOnly(value: boolean): void {
+    this.isReadOnly.value = value;
   }
 
   private createValidators(config: InteractiveElementConfiguration<C, N, RT>): void {

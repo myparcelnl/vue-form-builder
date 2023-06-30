@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import {type PropType, defineComponent} from 'vue';
+import {defineComponent, type PropType} from 'vue';
 import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 import LoadingOverlay from '../LoadingOverlay.vue';
 import {translate} from '../../translate';

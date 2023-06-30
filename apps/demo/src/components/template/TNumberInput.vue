@@ -5,21 +5,16 @@
     type="number"
     :class="{
       'border-red-500': !element.isValid,
-      'opacity-50 cursor-not-allowed': element.isDisabled || element.isSuspended,
+      'opacity-50 cursor-not-allowed': element.isDisabled || element.isSuspended || element.isReadOnly,
     }"
-    :disabled="element.isDisabled"
+    :disabled="element.isDisabled || element.isSuspended"
+    :readonly="element.isReadOnly"
     :name="element.name"
-    v-bind="element.props"
-    @blur="$emit('blur', $event)"
-    @change="$emit('change', $event)"
-    @click="$emit('click', $event)"
-    @focus="$emit('focus', $event)"
-    @focusin="$emit('focusin', $event)"
-    @focusout="$emit('focusout', $event)" />
+    v-bind="element.props" />
 </template>
 
 <script lang="ts">
-import {type PropType, defineComponent} from 'vue';
+import {defineComponent, type PropType} from 'vue';
 import {useVModel} from '@vueuse/core';
 import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 

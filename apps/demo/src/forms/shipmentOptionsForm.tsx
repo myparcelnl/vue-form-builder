@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import {ref} from 'vue';
-import {type InteractiveElementInstance, defineField, defineForm} from '@myparcel/vue-form-builder';
+import {defineField, defineForm, type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 import {isOfType} from '@myparcel/ts-utils';
 import {type CarrierName, PACKAGE_TYPE_IDS_TO_NAMES, PackageTypeName} from '@myparcel/constants';
 import {translate} from '../translate';
@@ -301,8 +301,8 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         const signature = form.getField<InteractiveElementInstance>('signature');
         const onlyRecipient = form.getField<InteractiveElementInstance>('onlyRecipient');
 
-        signature?.setDisabled(value);
-        onlyRecipient?.setDisabled(value);
+        signature?.setReadOnly(value);
+        onlyRecipient?.setReadOnly(value);
 
         if (!value) {
           return;

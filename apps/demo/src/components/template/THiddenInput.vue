@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import {type PropType, defineComponent} from 'vue';
+import {defineComponent, type PropType} from 'vue';
 import {useVModel} from '@vueuse/core';
 import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 

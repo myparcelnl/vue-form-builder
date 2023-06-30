@@ -4,21 +4,16 @@
     v-model="model"
     type="text"
     :name="element.name"
-    :disabled="element.isDisabled"
+    :disabled="element.isDisabled || element.isSuspended"
+    :readonly="element.isReadOnly"
     :class="{
       'border-red-500': !element.isValid,
       'opacity-50 cursor-not-allowed': element.isDisabled,
-    }"
-    @blur="$emit('blur', $event)"
-    @focus="$emit('focus', $event)"
-    @focusin="$emit('focusin', $event)"
-    @focusout="$emit('focusout', $event)"
-    @click="$emit('click', $event)"
-    @change="$emit('change', $event)" />
+    }" />
 </template>
 
 <script lang="ts">
-import {type PropType, defineComponent} from 'vue';
+import {defineComponent, type PropType} from 'vue';
 import {useVModel} from '@vueuse/core';
 import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 

@@ -35,6 +35,11 @@ export type InteractiveElementConfiguration<
      * Whether the element is optional. Defaults to false.
      */
     optional?: boolean;
+
+    /**
+     * Whether the element is read-only. Defaults to false.z
+     */
+    readOnly?: boolean;
   };
 
 export const INTERACTIVE_ELEMENT_HOOKS = [
@@ -77,6 +82,7 @@ export type InteractiveElementHooks<
 
   disabledWhen?(field: I): PromiseOr<boolean>;
   optionalWhen?(field: I): PromiseOr<boolean>;
+  readOnlyWhen?(field: I): PromiseOr<boolean>;
   visibleWhen?(field: I): PromiseOr<boolean>;
 };
 
@@ -131,8 +137,9 @@ export type BaseInteractiveElementInstance<
    */
   blur(): PromiseOr<void>;
 
-  setOptional(optional: boolean): void;
   setDisabled(disabled: boolean): void;
+  setOptional(optional: boolean): void;
+  setReadOnly(optional: boolean): void;
 };
 
 export type InteractiveElementInstance<

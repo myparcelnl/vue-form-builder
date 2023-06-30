@@ -14,6 +14,7 @@
     "build:dev": "run ws:ts:build \"$(pwd)\"",
     "clean": "run ws:clean \"$(pwd)\"",
     "test": "run ws:test \"$(pwd)\"",
+    "test:coverage": "run ws:test:coverage \"$(pwd)\"",
     "test:run": "run ws:test:run \"$(pwd)\"",
     "typecheck": "run ws:ts:typecheck \"$(pwd)\""
   },

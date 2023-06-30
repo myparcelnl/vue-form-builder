@@ -3,27 +3,21 @@
     :id="element.name"
     v-model="model"
     :name="element.name"
-    :disabled="element.isDisabled"
+    :disabled="element.isDisabled || element.isSuspended || element.isReadOnly"
     :class="{
       'border-red-500': !element.isValid,
-      'opacity-50 cursor-not-allowed': element.isDisabled || element.isSuspended,
-    }"
-    @blur="$emit('blur', $event)"
-    @change="$emit('change', $event)"
-    @click="$emit('click', $event)"
-    @focus="$emit('focus', $event)"
-    @focusin="$emit('focusin', $event)"
-    @focusout="$emit('focusout', $event)">
+      'opacity-50 cursor-not-allowed': element.isDisabled || element.isSuspended || element.isReadOnly,
+    }">
     <option
       v-for="option in options"
       :key="`${element.name}__option--${option.value}`"
       :value="option.value"
-      v-text="option.label"></option>
+      v-text="option.label" />
   </select>
 </template>
 
 <script lang="ts">
-import {type ComputedRef, type PropType, computed, defineComponent, watch} from 'vue';
+import {computed, type ComputedRef, defineComponent, type PropType, watch} from 'vue';
 import {useVModel} from '@vueuse/core';
 import {type InteractiveElementInstance, type SelectOption} from '@myparcel/vue-form-builder';
 

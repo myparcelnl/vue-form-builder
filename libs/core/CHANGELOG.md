@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.11](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.10...@myparcel-vfb/core@1.0.0-beta.11) "@myparcel-vfb/core" (2023-06-30)
+
+
+### Features
+
+* **element:** add readonly functionality ([#210](https://github/myparcelnl/vue-form-builder/issues/210)) ([4fa3166](https://github/myparcelnl/vue-form-builder/commit/4fa3166d0acecfd99dbfb97a3e542adf422eb2e7))
+
+
+
+
 ## [1.0.0-beta.10](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.9...@myparcel-vfb/core@1.0.0-beta.10) "@myparcel-vfb/core" (2023-06-30)
 
 

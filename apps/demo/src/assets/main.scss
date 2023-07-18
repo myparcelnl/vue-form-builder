@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  * {
+    @apply border-gray-400 dark:border-gray-700;
+  }
+}
+
+
 h1, h2, h3, h4, h5, h6 {
   @apply font-bold pb-2 pt-4;
 }

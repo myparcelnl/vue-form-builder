@@ -22,6 +22,11 @@
           to="/forms/no-prop">
           Form without element props
         </NLink>
+        <NLink
+          class="hover:text-pink-200 transition-colors"
+          to="/forms/new-form">
+          New form structure
+        </NLink>
       </nav>
     </div>
   </header>

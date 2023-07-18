@@ -150,7 +150,12 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   /**
    * Add a new element to the form at the end, or before or after an existing element.
    */
-  addElement(element: AnyElementConfiguration, sibling?: string, position?: 'before' | 'after'): void;
+  addElement<EC extends AnyElementConfiguration = AnyElementConfiguration>(element: EC): Promise<AnyElementInstance>;
+  addElement(
+    element: AnyElementConfiguration,
+    sibling: string,
+    position?: 'before' | 'after',
+  ): Promise<undefined | AnyElementInstance>;
 
   /**
    * Get a field by name.

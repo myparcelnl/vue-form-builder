@@ -38,10 +38,10 @@
 <script lang="ts">
 import {computed, defineComponent, ref, watch} from 'vue';
 import {get} from '@vueuse/core';
-import {FormHook, type FormInstance, type InteractiveElement} from '@myparcel-vfb/core';
+import {type FormInstance} from '@myparcel-vfb/core';
 import {MagicForm} from '@myparcel/vue-form-builder';
-import {isOfType} from '@myparcel/ts-utils';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';
+import {useFormEventLog} from '../composables/useFormEventLog';
 
 export default defineComponent({
   name: 'ShipmentOptionsView',
@@ -50,25 +50,10 @@ export default defineComponent({
   },
 
   setup: () => {
-    const values = computed(() => {
-      return shipmentOptionsForm.getValues();
-    });
+    const eventLog = useFormEventLog(shipmentOptionsForm);
+    const values = computed(() => shipmentOptionsForm.getValues());
 
     const formClasses = ref<string[]>([]);
-    const eventLog = ref<string>('');
-
-    Object.values(FormHook).forEach((hook) => {
-      shipmentOptionsForm.on(hook, (form, ...args) => {
-        const additionalArgs = args as unknown as [unknown, unknown];
-        let log = `${new Date().toISOString()} | ${hook}`;
-
-        if (additionalArgs.length && isOfType<InteractiveElement>(additionalArgs[0], 'ref')) {
-          log += ` (${additionalArgs[0].name}, ${additionalArgs[1]})`;
-        }
-
-        eventLog.value = `${log}\n${eventLog.value}`;
-      });
-    });
 
     const dirty = computed(() => get(shipmentOptionsForm.isDirty));
 

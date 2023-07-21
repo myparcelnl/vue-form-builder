@@ -7,12 +7,14 @@
     @submit.prevent="() => form.submit()"
     @reset.prevent="() => form.reset()">
     <Fragment :component="form.config.form.wrapper">
-      <Suspense @resolve="elementsAreResolved = true">
-        <slot
-          v-on="{
-            submit: () => form.submit(),
-            reset: () => form.reset(),
-          }" />
+      <Suspense>
+        <template #default>
+          <slot />
+        </template>
+
+        <template #fallback>
+          <slot name="loader" />
+        </template>
       </Suspense>
     </Fragment>
   </component>
@@ -56,6 +58,4 @@ FORM_HOOKS.forEach((hook) => {
 const lifeCycleHooks = useLifecycleHooks();
 
 lifeCycleHooks.register(props.form.hooks, props.form);
-
-const elementsAreResolved = ref(false);
 </script>

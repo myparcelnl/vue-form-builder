@@ -1,4 +1,4 @@
-import {computed, defineComponent, h, onMounted, provide, ref} from 'vue';
+import {type Component, computed, defineComponent, h, onMounted, provide, ref} from 'vue';
 import {type Event} from 'happy-dom';
 import {get} from '@vueuse/core';
 import {INJECT_FORM} from '../services';
@@ -92,13 +92,7 @@ export const MagicForm = defineComponent({
   },
 
   render() {
-    const formWrapper = h(
-      Fragment,
-      {
-        component: this.form.config.form.wrapper,
-      },
-      [],
-    );
+    const formWrapperChildren: Component[] = [];
 
     return h(
       this.form.config.form.tag,
@@ -116,7 +110,15 @@ export const MagicForm = defineComponent({
           void this.form.reset();
         },
       },
-      [formWrapper],
+      () => [
+        h(
+          Fragment,
+          {
+            component: this.form.config.form.wrapper,
+          },
+          () => formWrapperChildren,
+        ),
+      ],
     );
 
     //   return h(

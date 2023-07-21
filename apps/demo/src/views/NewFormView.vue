@@ -11,7 +11,22 @@
           <LastName.Component />
         </div>
 
-        <Email.Component />
+        <div v-show="FirstName.field.ref.value === 'Donald'">
+          <Email.Label />
+
+          <div>
+            <Email.Component />
+          </div>
+
+          <Email.Errors v-slot="errors">
+            <ul>
+              <li
+                v-for="error in errors"
+                :key="error.message"
+                v-text="error" />
+            </ul>
+          </Email.Errors>
+        </div>
 
         <div
           v-if="FirstName.field.ref.value && LastName.field.ref.value"
@@ -29,12 +44,25 @@
               <div>
                 <b>Nee, ik wil dit niet!</b>
 
-                <div><ResetButton.Component /></div>
+                <div>
+                  <button
+                    type="reset"
+                    class="-skew-x-6 bg-blue-500 mt-2 p-3"
+                    @click="() => Form.form.reset()">
+                    Reset!!!
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </Form.Component>
+
+      <Form2.Component
+        :class="formClasses"
+        class="border gap-4 grid grid-auto-rows p-4 rounded-lg">
+        <Email.Component />
+      </Form2.Component>
     </div>
 
     <div>
@@ -45,6 +73,7 @@
 
       <h3>Values</h3>
       <pre v-text="values" />
+      <pre v-text="values2" />
 
       <h3>Form event log</h3>
 
@@ -60,15 +89,24 @@
 <script lang="ts" setup>
 import {computed, h, ref} from 'vue';
 import {get} from '@vueuse/core';
-import {defineFieldNew, defineFormNew} from '@myparcel-vfb/core';
+import {defineFieldNew, defineFormNew, type Validator} from '@myparcel-vfb/core';
 import {useFormEventLog} from '../composables/useFormEventLog';
 import TTextInput from '../components/template/TTextInput.vue';
-import TSubmitButton from '../components/template/TSubmitButton.vue';
-import TResetButton from '../components/template/TResetButton.vue';
-import FormGroup from '../components/template/FormGroup.vue'; // eslint-disable-next-line @typescript-eslint/naming-convention
+import FormGroup from '../components/template/FormGroup.vue';
+import NewSubmitButton from '../components/NewSubmitButton.vue';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Form = defineFormNew('newForm', {
+  form: {
+    wrapper: h('div', {class: 'border gap-4 grid grid-auto-rows p-4 rounded-lg'}),
+  },
+
+  field: {
+    wrapper: FormGroup,
+  },
+});
+
+const Form2 = defineFormNew('newForm2', {
   form: {
     wrapper: h('div', {class: 'border gap-4 grid grid-auto-rows p-4 rounded-lg'}),
   },
@@ -82,29 +120,34 @@ const FirstName = defineFieldNew({
   name: 'firstName',
   label: 'First name',
   component: TTextInput,
-  ref: ref('Mr.'),
+  ref: ref('mr.'),
 });
 
 const LastName = defineFieldNew({
   name: 'lastName',
   label: 'Last name',
   component: TTextInput,
-  ref: ref('Krabs'),
+  ref: ref('krabs'),
 });
 
 const Email = defineFieldNew({
   name: 'email',
   label: 'Email',
   component: TTextInput,
+  wrapper: false,
   props: {
     type: 'email',
   },
-  ref: ref('mrkrabs@krokantekrab.bb'),
+  ref: ref('aweawewae'),
+  validators: [
+    {
+      validate: (_, value) => value.length > 5,
+      errorMessage: 'Email must be longer than 5 characters',
+    },
+  ] satisfies Validator[],
 });
 
-const SubmitButton = defineFieldNew({component: TSubmitButton});
-
-const ResetButton = defineFieldNew({component: TResetButton});
+const SubmitButton = defineFieldNew({component: NewSubmitButton});
 
 const dirty = computed(() => get(Form.form.isDirty));
 
@@ -116,4 +159,5 @@ const formClasses = computed(() => ({
 const eventLog = useFormEventLog(Form.form);
 
 const values = computed(() => Form.form.getValues());
+const values2 = computed(() => Form2.form.getValues());
 </script>

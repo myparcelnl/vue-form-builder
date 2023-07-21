@@ -1,4 +1,4 @@
-import {type Component, defineComponent, h, onMounted, ref} from 'vue';
+import {type Component, defineComponent, h, markRaw, onMounted, ref} from 'vue';
 import {
   type AnyElementConfiguration,
   type AnyElementInstance,
@@ -34,8 +34,10 @@ export const defineFieldNew = <
 >(
   field: AnyElementConfiguration<C, N, RT>,
 ): {
-  field: ResolvedElementConfiguration<C, N, RT>;
   Component: Component;
+  Errors: Component;
+  Label: Component;
+  field: ResolvedElementConfiguration<C, N, RT>;
 } => {
   const component = defineComponent({
     setup() {
@@ -76,8 +78,51 @@ export const defineFieldNew = <
     },
   });
 
+  const errors = defineComponent({
+    setup() {
+      const element = ref<null | AnyElementInstance>(null);
+      const form = useForm();
+
+      onMounted(async () => {
+        // @ts-expect-error todo
+        element.value = await form.getField(field);
+      });
+
+      return {
+        element,
+      };
+    },
+
+    render() {
+      return h(Fragment, {component: 'div'}, () => {
+        console.warn('errors', this.element, this.element?.errors);
+        return this.$slots.default?.({errors: this.element?.errors ?? []});
+      });
+    },
+  });
+
   return {
-    field: field as ResolvedElementConfiguration<C, N, RT>,
+    field: markRaw(field) as ResolvedElementConfiguration<C, N, RT>,
     Component: component,
+    Errors: errors,
+    Label: defineComponent({
+      setup() {
+        const element = ref<null | AnyElementInstance>(null);
+        const form = useForm();
+
+        onMounted(async () => {
+          // @ts-expect-error todo
+          element.value = await form.getField(field);
+        });
+
+        return {
+          element,
+        };
+      },
+
+      render() {
+        return h(Fragment, {component: 'label'}, () => [this.element?.label]);
+      },
+    }),
   };
 };

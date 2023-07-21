@@ -1,4 +1,4 @@
-import {type Component, defineComponent, h, toRaw} from 'vue';
+import {type Component, defineComponent, h, markRaw, toRaw} from 'vue';
 import {useFormBuilder} from '../composables';
 import MagicFormNew from '../components/MagicFormNew.vue';
 import {type FormConfiguration, type FormInstance, type InstanceFormConfiguration} from './Form.types';
@@ -37,7 +37,7 @@ export const defineFormNew = <FC extends FormConfiguration>(
   });
 
   return {
-    form,
+    form: markRaw(form),
     Component,
   };
 };

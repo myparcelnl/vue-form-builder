@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import {defineComponent, type PropType} from 'vue';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+import {type PlainElementInstance} from '@myparcel/vue-form-builder';
 import LoadingOverlay from '../LoadingOverlay.vue';
 import {translate} from '../../translate';
 
@@ -24,7 +24,7 @@ export default defineComponent({
   components: {LoadingOverlay},
   props: {
     element: {
-      type: Object as PropType<InteractiveElementInstance>,
+      type: Object as PropType<PlainElementInstance>,
       required: true,
     },
   },

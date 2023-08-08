@@ -1,4 +1,4 @@
-import {type Component, defineComponent, h, markRaw, onMounted, ref} from 'vue';
+import {type Component, computed, defineComponent, h, markRaw, onMounted, ref} from 'vue';
 import {
   type AnyElementConfiguration,
   type AnyElementInstance,
@@ -85,18 +85,21 @@ export const defineFieldNew = <
 
       onMounted(async () => {
         // @ts-expect-error todo
-        element.value = await form.getField(field);
+        element.value = form.getField(field.name);
       });
 
       return {
-        element,
+        errors: computed(() => {
+          console.warn('element', element.value);
+          return element.value?.errors ?? [];
+        }),
       };
     },
 
     render() {
       return h(Fragment, {component: 'div'}, () => {
-        console.warn('errors', this.element, this.element?.errors);
-        return this.$slots.default?.({errors: this.element?.errors ?? []});
+        console.warn('errors', this.errors);
+        return this.$slots.default?.({errors: this.errors ?? []});
       });
     },
   });
@@ -112,7 +115,7 @@ export const defineFieldNew = <
 
         onMounted(async () => {
           // @ts-expect-error todo
-          element.value = await form.getField(field);
+          element.value = form.getField(field.name);
         });
 
         return {

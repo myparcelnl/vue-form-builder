@@ -47,7 +47,7 @@
                 <div>
                   <button
                     type="reset"
-                    class="-skew-x-6 bg-blue-500 mt-2 p-3"
+                    class="-skew-x-12 bg-blue-500 hover:bg-blue-700 hover:font-bold hover:skew-x-12 mt-2 p-3 text-white transition-all"
                     @click="() => Form.form.reset()">
                     Reset!!!
                   </button>
@@ -61,7 +61,20 @@
       <Form2.Component
         :class="formClasses"
         class="border gap-4 grid grid-auto-rows p-4 rounded-lg">
-        <Email.Component />
+        <div class="border p-4">
+          <Email.Label />
+
+          <Email.Component />
+
+          <Email.Errors v-slot="errors">
+            <ul>
+              <li
+                v-for="error in errors"
+                :key="error.message"
+                v-text="error" />
+            </ul>
+          </Email.Errors>
+        </div>
       </Form2.Component>
     </div>
 

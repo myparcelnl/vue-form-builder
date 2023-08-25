@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {type Component, type HTMLAttributes, type VNode} from 'vue';
-import {type ComponentProps} from '@myparcel-vfb/utils';
+import {type Component, type VNode} from 'vue';
+import {type AnyAttributes, type ComponentProps} from '@myparcel-vfb/utils';
 import {type MakeOptional} from '@myparcel/ts-utils';
 import {
   type InteractiveElementConfiguration,
@@ -19,7 +19,7 @@ export type ComponentHooks<C extends ComponentOrHtmlElement = ComponentOrHtmlEle
   : any;
 
 export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = C extends Component
-  ? Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'>
+  ? Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'> & Record<string, unknown>
   : Record<string, unknown>;
 
 export type ElementSlots = Record<string, (() => VNode | string | VNode[]) | VNode | string | VNode[]>;
@@ -28,7 +28,7 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
   /**
    * Attributes to be passed to the component.
    */
-  attributes?: HTMLAttributes & Record<string, unknown>;
+  attributes?: AnyAttributes;
 
   /**
    * HTML element or Vue component. Can be any type of component that renders as a Vue fragment, including JSX

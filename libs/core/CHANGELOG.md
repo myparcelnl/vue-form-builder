@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.12](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.11...@myparcel-vfb/core@1.0.0-beta.12) "@myparcel-vfb/core" (2023-08-25)
+
+
+### Features
+
+* **element:** make props and attributes reactive ([#214](https://github/myparcelnl/vue-form-builder/issues/214)) ([bfe313f](https://github/myparcelnl/vue-form-builder/commit/bfe313f96ee02eadc33ba7cae2f39b2fd8757676))
+
+
+
+
 ## [1.0.0-beta.11](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.10...@myparcel-vfb/core@1.0.0-beta.11) "@myparcel-vfb/core" (2023-06-30)
 
 

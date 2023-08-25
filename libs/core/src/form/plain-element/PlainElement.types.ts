@@ -1,4 +1,5 @@
 import {type Component, type ComputedRef, type Ref} from 'vue';
+import {type UnwrapNestedRefs} from '@vue/reactivity';
 import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
 import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr} from '@myparcel/ts-utils';
@@ -54,7 +55,7 @@ export type BasePlainElementInstance<
 
   readonly hooks: HookManagerInstance<PlainElementHooks<C, N>>;
   readonly form: FormInstance;
-  readonly props: ElementProps<C>;
+  readonly props: UnwrapNestedRefs<ElementProps<C>>;
   readonly slots?: ElementSlots;
 
   readonly isVisible: Ref<boolean>;
@@ -65,7 +66,7 @@ export type BasePlainElementInstance<
   readonly errors: Ref<FunctionOr<string>[]>;
   readonly formattedErrors: ComputedRef<string[]>;
 
-  readonly attributes: AnyAttributes;
+  readonly attributes: UnwrapNestedRefs<AnyAttributes>;
 };
 
 export type PlainElementInstance<

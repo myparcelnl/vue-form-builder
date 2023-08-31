@@ -10,38 +10,44 @@ export type ValidateFunction<
   RT = unknown,
 > = (field: InteractiveElementInstance<C, N, RT>, value: RT) => PromiseOr<boolean>;
 
-export type ComputedValidator = {isValid: ComputedRef<boolean>};
-
-export type MultiValidator<
+export interface MultiValidator<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-> = {validators: Validator<C, N, RT>[]};
+> {
+  validators: SingleValidator<C, N, RT>[];
+}
+
+export interface ComputedValidator {
+  isValid: ComputedRef<boolean>;
+}
+
+export interface Validator<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  RT = unknown,
+> {
+  validate: ValidateFunction<C, N, RT>;
+  errorMessage?: FunctionOr<string>;
+  precedence?: number;
+}
+
+export interface ValidatorWithPrecedence<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  RT = unknown,
+> extends Validator<C, N, RT> {
+  precedence: number;
+}
 
 export type SingleValidator<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-> = Validator<C, N, RT>;
+> = Validator<C, N, RT> | ValidatorWithPrecedence<C, N, RT> | ComputedValidator;
 
 export type FieldValidator<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-> = Partial<ComputedValidator | MultiValidator<C, N, RT> | SingleValidator<C, N, RT>>;
-
-export type Validator<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = {
-  validate: ValidateFunction<C, N, RT>;
-  errorMessage?: FunctionOr<string>;
-  precedence?: number;
-};
-
-export type ValidatorWithPrecedence<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = Validator<C, N, RT> & {precedence: number};
+> = MultiValidator<C, N, RT> | SingleValidator<C, N, RT>;

@@ -1,10 +1,10 @@
 import {type Ref, ref, watch} from 'vue';
 import {get} from '@vueuse/core';
-import {asyncEvery, isOfType} from '@myparcel/ts-utils';
+import {asyncEvery, isOfType, partitionArray} from '@myparcel/ts-utils';
 import {
+  type ComputedValidator,
   isRequired,
   type MultiValidator,
-  type SingleValidator,
   type Validator,
   type ValidatorWithPrecedence,
 } from '../validator';
@@ -39,7 +39,7 @@ export class InteractiveElement<
   public label?: string;
   public lazy = false;
   public ref: InteractiveElementInstance<C, N, RT>['ref'];
-  public validators = ref<Validator<C, N, RT>[]>([]);
+  public validators = ref<MultiValidator<C, N, RT>['validators']>([]);
 
   protected declare config: InteractiveElementConfiguration<C, N, RT>;
 
@@ -76,8 +76,6 @@ export class InteractiveElement<
     }
 
     const doValidate = async (validator: Validator<C, N, RT>) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       const valid = await validator.validate(this, get(this.ref));
 
       if (!valid && validator.errorMessage) {
@@ -95,10 +93,13 @@ export class InteractiveElement<
 
     // validation schema: 1) validators without precedence 2) validators with precedence
     // if a validator with precedence fails, the rest of the validators are not executed.
-    const withoutPrecedence = get(this.validators).filter((validator) => !validator.precedence);
-    const withPrecedence = get(this.validators)
-      .filter((validator) => isOfType<ValidatorWithPrecedence<C, N, RT>>(validator, 'precedence'))
-      .sort((validatorA, validatorB) => (validatorA.precedence ?? 0) - (validatorB.precedence ?? 0));
+
+    const [withPrecedence, withoutPrecedence] = partitionArray<
+      ValidatorWithPrecedence<C, N, RT>,
+      Validator<C, N, RT> | ComputedValidator
+    >(get(this.validators), (validator) => isOfType<ValidatorWithPrecedence>(validator, 'precedence'));
+
+    withPrecedence.sort((validatorA, validatorB) => (validatorA.precedence ?? 0) - (validatorB.precedence ?? 0));
 
     // add the isRequired validator in-line when the field is not optional
     if (!get(this.isOptional)) {
@@ -201,7 +202,7 @@ export class InteractiveElement<
   private createValidators(config: InteractiveElementConfiguration<C, N, RT>): void {
     let validators: Validator<C, N, RT>[] = [];
 
-    if (isOfType<SingleValidator<C, N, RT>>(config, 'validate')) {
+    if (isOfType<Validator<C, N, RT>>(config, 'validate')) {
       validators = [
         {
           validate: config.validate,

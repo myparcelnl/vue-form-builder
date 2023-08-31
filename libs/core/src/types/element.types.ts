@@ -24,7 +24,7 @@ export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlEleme
 
 export type ElementSlots = Record<string, (() => VNode | string | VNode[]) | VNode | string | VNode[]>;
 
-export type BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
+export interface BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> {
   /**
    * Attributes to be passed to the component.
    */
@@ -75,18 +75,22 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
    * Wrap the field in a TableFormGroup. Defaults to true.
    */
   wrapper?: boolean | Component;
-};
+}
 
-export type AnyElementInstance<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =
-  | InteractiveElementInstance<C, N, RT>
-  | PlainElementInstance<C, N>;
+export type AnyElementInstance<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  RT = unknown,
+> = InteractiveElementInstance<C, N, RT> | PlainElementInstance<C, N>;
 
-export type AnyElementConfiguration<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =
-  | PlainElementConfiguration<C, N>
-  | InteractiveElementConfiguration<C, N, RT>;
+export type AnyElementConfiguration<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  RT = unknown,
+> = PlainElementConfiguration<C, N> | InteractiveElementConfiguration<C, N, RT>;
 
 export type ResolvedElementConfiguration<
-  C extends ComponentOrHtmlElement = any,
-  N extends ElementName = any,
-  RT = any,
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  RT = unknown,
 > = RT extends never ? PlainElementConfiguration<C> : InteractiveElementConfiguration<C, N, RT>;

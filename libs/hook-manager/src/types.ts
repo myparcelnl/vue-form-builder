@@ -3,9 +3,11 @@ import {type ReadonlyOr} from '@myparcel/ts-utils';
 
 export type HookCallback = (...args: any[]) => any;
 
-export type HookManagerConfiguration<HN extends string = string> = {
-  hookNames?: ReadonlyOr<HN[]>;
-} & Record<HN, unknown>;
+export type HookManagerConfiguration<HN extends string = string> =
+  | {
+      hookNames?: ReadonlyOr<HN[]>;
+    }
+  | Record<HN, unknown>;
 
 export type CustomHookItem<HN extends string = string> = {
   name: HN;

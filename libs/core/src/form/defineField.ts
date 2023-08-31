@@ -13,8 +13,7 @@ import {
 export const defineField = <
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  RT = any,
+  RT = unknown,
 >(
   field: AnyElementConfiguration<C, N, RT>,
 ): ResolvedElementConfiguration<C, N, RT> => {

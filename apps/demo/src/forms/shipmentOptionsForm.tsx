@@ -24,9 +24,9 @@ const firstName = ref('');
 const lastName = ref('');
 
 const validateName = (field: InteractiveElementInstance) => {
-  const nameField = field.form.fields.value.find((field) => field.name === 'name');
-  const firstNameField = field.form.fields.value.find((field) => field.name === 'firstname');
-  const lastNameField = field.form.fields.value.find((field) => field.name === 'lastname');
+  const nameField = field.form.getField('name');
+  const firstNameField = field.form.getField('firstname');
+  const lastNameField = field.form.getField('lastname');
 
   if (!nameField) {
     return;
@@ -272,7 +272,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TTextInput,
       ref: ref(''),
       label: 'bsn',
-      optionalWhen: (field) => field.form.getValue('ageCheck') === false,
+      optionalWhen: ({form}) => !form.getValue('ageCheck'),
     }),
 
     defineField({
@@ -280,7 +280,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_signature',
-      visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
+      visibleWhen: ({form}) => form.getValue('packageType') === PackageTypeName.Package,
     }),
 
     defineField({
@@ -288,7 +288,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_only_recipient',
-      visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
+      visibleWhen: ({form}) => form.getValue('packageType') === PackageTypeName.Package,
     }),
 
     defineField({
@@ -296,7 +296,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_age_check',
-      visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
+      visibleWhen: ({form}) => form.getValue('packageType') === PackageTypeName.Package,
       afterUpdate: ({form}, value) => {
         const signature = form.getField<InteractiveElementInstance>('signature');
         const onlyRecipient = form.getField<InteractiveElementInstance>('onlyRecipient');
@@ -352,10 +352,10 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       validate: (field, value) => value > 100,
       errorMessage: 'Insurance must be at least 100',
       visibleWhen: (field) => field.form.getValue('packageType') === PackageTypeName.Package,
-      props: {
-        step: 100,
-        min: 100,
-      },
+      // props: {
+      //   step: 100,
+      //   min: 100,
+      // },
     }),
 
     defineField({

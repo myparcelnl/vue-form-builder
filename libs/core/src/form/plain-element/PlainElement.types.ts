@@ -6,29 +6,30 @@ import {type PromiseOr} from '@myparcel/ts-utils';
 import {type FormInstance} from '../Form.types';
 import {
   type BaseElementConfiguration,
-  type ComponentHooks,
+  type ComponentLifecycleHooks,
   type ComponentOrHtmlElement,
   type ElementName,
   type ElementProps,
   type ElementSlots,
+  type ToRecord,
 } from '../../types';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../../data';
 
-export type PlainElementConfiguration<
+export interface PlainElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-> = BaseElementConfiguration<C> & {
-  ref?: never;
+> extends BaseElementConfiguration<C>,
+    PlainElementHooks<C, N> {
   name?: N;
-} & PlainElementHooks<C, N>;
+}
 
 export const PLAIN_ELEMENT_HOOKS = ['blur', 'click', 'focus', ...COMPONENT_LIFECYCLE_HOOKS] as const;
 
-export type PlainElementHooks<
+export interface PlainElementHooks<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-  I = BasePlainElementInstance<C, N>,
-> = Partial<ComponentHooks<C, I>> & {
+  I = PlainElementInstance<C, N>,
+> extends ComponentLifecycleHooks<I> {
   beforeBlur?(instance: I): PromiseOr<void>;
   blur?(instance: I, event: MouseEvent): PromiseOr<void>;
   afterBlur?(instance: I): PromiseOr<void>;
@@ -42,18 +43,16 @@ export type PlainElementHooks<
   afterClick?(instance: I): PromiseOr<void>;
 
   visibleWhen?(field: I): PromiseOr<boolean>;
-};
+}
 
-export type BasePlainElementInstance<
+export interface BasePlainElementInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-> = {
+> {
   readonly name: N;
   readonly component: C;
 
   readonly wrapper: boolean | Component;
-
-  readonly hooks: HookManagerInstance<PlainElementHooks<C, N>>;
   readonly form: FormInstance;
   readonly props: UnwrapNestedRefs<ElementProps<C>>;
   readonly slots?: ElementSlots;
@@ -67,9 +66,12 @@ export type BasePlainElementInstance<
   readonly formattedErrors: ComputedRef<string[]>;
 
   readonly attributes: UnwrapNestedRefs<AnyAttributes>;
-};
+}
 
-export type PlainElementInstance<
+export interface PlainElementInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
-> = BasePlainElementInstance<C, N> & PlainElementHooks<C, N>;
+> extends BasePlainElementInstance<C, N>,
+    PlainElementHooks<C, N> {
+  readonly hooks: HookManagerInstance<ToRecord<PlainElementHooks<C, N>>>;
+}

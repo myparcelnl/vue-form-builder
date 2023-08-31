@@ -1,46 +1,45 @@
 import {type Ref} from 'vue';
 import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr} from '@myparcel/ts-utils';
-import {type FieldValidator, type Validator} from '../validator';
-import {PLAIN_ELEMENT_HOOKS, type PlainElementInstance} from '../plain-element';
-import {type FormInstance} from '../Form.types';
-import {
-  type BaseElementConfiguration,
-  type ComponentHooks,
-  type ComponentOrHtmlElement,
-  type ElementName,
-} from '../../types';
+import {type FieldValidator} from '../validator';
+import {type BasePlainElementInstance, PLAIN_ELEMENT_HOOKS} from '../plain-element';
+import {type BaseElementConfiguration, type ComponentOrHtmlElement, type ElementName, type ToRecord} from '../../types';
+
+export interface BaseInteractiveElementConfiguration<
+  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+  N extends ElementName = ElementName,
+  RT = unknown,
+> extends BaseElementConfiguration<C>,
+    InteractiveElementHooks<C, N, RT> {
+  name: NonNullable<N>;
+  ref: Ref<RT>;
+
+  /**
+   * Whether the field is lazy. Defaults to false.
+   */
+  lazy?: boolean;
+
+  /**
+   * Whether the element is disabled. Defaults to false.
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether the element is optional. Defaults to false.
+   */
+  optional?: boolean;
+
+  /**
+   * Whether the element is read-only. Defaults to false.z
+   */
+  readOnly?: boolean;
+}
 
 export type InteractiveElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-> = BaseElementConfiguration<C> &
-  FieldValidator<C, N, RT> &
-  InteractiveElementHooks<C, N, RT> & {
-    name: NonNullable<N>;
-    ref: Ref<RT>;
-
-    /**
-     * Whether the field is lazy. Defaults to false.
-     */
-    lazy?: boolean;
-
-    /**
-     * Whether the element is disabled. Defaults to false.
-     */
-    disabled?: boolean;
-
-    /**
-     * Whether the element is optional. Defaults to false.
-     */
-    optional?: boolean;
-
-    /**
-     * Whether the element is read-only. Defaults to false.z
-     */
-    readOnly?: boolean;
-  };
+> = BaseInteractiveElementConfiguration<C, N, RT> & FieldValidator<C, N, RT>;
 
 export const INTERACTIVE_ELEMENT_HOOKS = [
   'blur',
@@ -51,51 +50,48 @@ export const INTERACTIVE_ELEMENT_HOOKS = [
   ...PLAIN_ELEMENT_HOOKS,
 ] as const;
 
-export type InteractiveElementHooks<
+export interface InteractiveElementHooks<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-  I = BaseInteractiveElementInstance<C, N, RT>,
-> = Partial<ComponentHooks<C, I>> & {
-  beforeBlur?(instance: I, value: RT): PromiseOr<void>;
-  blur?(instance: I, event: MouseEvent): PromiseOr<void>;
-  afterBlur?(instance: I, value: RT): PromiseOr<void>;
+  I = InteractiveElementInstance<C, N, RT>,
+> /* extends PlainElementHooks<C, N, I> */ {
+  beforeBlur?(instance: I): PromiseOr<void>;
+  // blur?(instance: I, event: MouseEvent): PromiseOr<void>;
+  afterBlur?(instance: I): PromiseOr<void>;
 
-  beforeFocus?(instance: I): PromiseOr<void>;
-  focus?(instance: I, event: FocusEvent): PromiseOr<void>;
-  afterFocus?(instance: I): PromiseOr<void>;
+  beforeClick?(instance: I): PromiseOr<void>;
+  // click?(instance: I, event: MouseEvent): PromiseOr<void>;
+  afterClick?(instance: I): PromiseOr<void>;
+
+  beforeFocus?(instance: I, event: FocusEvent): PromiseOr<void>;
+  // focus?(instance: I, event: FocusEvent): PromiseOr<void>;
+  afterFocus?(instance: I, event: FocusEvent): PromiseOr<void>;
+
+  // reset?(field: I): PromiseOr<void>;
 
   beforeSanitize?(field: I, value: RT): PromiseOr<void>;
-  sanitize?(field: I, value: RT): PromiseOr<RT>;
+  // sanitize?(field: I, value: RT): PromiseOr<RT>;
   afterSanitize?(field: I, value: RT): PromiseOr<void>;
 
   beforeUpdate?(field: I, value: RT, oldValue: RT): PromiseOr<void>;
   afterUpdate?(field: I, value: RT, oldValueT: RT): PromiseOr<void>;
 
   beforeValidate?(field: I, value: RT): PromiseOr<void>;
-  validate?(field: I, value: RT): PromiseOr<boolean>;
   afterValidate?(field: I, value: RT, isValid: boolean): PromiseOr<void>;
-
-  beforeClick?(instance: I): PromiseOr<void>;
-  click?(instance: I, event: MouseEvent): PromiseOr<void>;
-  afterClick?(instance: I): PromiseOr<void>;
 
   disabledWhen?(field: I): PromiseOr<boolean>;
   optionalWhen?(field: I): PromiseOr<boolean>;
   readOnlyWhen?(field: I): PromiseOr<boolean>;
   visibleWhen?(field: I): PromiseOr<boolean>;
-};
+}
 
-export type BaseInteractiveElementInstance<
+export interface BaseInteractiveElementInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-> = PlainElementInstance<C, N> & {
+> extends BasePlainElementInstance<C, N> {
   ref: Ref<RT>;
-
-  readonly form: FormInstance;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  readonly hooks: HookManagerInstance<InteractiveElementHooks<C, N, RT> | any>;
 
   readonly lazy: boolean;
 
@@ -105,45 +101,33 @@ export type BaseInteractiveElementInstance<
 
   readonly isDisabled: Ref<boolean>;
   readonly isOptional: Ref<boolean>;
-  readonly isVisible: Ref<boolean>;
 
   /**
    * Determines whether the field is valid.
    */
   readonly isValid: Ref<boolean>;
 
-  /**
-   * Validators used to compute the value of isValid.
-   */
-  readonly validators: Validator<C, N, RT>[];
-
-  /**
-   * Resets the field.
-   */
-  reset(): PromiseOr<void>;
-
-  /**
-   * Validates the field.
-   */
-  validate(): Promise<boolean>;
-
-  /**
-   * Focuses on the field.
-   */
-  focus(): PromiseOr<void>;
-
-  /**
-   * Blurs the field.
-   */
-  blur(): PromiseOr<void>;
-
   setDisabled(disabled: boolean): void;
   setOptional(optional: boolean): void;
   setReadOnly(optional: boolean): void;
-};
+}
 
 export type InteractiveElementInstance<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-> = BaseInteractiveElementInstance<C, N, RT>;
+> = BaseInteractiveElementInstance<C, N, RT> &
+  InteractiveElementHooks<C, N, RT> &
+  FieldValidator<C, N, RT> & {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    readonly hooks: HookManagerInstance<ToRecord<InteractiveElementHooks<C, N, RT>> | any>;
+  };
+// export interface InteractiveElementInstance<
+//   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
+//   N extends ElementName = ElementName,
+//   RT = unknown,
+// > extends BaseInteractiveElementInstance<C, N, RT>,
+//     InteractiveElementHooks<C, N, RT> {
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   readonly hooks: HookManagerInstance<ToRecord<InteractiveElementHooks<C, N, RT>> | any>;
+// }

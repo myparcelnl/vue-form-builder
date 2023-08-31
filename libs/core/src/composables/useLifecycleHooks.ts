@@ -1,12 +1,12 @@
 import * as Vue from 'vue';
 import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
-import {type ComponentLifecycleHooks} from '../types';
+import {type ComponentLifecycleHooks, type ToRecord} from '../types';
 import {COMPONENT_LIFECYCLE_HOOKS} from '../data';
 
 type UseLifeCycleHooks = () => {
   hooks: typeof COMPONENT_LIFECYCLE_HOOKS;
   register(
-    hookManager: HookManagerInstance<Partial<ComponentLifecycleHooks>> & Record<string, unknown>,
+    hookManager: HookManagerInstance<ToRecord<ComponentLifecycleHooks>> & Record<string, unknown>,
     ...args: unknown[]
   ): void;
 };

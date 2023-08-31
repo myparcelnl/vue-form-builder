@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import {type ReadonlyOr, type ResolvePromise} from '@myparcel/ts-utils';
-import {filterMatchingHooks} from './utils/filterMatchingHooks';
+import {filterMatchingHooks} from './utils';
 import {type CustomHookItem, type HookCallback, type HookManagerConfiguration} from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,10 +12,10 @@ type GetReturnType<T> = ResolvePromise<T extends (...args: any[]) => any ? Retur
 
 export type HookUnregisterHandler = () => void;
 
-export type HookManagerInstance<
+export interface HookManagerInstance<
   HC extends HookManagerConfiguration = HookManagerConfiguration,
   HN extends string = string,
-> = {
+> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   execute<N extends HN>(name: N, ...args: any[]): Promise<GetReturnType<HC[N]>>;
 
@@ -28,7 +28,7 @@ export type HookManagerInstance<
   register(name: HN, callback: HookCallback): HookUnregisterHandler;
 
   unregister(name: HN, callback?: HookCallback): void;
-};
+}
 
 export class HookManager<HC extends HookManagerConfiguration = HookManagerConfiguration, HN extends string = string> {
   protected readonly availableHooks: ReadonlyOr<(HN | string)[]>;

@@ -8,6 +8,7 @@ import {
   type AnyElementInstance,
   type ComponentOrHtmlElement,
   type ElementName,
+  type ToRecord,
 } from '../types';
 import {type InteractiveElementInstance} from './interactive-element';
 import {FormHook} from './hooks';
@@ -15,7 +16,7 @@ import {FormHook} from './hooks';
 /**
  * The input configuration for a Form.
  */
-export type FormConfiguration = FormHooks & {
+export interface FormConfiguration extends FormHooks {
   /**
    * Global configuration for all fields.
    */
@@ -75,23 +76,27 @@ export type FormConfiguration = FormHooks & {
    * Messages that are used for built-in validations.
    */
   validationMessages?: Record<'required' | string, FunctionOr<string>>;
-};
+}
 
-export type FormHooks = {
-  [FormHook.BeforeSubmit]?(form: FormInstance): PromiseOr<void>;
-  [FormHook.AfterSubmit]?(form: FormInstance): PromiseOr<void>;
+export interface FormHooks<I extends FormInstance = FormInstance> {
+  [FormHook.BeforeSubmit]?(form: I): PromiseOr<void>;
 
-  [FormHook.BeforeReset]?(form: FormInstance): PromiseOr<void>;
-  [FormHook.AfterReset]?(form: FormInstance): PromiseOr<void>;
+  [FormHook.AfterSubmit]?(form: I): PromiseOr<void>;
 
-  [FormHook.BeforeValidate]?(form: FormInstance): PromiseOr<void>;
-  [FormHook.AfterValidate]?(form: FormInstance): PromiseOr<void>;
+  [FormHook.BeforeReset]?(form: I): PromiseOr<void>;
 
-  [FormHook.BeforeAddElement]?(form: FormInstance, field: AnyElementInstance): PromiseOr<void>;
-  [FormHook.AfterAddElement]?(form: FormInstance, field: AnyElementInstance): PromiseOr<void>;
+  [FormHook.AfterReset]?(form: I): PromiseOr<void>;
 
-  [FormHook.ElementChange]?(form: FormInstance, field: AnyElementInstance, value: unknown): PromiseOr<void>;
-};
+  [FormHook.BeforeValidate]?(form: I): PromiseOr<void>;
+
+  [FormHook.AfterValidate]?(form: I): PromiseOr<void>;
+
+  [FormHook.BeforeAddElement]?(form: I, field: AnyElementInstance): PromiseOr<void>;
+
+  [FormHook.AfterAddElement]?(form: I, field: AnyElementInstance): PromiseOr<void>;
+
+  [FormHook.ElementChange]?(form: I, field: AnyElementInstance, value: unknown): PromiseOr<void>;
+}
 
 /**
  * The instance of a form.
@@ -115,7 +120,7 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   /**
    * Hooks that are registered for this form.
    */
-  readonly hooks: HookManagerInstance<FormHooks>;
+  readonly hooks: HookManagerInstance<ToRecord<FormHooks>>;
 
   /**
    * An object containing all named fields in the form as {name: field} pairs.

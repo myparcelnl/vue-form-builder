@@ -31,7 +31,7 @@
     "vite": "^4.1.4",
     "vite-plugin-custom-tsconfig": "^1.0.4",
     "vite-plugin-dts": "^2.1.0",
-    "vitest": "^0.28.5"
+    "vitest": "^0.34.3"
   },
   "peerDependencies": {
     "vue": "^3"

@@ -7,11 +7,16 @@
   "defaultProject": "@myparcel/vue-form-builder-js",
   "npmScope": "myparcel-vfb",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "test": [
-      "default",
+    "default": [
+      "sharedGlobals",
+      "{projectRoot}/**/*",
       "!{projectRoot}/**/*.spec.*",
       "!{projectRoot}/**/__tests__/**"
+    ],
+    "test": [
+      "default",
+      "{projectRoot}/**/*.spec.*",
+      "{projectRoot}/**/__tests__/**"
     ],
     "sharedGlobals": [
       "{workspaceRoot}/tsconfig.build.json",

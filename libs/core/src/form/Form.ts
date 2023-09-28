@@ -4,13 +4,13 @@ import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
 import {type AnyElementConfiguration, type AnyElementInstance, type ComponentOrHtmlElement} from '../types';
+import {FORM_HOOKS, FormHook} from '../data';
 import {PlainElement, type PlainElementInstance} from './plain-element';
 import {
   InteractiveElement,
   type InteractiveElementConfiguration,
   type InteractiveElementInstance,
 } from './interactive-element';
-import {FORM_HOOKS, FormHook} from './hooks';
 import {type FormHooks, type FormInstance, type InstanceFormConfiguration} from './Form.types';
 
 // noinspection JSUnusedGlobalSymbols

@@ -1,1 +1,2 @@
-export * from './componentLifecycleHooks';
+export * from './hooks';
+export * from './provides';

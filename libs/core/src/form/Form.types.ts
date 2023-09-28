@@ -9,8 +9,8 @@ import {
   type ComponentOrHtmlElement,
   type ElementName,
 } from '../types';
+import {FormHook} from '../data';
 import {type InteractiveElementInstance} from './interactive-element';
-import {FormHook} from './hooks';
 
 /**
  * The input configuration for a Form.

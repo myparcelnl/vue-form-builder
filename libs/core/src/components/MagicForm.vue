@@ -31,11 +31,11 @@
 </template>
 
 <script lang="ts">
-import { type PropType, computed, defineComponent, onMounted, provide, ref } from 'vue';
-import { get } from '@vueuse/core';
-import { INJECT_FORM } from '../services';
-import { FORM_HOOKS, type FormHook, type FormInstance } from '../form';
-import { useLifecycleHooks } from '../composables';
+import {computed, defineComponent, onMounted, type PropType, provide, ref} from 'vue';
+import {get} from '@vueuse/core';
+import {type FormInstance} from '../form';
+import {FORM_HOOKS, type FormHook, INJECT_FORM} from '../data';
+import {useLifecycleHooks} from '../composables';
 import Fragment from './Fragment.vue';
 import FormElementWrapper from './FormElementWrapper';
 

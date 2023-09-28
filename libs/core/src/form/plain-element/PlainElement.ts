@@ -5,7 +5,7 @@ import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {type FormInstance} from '../Form.types';
 import {useDynamicWatcher} from '../../utils';
 import {type AnyElementConfiguration, type ComponentOrHtmlElement, type ElementName} from '../../types';
-import {PLAIN_ELEMENT_HOOKS} from './hooks';
+import {PLAIN_ELEMENT_HOOKS} from '../../data';
 import {type PlainElementInstance} from './PlainElement.types';
 
 // noinspection JSUnusedGlobalSymbols

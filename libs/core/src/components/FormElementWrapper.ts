@@ -1,7 +1,7 @@
-import {type Component, type PropType, Teleport, defineComponent, h, provide} from 'vue';
+import {type Component, defineComponent, h, type PropType, provide, Teleport} from 'vue';
 import {type AnyElementInstance} from '../types';
-import {INJECT_ELEMENT} from '../services';
 import {type FormInstance} from '../form';
+import {INJECT_ELEMENT} from '../data';
 import {useTestAttributes} from '../composables';
 import FormElement from './FormElement.vue';
 

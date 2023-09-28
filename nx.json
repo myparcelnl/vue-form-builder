@@ -8,6 +8,11 @@
   "npmScope": "myparcel-vfb",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "test": [
+      "default",
+      "!{projectRoot}/**/*.spec.*",
+      "!{projectRoot}/**/__tests__/**"
+    ],
     "sharedGlobals": [
       "{workspaceRoot}/tsconfig.build.json",
       "{workspaceRoot}/yarn.lock",
@@ -30,6 +35,10 @@
       "outputs": ["{projectRoot}/dist"]
     },
     "test:run": {
+      "inputs": ["test"]
+    },
+    "test:coverage": {
+      "inputs": ["test"],
       "outputs": ["{workspaceRoot}/coverage"]
     }
   },
@@ -38,14 +47,25 @@
       "runner": "nx/tasks-runners/default",
       "options": {
         "parallel": 10,
-        "cacheableOperations": ["build", "build:dev", "test", "typecheck"]
+        "cacheableOperations": [
+          "build",
+          "build:dev",
+          "test:coverage",
+          "test:run",
+          "typecheck"
+        ]
       }
     },
     "cloud": {
       "runner": "@nrwl/nx-cloud",
       "options": {
         "parallel": 10,
-        "cacheableOperations": ["build", "build:dev", "test", "typecheck"],
+        "cacheableOperations": [
+          "build",
+          "test:coverage",
+          "test:run",
+          "typecheck"
+        ],
         "accessToken": "ODE1MmI4YjctMmFiZC00YzNlLTg5YjUtMGIzNjgyMjI3NjhkfHJlYWQtd3JpdGU="
       }
     }

@@ -11,7 +11,7 @@
   "scripts": {
     "build": "nx build --runner=cloud --output-style=stream",
     "build:demo": "nx build demo --runner=cloud --output-style=stream",
-    "build:dev": "run build:dev:default --runner=cloud --output-style=stream",
+    "build:dev": "run build:dev:default --output-style=stream",
     "build:dev:default": "nx build:dev --output-style=stream",
     "clean": "nx run-many --target=clean",
     "prepare": "is-ci || husky install",

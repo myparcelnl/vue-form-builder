@@ -12,7 +12,6 @@ import {
   type ElementProps,
   type ElementSlots,
 } from '../../types';
-import {COMPONENT_LIFECYCLE_HOOKS} from '../../data';
 
 export type PlainElementConfiguration<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
@@ -21,8 +20,6 @@ export type PlainElementConfiguration<
   ref?: never;
   name?: N;
 } & PlainElementHooks<C, N>;
-
-export const PLAIN_ELEMENT_HOOKS = ['blur', 'click', 'focus', ...COMPONENT_LIFECYCLE_HOOKS] as const;
 
 export type PlainElementHooks<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,

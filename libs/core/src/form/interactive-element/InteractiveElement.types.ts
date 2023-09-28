@@ -2,7 +2,7 @@ import {type Ref} from 'vue';
 import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr} from '@myparcel/ts-utils';
 import {type FieldValidator, type Validator} from '../validator';
-import {PLAIN_ELEMENT_HOOKS, type PlainElementInstance} from '../plain-element';
+import {type PlainElementInstance} from '../plain-element';
 import {type FormInstance} from '../Form.types';
 import {
   type BaseElementConfiguration,
@@ -41,15 +41,6 @@ export type InteractiveElementConfiguration<
      */
     readOnly?: boolean;
   };
-
-export const INTERACTIVE_ELEMENT_HOOKS = [
-  'blur',
-  'focus',
-  'sanitize',
-  'update',
-  'validate',
-  ...PLAIN_ELEMENT_HOOKS,
-] as const;
 
 export type InteractiveElementHooks<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,

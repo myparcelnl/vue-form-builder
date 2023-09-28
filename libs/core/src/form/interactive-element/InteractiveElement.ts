@@ -12,11 +12,8 @@ import {PlainElement} from '../plain-element';
 import {type FormInstance} from '../Form.types';
 import {useDynamicWatcher} from '../../utils';
 import {type AnyElementInstance, type ComponentOrHtmlElement} from '../../types';
-import {
-  INTERACTIVE_ELEMENT_HOOKS,
-  type InteractiveElementConfiguration,
-  type InteractiveElementInstance,
-} from './InteractiveElement.types';
+import {INTERACTIVE_ELEMENT_HOOKS} from './hooks';
+import {type InteractiveElementConfiguration, type InteractiveElementInstance} from './InteractiveElement.types';
 
 // noinspection JSUnusedGlobalSymbols
 export class InteractiveElement<

@@ -5,7 +5,8 @@ import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {type FormInstance} from '../Form.types';
 import {useDynamicWatcher} from '../../utils';
 import {type AnyElementConfiguration, type ComponentOrHtmlElement, type ElementName} from '../../types';
-import {PLAIN_ELEMENT_HOOKS, type PlainElementInstance} from './PlainElement.types';
+import {PLAIN_ELEMENT_HOOKS} from './hooks';
+import {type PlainElementInstance} from './PlainElement.types';
 
 // noinspection JSUnusedGlobalSymbols
 export class PlainElement<
@@ -28,6 +29,7 @@ export class PlainElement<
   protected readonly config: AnyElementConfiguration<C, N>;
 
   public constructor(form: FormInstance, config: AnyElementConfiguration<C, N>) {
+    // @ts-expect-error todo
     this.hooks = createHookManager({
       ...config,
       hookNames: [...PLAIN_ELEMENT_HOOKS, ...(config.hookNames ?? [])],

@@ -20,7 +20,7 @@
     "@vue/devtools-api": "^6.5.0"
   },
   "devDependencies": {
-    "@vitest/coverage-c8": "^0.28.5",
+    "@vitest/coverage-v8": "^0.34.5",
     "@vueuse/core": "^10.1.2",
     "typescript": "^5.0.0"
   },

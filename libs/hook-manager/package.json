@@ -22,7 +22,7 @@
     "@myparcel/ts-utils": "^1.6.0"
   },
   "devDependencies": {
-    "@vitest/coverage-c8": "^0.28.5",
+    "@vitest/coverage-v8": "^0.34.5",
     "typescript": "^5.0.0",
     "vitest": "^0.34.3"
   },

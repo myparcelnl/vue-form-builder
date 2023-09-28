@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.15](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.14...@myparcel-vfb/core@1.0.0-beta.15) "@myparcel-vfb/core" (2023-09-28)
+
+
+### Bug Fixes
+
+* **imports:** move non-type exports to separate files ([dd2b89f](https://github/myparcelnl/vue-form-builder/commit/dd2b89f40bd1bc3de0ecb18fa9b48a4f49c3fdb7))
+
+
+
+
 ## [1.0.0-beta.12](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.11...@myparcel-vfb/core@1.0.0-beta.12) "@myparcel-vfb/core" (2023-08-25)
 
 

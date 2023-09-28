@@ -12,6 +12,7 @@ runs:
 
     - name: 'Run tests'
       shell: bash
+      #language=sh
       run: |
         yarn nx run-many \
           --target=test:coverage \

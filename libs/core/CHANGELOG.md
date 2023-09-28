@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.16](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.15...@myparcel-vfb/core@1.0.0-beta.16) "@myparcel-vfb/core" (2023-09-28)
+
+
+### Bug Fixes
+
+* **consts:** move constants to central location ([3469e2a](https://github/myparcelnl/vue-form-builder/commit/3469e2ad07e63f01ddae02bf18b134cce48016db))
+
+
+
+
 ## [1.0.0-beta.15](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.14...@myparcel-vfb/core@1.0.0-beta.15) "@myparcel-vfb/core" (2023-09-28)
 
 

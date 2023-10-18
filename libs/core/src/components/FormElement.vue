@@ -9,20 +9,22 @@
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
+import {computed, toRefs} from 'vue';
 import {type AnyElementInstance} from '../types';
 import {createElementHooks} from '../composables';
 
-const props = defineProps<{
-  element: AnyElementInstance;
-}>();
+const props = defineProps<{element: AnyElementInstance}>();
+
+const propRefs = toRefs(props);
 
 defineEmits<(event: 'blur' | 'focus' | 'click', value: boolean) => void>();
 
-const hooks = createElementHooks(props.element, {
-  blur: props.element.blur,
-  focus: props.element.focus,
-  click: props.element.click,
+const elementProp = propRefs.element.value;
+
+const hooks = createElementHooks(elementProp, {
+  blur: elementProp.blur,
+  focus: elementProp.focus,
+  click: elementProp.click,
 });
 
 /**

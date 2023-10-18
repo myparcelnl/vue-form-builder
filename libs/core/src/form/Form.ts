@@ -91,8 +91,6 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     get(this.fields).splice(index, 0, newElement);
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
 
-    console.log({newElement});
-
     return newElement;
   }
 

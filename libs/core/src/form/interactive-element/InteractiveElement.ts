@@ -1,4 +1,4 @@
-import {type Ref, ref, watch} from 'vue';
+import {type Ref, ref, toRaw, watch} from 'vue';
 import {get} from '@vueuse/core';
 import {asyncEvery, isOfType} from '@myparcel/ts-utils';
 import {
@@ -86,6 +86,8 @@ export class InteractiveElement<
           get(this.errors).push(validator.errorMessage);
         }
       }
+
+      console.log(this.form.name, this.name, valid, toRaw(get(this.errors)));
 
       return valid;
     };

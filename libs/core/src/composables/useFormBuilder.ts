@@ -7,8 +7,8 @@ import {
   Form,
   type FormConfiguration,
   type FormInstance,
-  type InstanceFormConfiguration,
   getDefaultFormConfiguration,
+  type InstanceFormConfiguration,
 } from '../form';
 
 let forms: Ref<Record<string, FormInstance>>;
@@ -64,10 +64,12 @@ export const useFormBuilder = (): FormBuilder => {
       hookManager.register(hook, callback);
     },
 
+    // @ts-expect-error todo
     register(name, config) {
       void hookManager.execute('beforeRegister');
       const instance = new Form(name, mergeDefaults(get(defaults), config));
 
+      // @ts-expect-error todo
       get(forms)[name] = instance;
 
       void hookManager.execute('afterRegister', instance);

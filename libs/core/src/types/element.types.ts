@@ -24,7 +24,7 @@ export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlEleme
 
 export type ElementSlots = Record<string, (() => VNode | string | VNode[]) | VNode | string | VNode[]>;
 
-export type BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = {
+export interface BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> {
   /**
    * Attributes to be passed to the component.
    */
@@ -75,7 +75,7 @@ export type BaseElementConfiguration<C extends ComponentOrHtmlElement = Componen
    * Wrap the field in a TableFormGroup. Defaults to true.
    */
   wrapper?: boolean | Component;
-};
+}
 
 export type AnyElementInstance<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =
   | InteractiveElementInstance<C, N, RT>

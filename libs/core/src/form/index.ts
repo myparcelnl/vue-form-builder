@@ -5,3 +5,4 @@ export * from './defineField';
 export * from './defineForm';
 export * from './interactive-element';
 export * from './plain-element';
+export * from './validator';

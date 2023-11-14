@@ -116,7 +116,7 @@ export const createField = <
   // @ts-expect-error todo
   return reactive({
     field,
-    ref: field.ref as RT extends undefined ? undefined : Ref<RT>,
+    ref: (field.ref ?? ref<RT>()) as RT extends undefined ? undefined : Ref<RT>,
     Component: markRaw(createMainComponent(field)),
 
     ...(field.wrapper === false && {

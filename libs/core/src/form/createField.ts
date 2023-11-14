@@ -11,7 +11,7 @@ import {useForm} from '../composables';
 import FormElementWrapper from '../components/FormElementWrapper';
 import {generateFieldName} from './generateFieldName';
 
-interface BaseCreatedField<
+export interface CreatedField<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
@@ -21,11 +21,11 @@ interface BaseCreatedField<
   ref: RT extends undefined ? undefined : Ref<RT>;
 }
 
-interface ModularCreatedField<
+export interface ModularCreatedField<
   C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
   N extends ElementName = ElementName,
   RT = unknown,
-> extends BaseCreatedField<C, N, RT> {
+> extends CreatedField<C, N, RT> {
   /**
    * Only available when `wrapper` is `false`.
    * @TODO: reflect this in the type

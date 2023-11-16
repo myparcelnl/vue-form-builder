@@ -45,7 +45,7 @@
 
               <div class="gap-4 grid grid-cols-2">
                 <div>
-                  <SubmitButton.Component outline />
+                  <SubmitButton.Component />
                 </div>
 
                 <button

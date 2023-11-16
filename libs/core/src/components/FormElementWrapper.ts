@@ -27,6 +27,7 @@ export default defineComponent({
     let component: Component = h(
       FormElement,
       {
+        ...this.$attrs,
         ...useTestAttributes(this.element),
         element: this.element,
       },

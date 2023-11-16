@@ -3,12 +3,16 @@
     :class="{
       'opacity-50 cursor-not-allowed': element.isDisabled,
       'cursor-wait': element.isSuspended,
-      'hover:bg-pink-700': !element.isDisabled,
+      'hover:bg-pink-700': !outline && !element.isDisabled,
+      'hover:bg-pink-600': outline && !element.isDisabled,
+      'bg-pink-600 text-gray-900': !outline,
+      'border border-pink-600 hover:bg-pink-600 hover:text-white text:pink-600': outline,
     }"
     :disabled="element.isDisabled || element.isSuspended"
-    class="bg-pink-600 inline-flex mt-2 px-5 py-3 rounded-full text-gray-900"
+    class="inline-flex mt-2 px-5 py-3 rounded-full transition-colors"
     type="submit">
     <slot
+      :icon="icon"
       :scope="element.name"
       name="icon" />
 
@@ -33,6 +37,15 @@ export default defineComponent({
     element: {
       type: Object as PropType<PlainElementInstance>,
       required: true,
+    },
+
+    icon: {
+      type: String,
+      default: '🍀',
+    },
+
+    outline: {
+      type: Boolean,
     },
   },
 

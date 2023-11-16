@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import {computed, defineComponent, h, markRaw, onMounted, reactive, type Ref, ref} from 'vue';
+import {computed, defineComponent, h, markRaw, onMounted, reactive, type Ref, ref, type Component} from 'vue';
 import {
   type AnyElementConfiguration,
   type AnyElementInstance,
-  type ComponentOrHtmlElement,
   type ElementName,
   type ResolvedElementConfiguration,
 } from '../types';
@@ -11,21 +10,14 @@ import {useForm} from '../composables';
 import FormElementWrapper from '../components/FormElementWrapper';
 import {generateFieldName} from './generateFieldName';
 
-export interface CreatedField<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> {
+export interface CreatedField<C extends Component = Component, N extends ElementName = ElementName, RT = unknown> {
   Component: C;
   field: ResolvedElementConfiguration<C, N, RT>;
   ref: RT extends undefined ? undefined : Ref<RT>;
 }
 
-export interface ModularCreatedField<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> extends CreatedField<C, N, RT> {
+export interface ModularCreatedField<C extends Component = Component, N extends ElementName = ElementName, RT = unknown>
+  extends CreatedField<C, N, RT> {
   /**
    * Only available when `wrapper` is `false`.
    * @TODO: reflect this in the type
@@ -61,8 +53,19 @@ const createMainComponent = (field: AnyElementConfiguration) => {
         this.$options.name = generateFieldName(this.element);
       }
 
-      // @ts-expect-error todo
-      return this.element && h(FormElementWrapper, {form: this.form, element: this.element}, this.$slots);
+      return (
+        this.element &&
+        h(
+          // @ts-expect-error todo
+          FormElementWrapper,
+          {
+            ...this.$attrs,
+            form: this.form,
+            element: this.element,
+          },
+          this.$slots,
+        )
+      );
     },
   });
 };
@@ -106,11 +109,7 @@ const createErrorComponent = (field: AnyElementConfiguration) => {
   });
 };
 
-export const createField = <
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
->(
+export const createField = <C extends Component = Component, N extends ElementName = ElementName, RT = unknown>(
   field: AnyElementConfiguration<C, N, RT>,
 ): ModularCreatedField<C, N, RT> => {
   // @ts-expect-error todo

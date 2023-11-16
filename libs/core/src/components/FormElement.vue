@@ -4,10 +4,14 @@
     v-model="model"
     v-bind="attributes"
     v-on="hooks">
-    <slot
-      v-for="(_, name) in $slots"
+    <template
+      v-for="name in Object.keys($slots)"
       :key="name"
-      :name="name" />
+      #[name]="scope">
+      <slot
+        :name="name"
+        v-bind="scope" />
+    </template>
   </component>
 </template>
 

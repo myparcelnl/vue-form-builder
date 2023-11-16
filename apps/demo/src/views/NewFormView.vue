@@ -103,7 +103,18 @@
             </div>
 
             <SubmitButton.Component outline>
-              <template #scoped="scope"> scoped: {{ scope }}</template>
+              <template #icon="{icon}">
+                <span class="inline-flex">
+                  <span class="inline-flex relative">
+                    {{ icon }}
+                    <span
+                      class="absolute m-auto"
+                      v-text="'🚫'" />
+                  </span>
+
+                  <span> 🦷</span>
+                </span>
+              </template>
 
               <template #default> Default slot! </template>
             </SubmitButton.Component>

@@ -8,6 +8,10 @@
     :disabled="element.isDisabled || element.isSuspended"
     class="bg-pink-600 inline-flex mt-2 px-5 py-3 rounded-full text-gray-900"
     type="submit">
+    <slot
+      :scope="element.name"
+      name="icon" />
+
     <LoadingOverlay v-if="element.isSuspended" />
 
     <slot>

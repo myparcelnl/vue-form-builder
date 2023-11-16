@@ -102,7 +102,11 @@
               <small>This is the email Errors component. You won't see it if there are no errors.</small>
             </div>
 
-            <SubmitButton.Component outline> Other content via slot! </SubmitButton.Component>
+            <SubmitButton.Component outline>
+              <template #scoped="scope"> scoped: {{ scope }}</template>
+
+              <template #default> Default slot! </template>
+            </SubmitButton.Component>
           </div>
         </Form2.Component>
 

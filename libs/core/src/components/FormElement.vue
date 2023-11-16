@@ -4,7 +4,10 @@
     v-model="model"
     v-bind="attributes"
     v-on="hooks">
-    <slot />
+    <slot
+      v-for="(_, name) in $slots"
+      :key="name"
+      :name="name" />
   </component>
 </template>
 

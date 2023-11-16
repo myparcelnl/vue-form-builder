@@ -49,8 +49,8 @@
                 </div>
 
                 <button
-                  type="reset"
                   class="-skew-x-12 bg-blue-500 hover:bg-blue-700 hover:font-bold hover:skew-x-12 mt-2 p-3 text-white transition-all"
+                  type="reset"
                   @click="() => Form.instance.reset()">
                   Reset!!!
                 </button>
@@ -102,7 +102,7 @@
               <small>This is the email Errors component. You won't see it if there are no errors.</small>
             </div>
 
-            <SubmitButton.Component outline />
+            <SubmitButton.Component outline> Other content via slot! </SubmitButton.Component>
           </div>
         </Form2.Component>
 

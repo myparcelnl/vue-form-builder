@@ -1,12 +1,13 @@
 <template>
   <TSubmitButton
     v-if="element"
-    :element="element"
     :class="{
       'bg-white border border-blue-500 hover:bg-blue-500 hover:text-white hover:border-transparent hover:font-bold hover:skew-x-12 mt-2 p-3 text-blue-500 transition-all':
         outline,
     }"
+    :element="element"
     @click="() => form?.submit()">
+    <slot />
   </TSubmitButton>
 </template>
 

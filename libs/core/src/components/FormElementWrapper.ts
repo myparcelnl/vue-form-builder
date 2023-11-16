@@ -33,6 +33,7 @@ export default defineComponent({
       {
         ...this.element.component.children,
         ...this.element.slots,
+        ...this.$slots,
       },
     );
 
@@ -49,7 +50,7 @@ export default defineComponent({
           ...this.form.config.fieldDefaults.attributes,
           element: this.element,
         },
-        {...this.element.slots, default: () => childComponent},
+        {...this.element.slots, ...this.$slots, default: () => childComponent},
       );
     }
 

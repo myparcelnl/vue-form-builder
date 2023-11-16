@@ -32,6 +32,11 @@ export type FormConfiguration = FormHooks & {
   };
 
   /**
+   * Values to initialize the form with.
+   */
+  initialValues?: Record<string, unknown>;
+
+  /**
    * Default configuration for all fields.
    */
   fieldDefaults?: Partial<AnyElementConfiguration>;

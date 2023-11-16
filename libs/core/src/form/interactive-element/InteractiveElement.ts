@@ -87,8 +87,6 @@ export class InteractiveElement<
         }
       }
 
-      console.log(this.form.name, this.name, valid, toRaw(get(this.errors)));
-
       return valid;
     };
 
@@ -125,6 +123,11 @@ export class InteractiveElement<
     super(form, {...config, hookNames: INTERACTIVE_ELEMENT_HOOKS});
 
     this.ref = config.ref;
+
+    if (form.config.initialValues?.[name]) {
+      this.ref.value = form.config.initialValues[name];
+    }
+
     this.initialValue = get(this.ref);
 
     this.lazy = config.lazy ?? false;

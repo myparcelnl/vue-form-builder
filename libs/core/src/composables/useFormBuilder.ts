@@ -39,6 +39,14 @@ export type FormBuilder = {
     config: FC,
   ): FormInstance<InstanceFormConfiguration<FC>>;
 
+  /**
+   * Retrieve a previously registered form.
+   */
+  getForm<N extends string>(name: N): FormInstance;
+
+  /**
+   * Set default settings to apply to newly registered forms.
+   */
   setDefaults(options: Partial<FormConfiguration>): void;
 };
 
@@ -58,10 +66,13 @@ export const useFormBuilder = (): FormBuilder => {
 
   return {
     defaults,
-    forms,
 
     on(hook, callback) {
       hookManager.register(hook, callback);
+    },
+
+    getForm(name) {
+      return get(forms)[name];
     },
 
     // @ts-expect-error todo

@@ -32,7 +32,9 @@ export default defineComponent({
         element: this.element,
       },
       {
-        ...this.element.component.children,
+        ...this.element.component.children?.map((child: unknown) => {
+          return typeof child === 'function' ? child : () => child;
+        }),
         ...this.element.slots,
         ...this.$slots,
       },
@@ -51,7 +53,7 @@ export default defineComponent({
           ...this.form.config.fieldDefaults.attributes,
           element: this.element,
         },
-        {...this.element.slots, ...this.$slots, default: () => childComponent},
+        {...this.element.slots, default: () => childComponent},
       );
     }
 

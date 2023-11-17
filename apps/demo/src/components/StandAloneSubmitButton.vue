@@ -10,7 +10,7 @@
       #[name]="scope">
       <slot
         :name="name"
-        v-bind="scope" />
+        v-bind="scope || {}" />
     </template>
   </TSubmitButton>
 </template>

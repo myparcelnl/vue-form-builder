@@ -45,7 +45,7 @@
 
               <div class="gap-4 grid grid-cols-2">
                 <div>
-                  <SubmitButton.Component />
+                  <SubmitButton.Component @click="onSubmitClick" />
                 </div>
 
                 <button
@@ -185,7 +185,14 @@ const Email = createField({
   validators: [stringLengthValidator(5, 30), emailValidator()],
 });
 
-const SubmitButton = createField({component: NewSubmitButton});
+const SubmitButton = createField({
+  component: NewSubmitButton,
+  props: {
+    onClick(...args) {
+      console.log('click from prop!', {args});
+    },
+  },
+});
 
 const Description = createField({
   name: 'description',
@@ -214,4 +221,8 @@ const form2Classes = computed(() => {
     'border-blue-500': isDirty && isValid,
   };
 });
+
+const onSubmitClick = (...args) => {
+  console.log('submit', args);
+};
 </script>

@@ -60,6 +60,7 @@ const createMainComponent = (field: AnyElementConfiguration) => {
           FormElementWrapper,
           {
             ...this.$attrs,
+            ...this.element.props,
             form: this.form,
             element: this.element,
           },

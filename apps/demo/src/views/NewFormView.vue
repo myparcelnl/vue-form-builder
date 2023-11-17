@@ -131,7 +131,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {computed, h, ref} from 'vue';
 import {createField, createForm} from '@myparcel-vfb/core';
-import {emailValidator, regexValidator, stringLengthValidator, stringNotContainsValidator} from '../validation';
+import {regexValidator, stringLengthValidator, stringNotContainsValidator, emailValidator} from '../validation';
 import TTextInput from '../components/template/TTextInput.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import ErrorBox from '../components/template/ErrorBox.vue';

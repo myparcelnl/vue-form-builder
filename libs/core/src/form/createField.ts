@@ -56,7 +56,9 @@ const createMainComponent = (field: AnyElementConfiguration) => {
       return (
         this.element &&
         h(
-          // @ts-expect-error todo
+          // TODO: figure out why this causes an error in the build
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           FormElementWrapper,
           {
             ...this.$attrs,

@@ -60,12 +60,9 @@ const createMainComponent = (field: AnyElementConfiguration) => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           FormElementWrapper,
-          {
-            ...this.$attrs,
-            ...this.element.props,
-            form: this.form,
-            element: this.element,
-          },
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          {...this.$attrs, ...this.element.props, form: this.form, element: this.element},
           this.$slots,
         )
       );

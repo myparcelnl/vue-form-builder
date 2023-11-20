@@ -65,6 +65,7 @@ export const useFormBuilder = (): FormBuilder => {
   });
 
   return {
+    forms,
     defaults,
 
     on(hook, callback) {

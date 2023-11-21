@@ -2,6 +2,21 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.17](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.16...@myparcel-vfb/core@1.0.0-beta.17) "@myparcel-vfb/core" (2023-11-21)
+
+
+### Features
+
+* add new way of declaring forms ([#218](https://github/myparcelnl/vue-form-builder/issues/218)) ([9546c82](https://github/myparcelnl/vue-form-builder/commit/9546c82d29716cc269fe6731ff682f0670beec7a))
+
+
+### Bug Fixes
+
+* **imports:** correct barrel import ([6a55317](https://github/myparcelnl/vue-form-builder/commit/6a55317818eb6a35dd1a6d8bdec8fd00cfffef8c))
+
+
+
+
 ## [1.0.0-beta.16](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.15...@myparcel-vfb/core@1.0.0-beta.16) "@myparcel-vfb/core" (2023-09-28)
 
 

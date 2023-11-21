@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.18](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.17...@myparcel/vue-form-builder@1.0.0-beta.18) "@myparcel/vue-form-builder" (2023-11-21)
+
+
+### Features
+
+* add new way of declaring forms ([#218](https://github/myparcelnl/vue-form-builder/issues/218)) ([9546c82](https://github/myparcelnl/vue-form-builder/commit/9546c82d29716cc269fe6731ff682f0670beec7a))
+
+
+
+
 ## [1.0.0-beta.8](///compare/@myparcel/vue-form-builder@1.0.0-beta.7...@myparcel/vue-form-builder@1.0.0-beta.8) "@myparcel/vue-form-builder" (2023-06-05)
 
 

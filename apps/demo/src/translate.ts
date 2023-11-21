@@ -1,12 +1,17 @@
 const translations: Record<string, string> = Object.freeze({
+  bsn: 'BSN',
   carrier: 'Vervoerder',
   contact_details_title: 'Contactgegevens',
+  delivery_message: 'Bericht aan de bezorger',
   first_name: 'Voornaam',
   form_optional_suffix: ' (optioneel)',
+  form_reset: 'Reset',
   form_submit: 'Verzenden',
   label_amount: 'Aantal labels',
   last_name: 'Achternaam',
   name: 'Naam',
+  name_all_firstnames: 'Alle voornamen',
+  name_as_in_passport: 'Naam zoals in paspoort',
   number: 'Huisnummer',
   package_info_title: 'Zendinginformatie',
   package_type: 'Pakkettype',
@@ -24,10 +29,6 @@ const translations: Record<string, string> = Object.freeze({
   shipment_option_signature: 'Handtekening',
   shipment_options_title: 'Verzendopties',
   street: 'Straat',
-  delivery_message: 'Bericht aan de bezorger',
-  bsn: 'BSN',
-  name_as_in_passport: 'Naam zoals in paspoort',
-  name_all_firstnames: 'Alle voornamen',
 });
 
 export function translate(key: string): string {

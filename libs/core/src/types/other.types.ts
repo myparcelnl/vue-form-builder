@@ -1,3 +1,4 @@
+import {type UnwrapNestedRefs} from 'vue/dist/vue';
 import {type PromiseOr} from '@myparcel/ts-utils';
 
 export type ComponentLifecycleHooks<I = unknown> = {
@@ -11,3 +12,5 @@ export type ComponentLifecycleHooks<I = unknown> = {
   onUnmounted: (instance: I) => PromiseOr<void>;
   onUpdated: (instance: I) => PromiseOr<void>;
 };
+
+export type MaybeUnwrapNestedRefs<T> = UnwrapNestedRefs<T> | T;

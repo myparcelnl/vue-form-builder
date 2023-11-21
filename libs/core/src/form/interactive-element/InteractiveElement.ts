@@ -1,4 +1,4 @@
-import {type Ref, ref, watch} from 'vue';
+import {type Ref, ref, toRaw, watch} from 'vue';
 import {get} from '@vueuse/core';
 import {asyncEvery, isOfType} from '@myparcel/ts-utils';
 import {
@@ -123,6 +123,11 @@ export class InteractiveElement<
     super(form, {...config, hookNames: INTERACTIVE_ELEMENT_HOOKS});
 
     this.ref = config.ref;
+
+    if (form.config.initialValues?.[name]) {
+      this.ref.value = form.config.initialValues[name];
+    }
+
     this.initialValue = get(this.ref);
 
     this.lazy = config.lazy ?? false;

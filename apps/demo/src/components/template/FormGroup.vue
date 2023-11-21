@@ -14,25 +14,20 @@
     <slot name="info-after" />
 
     <template v-if="element.errors?.length">
-      <div class="bg-red-700 border border-red-800 col-span-2 dark:bg-red-900 mt-3 p-5 rounded-lg">
-        <ul>
-          <li
-            v-for="warning in element.errors"
-            :key="warning"
-            v-text="warning" />
-        </ul>
-      </div>
+      <ErrorBox :errors="element.errors" />
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import {type PropType, type UnwrapNestedRefs, defineComponent} from 'vue';
+import {defineComponent, type PropType, type UnwrapNestedRefs} from 'vue';
 import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 import {translate} from '../../translate';
+import ErrorBox from './ErrorBox.vue';
 
 export default defineComponent({
   name: 'FormGroup',
+  components: {ErrorBox},
   props: {
     element: {
       type: Object as PropType<UnwrapNestedRefs<InteractiveElementInstance>>,

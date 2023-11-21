@@ -6,7 +6,7 @@ import {
 } from '../types';
 
 /**
- * Define a field for use in a form.
+ * Define a field for use in a form with fields array.
  *
  * @example defineField({name: 'name', component: 'input', props: {type: 'text'}})
  */

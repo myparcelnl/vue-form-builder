@@ -23,6 +23,11 @@ const router = createRouter({
       name: 'forms-no-prop',
       component: () => import('../views/NoPropView.vue'),
     },
+    {
+      path: '/forms/new-form',
+      name: 'forms-new-form',
+      component: () => import('../views/NewFormView.vue'),
+    },
   ],
 });
 

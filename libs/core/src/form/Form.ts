@@ -67,18 +67,21 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     this.stable.value = true;
   }
 
-  public async addElement(
-    element: AnyElementConfiguration,
-    sibling?: string,
+  public async addElement<
+    EC extends AnyElementConfiguration = AnyElementConfiguration,
+    S extends string | undefined = undefined,
+  >(
+    element: EC,
+    sibling?: S,
     position: 'before' | 'after' = 'after',
-  ): Promise<void> {
+  ): Promise<S extends string ? undefined | AnyElementInstance : AnyElementInstance> {
     await this.hooks.execute(FormHook.BeforeAddElement, this, element);
     const newIndex = sibling ? get(this.fields).findIndex((field) => field.name === sibling) : get(this.fields).length;
 
-    if (newIndex === -1) {
+    if (sibling && newIndex === -1) {
       // eslint-disable-next-line no-console
       console.error(`Field ${sibling} not found in form ${this.name}`);
-      return;
+      return undefined as S extends string ? undefined : AnyElementInstance;
     }
 
     const index = position === 'after' ? newIndex + 1 : newIndex;
@@ -87,6 +90,8 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
 
     get(this.fields).splice(index, 0, newElement);
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
+
+    return newElement;
   }
 
   public getField<F extends AnyElementInstance | null = AnyElementInstance | null>(name: string): F {

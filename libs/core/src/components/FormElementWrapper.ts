@@ -27,12 +27,16 @@ export default defineComponent({
     let component: Component = h(
       FormElement,
       {
+        ...this.$attrs,
         ...useTestAttributes(this.element),
         element: this.element,
       },
       {
-        ...this.element.component.children,
+        ...this.element.component.children?.map((child: unknown) => {
+          return typeof child === 'function' ? child : () => child;
+        }),
         ...this.element.slots,
+        ...this.$slots,
       },
     );
 

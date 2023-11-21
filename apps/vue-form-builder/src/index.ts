@@ -2,11 +2,14 @@ export type {
   AnyElementConfiguration,
   AnyElementInstance,
   ComponentOrHtmlElement,
+  CreatedField,
+  CreatedForm,
   ElementName,
   FormConfiguration,
   FormInstance,
   InteractiveElementConfiguration,
   InteractiveElementInstance,
+  ModularCreatedField,
   PlainElementConfiguration,
   PlainElementInstance,
   ResolvedElementConfiguration,
@@ -15,6 +18,16 @@ export type {
 
 export type {SelectOption} from '@myparcel-vfb/utils';
 
-export {FormHook, MagicForm, defineField, defineForm, useElement, useForm, useFormBuilder} from '@myparcel-vfb/core';
+export {
+  FormHook,
+  MagicForm,
+  createField,
+  createForm,
+  defineField,
+  defineForm,
+  useElement,
+  useForm,
+  useFormBuilder,
+} from '@myparcel-vfb/core';
 
 export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from '@myparcel-vfb/plugin';

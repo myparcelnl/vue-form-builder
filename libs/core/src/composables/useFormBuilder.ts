@@ -7,8 +7,8 @@ import {
   Form,
   type FormConfiguration,
   type FormInstance,
-  type InstanceFormConfiguration,
   getDefaultFormConfiguration,
+  type InstanceFormConfiguration,
 } from '../form';
 
 let forms: Ref<Record<string, FormInstance>>;
@@ -39,6 +39,14 @@ export type FormBuilder = {
     config: FC,
   ): FormInstance<InstanceFormConfiguration<FC>>;
 
+  /**
+   * Retrieve a previously registered form.
+   */
+  getForm<N extends string>(name: N): FormInstance;
+
+  /**
+   * Set default settings to apply to newly registered forms.
+   */
   setDefaults(options: Partial<FormConfiguration>): void;
 };
 
@@ -57,17 +65,23 @@ export const useFormBuilder = (): FormBuilder => {
   });
 
   return {
-    defaults,
     forms,
+    defaults,
 
     on(hook, callback) {
       hookManager.register(hook, callback);
     },
 
+    getForm(name) {
+      return get(forms)[name];
+    },
+
+    // @ts-expect-error todo
     register(name, config) {
       void hookManager.execute('beforeRegister');
       const instance = new Form(name, mergeDefaults(get(defaults), config));
 
+      // @ts-expect-error todo
       get(forms)[name] = instance;
 
       void hookManager.execute('afterRegister', instance);

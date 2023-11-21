@@ -22,6 +22,11 @@
           to="/forms/no-prop">
           Form without element props
         </NLink>
+        <NLink
+          class="hover:text-pink-200 transition-colors"
+          to="/forms/new-form">
+          New form structure
+        </NLink>
       </nav>
     </div>
   </header>
@@ -31,7 +36,7 @@
   </NContainer>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {RouterView} from 'vue-router';
 import NLink from './components/NLink.vue';
 import NContainer from './components/NContainer.vue';

@@ -14,7 +14,7 @@ export enum FormHook {
   AfterAddElement = 'afterAddElement',
 }
 
-export const FORM_HOOKS = Object.freeze(Object.values(FormHook));
+export const FORM_HOOKS = Object.freeze(Object.values(FormHook)) as readonly FormHook[];
 
 export const COMPONENT_LIFECYCLE_HOOKS = [
   'onCreated',

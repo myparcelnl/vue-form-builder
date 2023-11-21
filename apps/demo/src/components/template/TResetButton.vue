@@ -8,8 +8,8 @@
 </template>
 
 <script lang="ts">
-import {type PropType, defineComponent} from 'vue';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+import {defineComponent, type PropType} from 'vue';
+import {type PlainElementInstance} from '@myparcel/vue-form-builder';
 import {translate} from '../../translate';
 import TButton from './TButton.vue';
 
@@ -18,7 +18,7 @@ export default defineComponent({
   components: {TButton},
   props: {
     element: {
-      type: Object as PropType<InteractiveElementInstance>,
+      type: Object as PropType<PlainElementInstance>,
       required: true,
     },
   },

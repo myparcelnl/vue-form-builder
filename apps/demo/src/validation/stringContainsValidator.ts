@@ -1,0 +1,13 @@
+import {type ComponentOrHtmlElement, type ElementName, type Validator} from '@myparcel/vue-form-builder';
+import {type OneOrMore, toArray} from '@myparcel/ts-utils';
+
+export const stringContainsValidator = (
+  search: OneOrMore<string>,
+): Validator<ComponentOrHtmlElement, ElementName, string> => {
+  const array = toArray(search);
+
+  return {
+    validate: (_, value) => array.every((search) => value.includes(search)),
+    errorMessage: `Value must contain "${array.join('", "')}"`,
+  };
+};

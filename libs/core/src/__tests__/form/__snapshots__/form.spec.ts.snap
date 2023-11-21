@@ -6,6 +6,7 @@ exports[`rendering a form > defaults to no inner wrapper 1`] = `
 >
   
   
+  
   <div
     data-test-id="field"
     data-test-type="interactive"
@@ -13,18 +14,13 @@ exports[`rendering a form > defaults to no inner wrapper 1`] = `
   <input
     data-test-id="named"
     data-test-type="plain"
-  >
-    
-    
-  </input>
+  />
   <br
     data-test-type="plain"
-  >
-    
-    
-  </br>
+  />
   
   <!--v-if-->
+  
   
 </form>
 `;
@@ -42,6 +38,7 @@ exports[`rendering a form > wraps fields with a wrapper element 1`] = `
 >
   
   
+  
   <span
     class="inner-wrapper"
     element="[object Object]"
@@ -56,6 +53,7 @@ exports[`rendering a form > wraps fields with a wrapper element 1`] = `
   />
   
   <!--v-if-->
+  
   
 </form>
 `;

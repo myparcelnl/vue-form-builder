@@ -173,4 +173,18 @@ describe('Form fields', () => {
 
     expect(form.isValid.value).toBe(true);
   });
+
+  it('gets filled with initial data from form config', async () => {
+    expect.assertions(1);
+
+    const field = defineField({
+      component: 'input',
+      name: 'element',
+      ref: ref('disregarded'),
+    });
+
+    const form = generateForm({fields: [field], initialValues: {element: 'hello'}});
+
+    expect(form.model.element.ref.value).toBe('hello');
+  });
 });

@@ -1,4 +1,4 @@
-import {type UnwrapNestedRefs} from 'vue/dist/vue';
+import {type UnwrapNestedRefs} from 'vue';
 import {type PromiseOr} from '@myparcel/ts-utils';
 
 export type ComponentLifecycleHooks<I = unknown> = {

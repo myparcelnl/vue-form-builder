@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.19](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.18...@myparcel-vfb/core@1.0.0-beta.19) "@myparcel-vfb/core" (2023-11-23)
+
+
+### Bug Fixes
+
+* fix events not being attached to element ([0ac7afa](https://github/myparcelnl/vue-form-builder/commit/0ac7afa2691231aacd53be565f9ae20096648993))
+
+
+
+
 ## [1.0.0-beta.18](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.17...@myparcel-vfb/core@1.0.0-beta.18) "@myparcel-vfb/core" (2023-11-21)
 
 

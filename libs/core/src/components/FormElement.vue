@@ -2,8 +2,7 @@
   <component
     :is="element.component"
     v-model="model"
-    v-bind="attributes"
-    v-on="hooks">
+    v-bind="attributes">
     <template
       v-for="name in Object.keys($slots)"
       :key="name"
@@ -28,11 +27,7 @@ defineEmits<(event: 'blur' | 'focus' | 'click', value: boolean) => void>();
 
 const elementProp = propRefs.element.value;
 
-const hooks = createElementHooks(elementProp, {
-  blur: elementProp.blur,
-  focus: elementProp.focus,
-  click: elementProp.click,
-});
+createElementHooks(elementProp);
 
 /**
  * Collect attributes. Always adds `element.attributes`, but only adds `element` if element is a Vue component.

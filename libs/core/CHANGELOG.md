@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.20](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.19...@myparcel-vfb/core@1.0.0-beta.20) "@myparcel-vfb/core" (2023-11-24)
+
+
+### Bug Fixes
+
+* pass elements through FormElement ([c2443ca](https://github/myparcelnl/vue-form-builder/commit/c2443ca5fe0d60f6f1fa64196dde54e43a1224a7))
+
+
+
+
 ## [1.0.0-beta.19](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.18...@myparcel-vfb/core@1.0.0-beta.19) "@myparcel-vfb/core" (2023-11-23)
 
 

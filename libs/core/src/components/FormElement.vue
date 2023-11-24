@@ -23,11 +23,7 @@ const props = defineProps<{element: AnyElementInstance}>();
 
 const propRefs = toRefs(props);
 
-defineEmits<(event: 'blur' | 'focus' | 'click', value: boolean) => void>();
-
-const elementProp = propRefs.element.value;
-
-createElementHooks(elementProp);
+createElementHooks(propRefs.element.value);
 
 /**
  * Collect attributes. Always adds `element.attributes`, but only adds `element` if element is a Vue component.

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import {computed, defineComponent, h, markRaw, onMounted, reactive, type Ref, ref, type Component} from 'vue';
+import {computed, defineComponent, h, markRaw, onMounted, type Ref, ref, type Component, reactive} from 'vue';
 import {
   type AnyElementConfiguration,
   type AnyElementInstance,

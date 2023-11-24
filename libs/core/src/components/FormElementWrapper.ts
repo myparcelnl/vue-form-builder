@@ -32,9 +32,11 @@ export default defineComponent({
         element: this.element,
       },
       {
-        ...this.element.component.children?.map((child: unknown) => {
-          return typeof child === 'function' ? child : () => child;
-        }),
+        ...(Array.isArray(this.element.component.children)
+          ? this.element.component.children.map((child: unknown) => {
+              return typeof child === 'function' ? child : () => child;
+            })
+          : this.element.component.children),
         ...this.element.slots,
         ...this.$slots,
       },

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.22](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.21...@myparcel-vfb/core@1.0.0-beta.22) "@myparcel-vfb/core" (2023-11-25)
+
+
+### Bug Fixes
+
+* fix type checking of the children before mapping ([#220](https://github/myparcelnl/vue-form-builder/issues/220)) ([5b134d0](https://github/myparcelnl/vue-form-builder/commit/5b134d0186e7fc0a3ac29586f5d970f9e3d594da))
+
+
+
+
 ## [1.0.0-beta.21](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.20...@myparcel-vfb/core@1.0.0-beta.21) "@myparcel-vfb/core" (2023-11-25)
 
 

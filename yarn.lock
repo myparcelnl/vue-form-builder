@@ -1345,7 +1345,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@myparcel-vfb/core@workspace:^1.0.0-beta.20, @myparcel-vfb/core@workspace:libs/core":
+"@myparcel-vfb/core@workspace:^1.0.0-beta.21, @myparcel-vfb/core@workspace:libs/core":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/core@workspace:libs/core"
   dependencies:
@@ -1428,11 +1428,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/plugin@workspace:^1.0.0-beta.20, @myparcel-vfb/plugin@workspace:libs/plugin":
+"@myparcel-vfb/plugin@workspace:^1.0.0-beta.21, @myparcel-vfb/plugin@workspace:libs/plugin":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/plugin@workspace:libs/plugin"
   dependencies:
-    "@myparcel-vfb/core": "workspace:^1.0.0-beta.20"
+    "@myparcel-vfb/core": "workspace:^1.0.0-beta.21"
     "@myparcel/ts-utils": "npm:^1.6.0"
     "@vitest/coverage-v8": "npm:^0.34.5"
     "@vue/devtools-api": "npm:^6.5.0"
@@ -1487,7 +1487,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@myparcel/vue-form-builder-js@workspace:apps/vue-form-builder-js"
   dependencies:
-    "@myparcel/vue-form-builder": "workspace:^1.0.0-beta.21"
+    "@myparcel/vue-form-builder": "workspace:^1.0.0-beta.22"
     "@vitejs/plugin-vue": "npm:^4.0.0"
     "@vitest/coverage-v8": "npm:^0.34.5"
     typescript: "npm:^5.0.0"
@@ -1500,13 +1500,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel/vue-form-builder@workspace:*, @myparcel/vue-form-builder@workspace:^1.0.0-beta.21, @myparcel/vue-form-builder@workspace:apps/vue-form-builder":
+"@myparcel/vue-form-builder@workspace:*, @myparcel/vue-form-builder@workspace:^1.0.0-beta.22, @myparcel/vue-form-builder@workspace:apps/vue-form-builder":
   version: 0.0.0-use.local
   resolution: "@myparcel/vue-form-builder@workspace:apps/vue-form-builder"
   dependencies:
-    "@myparcel-vfb/core": "workspace:^1.0.0-beta.20"
+    "@myparcel-vfb/core": "workspace:^1.0.0-beta.21"
     "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.8"
-    "@myparcel-vfb/plugin": "workspace:^1.0.0-beta.20"
+    "@myparcel-vfb/plugin": "workspace:^1.0.0-beta.21"
     "@myparcel-vfb/utils": "workspace:^1.0.0-beta.4"
     "@myparcel/ts-utils": "npm:^1.6.0"
     typescript: "npm:^5.0.0"
@@ -9294,11 +9294,11 @@ __metadata:
 
 "typescript@patch:typescript@npm%3A^5.0.0#optional!builtin<compat/typescript>":
   version: 5.3.2
-  resolution: "typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=29ae49"
+  resolution: "typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: c81b9bd20c6dbe90fa43e876c586021447f2b47baede9fa542b1f56715835c043e23b2eaf19c42c067cc6f5ae512bd9a9be28a67b3a1d9807f8c9cfb1269875e
+  checksum: 73c8bad74e732d93211c9d77f28b03307e2f5fc6a0afc73f4b783261ab567686a16d6ae958bdaef383a00be1b0b8c8b6741dd6ca3d13af4963fa7e47456d49c7
   languageName: node
   linkType: hard
 

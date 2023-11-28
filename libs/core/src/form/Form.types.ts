@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unified-signatures */
-import {type ComputedRef, type Ref} from 'vue';
+import {type ComputedRef, type Ref, type UnwrapNestedRefs} from 'vue';
 import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
 import {type HookManagerInstance, type HookUnregisterHandler} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr, type ReadonlyOr} from '@myparcel/ts-utils';
@@ -165,7 +165,7 @@ export interface BaseFormInstance<Values extends FormValues = FormValues> {
   /**
    * Computed values from all non-disabled fields.
    */
-  readonly values: ComputedRef<Values>;
+  readonly values: UnwrapNestedRefs<Values>;
 
   /**
    * Add a new element to the form at the end, or before or after an existing element.

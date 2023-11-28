@@ -1,4 +1,4 @@
-import {computed, ref, watch} from 'vue';
+import {computed, ref, watch, reactive, unref} from 'vue';
 import {get} from '@vueuse/core';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
@@ -46,6 +46,7 @@ export class Form<
 
     this.name = name;
     this.config = config;
+    this.values = reactive<V>({} as V);
 
     markComponentAsRaw(this.config.field.wrapper);
     markComponentAsRaw(this.config.fieldDefaults.wrapper);
@@ -65,17 +66,6 @@ export class Form<
     });
 
     this.isDirty = computed(() => get(this.interactiveFields).some((field) => get(field.isDirty)));
-
-    this.values = computed(() => {
-      return get(this.interactiveFields).reduce((acc, field) => {
-        if (field.isDisabled) {
-          return acc;
-        }
-
-        acc[field.name as keyof V] = get(field.ref) as V[keyof V];
-        return acc;
-      }, {} as V);
-    });
 
     this.stable.value = true;
   }
@@ -198,9 +188,19 @@ export class Form<
     if (isOfType<InteractiveElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'ref')) {
       instance = new InteractiveElement(form, elementConfig.name, elementConfig);
 
-      watch(elementConfig.ref, async (value: unknown) => {
+      watch(instance.ref, async (value: unknown) => {
         await this.hooks.execute(FormHook.ElementChange, this, instance, value);
+
+        if (!get(instance.isDisabled)) {
+          // @ts-expect-error todo
+          this.values[elementConfig.name] = value as V[keyof V];
+        }
       });
+
+      if (!get(instance.isDisabled)) {
+        // @ts-expect-error todo
+        this.values[elementConfig.name] = unref(instance.ref) as unknown as V[keyof V];
+      }
     } else {
       instance = new PlainElement(form, elementConfig);
     }

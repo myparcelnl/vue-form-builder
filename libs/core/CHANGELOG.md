@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.23](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.22...@myparcel-vfb/core@1.0.0-beta.23) "@myparcel-vfb/core" (2023-11-28)
+
+
+### Features
+
+* add typed computed values property to form ([#221](https://github/myparcelnl/vue-form-builder/issues/221)) ([5880bca](https://github/myparcelnl/vue-form-builder/commit/5880bcacf9dc3a1dee395c3486211ccc6cb231c0))
+
+
+
+
 ## [1.0.0-beta.22](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.21...@myparcel-vfb/core@1.0.0-beta.22) "@myparcel-vfb/core" (2023-11-25)
 
 

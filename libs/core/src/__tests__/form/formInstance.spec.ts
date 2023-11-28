@@ -74,7 +74,7 @@ describe('Form instance', () => {
   it('exposes a reactive object with all non-disabled keys and values', () => {
     const form = generateForm(createFormConfig());
 
-    expect(form.values.value).toEqual({
+    expect(form.values).toEqual({
       named: '',
       val: 23,
       text: 'initial',

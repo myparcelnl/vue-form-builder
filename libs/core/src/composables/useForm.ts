@@ -1,8 +1,8 @@
 import {inject} from 'vue';
-import {type FormInstance} from '../form';
+import {type FormInstance, type FormValues} from '../form';
 import {INJECT_FORM} from '../data';
 
-export const useForm = (): FormInstance => {
+export const useForm = <V extends FormValues>(): FormInstance<V> => {
   const form = inject(INJECT_FORM);
 
   if (!form) {

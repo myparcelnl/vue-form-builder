@@ -138,7 +138,11 @@ import ErrorBox from '../components/template/ErrorBox.vue';
 import NewSubmitButton from '../components/StandAloneSubmitButton.vue';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
 
-const Form = createForm('newForm', {
+const Form = createForm<{
+  firstName: string;
+  lastName: string;
+  email: string;
+}>('newForm', {
   form: {
     wrapper: h('div', {class: 'border gap-4 grid grid-auto-rows p-4 rounded-lg'}),
   },
@@ -148,7 +152,10 @@ const Form = createForm('newForm', {
   },
 });
 
-const Form2 = createForm('newForm2', {
+const Form2 = createForm<{
+  description: string;
+  email: string;
+}>('newForm2', {
   form: {
     wrapper: h('div', {class: 'border gap-4 grid grid-auto-rows p-4 rounded-lg'}),
   },

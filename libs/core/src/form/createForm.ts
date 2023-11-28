@@ -1,19 +1,21 @@
 import {type Component, h, markRaw} from 'vue';
-import {useFormBuilder} from '../composables';
 import MagicForm from '../components/MagicForm.vue';
-import {type FormConfiguration, type FormInstance, type InstanceFormConfiguration} from './Form.types';
+import {defineForm} from './defineForm';
+import {type FormConfiguration, type FormInstance, type FormValues} from './Form.types';
 
-export interface CreatedForm<FC extends FormConfiguration> {
+export interface CreatedForm<V extends FormValues> {
   Component: Component;
-  instance: FormInstance<InstanceFormConfiguration<FC>>;
+  instance: FormInstance<V>;
 }
 
-export const createForm = <FC extends FormConfiguration>(name: string, config: Omit<FC, 'fields'>): CreatedForm<FC> => {
-  const formBuilder = useFormBuilder();
-  const form = formBuilder.register(name, config as FC);
+export const createForm = <V extends FormValues = FormValues>(
+  name: string,
+  config: Omit<FormConfiguration<V>, 'fields'>,
+): CreatedForm<V> => {
+  const form = defineForm(name, config as FormConfiguration<V>);
 
   return {
-    Component: markRaw((_, ctx) => h(MagicForm, {form}, ctx.slots)),
+    Component: markRaw((_, ctx) => h<{form: FormInstance<V>}>(MagicForm, {form}, ctx.slots)),
     instance: form,
   };
 };

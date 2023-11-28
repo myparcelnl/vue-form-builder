@@ -1,21 +1,20 @@
 /* eslint-disable @typescript-eslint/unified-signatures */
-import {type ComputedRef, type Ref} from 'vue';
+import {type ComputedRef, type Ref, type UnwrapNestedRefs} from 'vue';
 import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
 import {type HookManagerInstance, type HookUnregisterHandler} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr, type ReadonlyOr} from '@myparcel/ts-utils';
-import {
-  type AnyElementConfiguration,
-  type AnyElementInstance,
-  type ComponentOrHtmlElement,
-  type ElementName,
-} from '../types';
+import {type ToRecord} from '../types/common.types';
+import {type AnyElementConfiguration, type AnyElementInstance, type ComponentOrHtmlElement} from '../types';
 import {FormHook} from '../data';
 import {type InteractiveElementInstance} from './interactive-element';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type FormValues = Record<string | symbol, any>;
 
 /**
  * The input configuration for a Form.
  */
-export type FormConfiguration = FormHooks & {
+export interface FormConfiguration<V extends FormValues = FormValues> extends FormHooks<V> {
   /**
    * Global configuration for all fields.
    */
@@ -30,11 +29,6 @@ export type FormConfiguration = FormHooks & {
      */
     elementProp?: boolean;
   };
-
-  /**
-   * Values to initialize the form with.
-   */
-  initialValues?: Record<string, unknown>;
 
   /**
    * Default configuration for all fields.
@@ -72,6 +66,11 @@ export type FormConfiguration = FormHooks & {
   hookNames?: readonly string[] | string[];
 
   /**
+   * Values to initialize the form with.
+   */
+  initialValues?: Partial<V>;
+
+  /**
    * Function executed when any label is rendered.
    */
   renderLabel?: (input: string) => string;
@@ -80,28 +79,79 @@ export type FormConfiguration = FormHooks & {
    * Messages that are used for built-in validations.
    */
   validationMessages?: Record<'required' | string, FunctionOr<string>>;
-};
+}
 
-export type FormHooks = {
-  [FormHook.BeforeSubmit]?(form: FormInstance): PromiseOr<void>;
-  [FormHook.AfterSubmit]?(form: FormInstance): PromiseOr<void>;
+export interface FormHooks<V extends FormValues = FormValues> {
+  [FormHook.BeforeSubmit]?(form: FormInstance<V>): PromiseOr<void>;
 
-  [FormHook.BeforeReset]?(form: FormInstance): PromiseOr<void>;
-  [FormHook.AfterReset]?(form: FormInstance): PromiseOr<void>;
+  [FormHook.AfterSubmit]?(form: FormInstance<V>): PromiseOr<void>;
 
-  [FormHook.BeforeValidate]?(form: FormInstance): PromiseOr<void>;
-  [FormHook.AfterValidate]?(form: FormInstance): PromiseOr<void>;
+  [FormHook.BeforeReset]?(form: FormInstance<V>): PromiseOr<void>;
 
-  [FormHook.BeforeAddElement]?(form: FormInstance, field: AnyElementInstance): PromiseOr<void>;
-  [FormHook.AfterAddElement]?(form: FormInstance, field: AnyElementInstance): PromiseOr<void>;
+  [FormHook.AfterReset]?(form: FormInstance<V>): PromiseOr<void>;
 
-  [FormHook.ElementChange]?(form: FormInstance, field: AnyElementInstance, value: unknown): PromiseOr<void>;
-};
+  [FormHook.BeforeValidate]?(form: FormInstance<V>): PromiseOr<void>;
 
-/**
- * The instance of a form.
- */
-export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> = {
+  [FormHook.AfterValidate]?(form: FormInstance<V>): PromiseOr<void>;
+
+  [FormHook.BeforeAddElement]?<T extends keyof V, N extends string>(
+    form: FormInstance<V>,
+    field: AnyElementInstance<ComponentOrHtmlElement, N, V[T]>,
+  ): PromiseOr<void>;
+
+  [FormHook.AfterAddElement]?<T extends keyof V, N extends string>(
+    form: FormInstance<V>,
+    field: AnyElementInstance<ComponentOrHtmlElement, N, V[T]>,
+  ): PromiseOr<void>;
+
+  [FormHook.ElementChange]?<T extends keyof V, N extends string>(
+    form: FormInstance<V>,
+    field: AnyElementInstance<ComponentOrHtmlElement, N, V[T]>,
+    value: V[T],
+  ): PromiseOr<void>;
+}
+
+export interface BaseFormInstance<Values extends FormValues = FormValues> {
+  /**
+   * Form configuration.
+   */
+  readonly config: Omit<InstanceFormConfiguration<Values>, 'fields'>;
+
+  /**
+   * The outer HTML element.
+   */
+  element: HTMLElement;
+
+  /**
+   * All fields in the form.
+   */
+  readonly fields: Ref<AnyElementInstance[]>;
+
+  /**
+   * Hooks that are registered for this form.
+   */
+  readonly hooks: HookManagerInstance<ToRecord<FormHooks>>;
+
+  /**
+   * All fields in the form that have a name and a ref.
+   */
+  readonly interactiveFields: ComputedRef<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>;
+
+  /**
+   * Exposes whether the form is dirty.
+   */
+  isDirty: ComputedRef<boolean>;
+
+  /**
+   * Determines whether the form is valid.
+   */
+  isValid: Ref<boolean>;
+
+  /**
+   * An object containing all named fields in the form as {name: field} pairs.
+   */
+  readonly model: FieldsToModel<Values>;
+
   /**
    * The name of the form.
    */
@@ -113,49 +163,15 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   readonly stable: Ref<boolean>;
 
   /**
-   * Form configuration.
+   * Computed values from all non-disabled fields.
    */
-  readonly config: Omit<FC, 'fields'>;
-
-  /**
-   * Hooks that are registered for this form.
-   */
-  readonly hooks: HookManagerInstance<FormHooks>;
-
-  /**
-   * An object containing all named fields in the form as {name: field} pairs.
-   */
-  readonly model: FieldsToModel;
-
-  /**
-   * All fields in the form.
-   */
-  readonly fields: Ref<AnyElementInstance[]>;
-
-  /**
-   * All fields in the form that have a name and a ref.
-   */
-  readonly interactiveFields: ComputedRef<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>;
-
-  /**
-   * The outer HTML element.
-   */
-  element: HTMLElement;
-
-  /**
-   * Determines whether the form is valid.
-   */
-  isValid: Ref<boolean>;
-
-  /**
-   * Exposes whether the form is dirty.
-   */
-  isDirty: ComputedRef<boolean>;
+  readonly values: UnwrapNestedRefs<Values>;
 
   /**
    * Add a new element to the form at the end, or before or after an existing element.
    */
   addElement<EC extends AnyElementConfiguration = AnyElementConfiguration>(element: EC): Promise<AnyElementInstance>;
+
   addElement(
     element: AnyElementConfiguration,
     sibling: string,
@@ -168,34 +184,26 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   getField<F extends AnyElementInstance | null = AnyElementInstance | null>(name: string): F;
 
   /**
-   * Get values from all non-disabled fields.
-   */
-  getValues<T extends Record<string, unknown> = Record<string, unknown>>(): T;
-
-  /**
    * Get the value of a field by name.
    */
-  getValue<T = unknown>(fieldName: string): T;
+  getValue<T = unknown, K extends keyof Values | string = keyof Values>(
+    fieldName: K,
+  ): K extends keyof Values ? Values[K] : T;
 
   /**
-   * Set the value of a field by name.
+   * Get values from all non-disabled fields.
    */
-  setValue(fieldName: string, value: unknown): void;
-
-  /**
-   * Set values for multiple fields at once.
-   */
-  setValues(values: Record<string, unknown>): void;
-
-  /**
-   * Add an event listener to the form.
-   */
-  on(event: keyof FormHooks, callback: (form: FormInstance) => void): HookUnregisterHandler;
+  getValues<T extends FormValues = Values>(): T;
 
   /**
    * Remove one or more event listeners from the form.
    */
-  off(event: keyof FormHooks, callback?: (form: FormInstance) => void): void;
+  off(event: keyof FormHooks, callback?: (form: FormInstance<Values>) => void): void;
+
+  /**
+   * Add an event listener to the form.
+   */
+  on(event: keyof FormHooks, callback: (form: FormInstance<Values>) => void): HookUnregisterHandler;
 
   /**
    * Remove an element from the form by name.
@@ -208,6 +216,19 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
   reset(): PromiseOr<void>;
 
   /**
+   * Set the value of a field by name.
+   */
+  setValue<T = unknown, K extends keyof Values | string = keyof Values>(
+    fieldName: K,
+    value: K extends keyof Values ? Values[K] : T,
+  ): void;
+
+  /**
+   * Set values for multiple fields at once.
+   */
+  setValues<T extends FormValues = Values>(values: T): void;
+
+  /**
    * Submit the form.
    */
   submit(): PromiseOr<void>;
@@ -216,37 +237,32 @@ export type BaseFormInstance<FC extends FormConfiguration = FormConfiguration> =
    * Validate all fields in the form.
    */
   validate(): PromiseOr<boolean>;
-};
+}
 
 /**
  * Initialized form configuration always contains the following properties.
  */
-export type InstanceFormConfiguration<FC extends FormConfiguration = FormConfiguration> = FC & {
+export interface InstanceFormConfiguration<V extends FormValues = FormValues> extends FormConfiguration<V> {
   field: {
     elementProp: boolean;
     wrapper?: ComponentOrHtmlElement;
   };
+
   fieldDefaults: {
     attributes: AnyAttributes;
     wrapper: boolean;
   };
+
   form: {
     attributes: AnyAttributes;
     tag: string;
+    wrapper?: ComponentOrHtmlElement;
   };
-};
+}
 
-export type FormInstance<FC extends InstanceFormConfiguration = InstanceFormConfiguration> = BaseFormInstance<FC>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type FormInstance<V extends FormValues = any> = BaseFormInstance<V>;
 
-/**
- * TODO: This is a temporary solution to avoid errors.
- *  We need to find a way to infer the types from the input form configuration.
- */
-export type FieldsToModel<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  RT = any,
-> = {
-  [K in N extends string ? N | string : string]: InteractiveElementInstance<C, N, RT>;
+export type FieldsToModel<V extends FormValues> = {
+  [K in keyof V]: K extends string ? InteractiveElementInstance<ComponentOrHtmlElement, K, V[K]> : never;
 };

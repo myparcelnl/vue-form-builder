@@ -2,8 +2,8 @@
   <component
     :is="form.config.form.tag"
     :id="form.name"
-    v-bind="form.config.form.attributes"
     ref="formElement"
+    v-bind="form.config.form.attributes"
     @submit.prevent="() => form.submit()"
     @reset.prevent="() => form.reset()">
     <Fragment :component="form.config.form.wrapper">
@@ -22,10 +22,10 @@
   </component>
 </template>
 
-<script lang="ts" setup>
+<script generic="V extends FormValues = FormValues" lang="ts" setup>
 import {onMounted, provide, ref, toRefs} from 'vue';
 import {get} from '@vueuse/core';
-import {type FormInstance} from '../form';
+import {type FormInstance, type FormValues} from '../form';
 import {FORM_HOOKS, type FormHook, INJECT_FORM} from '../data';
 import {useLifecycleHooks} from '../composables';
 import RenderedFormContent from './RenderedFormContent.vue';
@@ -33,8 +33,8 @@ import Fragment from './Fragment.vue';
 
 const formElement = ref<HTMLFormElement | null>(null);
 
-const props = defineProps<{form: FormInstance}>();
-const emit = defineEmits<(event: FormHook, form: FormInstance) => void>();
+const props = defineProps<{form: FormInstance<V>}>();
+const emit = defineEmits<(event: FormHook, form: FormInstance<V>) => void>();
 
 const propRefs = toRefs(props);
 

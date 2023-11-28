@@ -3,15 +3,13 @@
 
   <MagicForm :form="form" />
 
-  <hr />
-
-  <h2>Form values</h2>
-  <pre v-text="form.getValues()" />
+  <FormDiagnostics :form="form" />
 </template>
 
 <script lang="ts" setup>
 import {MagicForm} from '@myparcel/vue-form-builder';
 import {noPropForm} from '../forms/noPropForm';
+import FormDiagnostics from '../components/FormDiagnostics.vue';
 
 const form = noPropForm;
 </script>

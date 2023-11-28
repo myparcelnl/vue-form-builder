@@ -2,13 +2,13 @@ import {type Ref, ref} from 'vue';
 import {get} from '@vueuse/core';
 import {HookManager} from '@myparcel-vfb/hook-manager';
 import {markComponentAsRaw} from '../utils';
-import {type AnyElementConfiguration} from '../types';
 import {
   Form,
   type FormConfiguration,
   type FormInstance,
   getDefaultFormConfiguration,
   type InstanceFormConfiguration,
+  type FormValues,
 } from '../form';
 
 let forms: Ref<Record<string, FormInstance>>;
@@ -34,10 +34,10 @@ export type FormBuilder = {
   /**
    * Register a new form. If a form with the same name already exists, it will be overwritten.
    */
-  register<FC extends FormConfiguration = FormConfiguration, N extends string = string>(
+  register<V extends FormValues = FormValues, N extends string = string>(
     name: N,
-    config: FC,
-  ): FormInstance<InstanceFormConfiguration<FC>>;
+    config: FormConfiguration<V>,
+  ): FormInstance<V>;
 
   /**
    * Retrieve a previously registered form.
@@ -79,7 +79,7 @@ export const useFormBuilder = (): FormBuilder => {
     // @ts-expect-error todo
     register(name, config) {
       void hookManager.execute('beforeRegister');
-      const instance = new Form(name, mergeDefaults(get(defaults), config));
+      const instance = new Form(name, mergeDefaults(get(defaults), config as FormConfiguration));
 
       // @ts-expect-error todo
       get(forms)[name] = instance;
@@ -95,10 +95,10 @@ export const useFormBuilder = (): FormBuilder => {
   };
 };
 
-const mergeDefaults = <FC extends Partial<FormConfiguration>>(
-  defaults: InstanceFormConfiguration,
+const mergeDefaults = <V extends FormValues, FC extends Partial<FormConfiguration<V>>>(
+  defaults: InstanceFormConfiguration<V>,
   config: FC,
-): InstanceFormConfiguration<FC & {fields: AnyElementConfiguration[]}> => {
+): InstanceFormConfiguration<V> => {
   return {
     ...defaults,
     ...config,

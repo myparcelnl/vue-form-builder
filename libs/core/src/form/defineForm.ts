@@ -1,10 +1,10 @@
 import {useFormBuilder} from '../composables';
-import {type FormConfiguration, type FormInstance, type InstanceFormConfiguration} from './Form.types';
+import {type FormConfiguration, type FormInstance, type FormValues} from './Form.types';
 
-export const defineForm = <FC extends FormConfiguration>(
+export const defineForm = <V extends FormValues = FormValues>(
   name: string,
-  config: FC,
-): FormInstance<InstanceFormConfiguration<FC>> => {
+  config: FormConfiguration<V>,
+): FormInstance<V> => {
   const formBuilder = useFormBuilder();
 
   return formBuilder.register(name, config);

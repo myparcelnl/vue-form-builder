@@ -10,28 +10,28 @@
       <b>isValid</b>
       <span v-text="form.isValid" />
 
-      <b>getValues()</b>
-      <pre v-text="values" />
+      <b>values</b>
+      <pre v-text="form.values" />
 
       <b>Event log</b>
       <textarea
         v-model="eventLog"
         class="font-mono w-full"
-        rows="10"
-        readonly />
+        readonly
+        rows="10" />
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import {computed, toRefs} from 'vue';
-import {type MaybeUnwrapNestedRefs} from '@myparcel-vfb/core';
+<script generic="V extends FormValues" lang="ts" setup>
+import {toRefs} from 'vue';
+import {type MaybeUnwrapNestedRefs, type FormValues} from '@myparcel-vfb/core';
 import {type FormInstance} from '@myparcel/vue-form-builder';
 import {useFormEventLog} from '../composables/useFormEventLog';
 
-const props = defineProps<{form: MaybeUnwrapNestedRefs<FormInstance>}>();
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
+const props = defineProps<{form: MaybeUnwrapNestedRefs<FormInstance<V>>}>();
 const propRefs = toRefs(props);
 
 const eventLog = useFormEventLog(propRefs.form.value);
-const values = computed(() => props.form.getValues());
 </script>

@@ -3,6 +3,7 @@ import {get} from '@vueuse/core';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
+import {type ToRecord} from '../types/common.types';
 import {type AnyElementConfiguration, type AnyElementInstance, type ComponentOrHtmlElement} from '../types';
 import {FORM_HOOKS, FormHook} from '../data';
 import {PlainElement, type PlainElementInstance} from './plain-element';
@@ -11,29 +12,30 @@ import {
   type InteractiveElementConfiguration,
   type InteractiveElementInstance,
 } from './interactive-element';
-import {type FormHooks, type FormInstance, type InstanceFormConfiguration} from './Form.types';
+import {type FormHooks, type FormInstance, type InstanceFormConfiguration, type FormValues} from './Form.types';
 
 // noinspection JSUnusedGlobalSymbols
-export class Form<FC extends InstanceFormConfiguration = InstanceFormConfiguration, FN extends string = string> {
-  public readonly name: FN;
-
-  public readonly stable: FormInstance<FC>['stable'] = ref(false);
+export class Form<
+  V extends FormValues = FormValues,
+  FN extends string = string,
+  FC extends InstanceFormConfiguration<V> & FormHooks = InstanceFormConfiguration<V> & FormHooks,
+> {
   public readonly config: Omit<FC, 'fields'>;
-  public readonly hooks: FormInstance<FC>['hooks'];
-  public readonly model = {} as FormInstance<FC>['model'];
-  public readonly fields: FormInstance<FC>['fields'] = ref([]);
-  public readonly interactiveFields: FormInstance<FC>['interactiveFields'];
-
-  public readonly on: FormInstance<FC>['on'];
-  public readonly off: FormInstance<FC>['off'];
-
   // @ts-expect-error This is initialized this on render.
-  public element: FormInstance<FC>['element'];
+  public element: FormInstance<V>['element'];
+  public readonly fields: FormInstance<V>['fields'] = ref([]);
+  public readonly hooks: FormInstance<V>['hooks'];
+  public readonly interactiveFields: FormInstance<V>['interactiveFields'];
+  public isDirty: FormInstance<V>['isDirty'];
+  public isValid: FormInstance<V>['isValid'] = ref(true);
+  public readonly model = {} as FormInstance<V>['model'];
+  public readonly name: FN;
+  public readonly off: FormInstance<V>['off'];
+  public readonly on: FormInstance<V>['on'];
+  public readonly stable: FormInstance<V>['stable'] = ref(false);
+  public readonly values: FormInstance<V>['values'];
 
-  public isValid: FormInstance<FC>['isValid'] = ref(true);
-  public isDirty: FormInstance<FC>['isDirty'];
-
-  public constructor(name: FN, formConfig: FC & FormHooks) {
+  public constructor(name: FN, formConfig: ToRecord<FC>) {
     const {fields, ...config} = formConfig;
 
     formConfig.hookNames = [...FORM_HOOKS, ...(formConfig.hookNames ?? [])];
@@ -49,7 +51,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     markComponentAsRaw(this.config.fieldDefaults.wrapper);
 
     fields.forEach((field) => {
-      const instance = this.createFieldInstance(field, this as unknown as FormInstance<FC>);
+      const instance = this.createFieldInstance(field, this as unknown as FormInstance<V>);
 
       get(this.fields).push(instance);
     });
@@ -63,6 +65,17 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     });
 
     this.isDirty = computed(() => get(this.interactiveFields).some((field) => get(field.isDirty)));
+
+    this.values = computed(() => {
+      return get(this.interactiveFields).reduce((acc, field) => {
+        if (field.isDisabled) {
+          return acc;
+        }
+
+        acc[field.name as keyof V] = get(field.ref) as V[keyof V];
+        return acc;
+      }, {} as V);
+    });
 
     this.stable.value = true;
   }
@@ -86,7 +99,7 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
 
     const index = position === 'after' ? newIndex + 1 : newIndex;
 
-    const newElement = this.createFieldInstance(element, this as unknown as FormInstance<FC>);
+    const newElement = this.createFieldInstance(element, this as unknown as FormInstance<V>);
 
     get(this.fields).splice(index, 0, newElement);
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
@@ -104,21 +117,20 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     return get(fieldInstance.ref);
   }
 
-  public getValues<T extends Record<string, unknown> = Record<string, unknown>>(): T {
-    return get(this.interactiveFields).reduce((acc, field) => {
-      if (field.isDisabled) {
-        return acc;
-      }
-
-      acc[field.name as keyof T] = field.ref as T[keyof T];
-      return acc;
-    }, {} as T);
+  public getValues(): V {
+    return get(this.values);
   }
 
   public removeElement(name: string): void {
     const index = get(this.fields).findIndex((field) => field.name === name);
 
     get(this.fields).splice(index, 1);
+  }
+
+  public async reset(): Promise<void> {
+    await this.hooks.execute(FormHook.BeforeReset, this);
+    await Promise.all(get(this.interactiveFields).map((field) => field.reset()));
+    await this.hooks.execute(FormHook.AfterReset, this);
   }
 
   public setValue(fieldName: string, value: unknown): void {
@@ -158,12 +170,6 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     return get(this.isValid);
   }
 
-  public async reset(): Promise<void> {
-    await this.hooks.execute(FormHook.BeforeReset, this);
-    await Promise.all(get(this.interactiveFields).map((field) => field.reset()));
-    await this.hooks.execute(FormHook.AfterReset, this);
-  }
-
   protected ensureGetField(name: string): AnyElementInstance {
     const field = this.getField(name);
 
@@ -174,14 +180,14 @@ export class Form<FC extends InstanceFormConfiguration = InstanceFormConfigurati
     return field;
   }
 
-  private createFieldInstance(field: AnyElementConfiguration, form: FormInstance<FC>): AnyElementInstance {
+  private createFieldInstance(field: AnyElementConfiguration, form: FormInstance<V>): AnyElementInstance {
     let instance: InteractiveElementInstance | PlainElementInstance;
 
     const elementConfig = {
       ...form.config.fieldDefaults,
       ...field,
       attributes: {
-        ...form.config.fieldDefaults.attributes,
+        ...form.config.fieldDefaults?.attributes,
         ...field.attributes,
       },
     } as AnyElementConfiguration;

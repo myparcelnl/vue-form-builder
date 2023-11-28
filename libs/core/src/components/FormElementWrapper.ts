@@ -52,7 +52,7 @@ export default defineComponent({
         (hasOwnWrapper ? this.element.wrapper : this.form.config.field?.wrapper) as Component,
         {
           ...this.$attrs,
-          ...this.form.config.fieldDefaults.attributes,
+          ...this.form.config.fieldDefaults?.attributes,
           element: this.element,
         },
         {...this.element.slots, default: () => childComponent},

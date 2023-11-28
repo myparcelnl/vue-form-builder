@@ -71,6 +71,16 @@ describe('Form instance', () => {
     });
   });
 
+  it('exposes a reactive object with all non-disabled keys and values', () => {
+    const form = generateForm(createFormConfig());
+
+    expect(form.values.value).toEqual({
+      named: '',
+      val: 23,
+      text: 'initial',
+    });
+  });
+
   it('can retrieve the value of a field by the field name', () => {
     const form = generateForm(createFormConfig());
 

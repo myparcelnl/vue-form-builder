@@ -35,10 +35,9 @@ const createMainComponent = (field: AnyElementConfiguration) => {
   return defineComponent({
     setup() {
       const form = useForm();
-      const element = ref<null | AnyElementInstance>(null);
+      const element = ref<AnyElementInstance>();
 
       onMounted(async () => {
-        // @ts-expect-error todo
         element.value = await form.addElement(field);
       });
 
@@ -56,13 +55,9 @@ const createMainComponent = (field: AnyElementConfiguration) => {
       return (
         this.element &&
         h(
-          // TODO: figure out why this causes an error in the build
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           FormElementWrapper,
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          {...this.$attrs, ...this.element.props, form: this.form, element: this.element},
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          {...this.$attrs, ...this.element?.props, form: this.form, element: this.element},
           this.$slots,
         )
       );

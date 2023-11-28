@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {type Component, type VNode, type DefineComponent} from 'vue';
+import {type Component, type VNode} from 'vue';
 import {type AnyAttributes, type ComponentProps} from '@myparcel-vfb/utils';
 import {type MakeOptional} from '@myparcel/ts-utils';
 import {
@@ -12,7 +12,7 @@ import {type ComponentLifecycleHooks} from './other.types';
 
 export type ElementName = string | undefined;
 
-export type ComponentOrHtmlElement = string | Component | DefineComponent<{}, {}, any>;
+export type ComponentOrHtmlElement = string | Component;
 
 export type ComponentHooks<C extends ComponentOrHtmlElement = ComponentOrHtmlElement, I = unknown> = C extends Component
   ? ComponentLifecycleHooks<I>

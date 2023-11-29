@@ -53,13 +53,7 @@ const createMainComponent = (field: AnyElementConfiguration) => {
       }
 
       return (
-        this.element &&
-        h(
-          FormElementWrapper,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          {...this.$attrs, ...this.element?.props, form: this.form, element: this.element},
-          this.$slots,
-        )
+        this.element && h(FormElementWrapper, {...this.$attrs, form: this.form, element: this.element}, this.$slots)
       );
     },
   });

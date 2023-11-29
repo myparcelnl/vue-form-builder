@@ -1,6 +1,6 @@
 {
   "name": "@myparcel-vfb/plugin",
-  "version": "1.0.0-beta.23",
+  "version": "1.0.0-beta.24",
   "license": "MIT",
   "type": "module",
   "exports": "./src/index.ts",
@@ -15,7 +15,7 @@
     "typecheck": "run ws:ts:typecheck \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/core": "workspace:^1.0.0-beta.23",
+    "@myparcel-vfb/core": "workspace:^1.0.0-beta.24",
     "@myparcel/ts-utils": "^1.6.0",
     "@vue/devtools-api": "^6.5.0"
   },

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.24](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.23...@myparcel-vfb/core@1.0.0-beta.24) "@myparcel-vfb/core" (2023-11-29)
+
+
+### Bug Fixes
+
+* fix element props being bound too early ([bad1935](https://github/myparcelnl/vue-form-builder/commit/bad1935f9d724539abc1b930c04a9122430bb689))
+
+
+
+
 ## [1.0.0-beta.23](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.22...@myparcel-vfb/core@1.0.0-beta.23) "@myparcel-vfb/core" (2023-11-28)
 
 

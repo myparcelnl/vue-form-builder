@@ -1,6 +1,6 @@
 import {inject} from 'vue';
 import {type AnyElementInstance} from '../types';
-import {INJECT_ELEMENT} from '../data';
+import {INJECT_ELEMENT} from '../symbols';
 
 export const useElement = (): AnyElementInstance => {
   const element = inject(INJECT_ELEMENT);

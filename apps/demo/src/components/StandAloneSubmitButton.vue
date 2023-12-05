@@ -16,12 +16,11 @@
 </template>
 
 <script lang="ts" setup>
-import {inject} from 'vue';
-import {INJECT_ELEMENT, INJECT_FORM} from '@myparcel-vfb/core';
+import {useForm, useElement} from '@myparcel-vfb/core';
 import TSubmitButton from './template/TSubmitButton.vue';
 
 defineProps<{outline?: boolean}>();
 
-const form = inject(INJECT_FORM);
-const element = inject(INJECT_ELEMENT);
+const form = useForm();
+const element = useElement();
 </script>

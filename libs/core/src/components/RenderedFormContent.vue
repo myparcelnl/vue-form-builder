@@ -6,8 +6,8 @@
       v-for="(element, index) in plainFields"
       :key="`element--${element.name ?? 'unnamed'}--${index}`">
       <FormElementWrapper
-        :form="form"
-        :element="element" />
+        :element="element"
+        :form="form" />
     </template>
   </Suspense>
 
@@ -16,21 +16,21 @@
       v-for="(element, index) in teleportFields"
       :key="`element--${element.name ?? 'unnamed'}--${index}`">
       <FormElementWrapper
-        :form="form"
-        :element="element" />
+        :element="element"
+        :form="form" />
     </template>
   </template>
 </template>
 
-<script setup lang="ts">
-import {computed, inject, ref} from 'vue';
+<script lang="ts" setup>
+import {computed, ref} from 'vue';
 import {get} from '@vueuse/core';
-import {INJECT_FORM} from '../data';
+import {useForm} from '../composables';
 import FormElementWrapper from './FormElementWrapper';
 
 const elementsAreResolved = ref(false);
 
-const form = inject(INJECT_FORM);
+const form = useForm();
 
 if (!form) {
   throw new Error('Form not found');

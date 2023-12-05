@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.25](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.24...@myparcel-vfb/core@1.0.0-beta.25) "@myparcel-vfb/core" (2023-12-05)
+
+
+### Bug Fixes
+
+* do not use or export symbols directly ([212d34c](https://github/myparcelnl/vue-form-builder/commit/212d34ca6f2f9a3c907da83d254150a092c33d6d))
+
+
+
+
 ## [1.0.0-beta.24](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.23...@myparcel-vfb/core@1.0.0-beta.24) "@myparcel-vfb/core" (2023-11-29)
 
 

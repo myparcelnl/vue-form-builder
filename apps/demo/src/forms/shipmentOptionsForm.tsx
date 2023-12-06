@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import {ref} from 'vue';
+import {get} from '@vueuse/core';
 import {defineField, defineForm, type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 import {isOfType} from '@myparcel/ts-utils';
 import {type CarrierName, PACKAGE_TYPE_IDS_TO_NAMES, PackageTypeName} from '@myparcel/constants';
@@ -23,7 +24,7 @@ declare const h: typeof import('vue').h;
 const firstName = ref('');
 const lastName = ref('');
 
-const validateName = (field: InteractiveElementInstance) => {
+const validateName = <Type = unknown,>(field: InteractiveElementInstance<Type>) => {
   const nameField = field.form.fields.value.find((field) => field.name === 'name');
   const firstNameField = field.form.fields.value.find((field) => field.name === 'firstname');
   const lastNameField = field.form.fields.value.find((field) => field.name === 'lastname');
@@ -32,7 +33,7 @@ const validateName = (field: InteractiveElementInstance) => {
     return;
   }
 
-  nameField.props.errors = [...(firstNameField?.errors ?? []), ...(lastNameField?.errors ?? [])];
+  nameField.props.errors = [...(get(firstNameField?.errors) ?? []), ...(get(lastNameField?.errors) ?? [])];
 };
 
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
@@ -83,7 +84,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       },
     }),
 
-    defineField({
+    defineField<string>({
       name: 'firstName',
       component: TTextInput,
       ref: firstName,
@@ -174,7 +175,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       label: 'dhl_only_options',
       component: TTextInput,
       ref: ref<string>(),
-      visibleWhen: (field) => field.form.getValue('carrier')?.includes('dhl'),
+      visibleWhen: (field: InteractiveElementInstance) => field.form.getValue('carrier')?.includes('dhl'),
     }),
 
     defineField({
@@ -234,7 +235,11 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
         } else if (copyNameFields.length > newValue) {
           // remove fields
           for (let i = copyNameFields.length; i > newValue; i--) {
-            instance.form.removeElement(copyNameFields[i - 1].name);
+            const {name} = copyNameFields[i - 1];
+
+            if (name) {
+              instance.form.removeElement(name);
+            }
           }
         }
       },
@@ -337,10 +342,10 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       component: TToggleSwitch,
       ref: ref(false),
       label: 'shipment_option_same_day_delivery',
-      visibleWhen: ({form}) => {
+      visibleWhen: ({form}: InteractiveElementInstance) => {
         const {packageType, carrier} = form.model;
 
-        return packageType.ref.value === PackageTypeName.Package && ['dhlforyou'].includes(carrier.ref);
+        return packageType.ref.value === PackageTypeName.Package && ['dhlforyou'].includes(get(carrier.ref));
       },
     }),
 

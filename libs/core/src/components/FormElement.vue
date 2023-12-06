@@ -15,8 +15,9 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, toRefs} from 'vue';
+import {computed, toRefs, type Ref, unref} from 'vue';
 import {type AnyElementInstance} from '../types';
+import {type InteractiveElementInstance} from '../form';
 import {createElementHooks} from '../composables';
 
 const props = defineProps<{element: AnyElementInstance}>();
@@ -39,12 +40,11 @@ const attributes = computed(() => {
 
 const model = computed({
   get() {
-    return props.element.ref;
+    return unref((props.element as InteractiveElementInstance).ref);
   },
 
   set(value) {
-    // eslint-disable-next-line vue/no-mutating-props
-    props.element.ref = value;
+    (props.element as InteractiveElementInstance).ref = value as Ref;
   },
 });
 </script>

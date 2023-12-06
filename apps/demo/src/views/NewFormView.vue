@@ -129,13 +129,13 @@
 
 <script lang="ts" setup>
 /* eslint-disable @typescript-eslint/naming-convention */
-import {computed, h, ref} from 'vue';
+import {computed, h, ref, type Component} from 'vue';
 import {createField, createForm} from '@myparcel-vfb/core';
 import {regexValidator, stringLengthValidator, stringNotContainsValidator, emailValidator} from '../validation';
 import TTextInput from '../components/template/TTextInput.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import ErrorBox from '../components/template/ErrorBox.vue';
-import NewSubmitButton from '../components/StandAloneSubmitButton.vue';
+import StandaloneSubmitButton from '../components/StandAloneSubmitButton.vue';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
 
 const Form = createForm<{
@@ -193,7 +193,7 @@ const Email = createField({
 });
 
 const SubmitButton = createField({
-  component: NewSubmitButton,
+  component: StandaloneSubmitButton,
   props: {
     onClick(...args) {
       console.log('click from prop!', {args});

@@ -1,16 +1,11 @@
-import {type FunctionOr} from '@myparcel-vfb/utils';
+import {type ComponentProps, type FunctionOr} from '@myparcel-vfb/utils';
 import {type InteractiveElementInstance} from '../interactive-element';
-import {type ComponentOrHtmlElement, type ElementName} from '../../types';
 import {type Validator} from './validator.types';
 
-export const isRequired = <
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
->(
+export const isRequired = <Type = unknown, Props extends ComponentProps = ComponentProps>(
   errorMessage: FunctionOr<string>,
-): Validator<C, N, RT> => ({
-  validate: (field: InteractiveElementInstance<C, N, RT>, value: RT): boolean => {
+): Validator<Type, Props> => ({
+  validate: (field: InteractiveElementInstance<Type, Props>, value: Type): boolean => {
     return !(value === null || value === undefined || value === '');
   },
   errorMessage,

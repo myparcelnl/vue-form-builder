@@ -1,34 +1,36 @@
-import {computed, type ComputedRef, markRaw, reactive, ref} from 'vue';
+import {computed, markRaw, reactive, ref, type UnwrapNestedRefs} from 'vue';
 import {get} from '@vueuse/core';
-import {type FunctionOr} from '@myparcel-vfb/utils';
-import {createHookManager} from '@myparcel-vfb/hook-manager';
+import {type ComponentProps} from '@myparcel-vfb/utils';
+import {createHookManager, type HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {type FormInstance} from '../Form.types';
 import {useDynamicWatcher} from '../../utils';
-import {type AnyElementConfiguration, type ComponentOrHtmlElement, type ElementName} from '../../types';
+import {type ToRecord} from '../../types/common.types';
+import {type BaseElementConfiguration, type BaseElementHooks, type BaseElementInstance} from '../../types';
 import {PLAIN_ELEMENT_HOOKS} from '../../data';
-import {type PlainElementInstance} from './PlainElement.types';
+import {type PlainElementInstance, type PlainElementHooks, type PlainElementConfiguration} from './PlainElement.types';
 
 // noinspection JSUnusedGlobalSymbols
 export class PlainElement<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
+  Props extends ComponentProps = ComponentProps,
+  Config extends BaseElementConfiguration<Props> = PlainElementConfiguration<Props>,
+  Hooks extends BaseElementHooks<BaseElementInstance<Props>> = PlainElementHooks<Props>,
 > {
-  public declare hooks: PlainElementInstance<C, N>['hooks'];
+  public declare readonly hooks: HookManagerInstance<ToRecord<Hooks>>;
 
-  public errors = ref<FunctionOr<string>[]>([]);
+  public errors: PlainElementInstance<Props>['errors'] = ref([]);
 
-  public readonly attributes: PlainElementInstance<C, N>['attributes'];
-  public readonly component: C;
-  public readonly form: FormInstance;
-  public readonly formattedErrors: ComputedRef<string[]>;
-  public readonly isVisible: PlainElementInstance<C, N>['isVisible'] = ref(true);
-  public readonly name: N;
-  public readonly props: PlainElementInstance<C, N>['props'];
-  public readonly wrapper: PlainElementInstance<C, N>['wrapper'];
+  public readonly attributes: PlainElementInstance<Props>['attributes'];
+  public readonly component: PlainElementInstance<Props>['component'];
+  public readonly form: PlainElementInstance<Props>['form'];
+  public readonly formattedErrors: PlainElementInstance<Props>['formattedErrors'];
+  public readonly isVisible: PlainElementInstance<Props>['isVisible'] = ref(true);
+  public readonly name: PlainElementInstance<Props>['name'];
+  public readonly props: PlainElementInstance<Props>['props'];
+  public readonly wrapper: PlainElementInstance<Props>['wrapper'];
 
-  protected readonly config: AnyElementConfiguration<C, N>;
+  protected readonly config: Config;
 
-  public constructor(form: FormInstance, config: AnyElementConfiguration<C, N>) {
+  public constructor(form: FormInstance, config: ToRecord<Config>) {
     // @ts-expect-error todo
     this.hooks = createHookManager({
       ...config,
@@ -45,12 +47,12 @@ export class PlainElement<
         this[key] = config[key];
       });
 
-    this.props = reactive(config.props ?? ({} as PlainElementInstance<C, N>['props']));
+    this.props = reactive(config.props ?? {}) as UnwrapNestedRefs<Props>;
     this.attributes = reactive(config.attributes ?? {});
 
     this.config = config;
     this.form = form;
-    this.name = config.name as N;
+    this.name = config.name;
     this.wrapper = config.wrapper ?? true;
 
     this.setVisible(config.visible ?? true);
@@ -70,7 +72,7 @@ export class PlainElement<
       return;
     }
 
-    this.component = markRaw(config.component) as C;
+    this.component = markRaw(config.component);
   }
 
   public setVisible(value: boolean): void {

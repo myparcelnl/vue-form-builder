@@ -1,47 +1,30 @@
 import {type ComputedRef} from 'vue';
-import {type FunctionOr} from '@myparcel-vfb/utils';
+import {type ComponentProps, type FunctionOr} from '@myparcel-vfb/utils';
 import {type PromiseOr} from '@myparcel/ts-utils';
 import {type InteractiveElementInstance} from '../interactive-element';
-import {type ComponentOrHtmlElement, type ElementName} from '../../types';
 
-export type ValidateFunction<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = (field: InteractiveElementInstance<C, N, RT>, value: RT) => PromiseOr<boolean>;
+export type ValidateFunction<Type = unknown, Props extends ComponentProps = ComponentProps> = (
+  field: InteractiveElementInstance<Type, Props>,
+  value: Type,
+) => PromiseOr<boolean>;
 
-export type ComputedValidator = {isValid: ComputedRef<boolean>};
+export interface WithComputedValidator {
+  isValid: ComputedRef<boolean>;
+}
 
-export type MultiValidator<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = {validators: Validator<C, N, RT>[]};
+export interface WithMultiValidator<Type = unknown, Props extends ComponentProps = ComponentProps> {
+  validators: Validator<Type, Props>[];
+}
 
-export type SingleValidator<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = Validator<C, N, RT>;
-
-export type FieldValidator<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = Partial<ComputedValidator | MultiValidator<C, N, RT> | SingleValidator<C, N, RT>>;
-
-export type Validator<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = {
-  validate: ValidateFunction<C, N, RT>;
+export interface Validator<Type = unknown, Props extends ComponentProps = ComponentProps> {
+  validate: ValidateFunction<Type, Props>;
   errorMessage?: FunctionOr<string>;
   precedence?: number;
-};
+}
 
-export type ValidatorWithPrecedence<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = Validator<C, N, RT> & {precedence: number};
+export type ValidatorWithPrecedence<Type = unknown, Props extends ComponentProps = ComponentProps> = Validator<
+  Type,
+  Props
+> & {
+  precedence: number;
+};

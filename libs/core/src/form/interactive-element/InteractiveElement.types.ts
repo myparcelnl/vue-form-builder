@@ -1,92 +1,86 @@
-import {type Ref} from 'vue';
+import {type Ref, type ComputedRef} from 'vue';
+import {type ComponentProps, type FunctionOr} from '@myparcel-vfb/utils';
 import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr} from '@myparcel/ts-utils';
-import {type FieldValidator, type Validator} from '../validator';
-import {type PlainElementInstance} from '../plain-element';
-import {type FormInstance} from '../Form.types';
+import {type Validator, type ValidateFunction} from '../validator';
+import {type ToRecord} from '../../types/common.types';
 import {
   type BaseElementConfiguration,
-  type ComponentHooks,
-  type ComponentOrHtmlElement,
   type ElementName,
+  type BaseElementInstance,
+  type BaseElementHooks,
 } from '../../types';
 
-export type InteractiveElementConfiguration<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = BaseElementConfiguration<C> &
-  FieldValidator<C, N, RT> &
-  InteractiveElementHooks<C, N, RT> & {
-    name: NonNullable<N>;
-    ref: Ref<RT>;
+export interface InteractiveElementConfiguration<Type = unknown, Props extends ComponentProps = ComponentProps>
+  extends BaseElementConfiguration<Props>,
+    InteractiveElementHooks<Type, Props> {
+  name: NonNullable<ElementName>;
+  ref: Ref<Type>;
 
-    /**
-     * Whether the field is lazy. Defaults to false.
-     */
-    lazy?: boolean;
+  // TODO: figure out a way to have the validator properties exclude each other with the types still working properly
 
-    /**
-     * Whether the element is disabled. Defaults to false.
-     */
-    disabled?: boolean;
+  // Computed validator
+  isValid?: ComputedRef<boolean>;
 
-    /**
-     * Whether the element is optional. Defaults to false.
-     */
-    optional?: boolean;
+  // Single validator
+  validate?: ValidateFunction<Type, Props>;
+  errorMessage?: FunctionOr<string>;
+  precedence?: number;
 
-    /**
-     * Whether the element is read-only. Defaults to false.z
-     */
-    readOnly?: boolean;
-  };
+  // Multiple validators
+  validators?: Validator<Type, Props>[];
 
-export type InteractiveElementHooks<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-  I = BaseInteractiveElementInstance<C, N, RT>,
-> = Partial<ComponentHooks<C, I>> & {
-  beforeBlur?(instance: I, value: RT): PromiseOr<void>;
+  /**
+   * Whether the field is lazy. Defaults to false.
+   */
+  lazy?: boolean;
+
+  /**
+   * Whether the element is disabled. Defaults to false.
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether the element is optional. Defaults to false.
+   */
+  optional?: boolean;
+
+  /**
+   * Whether the element is read-only. Defaults to false.z
+   */
+  readOnly?: boolean;
+}
+
+export interface InteractiveElementHooks<
+  Type = unknown,
+  Props extends ComponentProps = ComponentProps,
+  I extends InteractiveElementInstance<Type, Props> = InteractiveElementInstance<Type, Props>,
+> extends BaseElementHooks<I> {
+  beforeBlur?(instance: I, value: Type): PromiseOr<void>;
   blur?(instance: I, event: MouseEvent): PromiseOr<void>;
-  afterBlur?(instance: I, value: RT): PromiseOr<void>;
+  afterBlur?(instance: I, value: Type): PromiseOr<void>;
 
-  beforeFocus?(instance: I): PromiseOr<void>;
-  focus?(instance: I, event: FocusEvent): PromiseOr<void>;
-  afterFocus?(instance: I): PromiseOr<void>;
+  beforeSanitize?(instance: I, value: Type): PromiseOr<void>;
+  afterSanitize?(instance: I, value: Type): PromiseOr<void>;
 
-  beforeSanitize?(field: I, value: RT): PromiseOr<void>;
-  sanitize?(field: I, value: RT): PromiseOr<RT>;
-  afterSanitize?(field: I, value: RT): PromiseOr<void>;
+  beforeUpdate?(instance: I, value: Type, oldValue: Type): PromiseOr<void>;
+  afterUpdate?(instance: I, value: Type, oldValueT: Type): PromiseOr<void>;
 
-  beforeUpdate?(field: I, value: RT, oldValue: RT): PromiseOr<void>;
-  afterUpdate?(field: I, value: RT, oldValueT: RT): PromiseOr<void>;
+  beforeValidate?(instance: I, value: Type): PromiseOr<void>;
+  afterValidate?(instance: I, value: Type, isValid: boolean): PromiseOr<void>;
 
-  beforeValidate?(field: I, value: RT): PromiseOr<void>;
-  validate?(field: I, value: RT): PromiseOr<boolean>;
-  afterValidate?(field: I, value: RT, isValid: boolean): PromiseOr<void>;
+  disabledWhen?(instance: I): PromiseOr<boolean>;
+  optionalWhen?(instance: I): PromiseOr<boolean>;
+  readOnlyWhen?(instance: I): PromiseOr<boolean>;
+}
 
-  beforeClick?(instance: I): PromiseOr<void>;
-  click?(instance: I, event: MouseEvent): PromiseOr<void>;
-  afterClick?(instance: I): PromiseOr<void>;
+export interface InteractiveElementInstance<Type = unknown, Props extends ComponentProps = ComponentProps>
+  extends BaseElementInstance<Props>,
+    InteractiveElementHooks<Type, Props> {
+  readonly hooks: HookManagerInstance<ToRecord<InteractiveElementHooks<Type, Props>>>;
 
-  disabledWhen?(field: I): PromiseOr<boolean>;
-  optionalWhen?(field: I): PromiseOr<boolean>;
-  readOnlyWhen?(field: I): PromiseOr<boolean>;
-  visibleWhen?(field: I): PromiseOr<boolean>;
-};
-
-export type BaseInteractiveElementInstance<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = PlainElementInstance<C, N> & {
-  ref: Ref<RT>;
-
-  readonly form: FormInstance;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  readonly hooks: HookManagerInstance<InteractiveElementHooks<C, N, RT> | any>;
+  readonly name: NonNullable<ElementName>;
+  ref: Ref<Type>;
 
   readonly lazy: boolean;
 
@@ -96,7 +90,7 @@ export type BaseInteractiveElementInstance<
 
   readonly isDisabled: Ref<boolean>;
   readonly isOptional: Ref<boolean>;
-  readonly isVisible: Ref<boolean>;
+  readonly isReadOnly: Ref<boolean>;
 
   /**
    * Determines whether the field is valid.
@@ -106,7 +100,7 @@ export type BaseInteractiveElementInstance<
   /**
    * Validators used to compute the value of isValid.
    */
-  readonly validators: Validator<C, N, RT>[];
+  readonly validators: Ref<Validator<Type, Props>[]>;
 
   /**
    * Resets the field.
@@ -118,23 +112,7 @@ export type BaseInteractiveElementInstance<
    */
   validate(): Promise<boolean>;
 
-  /**
-   * Focuses on the field.
-   */
-  focus(): PromiseOr<void>;
-
-  /**
-   * Blurs the field.
-   */
-  blur(): PromiseOr<void>;
-
   setDisabled(disabled: boolean): void;
   setOptional(optional: boolean): void;
   setReadOnly(optional: boolean): void;
-};
-
-export type InteractiveElementInstance<
-  C extends ComponentOrHtmlElement = ComponentOrHtmlElement,
-  N extends ElementName = ElementName,
-  RT = unknown,
-> = BaseInteractiveElementInstance<C, N, RT>;
+}

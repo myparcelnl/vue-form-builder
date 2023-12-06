@@ -2,8 +2,9 @@ import {type PropType, defineComponent, h, ref, vModelText, withDirectives} from
 import {afterEach, describe, expect, it, vi} from 'vitest';
 import {mount} from '@vue/test-utils';
 import {generateForm, mountForm} from '../utils';
-import {type AnyElementConfiguration} from '../../types';
-import {InteractiveElement, type InteractiveElementInstance, getDefaultFormConfiguration} from '../../form';
+import {type AnyElementConfiguration, type InteractiveElementInstance} from '../../types';
+import {InteractiveElement} from '../../form';
+import {getDefaultFormConfiguration} from '../../data';
 import {useFormBuilder} from '../../composables';
 import MagicForm from '../../components/MagicForm.vue';
 

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import {generateFieldName} from './index';
 import {
   computed,
   defineComponent,
@@ -11,34 +12,16 @@ import {
   type ComputedRef,
   type Component,
 } from 'vue';
-import {type ComponentProps} from '@myparcel-vfb/utils';
 import {isOfType} from '@myparcel/ts-utils';
-import {type AnyElementConfiguration, type ResolvedElementConfiguration, type ComponentOrHtmlElement} from '../types';
+import {
+  type AnyElementConfiguration,
+  type InteractiveElementInstance,
+  type InteractiveElementConfiguration,
+  type ModularCreatedElement,
+  type ComponentProps,
+} from '../types';
 import {useForm} from '../composables';
 import FormElementWrapper from '../components/FormElementWrapper';
-import {type InteractiveElementConfiguration, type InteractiveElementInstance} from './interactive-element';
-import {generateFieldName} from './generateFieldName';
-
-export interface CreatedField<Type = unknown, Props extends ComponentProps = ComponentProps> {
-  Component: ComponentOrHtmlElement<Props>;
-  field: ResolvedElementConfiguration<Type, Props>;
-  ref: Type extends undefined ? undefined : Ref<Type>;
-}
-
-export interface ModularCreatedField<Type = unknown, Props extends ComponentProps = ComponentProps>
-  extends CreatedField<Type, Props> {
-  /**
-   * Only available when `wrapper` is `false`.
-   * @TODO: reflect this in the type
-   */
-  Errors: ReturnType<typeof createErrorComponent>;
-
-  /**
-   * Only available when `wrapper` is `false`.
-   * @TODO: reflect this in the type
-   */
-  Label: ReturnType<typeof createLabelComponent>;
-}
 
 const createMainComponent = <Type = unknown, Props extends ComponentProps = ComponentProps>(
   field: AnyElementConfiguration<Type, Props>,
@@ -111,7 +94,7 @@ const createErrorComponent = (field: AnyElementConfiguration): Component => {
 
 export const createField = <Type = unknown, Props extends ComponentProps = ComponentProps>(
   field: AnyElementConfiguration<Type, Props>,
-): ModularCreatedField<Type, Props> => {
+): ModularCreatedElement<Type, Props> => {
   // @ts-expect-error todo
   return reactive({
     field,

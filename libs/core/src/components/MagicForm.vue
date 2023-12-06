@@ -26,11 +26,11 @@
 import {onMounted, provide, ref, toRefs} from 'vue';
 import {get} from '@vueuse/core';
 import {INJECT_FORM} from '../symbols';
-import {type FormInstance, type FormValues} from '../form';
 import {FORM_HOOKS, type FormHook} from '../data';
 import {useLifecycleHooks} from '../composables';
 import RenderedFormContent from './RenderedFormContent.vue';
 import Fragment from './Fragment.vue';
+import type {FormInstance, FormValues} from '../types';
 
 const formElement = ref<HTMLFormElement | null>(null);
 

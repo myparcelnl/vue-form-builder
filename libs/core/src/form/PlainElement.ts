@@ -1,13 +1,19 @@
-import {computed, markRaw, reactive, ref, type UnwrapNestedRefs} from 'vue';
+import {ref, reactive, type UnwrapNestedRefs, computed, markRaw} from 'vue';
 import {get} from '@vueuse/core';
-import {type ComponentProps} from '@myparcel-vfb/utils';
-import {createHookManager, type HookManagerInstance} from '@myparcel-vfb/hook-manager';
-import {type FormInstance} from '../Form.types';
-import {useDynamicWatcher} from '../../utils';
-import {type ToRecord} from '../../types/common.types';
-import {type BaseElementConfiguration, type BaseElementHooks, type BaseElementInstance} from '../../types';
-import {PLAIN_ELEMENT_HOOKS} from '../../data';
-import {type PlainElementInstance, type PlainElementHooks, type PlainElementConfiguration} from './PlainElement.types';
+import {type HookManagerInstance, createHookManager} from '@myparcel-vfb/hook-manager';
+import {useDynamicWatcher} from '../utils';
+import {type ToRecord} from '../types/common.types';
+import {
+  type BaseElementConfiguration,
+  type PlainElementConfiguration,
+  type BaseElementHooks,
+  type BaseElementInstance,
+  type PlainElementHooks,
+  type PlainElementInstance,
+  type FormInstance,
+  type ComponentProps,
+} from '../types';
+import {PLAIN_ELEMENT_HOOKS} from '../data';
 
 // noinspection JSUnusedGlobalSymbols
 export class PlainElement<

@@ -3,52 +3,20 @@ import {get} from '@vueuse/core';
 import {HookManager} from '@myparcel-vfb/hook-manager';
 import {markComponentAsRaw} from '../utils';
 import {
-  Form,
-  type FormConfiguration,
   type FormInstance,
-  getDefaultFormConfiguration,
   type InstanceFormConfiguration,
+  type FormConfiguration,
   type FormValues,
-} from '../form';
+  type FormBuilder,
+} from '../types';
+import {Form} from '../form';
+import {getDefaultFormConfiguration} from '../data';
 
 let forms: Ref<Record<string, FormInstance>>;
 
 let defaults: Ref<InstanceFormConfiguration>;
 
 let hookManager: HookManager;
-
-export type FormBuilder = {
-  /**
-   * All registered forms.
-   */
-  forms: typeof forms;
-
-  /**
-   * Default settings to apply to newly registered forms.
-   */
-  defaults: Ref<InstanceFormConfiguration>;
-
-  on(hook: 'beforeRegister', callback: () => void): void;
-  on(hook: 'afterRegister', callback: (form: FormInstance) => void): void;
-
-  /**
-   * Register a new form. If a form with the same name already exists, it will be overwritten.
-   */
-  register<V extends FormValues = FormValues, N extends string = string>(
-    name: N,
-    config: FormConfiguration<V>,
-  ): FormInstance<V>;
-
-  /**
-   * Retrieve a previously registered form.
-   */
-  getForm<N extends string>(name: N): FormInstance;
-
-  /**
-   * Set default settings to apply to newly registered forms.
-   */
-  setDefaults(options: Partial<FormConfiguration>): void;
-};
 
 const HOOK_REGISTER = 'register';
 

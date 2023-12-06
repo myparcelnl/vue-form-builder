@@ -1,20 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {type Component, type VNode, type Ref, type ComputedRef} from 'vue';
 import {type UnwrapNestedRefs} from '@vue/reactivity';
-import {type AnyAttributes, type FunctionOr, type ComponentProps} from '@myparcel-vfb/utils';
+import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
 import {type ReadonlyOr, type PromiseOr} from '@myparcel/ts-utils';
-import {
-  type InteractiveElementConfiguration,
-  type InteractiveElementInstance,
-  type PlainElementConfiguration,
-  type PlainElementInstance,
-  type FormInstance,
-} from '../form';
-import {type ComponentLifecycleHooks} from './other.types';
+import {type PlainElementInstance, type PlainElementConfiguration} from './plain-element.types';
+import {type InteractiveElementInstance, type InteractiveElementConfiguration} from './interactive-element.types';
+import {type FormInstance} from './form.types';
+import {type ComponentLifecycleHooks, type ComponentOrHtmlElement, type ComponentProps} from './component.types';
 
 export type ElementName = string | undefined;
-
-export type ComponentOrHtmlElement<Props extends ComponentProps = ComponentProps> = string | Component<Props>;
 
 export type ElementSlots = Record<string, (() => VNode | string | VNode[]) | VNode | string | VNode[]>;
 
@@ -122,3 +116,24 @@ export type ResolvedElementConfiguration<
   Type = unknown,
   Props extends ComponentProps = ComponentProps,
 > = Type extends never ? PlainElementConfiguration<Props> : InteractiveElementConfiguration<Type, Props>;
+
+export interface CreatedElement<Type = unknown, Props extends ComponentProps = ComponentProps> {
+  Component: ComponentOrHtmlElement<Props>;
+  field: ResolvedElementConfiguration<Type, Props>;
+  ref: Type extends undefined ? undefined : Ref<Type>;
+}
+
+export interface ModularCreatedElement<Type = unknown, Props extends ComponentProps = ComponentProps>
+  extends CreatedElement<Type, Props> {
+  /**
+   * Only available when `wrapper` is `false`.
+   * @TODO: reflect this in the type
+   */
+  Errors: Component;
+
+  /**
+   * Only available when `wrapper` is `false`.
+   * @TODO: reflect this in the type
+   */
+  Label: Component;
+}

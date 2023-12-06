@@ -1,5 +1,5 @@
 import {isOfType} from '@myparcel/ts-utils';
-import {type AnyElementInstance, type MaybeUnwrapNestedRefs} from '../types';
+import {type MaybeUnwrapNestedRefs, type AnyElementInstance} from '../types';
 
 export const generateFieldName = (
   field?: MaybeUnwrapNestedRefs<AnyElementInstance> | null,

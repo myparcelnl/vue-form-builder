@@ -1,5 +1,5 @@
 import {expect} from 'vitest';
-import {type FormInstance} from '../../form';
+import {type FormInstance} from '../../types';
 
 export const formIsInvalid = (form: FormInstance): void => {
   expect(form.isValid.value).toBe(false);

@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest';
-import {getDefaultFormConfiguration} from '../../form';
+import {getDefaultFormConfiguration} from '../../data';
 import {useFormBuilder} from '../../composables';
 
 describe('useFormBuilder', () => {

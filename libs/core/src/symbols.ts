@@ -1,6 +1,5 @@
 import {type InjectionKey} from 'vue';
-import {type AnyElementInstance} from './types';
-import {type FormInstance} from './form';
+import {type AnyElementInstance, type FormInstance} from './types';
 
 export const INJECT_FORM = Symbol('form') as InjectionKey<FormInstance>;
 

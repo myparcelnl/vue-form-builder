@@ -5,7 +5,7 @@ import {generateForm, optionData} from '../utils';
 import {firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
 import FormGroup from '../elements/FormGroup.vue';
-import {defineField, defineForm} from '../../form';
+import {defineField, defineForm} from '../../utils';
 import MagicForm from '../../components/MagicForm.vue';
 
 describe('Form fields', () => {

@@ -4,7 +4,9 @@ import {get} from '@vueuse/core';
 import {flushPromises} from '@vue/test-utils';
 import {generateForm} from '../utils';
 import TextInput from '../elements/TextInput.vue';
-import {defineField, type FormConfiguration, InteractiveElement, PlainElement} from '../../form';
+import {defineField} from '../../utils';
+import {type FormConfiguration, type InteractiveElementConfiguration} from '../../types';
+import {PlainElement, InteractiveElement} from '../../form';
 
 describe('Form instance', () => {
   it('creates a reactive model from named elements', () => {
@@ -116,7 +118,8 @@ describe('Form instance', () => {
     let expectation: boolean;
     const newFormConfig = createFormConfig();
     // specifically make the predicate rely on a field further down the form:
-    newFormConfig.fields[0].optionalWhen = (field) => field.form.getValue('val') === 24;
+    (newFormConfig.fields as InteractiveElementConfiguration[])[0].optionalWhen = (field) =>
+      field.form.getValue('val') === 24;
 
     newFormConfig.afterSubmit = (form) => {
       expect(form.fields.value[0].isOptional).toBe(expectation);

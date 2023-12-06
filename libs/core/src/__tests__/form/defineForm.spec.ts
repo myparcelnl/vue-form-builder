@@ -1,7 +1,9 @@
 import {type PropType, defineComponent, h, isVNode, ref, vModelText, withDirectives} from 'vue';
 import {afterEach, describe, expect, it} from 'vitest';
-import {type AnyElementConfiguration} from '../../types';
-import {Form, type InteractiveElementInstance, defineForm, getDefaultFormConfiguration} from '../../form';
+import {defineForm} from '../../utils';
+import {type AnyElementConfiguration, type InteractiveElementInstance} from '../../types';
+import {Form} from '../../form';
+import {getDefaultFormConfiguration} from '../../data';
 import {useFormBuilder} from '../../composables';
 
 const mockComponent = defineComponent({

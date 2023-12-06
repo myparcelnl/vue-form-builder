@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import {type PropType, defineComponent} from 'vue';
-import {type InteractiveElementInstance} from '../../form';
+import type {InteractiveElementInstance} from '../../types';
 
 export default defineComponent({
   name: 'SubmitButton',

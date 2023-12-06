@@ -1,21 +1,25 @@
+// noinspection JSUnusedGlobalSymbols
 import {ref, watch} from 'vue';
 import {get} from '@vueuse/core';
-import {type ComponentProps} from '@myparcel-vfb/utils';
-import {asyncEvery, isOfType} from '@myparcel/ts-utils';
-import {isRequired, type WithMultiValidator, type Validator, type ValidatorWithPrecedence} from '../validator';
-import {PlainElement} from '../plain-element';
-import {type FormInstance} from '../Form.types';
-import {useDynamicWatcher} from '../../utils';
-import {type ToRecord} from '../../types/common.types';
-import {type AnyElementInstance, type ElementName} from '../../types';
-import {INTERACTIVE_ELEMENT_HOOKS} from '../../data';
+import {isOfType, asyncEvery} from '@myparcel/ts-utils';
+import {isRequired} from '../validators/isRequired';
+import {useDynamicWatcher} from '../utils';
+import {type ToRecord} from '../types/common.types';
 import {
   type InteractiveElementConfiguration,
-  type InteractiveElementInstance,
   type InteractiveElementHooks,
-} from './InteractiveElement.types';
+  type InteractiveElementInstance,
+  type FormInstance,
+  type ElementName,
+  type AnyElementInstance,
+  type ValidatorWithPrecedence,
+  type Validator,
+  type WithMultiValidator,
+  type ComponentProps,
+} from '../types';
+import {INTERACTIVE_ELEMENT_HOOKS} from '../data';
+import {PlainElement} from './PlainElement';
 
-// noinspection JSUnusedGlobalSymbols
 export class InteractiveElement<
   Type = unknown,
   Props extends ComponentProps = ComponentProps,
@@ -76,7 +80,9 @@ export class InteractiveElement<
 
     // initialize dynamic field checks when the form is stable:
     watch(form.stable, (value: boolean) => {
-      if (!value) return;
+      if (!value) {
+        return;
+      }
 
       if (config.disabledWhen) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -1,6 +1,5 @@
-import {type ComponentProps, type FunctionOr} from '@myparcel-vfb/utils';
-import {type InteractiveElementInstance} from '../interactive-element';
-import {type Validator} from './validator.types';
+import {type FunctionOr} from '@myparcel-vfb/utils';
+import {type Validator, type InteractiveElementInstance, type ComponentProps} from '../types';
 
 export const isRequired = <Type = unknown, Props extends ComponentProps = ComponentProps>(
   errorMessage: FunctionOr<string>,

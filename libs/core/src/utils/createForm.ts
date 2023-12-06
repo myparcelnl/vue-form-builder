@@ -1,12 +1,7 @@
-import {type Component, h, markRaw} from 'vue';
+import {h, markRaw} from 'vue';
+import {type FormInstance, type FormConfiguration, type FormValues, type CreatedForm} from '../types';
 import MagicForm from '../components/MagicForm.vue';
 import {defineForm} from './defineForm';
-import {type FormConfiguration, type FormInstance, type FormValues} from './Form.types';
-
-export interface CreatedForm<V extends FormValues> {
-  Component: Component;
-  instance: FormInstance<V>;
-}
 
 export const createForm = <V extends FormValues = FormValues>(
   name: string,

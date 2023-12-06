@@ -1,6 +1,5 @@
 import {isOfType} from '@myparcel/ts-utils';
-import {type AnyElementInstance} from '../types';
-import {type InteractiveElementInstance} from '../form';
+import {type AnyElementInstance, type InteractiveElementInstance} from '../types';
 
 export const useTestAttributes = (element: AnyElementInstance): Record<string, unknown> => {
   if (import.meta.env.MODE !== 'test') {

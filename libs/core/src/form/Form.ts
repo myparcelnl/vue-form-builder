@@ -4,15 +4,20 @@ import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
 import {type ToRecord} from '../types/common.types';
-import {type AnyElementConfiguration, type AnyElementInstance, type ElementName} from '../types';
-import {FORM_HOOKS, FormHook} from '../data';
-import {PlainElement} from './plain-element';
 import {
-  InteractiveElement,
-  type InteractiveElementConfiguration,
+  type AnyElementConfiguration,
+  type AnyElementInstance,
+  type ElementName,
   type InteractiveElementInstance,
-} from './interactive-element';
-import {type FormHooks, type FormInstance, type InstanceFormConfiguration, type FormValues} from './Form.types';
+  type InteractiveElementConfiguration,
+  type FormInstance,
+  type InstanceFormConfiguration,
+  type FormHooks,
+  type FormValues,
+} from '../types';
+import {FORM_HOOKS, FormHook} from '../data';
+import {PlainElement} from './PlainElement';
+import {InteractiveElement} from './InteractiveElement';
 
 // noinspection JSUnusedGlobalSymbols
 export class Form<
@@ -175,7 +180,7 @@ export class Form<
         ...form.config.fieldDefaults?.attributes,
         ...field.attributes,
       },
-    } as AnyElementConfiguration;
+    };
 
     markComponentAsRaw(elementConfig.component);
     markComponentAsRaw(elementConfig.wrapper);

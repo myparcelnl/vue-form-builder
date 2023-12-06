@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {type HTMLAttributes} from 'vue';
 
-export type ComponentProps = any;
-
 export interface SelectOption {
   label: string;
   value: string;

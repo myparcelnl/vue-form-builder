@@ -1,5 +1,4 @@
-import {type ComponentProps} from '@myparcel-vfb/utils';
-import {type AnyElementConfiguration, type ResolvedElementConfiguration} from '../types';
+import {type AnyElementConfiguration, type ResolvedElementConfiguration, type ComponentProps} from '../types';
 
 /**
  * Define a field for use in a form with fields array.

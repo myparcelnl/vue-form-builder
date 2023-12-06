@@ -5,7 +5,7 @@ import {formIsInvalid, formIsValid, generateForm} from '../utils';
 import {canNotContainX, firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
 import SubmitButton from '../elements/SubmitButton.vue';
-import {defineField, defineForm} from '../../form';
+import {defineField, defineForm} from '../../utils';
 import MagicForm from '../../components/MagicForm.vue';
 import {
   canNotContainLetterValidator,

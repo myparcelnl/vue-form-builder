@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/unified-signatures */
-import {type ComputedRef, type Ref, type UnwrapNestedRefs} from 'vue';
-import {type AnyAttributes, type FunctionOr, type ComponentProps} from '@myparcel-vfb/utils';
-import {type HookManagerInstance, type HookUnregisterHandler} from '@myparcel-vfb/hook-manager';
-import {type PromiseOr, type ReadonlyOr} from '@myparcel/ts-utils';
-import {type ToRecord} from '../types/common.types';
-import {type AnyElementConfiguration, type AnyElementInstance, type ComponentOrHtmlElement} from '../types';
-import {FormHook} from '../data';
-import {type InteractiveElementInstance} from './interactive-element';
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+import {type Ref, type ComputedRef, type UnwrapNestedRefs, type Component} from 'vue';
+import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
+import {type HookManagerInstance, type HookUnregisterHandler} from '@myparcel-vfb/hook-manager';
+import {type ReadonlyOr, type PromiseOr} from '@myparcel/ts-utils';
+import {FormHook} from '../data';
+import {type InteractiveElementInstance} from './interactive-element.types';
+import {type AnyElementConfiguration, type AnyElementInstance} from './element.types';
+import {type ComponentOrHtmlElement, type ComponentProps} from './component.types';
+import {type ToRecord} from './common.types';
+
 export type FormValues = Record<string | symbol, any>;
 
 /**
@@ -269,3 +269,8 @@ export type FormInstance<V extends FormValues = any> = BaseFormInstance<V>;
 export type FieldsToModel<V extends FormValues> = {
   [K in keyof V]: K extends string ? InteractiveElementInstance<ComponentProps, V[K]> : never;
 };
+
+export interface CreatedForm<V extends FormValues> {
+  Component: Component;
+  instance: FormInstance<V>;
+}

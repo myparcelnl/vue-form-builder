@@ -1,8 +1,7 @@
 import {type Component, defineComponent, h, type PropType, provide, Teleport, type VNode} from 'vue';
 import {isOfType} from '@myparcel/ts-utils';
-import {type AnyElementInstance} from '../types';
+import {type AnyElementInstance, type FormInstance} from '../types';
 import {INJECT_ELEMENT} from '../symbols';
-import {type FormInstance} from '../form';
 import {useTestAttributes} from '../composables';
 import FormElement from './FormElement.vue';
 

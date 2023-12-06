@@ -1,9 +1,6 @@
-import {type ComponentOrHtmlElement, type ElementName, type Validator} from '@myparcel-vfb/core';
+import {type Validator} from '@myparcel-vfb/core';
 
-export const stringLengthValidator = (
-  minLength: number,
-  maxLength?: number,
-): Validator<ComponentOrHtmlElement, ElementName, string> => {
+export const stringLengthValidator = (minLength: number, maxLength?: number): Validator<string> => {
   return {
     validate: (_, value) => value.length >= minLength && value.length <= (maxLength ?? Infinity),
     errorMessage: maxLength

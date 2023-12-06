@@ -1,9 +1,7 @@
-import {type ComponentOrHtmlElement, type ElementName, type Validator} from '@myparcel-vfb/core';
+import {type Validator} from '@myparcel-vfb/core';
 import {type OneOrMore, toArray} from '@myparcel/ts-utils';
 
-export const stringNotContainsValidator = (
-  search: OneOrMore<string>,
-): Validator<ComponentOrHtmlElement, ElementName, string> => {
+export const stringNotContainsValidator = (search: OneOrMore<string>): Validator<string> => {
   const array = toArray(search);
 
   return {

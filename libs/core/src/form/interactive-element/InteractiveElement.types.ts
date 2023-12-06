@@ -1,8 +1,8 @@
-import {type Ref} from 'vue';
-import {type ComponentProps} from '@myparcel-vfb/utils';
+import {type Ref, type ComputedRef} from 'vue';
+import {type ComponentProps, type FunctionOr} from '@myparcel-vfb/utils';
 import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr} from '@myparcel/ts-utils';
-import {type Validator, type WithMultiValidator, type WithComputedValidator} from '../validator';
+import {type Validator, type ValidateFunction} from '../validator';
 import {type ToRecord} from '../../types/common.types';
 import {
   type BaseElementConfiguration,
@@ -13,13 +13,22 @@ import {
 
 export interface InteractiveElementConfiguration<Type = unknown, Props extends ComponentProps = ComponentProps>
   extends BaseElementConfiguration<Props>,
-    InteractiveElementHooks<Type, Props>,
-    // TODO: figure out a way to have he validators exclude each other with the types still working properly
-    Partial<Validator<Type, Props>>,
-    Partial<WithMultiValidator<Type, Props>>,
-    Partial<WithComputedValidator> {
+    InteractiveElementHooks<Type, Props> {
   name: NonNullable<ElementName>;
   ref: Ref<Type>;
+
+  // TODO: figure out a way to have the validator properties exclude each other with the types still working properly
+
+  // Computed validator
+  isValid?: ComputedRef<boolean>;
+
+  // Single validator
+  validate?: ValidateFunction<Type, Props>;
+  errorMessage?: FunctionOr<string>;
+  precedence?: number;
+
+  // Multiple validators
+  validators?: Validator<Type, Props>[];
 
   /**
    * Whether the field is lazy. Defaults to false.

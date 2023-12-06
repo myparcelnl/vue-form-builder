@@ -1,9 +1,7 @@
-import {type ComponentOrHtmlElement, type ElementName, type Validator} from '@myparcel/vue-form-builder';
+import {type Validator} from '@myparcel/vue-form-builder';
 import {type OneOrMore, toArray} from '@myparcel/ts-utils';
 
-export const stringContainsValidator = (
-  search: OneOrMore<string>,
-): Validator<ComponentOrHtmlElement, ElementName, string> => {
+export const stringContainsValidator = (search: OneOrMore<string>): Validator<string> => {
   const array = toArray(search);
 
   return {

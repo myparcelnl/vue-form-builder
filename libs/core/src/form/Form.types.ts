@@ -136,7 +136,7 @@ export interface BaseFormInstance<Values extends FormValues = FormValues> {
   /**
    * All fields in the form that have a name and a ref.
    */
-  readonly interactiveFields: ComputedRef<InteractiveElementInstance<ComponentOrHtmlElement, string>[]>;
+  readonly interactiveFields: ComputedRef<InteractiveElementInstance[]>;
 
   /**
    * Exposes whether the form is dirty.

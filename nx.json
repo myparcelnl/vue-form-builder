@@ -8,30 +8,34 @@
   "npmScope": "myparcel-vfb",
   "namedInputs": {
     "default": [
-      "sharedGlobals",
-      "{projectRoot}/**/*",
+      "{workspaceRoot}/tsconfig.build.json",
+      "{workspaceRoot}/yarn.lock",
+      "{workspaceRoot}/package.json",
+      "{projectRoot}/**/*"
+    ],
+    "prod": [
+      "default",
       "!{projectRoot}/**/*.spec.*",
-      "!{projectRoot}/**/__tests__/**"
+      "!{projectRoot}/**/__tests__/**",
+      "!{projectRoot}/**/__mocks__/**",
+      "!{projectRoot}/**/__snapshots__/**"
     ],
     "test": [
       "default",
       "{projectRoot}/**/*.spec.*",
-      "{projectRoot}/**/__tests__/**"
-    ],
-    "sharedGlobals": [
-      "{workspaceRoot}/tsconfig.build.json",
-      "{workspaceRoot}/yarn.lock",
-      "{workspaceRoot}/package.json"
+      "{projectRoot}/**/__tests__/**",
+      "{projectRoot}/**/__mocks__/**",
+      "{projectRoot}/**/__snapshots__/**"
     ]
   },
   "targetDefaults": {
     "build:dev": {
-      "inputs": ["default"],
+      "inputs": ["prod"],
       "dependsOn": ["^build:dev"],
       "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
     },
     "build": {
-      "inputs": ["default"],
+      "inputs": ["prod"],
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
     },

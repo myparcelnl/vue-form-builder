@@ -1,4 +1,3 @@
-import {type ComponentInstance} from '@vue/devtools-api';
 import {isOfType} from '@myparcel/ts-utils';
 import {type AnyElementInstance, type MaybeUnwrapNestedRefs} from '../types';
 
@@ -14,10 +13,11 @@ export const generateFieldName = (
   const resolvedSuffix = suffix ? `:${suffix}` : '';
 
   if (field.name) {
-    return prefix + (field.name as string) + resolvedSuffix;
+    return prefix + field.name + resolvedSuffix;
   }
 
-  if (isOfType<ComponentInstance>(field.component, '__name')) {
+  // eslint-disable-next-line no-underscore-dangle,@typescript-eslint/naming-convention
+  if (isOfType<{__name?: string}>(field.component, '__name') && field.component.__name) {
     // eslint-disable-next-line no-underscore-dangle
     return `${prefix}${field.component.__name}${resolvedSuffix}`;
   }

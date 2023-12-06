@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unified-signatures */
 import {type ComputedRef, type Ref, type UnwrapNestedRefs} from 'vue';
-import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
+import {type AnyAttributes, type FunctionOr, type ComponentProps} from '@myparcel-vfb/utils';
 import {type HookManagerInstance, type HookUnregisterHandler} from '@myparcel-vfb/hook-manager';
 import {type PromiseOr, type ReadonlyOr} from '@myparcel/ts-utils';
 import {type ToRecord} from '../types/common.types';
@@ -37,8 +37,9 @@ export interface FormConfiguration<V extends FormValues = FormValues> extends Fo
 
   /**
    * Fields in the form.
+   * @TODO find a way to type this without having it cause a billion errors.
    */
-  fields: ReadonlyOr<AnyElementConfiguration[]>;
+  fields: unknown[];
 
   /**
    * Configuration for the form element.
@@ -63,7 +64,7 @@ export interface FormConfiguration<V extends FormValues = FormValues> extends Fo
   /**
    * Names of hooks to register.
    */
-  hookNames?: readonly string[] | string[];
+  hookNames?: ReadonlyOr<string[]>;
 
   /**
    * Values to initialize the form with.
@@ -94,19 +95,19 @@ export interface FormHooks<V extends FormValues = FormValues> {
 
   [FormHook.AfterValidate]?(form: FormInstance<V>): PromiseOr<void>;
 
-  [FormHook.BeforeAddElement]?<T extends keyof V, N extends string>(
+  [FormHook.BeforeAddElement]?<T extends keyof V, Props extends ComponentProps = ComponentProps>(
     form: FormInstance<V>,
-    field: AnyElementInstance<ComponentOrHtmlElement, N, V[T]>,
+    field: AnyElementInstance<V[T], Props>,
   ): PromiseOr<void>;
 
-  [FormHook.AfterAddElement]?<T extends keyof V, N extends string>(
+  [FormHook.AfterAddElement]?<T extends keyof V, Props extends ComponentProps = ComponentProps>(
     form: FormInstance<V>,
-    field: AnyElementInstance<ComponentOrHtmlElement, N, V[T]>,
+    field: AnyElementInstance<V[T], Props>,
   ): PromiseOr<void>;
 
-  [FormHook.ElementChange]?<T extends keyof V, N extends string>(
+  [FormHook.ElementChange]?<T extends keyof V, Props extends ComponentProps = ComponentProps>(
     form: FormInstance<V>,
-    field: AnyElementInstance<ComponentOrHtmlElement, N, V[T]>,
+    field: AnyElementInstance<V[T], Props>,
     value: V[T],
   ): PromiseOr<void>;
 }
@@ -170,13 +171,15 @@ export interface BaseFormInstance<Values extends FormValues = FormValues> {
   /**
    * Add a new element to the form at the end, or before or after an existing element.
    */
-  addElement<EC extends AnyElementConfiguration = AnyElementConfiguration>(element: EC): Promise<AnyElementInstance>;
+  addElement<Type = unknown, Props extends ComponentProps = ComponentProps>(
+    element: AnyElementConfiguration<Type, Props>,
+  ): Promise<AnyElementInstance<Type, Props>>;
 
-  addElement(
-    element: AnyElementConfiguration,
+  addElement<Type = unknown, Props extends ComponentProps = ComponentProps>(
+    element: AnyElementConfiguration<Type, Props>,
     sibling: string,
     position?: 'before' | 'after',
-  ): Promise<undefined | AnyElementInstance>;
+  ): Promise<undefined | AnyElementInstance<Type, Props>>;
 
   /**
    * Get a field by name.
@@ -264,5 +267,5 @@ export interface InstanceFormConfiguration<V extends FormValues = FormValues> ex
 export type FormInstance<V extends FormValues = any> = BaseFormInstance<V>;
 
 export type FieldsToModel<V extends FormValues> = {
-  [K in keyof V]: K extends string ? InteractiveElementInstance<ComponentOrHtmlElement, K, V[K]> : never;
+  [K in keyof V]: K extends string ? InteractiveElementInstance<ComponentProps, V[K]> : never;
 };

@@ -1,30 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {type Component, type VNode} from 'vue';
-import {type AnyAttributes, type ComponentProps} from '@myparcel-vfb/utils';
-import {type MakeOptional} from '@myparcel/ts-utils';
+import {type Component, type VNode, type Ref, type ComputedRef} from 'vue';
+import {type UnwrapNestedRefs} from '@vue/reactivity';
+import {type AnyAttributes, type FunctionOr, type ComponentProps} from '@myparcel-vfb/utils';
+import {type ReadonlyOr, type PromiseOr} from '@myparcel/ts-utils';
 import {
   type InteractiveElementConfiguration,
   type InteractiveElementInstance,
   type PlainElementConfiguration,
   type PlainElementInstance,
+  type FormInstance,
 } from '../form';
 import {type ComponentLifecycleHooks} from './other.types';
 
 export type ElementName = string | undefined;
 
-export type ComponentOrHtmlElement = string | Component;
-
-export type ComponentHooks<C extends ComponentOrHtmlElement = ComponentOrHtmlElement, I = unknown> = C extends Component
-  ? ComponentLifecycleHooks<I>
-  : any;
-
-export type ElementProps<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> = C extends Component
-  ? Omit<MakeOptional<ComponentProps<C>, 'name' | 'label' | 'id'>, 'modelValue'> & Record<string, unknown>
-  : Record<string, unknown>;
+export type ComponentOrHtmlElement<Props extends ComponentProps = ComponentProps> = string | Component<Props>;
 
 export type ElementSlots = Record<string, (() => VNode | string | VNode[]) | VNode | string | VNode[]>;
 
-export interface BaseElementConfiguration<C extends ComponentOrHtmlElement = ComponentOrHtmlElement> {
+export interface BaseElementConfiguration<Props extends ComponentProps = ComponentProps> {
+  name?: ElementName;
+
   /**
    * Attributes to be passed to the component.
    */
@@ -34,7 +30,7 @@ export interface BaseElementConfiguration<C extends ComponentOrHtmlElement = Com
    * HTML element or Vue component. Can be any type of component that renders as a Vue fragment, including JSX
    * templates.
    */
-  component: C;
+  component: ComponentOrHtmlElement<Props>;
 
   /**
    * Name of the field to port errors to.
@@ -44,7 +40,7 @@ export interface BaseElementConfiguration<C extends ComponentOrHtmlElement = Com
   /**
    * Hooks to be registered.
    */
-  hookNames?: string[];
+  hookNames?: ReadonlyOr<string[]>;
 
   /**
    * Element label.
@@ -54,7 +50,7 @@ export interface BaseElementConfiguration<C extends ComponentOrHtmlElement = Com
   /**
    * Props to be passed to the component.
    */
-  props?: ElementProps<C>;
+  props?: Props;
 
   /**
    * Slot content to be passed to the component.
@@ -77,16 +73,52 @@ export interface BaseElementConfiguration<C extends ComponentOrHtmlElement = Com
   wrapper?: boolean | Component;
 }
 
-export type AnyElementInstance<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =
-  | InteractiveElementInstance<C, N, RT>
-  | PlainElementInstance<C, N>;
+export interface BaseElementHooks<I extends BaseElementInstance = BaseElementInstance>
+  extends ComponentLifecycleHooks<I> {
+  beforeFocus?(instance: I, event: FocusEvent): PromiseOr<void>;
+  focus?(instance: I, event: FocusEvent): PromiseOr<void>;
+  afterFocus?(instance: I, event: FocusEvent): PromiseOr<void>;
 
-export type AnyElementConfiguration<C extends ComponentOrHtmlElement = any, N extends ElementName = any, RT = any> =
-  | PlainElementConfiguration<C, N>
-  | InteractiveElementConfiguration<C, N, RT>;
+  beforeClick?(instance: I): PromiseOr<void>;
+  click?(instance: I, event: MouseEvent): PromiseOr<void>;
+  afterClick?(instance: I): PromiseOr<void>;
+
+  visibleWhen?(instance: I): PromiseOr<boolean>;
+}
+
+export interface BaseElementInstance<Props extends ComponentProps = ComponentProps> {
+  readonly name: ElementName;
+  readonly component: ComponentOrHtmlElement<Props>;
+
+  readonly wrapper: boolean | Component;
+
+  readonly form: FormInstance;
+  readonly props: UnwrapNestedRefs<Props>;
+  readonly slots?: ElementSlots;
+
+  readonly isVisible: Ref<boolean>;
+  readonly teleportSelector?: string;
+
+  readonly label?: string;
+  readonly errorsTarget?: string;
+  readonly errors: Ref<FunctionOr<string>[]>;
+  readonly formattedErrors: ComputedRef<string[]>;
+
+  readonly attributes: UnwrapNestedRefs<AnyAttributes>;
+
+  setVisible(value: boolean): void;
+  resetValidation(): void;
+}
+
+export type AnyElementInstance<Type = unknown, Props extends ComponentProps = ComponentProps> =
+  | InteractiveElementInstance<Type, Props>
+  | PlainElementInstance<Props>;
+
+export type AnyElementConfiguration<Type = unknown, Props extends ComponentProps = ComponentProps> =
+  | PlainElementConfiguration<Props>
+  | InteractiveElementConfiguration<Type, Props>;
 
 export type ResolvedElementConfiguration<
-  C extends ComponentOrHtmlElement = any,
-  N extends ElementName = any,
-  RT = any,
-> = RT extends never ? PlainElementConfiguration<C> : InteractiveElementConfiguration<C, N, RT>;
+  Type = unknown,
+  Props extends ComponentProps = ComponentProps,
+> = Type extends never ? PlainElementConfiguration<Props> : InteractiveElementConfiguration<Type, Props>;

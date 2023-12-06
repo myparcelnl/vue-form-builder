@@ -1,28 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  type AllowedComponentProps,
-  type Component,
-  type ComputedRef,
-  type HTMLAttributes,
-  type Ref,
-  type VNodeProps,
-} from 'vue';
+import {type HTMLAttributes} from 'vue';
 
-export type ComponentProps<C extends Component> = C extends new (...args: any) => any
-  ? Omit<
-      InstanceType<C>['$props'],
-      | keyof VNodeProps
-      | keyof AllowedComponentProps
-      | keyof Extract<InstanceType<C>['$props'], Record<`on${string}`, ((...args: any[]) => any) | null>>
-    >
-  : Record<string, unknown>;
+export type ComponentProps = any;
 
 export interface SelectOption {
   label: string;
   value: string;
 }
-
-export type MaybeRefOrComputed<T = unknown> = T | Ref<T> | ComputedRef<T>;
 
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 

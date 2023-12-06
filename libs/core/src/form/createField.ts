@@ -1,23 +1,32 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import {computed, defineComponent, h, markRaw, onMounted, type Ref, ref, type Component, reactive} from 'vue';
 import {
-  type AnyElementConfiguration,
-  type AnyElementInstance,
-  type ElementName,
-  type ResolvedElementConfiguration,
-} from '../types';
+  computed,
+  defineComponent,
+  h,
+  markRaw,
+  onMounted,
+  type Ref,
+  ref,
+  reactive,
+  type ComputedRef,
+  type Component,
+} from 'vue';
+import {type ComponentProps} from '@myparcel-vfb/utils';
+import {isOfType} from '@myparcel/ts-utils';
+import {type AnyElementConfiguration, type ResolvedElementConfiguration, type ComponentOrHtmlElement} from '../types';
 import {useForm} from '../composables';
 import FormElementWrapper from '../components/FormElementWrapper';
+import {type InteractiveElementConfiguration, type InteractiveElementInstance} from './interactive-element';
 import {generateFieldName} from './generateFieldName';
 
-export interface CreatedField<C extends Component = Component, N extends ElementName = ElementName, RT = unknown> {
-  Component: C;
-  field: ResolvedElementConfiguration<C, N, RT>;
-  ref: RT extends undefined ? undefined : Ref<RT>;
+export interface CreatedField<Type = unknown, Props extends ComponentProps = ComponentProps> {
+  Component: ComponentOrHtmlElement<Props>;
+  field: ResolvedElementConfiguration<Type, Props>;
+  ref: Type extends undefined ? undefined : Ref<Type>;
 }
 
-export interface ModularCreatedField<C extends Component = Component, N extends ElementName = ElementName, RT = unknown>
-  extends CreatedField<C, N, RT> {
+export interface ModularCreatedField<Type = unknown, Props extends ComponentProps = ComponentProps>
+  extends CreatedField<Type, Props> {
   /**
    * Only available when `wrapper` is `false`.
    * @TODO: reflect this in the type
@@ -31,11 +40,13 @@ export interface ModularCreatedField<C extends Component = Component, N extends 
   Label: ReturnType<typeof createLabelComponent>;
 }
 
-const createMainComponent = (field: AnyElementConfiguration) => {
+const createMainComponent = <Type = unknown, Props extends ComponentProps = ComponentProps>(
+  field: AnyElementConfiguration<Type, Props>,
+): Component => {
   return defineComponent({
     setup() {
       const form = useForm();
-      const element = ref<AnyElementInstance>();
+      const element = ref();
 
       onMounted(async () => {
         element.value = await form.addElement(field);
@@ -59,10 +70,8 @@ const createMainComponent = (field: AnyElementConfiguration) => {
   });
 };
 
-const createLabelComponent = (field: AnyElementConfiguration) =>
+const createLabelComponent = (field: AnyElementConfiguration): Component =>
   defineComponent({
-    // props: SHARED_PROPS,
-
     setup() {
       const form = useForm();
       const element = computed(() => field.name && form.getField(field.name));
@@ -79,11 +88,13 @@ const createLabelComponent = (field: AnyElementConfiguration) =>
     },
   });
 
-const createErrorComponent = (field: AnyElementConfiguration) => {
+const createErrorComponent = (field: AnyElementConfiguration): Component => {
   return defineComponent({
-    setup() {
+    setup(): {
+      element: ComputedRef<InteractiveElementInstance | undefined>;
+    } {
       const form = useForm();
-      const element = computed(() => field.name && form.getField(field.name));
+      const element = computed(() => (field.name ? form.getField<InteractiveElementInstance>(field.name) : undefined));
 
       return {element};
     },
@@ -98,18 +109,21 @@ const createErrorComponent = (field: AnyElementConfiguration) => {
   });
 };
 
-export const createField = <C extends Component = Component, N extends ElementName = ElementName, RT = unknown>(
-  field: AnyElementConfiguration<C, N, RT>,
-): ModularCreatedField<C, N, RT> => {
+export const createField = <Type = unknown, Props extends ComponentProps = ComponentProps>(
+  field: AnyElementConfiguration<Type, Props>,
+): ModularCreatedField<Type, Props> => {
   // @ts-expect-error todo
   return reactive({
     field,
-    ref: (field.ref ?? ref<RT>()) as RT extends undefined ? undefined : Ref<RT>,
     Component: markRaw(createMainComponent(field)),
 
-    ...(field.wrapper === false && {
-      Label: markRaw(createLabelComponent(field)),
-      Errors: markRaw(createErrorComponent(field)),
+    ...(isOfType<InteractiveElementConfiguration>(field, 'ref') && {
+      ref: (field.ref ?? ref<Type>()) as Type extends undefined ? undefined : Ref<Type>,
+
+      ...(field.wrapper === false && {
+        Label: markRaw(createLabelComponent(field)),
+        Errors: markRaw(createErrorComponent(field)),
+      }),
     }),
   });
 };

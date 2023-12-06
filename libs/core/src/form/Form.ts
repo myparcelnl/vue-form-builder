@@ -1,12 +1,12 @@
 import {computed, ref, watch, reactive, unref} from 'vue';
-import {get} from '@vueuse/core';
+import {get, isDefined} from '@vueuse/core';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
 import {type ToRecord} from '../types/common.types';
-import {type AnyElementConfiguration, type AnyElementInstance, type ComponentOrHtmlElement} from '../types';
+import {type AnyElementConfiguration, type AnyElementInstance, type ElementName} from '../types';
 import {FORM_HOOKS, FormHook} from '../data';
-import {PlainElement, type PlainElementInstance} from './plain-element';
+import {PlainElement} from './plain-element';
 import {
   InteractiveElement,
   type InteractiveElementConfiguration,
@@ -17,25 +17,22 @@ import {type FormHooks, type FormInstance, type InstanceFormConfiguration, type 
 // noinspection JSUnusedGlobalSymbols
 export class Form<
   V extends FormValues = FormValues,
-  FN extends string = string,
   FC extends InstanceFormConfiguration<V> & FormHooks = InstanceFormConfiguration<V> & FormHooks,
 > {
-  public readonly config: Omit<FC, 'fields'>;
-  // @ts-expect-error This is initialized this on render.
-  public element: FormInstance<V>['element'];
+  public readonly config: FormInstance<V>['config'];
   public readonly fields: FormInstance<V>['fields'] = ref([]);
   public readonly hooks: FormInstance<V>['hooks'];
   public readonly interactiveFields: FormInstance<V>['interactiveFields'];
   public isDirty: FormInstance<V>['isDirty'];
   public isValid: FormInstance<V>['isValid'] = ref(true);
   public readonly model = {} as FormInstance<V>['model'];
-  public readonly name: FN;
+  public readonly name: FormInstance<V>['name'];
   public readonly off: FormInstance<V>['off'];
   public readonly on: FormInstance<V>['on'];
   public readonly stable: FormInstance<V>['stable'] = ref(false);
   public readonly values: FormInstance<V>['values'];
 
-  public constructor(name: FN, formConfig: ToRecord<FC>) {
+  public constructor(name: FormInstance<V>['name'], formConfig: ToRecord<FC>) {
     const {fields, ...config} = formConfig;
 
     formConfig.hookNames = [...FORM_HOOKS, ...(formConfig.hookNames ?? [])];
@@ -52,7 +49,7 @@ export class Form<
     markComponentAsRaw(this.config.fieldDefaults.wrapper);
 
     fields.forEach((field) => {
-      const instance = this.createFieldInstance(field, this as unknown as FormInstance<V>);
+      const instance = this.createFieldInstance(field as AnyElementConfiguration, this as unknown as FormInstance<V>);
 
       get(this.fields).push(instance);
     });
@@ -102,9 +99,9 @@ export class Form<
   }
 
   public getValue<T = unknown>(fieldName: string): T {
-    const fieldInstance = this.ensureGetField(fieldName);
+    const fieldInstance = this.ensureGetField<InteractiveElementInstance>(fieldName);
 
-    return get(fieldInstance.ref);
+    return get(fieldInstance.ref) as T;
   }
 
   public getValues(): V {
@@ -124,7 +121,7 @@ export class Form<
   }
 
   public setValue(fieldName: string, value: unknown): void {
-    const fieldInstance = this.ensureGetField(fieldName);
+    const fieldInstance = this.ensureGetField<InteractiveElementInstance>(fieldName);
 
     fieldInstance.ref.value = value;
   }
@@ -160,8 +157,8 @@ export class Form<
     return get(this.isValid);
   }
 
-  protected ensureGetField(name: string): AnyElementInstance {
-    const field = this.getField(name);
+  protected ensureGetField<I extends AnyElementInstance>(name: string): I {
+    const field = this.getField<I>(name);
 
     if (!field) {
       throw new Error(`Field ${name} not found in form ${this.name}`);
@@ -171,8 +168,6 @@ export class Form<
   }
 
   private createFieldInstance(field: AnyElementConfiguration, form: FormInstance<V>): AnyElementInstance {
-    let instance: InteractiveElementInstance | PlainElementInstance;
-
     const elementConfig = {
       ...form.config.fieldDefaults,
       ...field,
@@ -185,31 +180,45 @@ export class Form<
     markComponentAsRaw(elementConfig.component);
     markComponentAsRaw(elementConfig.wrapper);
 
-    if (isOfType<InteractiveElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'ref')) {
-      instance = new InteractiveElement(form, elementConfig.name, elementConfig);
+    if (!isOfType<InteractiveElementConfiguration>(elementConfig, 'ref')) {
+      const instance = new PlainElement(form as FormInstance, elementConfig);
 
-      watch(instance.ref, async (value: unknown) => {
-        await this.hooks.execute(FormHook.ElementChange, this, instance, value);
+      return this.registerElement(elementConfig.name, instance);
+    }
 
-        if (!get(instance.isDisabled)) {
-          // @ts-expect-error todo
-          this.values[elementConfig.name] = value as V[keyof V];
-        }
-      });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const instance: InteractiveElementInstance<any> = new InteractiveElement<
+      FormInstance,
+      string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      InteractiveElementConfiguration<any>
+    >(form, elementConfig.name, elementConfig);
+
+    watch(instance.ref, async (value: unknown) => {
+      await this.hooks.execute(FormHook.ElementChange, this, instance, value);
 
       if (!get(instance.isDisabled)) {
         // @ts-expect-error todo
-        this.values[elementConfig.name] = unref(instance.ref) as unknown as V[keyof V];
+        this.values[elementConfig.name] = value as V[keyof V];
       }
-    } else {
-      instance = new PlainElement(form, elementConfig);
+    });
+
+    if (!get(instance.isDisabled)) {
+      // @ts-expect-error todo
+      this.values[elementConfig.name] = unref(instance.ref) as V[keyof V];
     }
 
-    if (isOfType<AnyElementConfiguration<ComponentOrHtmlElement, string>>(elementConfig, 'name')) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      this.model[elementConfig.name] = instance;
+    return this.registerElement(elementConfig.name, instance);
+  }
+
+  private registerElement<I extends AnyElementInstance>(name: ElementName, instance: I): I {
+    if (!isDefined(name)) {
+      return instance;
     }
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    this.model[name] = instance;
 
     return instance;
   }

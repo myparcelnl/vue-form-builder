@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.27](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.26...@myparcel/vue-form-builder@1.0.0-beta.27) "@myparcel/vue-form-builder" (2023-12-06)
+
+
+### Bug Fixes
+
+* fix circular imports ([0d4a4d4](https://github/myparcelnl/vue-form-builder/commit/0d4a4d43d4bd62b922dedeab4b965bd27105c693))
+
+
+
+
 ## [1.0.0-beta.18](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.17...@myparcel/vue-form-builder@1.0.0-beta.18) "@myparcel/vue-form-builder" (2023-11-21)
 
 

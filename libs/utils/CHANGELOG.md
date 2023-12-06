@@ -2,6 +2,17 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.5](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/utils@1.0.0-beta.4...@myparcel-vfb/utils@1.0.0-beta.5) "@myparcel-vfb/utils" (2023-12-06)
+
+
+### Bug Fixes
+
+* fix circular imports ([0d4a4d4](https://github/myparcelnl/vue-form-builder/commit/0d4a4d43d4bd62b922dedeab4b965bd27105c693))
+* improve and speed up field types ([#222](https://github/myparcelnl/vue-form-builder/issues/222)) ([d8242ac](https://github/myparcelnl/vue-form-builder/commit/d8242acfe7297633bab4e52e86456ee000b7d0d5))
+
+
+
+
 ## [1.0.0-beta.4](///compare/@myparcel-vfb/utils@1.0.0-beta.3...@myparcel-vfb/utils@1.0.0-beta.4) "@myparcel-vfb/utils" (2023-06-05)
 
 

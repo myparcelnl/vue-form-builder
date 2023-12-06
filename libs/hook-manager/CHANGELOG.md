@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.9](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-beta.8...@myparcel-vfb/hook-manager@1.0.0-beta.9) "@myparcel-vfb/hook-manager" (2023-12-06)
+
+
+### Bug Fixes
+
+* improve and speed up field types ([#222](https://github/myparcelnl/vue-form-builder/issues/222)) ([d8242ac](https://github/myparcelnl/vue-form-builder/commit/d8242acfe7297633bab4e52e86456ee000b7d0d5))
+
+
+
+
 ## [1.0.0-beta.8](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/hook-manager@1.0.0-beta.7...@myparcel-vfb/hook-manager@1.0.0-beta.8) "@myparcel-vfb/hook-manager" (2023-09-28)
 
 

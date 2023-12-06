@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.26](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-beta.25...@myparcel-vfb/plugin@1.0.0-beta.26) "@myparcel-vfb/plugin" (2023-12-06)
+
+
+### Bug Fixes
+
+* improve and speed up field types ([#222](https://github/myparcelnl/vue-form-builder/issues/222)) ([d8242ac](https://github/myparcelnl/vue-form-builder/commit/d8242acfe7297633bab4e52e86456ee000b7d0d5))
+
+
+
+
 ## [1.0.0-beta.23](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-beta.22...@myparcel-vfb/plugin@1.0.0-beta.23) "@myparcel-vfb/plugin" (2023-11-28)
 
 

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.28](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.27...@myparcel-vfb/core@1.0.0-beta.28) "@myparcel-vfb/core" (2023-12-07)
+
+
+### Bug Fixes
+
+* **types:** add missing types to interface ([a4b4942](https://github/myparcelnl/vue-form-builder/commit/a4b494227bed45046e6c899937238c697d969f9a))
+
+
+
+
 ## [1.0.0-beta.27](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.26...@myparcel-vfb/core@1.0.0-beta.27) "@myparcel-vfb/core" (2023-12-07)
 
 

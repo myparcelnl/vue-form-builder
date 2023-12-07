@@ -1,6 +1,6 @@
 {
   "name": "@myparcel-vfb/core",
-  "version": "1.0.0-beta.27",
+  "version": "1.0.0-beta.28",
   "license": "MIT",
   "type": "module",
   "exports": "./src/index.ts",
@@ -18,7 +18,7 @@
     "typecheck": "run ws:vue:typecheck \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.9",
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.10",
     "@myparcel-vfb/utils": "workspace:^1.0.0-beta.5",
     "@myparcel/ts-utils": "^1.6.0"
   },

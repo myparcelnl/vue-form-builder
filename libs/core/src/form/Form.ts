@@ -107,7 +107,7 @@ export class Form<V extends FormValues = FormValues> {
   }
 
   public getValues(): V {
-    return get(this.values);
+    return get(this.values) as V;
   }
 
   public removeElement(name: string): void {

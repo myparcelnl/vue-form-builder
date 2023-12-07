@@ -16,9 +16,8 @@
 
 <script lang="ts" setup>
 import {computed, toRefs, type Ref, unref} from 'vue';
-import {type AnyElementInstance, type InteractiveElementInstance} from '../types';
+import {type AnyElementInstance, type InteractiveElementInstance, type ComponentProps} from '../types';
 import {createElementHooks} from '../composables';
-import type {AnyAttributes} from '@myparcel-vfb/utils';
 
 const props = defineProps<{element: AnyElementInstance}>();
 
@@ -32,10 +31,15 @@ createElementHooks(propRefs.element.value);
 const attributes = computed(() => {
   const elementProp = props.element.form?.config.field?.elementProp;
 
-  return {
+  const newProps: ComponentProps = {
     ...props.element.attributes,
-    ...(typeof props.element.component === 'string' || elementProp === false ? {} : {element: props.element}),
-  } as AnyAttributes & {element?: AnyElementInstance};
+  };
+
+  if (typeof props.element.component !== 'string' && elementProp !== false) {
+    newProps.element = props.element;
+  }
+
+  return newProps;
 });
 
 const model = computed({

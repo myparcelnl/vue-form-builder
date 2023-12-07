@@ -421,7 +421,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.21.4, @babel/parser@npm:^7.22.15, @babel/parser@npm:^7.23.0, @babel/parser@npm:^7.23.3":
+"@babel/parser@npm:^7.21.4":
+  version: 7.23.5
+  resolution: "@babel/parser@npm:7.23.5"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: 3356aa90d7bafb4e2c7310e7c2c3d443c4be4db74913f088d3d577a1eb914ea4188e05fd50a47ce907a27b755c4400c4e3cbeee73dbeb37761f6ca85954f5a20
+  languageName: node
+  linkType: hard
+
+"@babel/parser@npm:^7.22.15, @babel/parser@npm:^7.23.0, @babel/parser@npm:^7.23.3":
   version: 7.23.3
   resolution: "@babel/parser@npm:7.23.3"
   bin:
@@ -960,25 +969,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor-model@npm:7.28.2":
-  version: 7.28.2
-  resolution: "@microsoft/api-extractor-model@npm:7.28.2"
+"@microsoft/api-extractor-model@npm:7.28.3":
+  version: 7.28.3
+  resolution: "@microsoft/api-extractor-model@npm:7.28.3"
   dependencies:
     "@microsoft/tsdoc": "npm:0.14.2"
     "@microsoft/tsdoc-config": "npm:~0.16.1"
-    "@rushstack/node-core-library": "npm:3.61.0"
-  checksum: b97cfd8b8968143ef2deea25cfefab84d6d064b9378a04270e2a6f7e00ea4a781876264ddc51835ffda9eedb6962403afbe01b4447ffe42388a065cd42532a31
+    "@rushstack/node-core-library": "npm:3.62.0"
+  checksum: 776ae84e8398358469c4d2d3798206f268e780ab03c9212f062506f149e8fa59047aefa7046334a5ef199b28c3ed5fca0c708bfa7da929f7ce86c0440ca78ce3
   languageName: node
   linkType: hard
 
 "@microsoft/api-extractor@npm:^7.34.4":
-  version: 7.38.3
-  resolution: "@microsoft/api-extractor@npm:7.38.3"
+  version: 7.38.5
+  resolution: "@microsoft/api-extractor@npm:7.38.5"
   dependencies:
-    "@microsoft/api-extractor-model": "npm:7.28.2"
+    "@microsoft/api-extractor-model": "npm:7.28.3"
     "@microsoft/tsdoc": "npm:0.14.2"
     "@microsoft/tsdoc-config": "npm:~0.16.1"
-    "@rushstack/node-core-library": "npm:3.61.0"
+    "@rushstack/node-core-library": "npm:3.62.0"
     "@rushstack/rig-package": "npm:0.5.1"
     "@rushstack/ts-command-line": "npm:4.17.1"
     colors: "npm:~1.2.1"
@@ -989,7 +998,7 @@ __metadata:
     typescript: "npm:~5.0.4"
   bin:
     api-extractor: bin/api-extractor
-  checksum: 0b05e3865864d36f69356c137144fac85884596768f63fd69f78e87a486476e443f29f93cd687fde6137bc4a92527544c281a283b62a5217e9a0d478c8f67182
+  checksum: 3aa78e60b0688bea4c31c5f6124d344fcb68de82c538301690442570a584a1d56cfa0344bb8253e2d95a8ec80b252cd5760ce2f69c23d7a970fec4700a58fc93
   languageName: node
   linkType: hard
 
@@ -1483,24 +1492,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@myparcel/vue-form-builder-js@workspace:apps/vue-form-builder-js":
-  version: 0.0.0-use.local
-  resolution: "@myparcel/vue-form-builder-js@workspace:apps/vue-form-builder-js"
-  dependencies:
-    "@myparcel/vue-form-builder": "workspace:^1.0.0-beta.27"
-    "@vitejs/plugin-vue": "npm:^4.0.0"
-    "@vitest/coverage-v8": "npm:^0.34.5"
-    typescript: "npm:^5.0.0"
-    vite: "npm:^4.1.4"
-    vite-plugin-custom-tsconfig: "npm:^1.0.4"
-    vite-plugin-dts: "npm:^2.1.0"
-    vitest: "npm:^0.34.3"
-  peerDependencies:
-    vue: ^3
-  languageName: unknown
-  linkType: soft
-
-"@myparcel/vue-form-builder@workspace:*, @myparcel/vue-form-builder@workspace:^1.0.0-beta.27, @myparcel/vue-form-builder@workspace:apps/vue-form-builder":
+"@myparcel/vue-form-builder@workspace:*, @myparcel/vue-form-builder@workspace:apps/vue-form-builder":
   version: 0.0.0-use.local
   resolution: "@myparcel/vue-form-builder@workspace:apps/vue-form-builder"
   dependencies:
@@ -1509,7 +1501,13 @@ __metadata:
     "@myparcel-vfb/plugin": "workspace:^1.0.0-beta.26"
     "@myparcel-vfb/utils": "workspace:^1.0.0-beta.5"
     "@myparcel/ts-utils": "npm:^1.6.0"
+    "@vitejs/plugin-vue": "npm:^4.0.0"
+    "@vitest/coverage-v8": "npm:^0.34.5"
     typescript: "npm:^5.0.0"
+    vite: "npm:^4.1.4"
+    vite-plugin-custom-tsconfig: "npm:^1.0.4"
+    vite-plugin-dts: "npm:^2.1.0"
+    vitest: "npm:^0.34.3"
     vue: "npm:^3.2.47"
     vue-tsc: "npm:^1.6.5"
   peerDependencies:
@@ -1831,8 +1829,8 @@ __metadata:
   linkType: hard
 
 "@rollup/pluginutils@npm:^5.0.2":
-  version: 5.0.5
-  resolution: "@rollup/pluginutils@npm:5.0.5"
+  version: 5.1.0
+  resolution: "@rollup/pluginutils@npm:5.1.0"
   dependencies:
     "@types/estree": "npm:^1.0.0"
     estree-walker: "npm:^2.0.2"
@@ -1842,7 +1840,7 @@ __metadata:
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: 18a1f5a9afa993a76663cc2102169cd546786b39a3e92bdc8a2a0b408b509d070a02b20970a30daa9d5d0b1b591b5e7734add84b3aaf263178aef5a26cfab2cf
+  checksum: c7bed15711f942d6fdd3470fef4105b73991f99a478605e13d41888963330a6f9e32be37e6ddb13f012bc7673ff5e54f06f59fd47109436c1c513986a8a7612d
   languageName: node
   linkType: hard
 
@@ -1937,9 +1935,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/node-core-library@npm:3.61.0, @rushstack/node-core-library@npm:^3.55.2":
-  version: 3.61.0
-  resolution: "@rushstack/node-core-library@npm:3.61.0"
+"@rushstack/node-core-library@npm:3.62.0, @rushstack/node-core-library@npm:^3.55.2":
+  version: 3.62.0
+  resolution: "@rushstack/node-core-library@npm:3.62.0"
   dependencies:
     colors: "npm:~1.2.1"
     fs-extra: "npm:~7.0.1"
@@ -1953,7 +1951,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 6ae8205e57b13b2898fcc07754a70d2c716ecd5c853310a7a75c6321c1f1be79695eb7571d975243f2f83df1ba5d15342c0fa50715b8f146f7ae544f94d89eb6
+  checksum: ea75d5c3d8dc14f66300cfc66e26c57f39a9cf057321d3034889a4643a175e275c8d7a9a5524366879fc4608e5a36df7041895ae11c0e2267dc4b5a5e6e5d0b4
   languageName: node
   linkType: hard
 
@@ -9289,11 +9287,11 @@ __metadata:
 
 "typescript@patch:typescript@npm%3A^5.0.0#optional!builtin<compat/typescript>":
   version: 5.3.2
-  resolution: "typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"
+  resolution: "typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 73c8bad74e732d93211c9d77f28b03307e2f5fc6a0afc73f4b783261ab567686a16d6ae958bdaef383a00be1b0b8c8b6741dd6ca3d13af4963fa7e47456d49c7
+  checksum: c81b9bd20c6dbe90fa43e876c586021447f2b47baede9fa542b1f56715835c043e23b2eaf19c42c067cc6f5ae512bd9a9be28a67b3a1d9807f8c9cfb1269875e
   languageName: node
   linkType: hard
 

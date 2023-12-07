@@ -4,7 +4,7 @@
   "affected": {
     "defaultBase": "alpha"
   },
-  "defaultProject": "@myparcel/vue-form-builder-js",
+  "defaultProject": "@myparcel/vue-form-builder",
   "npmScope": "myparcel-vfb",
   "namedInputs": {
     "default": [

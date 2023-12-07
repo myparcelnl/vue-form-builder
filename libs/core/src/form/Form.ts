@@ -20,10 +20,7 @@ import {PlainElement} from './PlainElement';
 import {InteractiveElement} from './InteractiveElement';
 
 // noinspection JSUnusedGlobalSymbols
-export class Form<
-  V extends FormValues = FormValues,
-  FC extends InstanceFormConfiguration<V> & FormHooks = InstanceFormConfiguration<V> & FormHooks,
-> {
+export class Form<V extends FormValues = FormValues> {
   public readonly config: FormInstance<V>['config'];
   public readonly fields: FormInstance<V>['fields'] = ref([]);
   public readonly hooks: FormInstance<V>['hooks'];
@@ -37,7 +34,7 @@ export class Form<
   public readonly stable: FormInstance<V>['stable'] = ref(false);
   public readonly values: FormInstance<V>['values'];
 
-  public constructor(name: FormInstance<V>['name'], formConfig: ToRecord<FC>) {
+  public constructor(name: FormInstance<V>['name'], formConfig: ToRecord<InstanceFormConfiguration<V> & FormHooks>) {
     const {fields, ...config} = formConfig;
 
     formConfig.hookNames = [...FORM_HOOKS, ...(formConfig.hookNames ?? [])];

@@ -3,7 +3,6 @@ import {type Ref, type ComputedRef, type UnwrapNestedRefs, type Component} from 
 import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
 import {type HookManagerInstance, type HookUnregisterHandler} from '@myparcel-vfb/hook-manager';
 import {type ReadonlyOr, type PromiseOr} from '@myparcel/ts-utils';
-import {FormHook} from '../data';
 import {type InteractiveElementInstance} from './interactive-element.types';
 import {type AnyElementConfiguration, type AnyElementInstance} from './element.types';
 import {type ComponentOrHtmlElement, type ComponentProps} from './component.types';
@@ -14,7 +13,7 @@ export type FormValues = Record<string | symbol, any>;
 /**
  * The input configuration for a Form.
  */
-export interface FormConfiguration<V extends FormValues = FormValues> extends FormHooks<V> {
+export interface FormConfiguration<Values extends FormValues = FormValues> extends FormHooks<Values> {
   /**
    * Global configuration for all fields.
    */
@@ -69,7 +68,7 @@ export interface FormConfiguration<V extends FormValues = FormValues> extends Fo
   /**
    * Values to initialize the form with.
    */
-  initialValues?: Partial<V>;
+  initialValues?: Partial<Values>;
 
   /**
    * Function executed when any label is rendered.
@@ -82,33 +81,29 @@ export interface FormConfiguration<V extends FormValues = FormValues> extends Fo
   validationMessages?: Record<'required' | string, FunctionOr<string>>;
 }
 
-export interface FormHooks<V extends FormValues = FormValues> {
-  [FormHook.BeforeSubmit]?(form: FormInstance<V>): PromiseOr<void>;
+export interface FormHooks<Values extends FormValues = FormValues> {
+  beforeSubmit?(form: FormInstance<Values>): PromiseOr<void>;
+  afterSubmit?(form: FormInstance<Values>): PromiseOr<void>;
 
-  [FormHook.AfterSubmit]?(form: FormInstance<V>): PromiseOr<void>;
+  beforeReset?(form: FormInstance<Values>): PromiseOr<void>;
+  afterReset?(form: FormInstance<Values>): PromiseOr<void>;
 
-  [FormHook.BeforeReset]?(form: FormInstance<V>): PromiseOr<void>;
+  beforeValidate?(form: FormInstance<Values>): PromiseOr<void>;
+  afterValidate?(form: FormInstance<Values>): PromiseOr<void>;
 
-  [FormHook.AfterReset]?(form: FormInstance<V>): PromiseOr<void>;
-
-  [FormHook.BeforeValidate]?(form: FormInstance<V>): PromiseOr<void>;
-
-  [FormHook.AfterValidate]?(form: FormInstance<V>): PromiseOr<void>;
-
-  [FormHook.BeforeAddElement]?<T extends keyof V, Props extends ComponentProps = ComponentProps>(
-    form: FormInstance<V>,
-    field: AnyElementInstance<V[T], Props>,
+  beforeAddElement?<T extends keyof Values, Props extends ComponentProps = ComponentProps>(
+    form: FormInstance<Values>,
+    field: AnyElementInstance<Values[T], Props>,
+  ): PromiseOr<void>;
+  afterAddElement?<T extends keyof Values, Props extends ComponentProps = ComponentProps>(
+    form: FormInstance<Values>,
+    field: AnyElementInstance<Values[T], Props>,
   ): PromiseOr<void>;
 
-  [FormHook.AfterAddElement]?<T extends keyof V, Props extends ComponentProps = ComponentProps>(
-    form: FormInstance<V>,
-    field: AnyElementInstance<V[T], Props>,
-  ): PromiseOr<void>;
-
-  [FormHook.ElementChange]?<T extends keyof V, Props extends ComponentProps = ComponentProps>(
-    form: FormInstance<V>,
-    field: AnyElementInstance<V[T], Props>,
-    value: V[T],
+  elementChange?<T extends keyof Values, Props extends ComponentProps = ComponentProps>(
+    form: FormInstance<Values>,
+    field: AnyElementInstance<Values[T], Props>,
+    value: Values[T],
   ): PromiseOr<void>;
 }
 

@@ -25,12 +25,12 @@
 <script generic="V extends FormValues = FormValues" lang="ts" setup>
 import {onMounted, provide, ref, toRefs} from 'vue';
 import {get} from '@vueuse/core';
+import {type FormInstance, type FormValues, type FormHooks} from '../types';
 import {INJECT_FORM} from '../symbols';
 import {FORM_HOOKS, type FormHook} from '../data';
 import {useLifecycleHooks} from '../composables';
 import RenderedFormContent from './RenderedFormContent.vue';
 import Fragment from './Fragment.vue';
-import type {FormInstance, FormValues} from '../types';
 
 const formElement = ref<HTMLFormElement | null>(null);
 
@@ -55,7 +55,7 @@ onMounted(() => {
 provide(INJECT_FORM, propsForm);
 
 FORM_HOOKS.forEach((hook) => {
-  props.form.on(hook, (form) => {
+  props.form.on(hook as keyof FormHooks, (form) => {
     emit(hook, form);
   });
 });

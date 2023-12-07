@@ -65,6 +65,11 @@ export interface BaseElementConfiguration<Props extends ComponentProps = Compone
    * Wrap the field in a TableFormGroup. Defaults to true.
    */
   wrapper?: boolean | Component;
+
+  /**
+   * Computed visibility of the element.
+   */
+  isVisible?: ComputedRef<boolean>;
 }
 
 export interface BaseElementHooks<I extends BaseElementInstance = BaseElementInstance>

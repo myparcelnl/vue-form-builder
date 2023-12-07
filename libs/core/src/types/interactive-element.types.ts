@@ -50,6 +50,21 @@ export interface InteractiveElementConfiguration<Type = unknown, Props extends C
    * Whether the element is read-only. Defaults to false.z
    */
   readOnly?: boolean;
+
+  /**
+   * Computed read only state of the element.
+   */
+  isReadOnly?: ComputedRef<boolean>;
+
+  /**
+   * Computed disabled state of the element.
+   */
+  isDisabled?: ComputedRef<boolean>;
+
+  /**
+   * Computed optional state of the element.
+   */
+  isOptional?: ComputedRef<boolean>;
 }
 
 export interface InteractiveElementHooks<
@@ -93,12 +108,11 @@ export interface InteractiveElementInstance<Type = unknown, Props extends Compon
   readonly lazy: boolean;
 
   readonly isDirty: Ref<boolean>;
-  readonly isSuspended: Ref<boolean>;
-  readonly isTouched: Ref<boolean>;
-
   readonly isDisabled: Ref<boolean>;
   readonly isOptional: Ref<boolean>;
   readonly isReadOnly: Ref<boolean>;
+  readonly isSuspended: Ref<boolean>;
+  readonly isTouched: Ref<boolean>;
 
   /**
    * Determines whether the field is valid.

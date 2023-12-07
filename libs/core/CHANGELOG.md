@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.29](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.28...@myparcel-vfb/core@1.0.0-beta.29) "@myparcel-vfb/core" (2023-12-07)
+
+
+### Bug Fixes
+
+* **types:** fix type errors ([93389d0](https://github/myparcelnl/vue-form-builder/commit/93389d01c20e05c4bb76e97d44f663c0b1956177))
+
+
+
+
 ## [1.0.0-beta.28](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.27...@myparcel-vfb/core@1.0.0-beta.28) "@myparcel-vfb/core" (2023-12-07)
 
 

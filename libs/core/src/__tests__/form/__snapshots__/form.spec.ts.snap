@@ -26,8 +26,8 @@ exports[`rendering a form > defaults to no inner wrapper 1`] = `
 `;
 
 exports[`rendering a form > renders html elements 1`] = `
-"<form id=\\"form\\">
-  <div data-test-id=\\"field\\" data-test-type=\\"interactive\\"></div><input data-test-id=\\"named\\" data-test-type=\\"plain\\"><br data-test-type=\\"plain\\">
+"<form id="form">
+  <div data-test-id="field" data-test-type="interactive"></div><input data-test-id="named" data-test-type="plain"><br data-test-type="plain">
   <!--v-if-->
 </form>"
 `;

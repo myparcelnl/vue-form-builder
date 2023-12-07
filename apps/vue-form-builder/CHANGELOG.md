@@ -2,6 +2,20 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.28](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.27...@myparcel/vue-form-builder@1.0.0-beta.28) "@myparcel/vue-form-builder" (2023-12-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* `vue-form-builder-js` is removed. `vue-form-builder` is now compiled JavaScript instead of TypeScript. Import `@myparcel/vue-form-builder/ts` to get TypeScript
+
+### Build System
+
+* merge vue-form-builder-js into vue-form-builder ([e10c874](https://github/myparcelnl/vue-form-builder/commit/e10c874a3fc6bb5ddeef4ec68c28c322cc04d191))
+
+
+
+
 ## [1.0.0-beta.27](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.26...@myparcel/vue-form-builder@1.0.0-beta.27) "@myparcel/vue-form-builder" (2023-12-06)
 
 

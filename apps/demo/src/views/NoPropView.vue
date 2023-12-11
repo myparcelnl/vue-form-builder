@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import {MagicForm} from '@myparcel/vue-form-builder';
+import {MagicForm} from '@myparcel/vue-form-builder/ts';
 import {noPropForm} from '../forms/noPropForm';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
 

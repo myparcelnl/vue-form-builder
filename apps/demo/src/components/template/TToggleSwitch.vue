@@ -20,7 +20,7 @@
 /* eslint-disable vue/no-unused-properties */
 import {defineComponent, type PropType} from 'vue';
 import {useVModel} from '@vueuse/core';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+import {type InteractiveElementInstance} from '@myparcel/vue-form-builder/ts';
 
 export default defineComponent({
   name: 'TToggleSwitch',

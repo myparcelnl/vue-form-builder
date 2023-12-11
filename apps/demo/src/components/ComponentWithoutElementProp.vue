@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import {useVModel} from '@vueuse/core';
-import {useElement} from '@myparcel/vue-form-builder';
+import {useElement} from '@myparcel/vue-form-builder/ts';
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<{modelValue: string}>();

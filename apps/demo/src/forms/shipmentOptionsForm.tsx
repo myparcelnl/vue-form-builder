@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import {ref} from 'vue';
 import {get} from '@vueuse/core';
-import {defineField, defineForm, type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+import {defineField, defineForm, type InteractiveElementInstance} from '@myparcel/vue-form-builder/ts';
 import {isOfType} from '@myparcel/ts-utils';
 import {type CarrierName, PACKAGE_TYPE_IDS_TO_NAMES, PackageTypeName} from '@myparcel/constants';
 import {translate} from '../translate';

@@ -23,7 +23,7 @@
 import {computed, ref, watch} from 'vue';
 import {get} from '@vueuse/core';
 import {type FormInstance} from '@myparcel-vfb/core';
-import {MagicForm} from '@myparcel/vue-form-builder';
+import {MagicForm} from '@myparcel/vue-form-builder/ts';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
 

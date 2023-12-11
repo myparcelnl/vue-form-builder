@@ -26,7 +26,7 @@
 <script generic="V extends FormValues" lang="ts" setup>
 import {toRefs} from 'vue';
 import {type MaybeUnwrapNestedRefs, type FormValues} from '@myparcel-vfb/core';
-import {type FormInstance} from '@myparcel/vue-form-builder';
+import {type FormInstance} from '@myparcel/vue-form-builder/ts';
 import {useFormEventLog} from '../composables/useFormEventLog';
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments

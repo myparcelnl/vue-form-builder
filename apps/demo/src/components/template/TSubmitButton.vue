@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import {defineComponent, type PropType} from 'vue';
-import {type PlainElementInstance} from '@myparcel/vue-form-builder';
+import {type PlainElementInstance} from '@myparcel/vue-form-builder/ts';
 import LoadingOverlay from '../LoadingOverlay.vue';
 import {translate} from '../../translate';
 

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {type Component, type VNode, type Ref, type ComputedRef} from 'vue';
+import {type ComponentSlots} from 'vue-component-type-helpers';
+import {type Component, type Ref, type ComputedRef, type Slots} from 'vue';
 import {type UnwrapNestedRefs} from '@vue/reactivity';
 import {type AnyAttributes, type FunctionOr} from '@myparcel-vfb/utils';
 import {type ReadonlyOr, type PromiseOr} from '@myparcel/ts-utils';
@@ -10,7 +11,7 @@ import {type ComponentLifecycleHooks, type ComponentOrHtmlElement, type Componen
 
 export type ElementName = string | undefined;
 
-export type ElementSlots = Record<string, (() => VNode | string | VNode[]) | VNode | string | VNode[]>;
+export type ElementSlots = Slots;
 
 export interface BaseElementConfiguration<Props extends ComponentProps = ComponentProps> {
   name?: ElementName;
@@ -49,7 +50,7 @@ export interface BaseElementConfiguration<Props extends ComponentProps = Compone
   /**
    * Slot content to be passed to the component.
    */
-  slots?: ElementSlots;
+  slots?: ComponentSlots<any>;
 
   /**
    * Selector to render the field in.

@@ -2,6 +2,18 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.30](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.29...@myparcel-vfb/core@1.0.0-beta.30) "@myparcel-vfb/core" (2023-12-11)
+
+
+### Bug Fixes
+
+* **core:** remove component children ([5ea273d](https://github/myparcelnl/vue-form-builder/commit/5ea273d27c00fd203a84fdbf0239e8821ca109b5))
+* **core:** update slots type ([10c7bff](https://github/myparcelnl/vue-form-builder/commit/10c7bffe4e5f996c03b66c9ece5847f95b51c190))
+* spread children array ([11f7add](https://github/myparcelnl/vue-form-builder/commit/11f7add5367f2aa464995e53f2d87550102ae7d5))
+
+
+
+
 ## [1.0.0-beta.29](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.28...@myparcel-vfb/core@1.0.0-beta.29) "@myparcel-vfb/core" (2023-12-07)
 
 

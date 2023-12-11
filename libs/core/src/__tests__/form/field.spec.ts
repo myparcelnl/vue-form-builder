@@ -1,4 +1,4 @@
-import {h, markRaw, ref} from 'vue';
+import {h, markRaw, ref, nextTick} from 'vue';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {generateForm, optionData} from '../utils';
@@ -186,5 +186,26 @@ describe('Form fields', () => {
     const form = generateForm({fields: [field], initialValues: {element: 'hello'}});
 
     expect(form.model.element.ref.value).toBe('hello');
+  });
+
+  it.skip('can pass through slots', async () => {
+    expect.assertions(1);
+
+    const field = defineField({
+      component: h('div', () => ['this.$slots']),
+      name: 'element',
+      ref: ref(''),
+      slots: {
+        default: () => ['this.element.slots 1', h('div', () => ['this.element.slots 2'])],
+      },
+    });
+
+    const form = generateForm({fields: [field], initialValues: {element: 'hello'}});
+
+    const wrapper = mount(MagicForm, {props: {form}});
+
+    await nextTick();
+
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });

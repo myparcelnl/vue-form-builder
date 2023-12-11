@@ -1,5 +1,4 @@
-import {type Component, defineComponent, h, type PropType, provide, Teleport, type VNode} from 'vue';
-import {isOfType} from '@myparcel/ts-utils';
+import {type Component, defineComponent, h, type PropType, provide, Teleport} from 'vue';
 import {type AnyElementInstance, type FormInstance} from '../types';
 import {INJECT_ELEMENT} from '../symbols';
 import {useTestAttributes} from '../composables';
@@ -32,16 +31,6 @@ export default defineComponent({
         element: this.element,
       },
       {
-        ...(isOfType<VNode>(this.element.component, 'children')
-          ? [
-              ...(Array.isArray(this.element.component.children) ||
-              this.element.component.children?.constructor.name === 'Object'
-                ? this.element.component.children.map((child: unknown) => {
-                    return typeof child === 'function' ? child : () => child;
-                  })
-                : [this.element.component.children]),
-            ]
-          : []),
         ...this.element.slots,
         ...this.$slots,
       },

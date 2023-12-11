@@ -34,11 +34,12 @@ export default defineComponent({
       {
         ...(isOfType<VNode>(this.element.component, 'children')
           ? [
-              ...(Array.isArray(this.element.component.children)
+              ...(Array.isArray(this.element.component.children) ||
+              this.element.component.children?.constructor.name === 'Object'
                 ? this.element.component.children.map((child: unknown) => {
                     return typeof child === 'function' ? child : () => child;
                   })
-                : this.element.component.children),
+                : [this.element.component.children]),
             ]
           : []),
         ...this.element.slots,

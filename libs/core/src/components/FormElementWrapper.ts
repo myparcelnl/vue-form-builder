@@ -11,7 +11,7 @@ type RawSlots = {
   $stable?: boolean;
 };
 
-const convertSlots = (component: ComponentOrHtmlElement) => {
+const convertSlots = (component: ComponentOrHtmlElement): RawSlots => {
   const slotList = [];
   let slotMap: RawSlots = {};
 

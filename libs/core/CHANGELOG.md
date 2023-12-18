@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.31](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.30...@myparcel-vfb/core@1.0.0-beta.31) "@myparcel-vfb/core" (2023-12-18)
+
+
+### Bug Fixes
+
+* preserve children slot composition ([#223](https://github/myparcelnl/vue-form-builder/issues/223)) ([5147ffa](https://github/myparcelnl/vue-form-builder/commit/5147ffa8d39334944b8a498d6d23a3797dfacc90))
+
+
+
+
 ## [1.0.0-beta.30](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.29...@myparcel-vfb/core@1.0.0-beta.30) "@myparcel-vfb/core" (2023-12-11)
 
 

@@ -11,6 +11,9 @@ type RawSlots = {
   $stable?: boolean;
 };
 
+/**
+ * @TODO: check if this can be removed before releasing 1.0.0
+ */
 const convertSlots = (component: ComponentOrHtmlElement): RawSlots => {
   const slotList = [];
   let slotMap: RawSlots = {};

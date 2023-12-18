@@ -1,10 +1,38 @@
-import {type Component, defineComponent, h, type PropType, provide, Teleport} from 'vue';
-import {type AnyElementInstance, type FormInstance} from '../types';
+import {type Component, defineComponent, h, type PropType, provide, Teleport, type VNode} from 'vue';
+import {isOfType} from '@myparcel/ts-utils';
+import {type AnyElementInstance, type ComponentOrHtmlElement, type FormInstance} from '../types';
 import {INJECT_ELEMENT} from '../symbols';
 import {useTestAttributes} from '../composables';
 import FormElement from './FormElement.vue';
 
 // noinspection JSUnusedGlobalSymbols
+type RawSlots = {
+  [name: string]: unknown;
+  $stable?: boolean;
+};
+
+/**
+ * @TODO: check if this can be removed before releasing 1.0.0
+ */
+const convertSlots = (component: ComponentOrHtmlElement): RawSlots => {
+  const slotList = [];
+  let slotMap: RawSlots = {};
+
+  if (isOfType<VNode>(component, 'children')) {
+    if (Array.isArray(component.children)) {
+      component.children.forEach((child: unknown) => {
+        slotList.push(typeof child === 'function' ? child : () => child);
+      });
+    } else if (isOfType<RawSlots>(component, 'children')) {
+      slotMap = component.children as RawSlots;
+    } else {
+      slotList.push(component.children);
+    }
+  }
+
+  return {...slotList, ...slotMap};
+};
+
 export default defineComponent({
   name: 'FormElementWrapper',
   props: {
@@ -23,6 +51,8 @@ export default defineComponent({
   },
 
   render() {
+    const childrenSlots = convertSlots(this.element.component);
+
     let component: Component = h(
       FormElement,
       {
@@ -31,6 +61,7 @@ export default defineComponent({
         element: this.element,
       },
       {
+        ...childrenSlots,
         ...this.element.slots,
         ...this.$slots,
       },

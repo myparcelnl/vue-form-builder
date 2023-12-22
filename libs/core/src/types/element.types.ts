@@ -124,7 +124,7 @@ export type ResolvedElementConfiguration<
 > = Type extends never ? PlainElementConfiguration<Props> : InteractiveElementConfiguration<Type, Props>;
 
 export interface CreatedElement<Type = unknown, Props extends ComponentProps = ComponentProps> {
-  Component: ComponentOrHtmlElement<Props>;
+  Component: Component<Props>;
   field: ResolvedElementConfiguration<Type, Props>;
   ref: Type extends undefined ? undefined : Ref<Type>;
 }

@@ -1,4 +1,3 @@
-import {isOfType} from '@myparcel/ts-utils';
 import {type MaybeUnwrapNestedRefs, type AnyElementInstance} from '../types';
 
 export const generateFieldName = (
@@ -16,11 +15,11 @@ export const generateFieldName = (
     return prefix + field.name + resolvedSuffix;
   }
 
-  // eslint-disable-next-line no-underscore-dangle,@typescript-eslint/naming-convention
-  if (isOfType<{__name?: string}>(field.component, '__name') && field.component.__name) {
-    // eslint-disable-next-line no-underscore-dangle
-    return `${prefix}${field.component.__name}${resolvedSuffix}`;
+  if (typeof field.component === 'string') {
+    return prefix + field.component + resolvedSuffix;
   }
 
-  return `${prefix}${field.component}${resolvedSuffix}`;
+  // @ts-expect-error todo
+  // eslint-disable-next-line no-underscore-dangle
+  return prefix + String(field.component.name ?? field.component.__name) + resolvedSuffix;
 };

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.32](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.31...@myparcel-vfb/core@1.0.0-beta.32) "@myparcel-vfb/core" (2023-12-22)
+
+
+### Features
+
+* **form:** do not throw errors on setValue on undefined field ([#227](https://github/myparcelnl/vue-form-builder/issues/227)) ([61f66f7](https://github/myparcelnl/vue-form-builder/commit/61f66f77fa91e1ed85f1d2a75a49599260cc45fe))
+
+
+
+
 ## [1.0.0-beta.31](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.30...@myparcel-vfb/core@1.0.0-beta.31) "@myparcel-vfb/core" (2023-12-18)
 
 

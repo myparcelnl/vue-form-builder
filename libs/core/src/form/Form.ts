@@ -123,7 +123,11 @@ export class Form<V extends FormValues = FormValues> {
   }
 
   public setValue(fieldName: string, value: unknown): void {
-    const fieldInstance = this.ensureGetField<InteractiveElementInstance>(fieldName);
+    const fieldInstance = this.getField<InteractiveElementInstance>(fieldName);
+
+    if (!fieldInstance) {
+      return;
+    }
 
     fieldInstance.ref.value = value;
   }

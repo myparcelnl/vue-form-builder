@@ -265,7 +265,7 @@ export type FieldsToModel<V extends FormValues> = {
   [K in keyof V]: K extends string ? InteractiveElementInstance<ComponentProps, V[K]> : never;
 };
 
-export interface CreatedForm<V extends FormValues> {
+export interface CreatedForm<V extends FormValues = FormValues> {
   Component: Component;
   instance: FormInstance<V>;
 }

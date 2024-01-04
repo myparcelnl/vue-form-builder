@@ -1,5 +1,6 @@
 import {h, markRaw, ref, nextTick} from 'vue';
 import {describe, expect, it, vi} from 'vitest';
+import {get} from '@vueuse/core';
 import {flushPromises, mount} from '@vue/test-utils';
 import {generateForm, optionData} from '../utils';
 import {firstNameNotDuane} from '../examples/validators';
@@ -174,18 +175,19 @@ describe('Form fields', () => {
     expect(form.isValid.value).toBe(true);
   });
 
-  it('gets filled with initial data from form config', async () => {
-    expect.assertions(1);
+  it('gets filled with initial data from form config', () => {
+    expect.assertions(2);
 
-    const field = defineField({
-      component: 'input',
-      name: 'element',
-      ref: ref('disregarded'),
+    const form = generateForm({
+      fields: [
+        defineField({component: 'input', name: 'element', ref: ref('disregarded')}),
+        defineField({component: 'input', name: 'toggle', ref: ref()}),
+      ],
+      initialValues: {element: 'hello', toggle: false},
     });
 
-    const form = generateForm({fields: [field], initialValues: {element: 'hello'}});
-
-    expect(form.model.element.ref.value).toBe('hello');
+    expect(get(form.model.element.ref)).toBe('hello');
+    expect(get(form.model.toggle.ref)).toBe(false);
   });
 
   it.skip('can pass through slots', async () => {

@@ -20,15 +20,19 @@ jobs:
     needs: test
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           persist-credentials: false
           token: ${{ secrets.GH_REPO_TOKEN }}
 
-      # TODO: Switch to v3 with app credentials when GitHub apps are allowed to bypass merge queue
+      # TODO: Switch to v3 with app credentials when GitHub apps are allowed to bypass status checks. https://github.com/orgs/community/discussions/43460
       - uses: myparcelnl/actions/setup-git-credentials@v2
         with:
+          token: ${{ secrets.GH_REPO_TOKEN }}
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
           token: ${{ secrets.GH_REPO_TOKEN }}
 
       - uses: myparcelnl/actions/yarn-install@v3

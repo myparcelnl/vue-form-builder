@@ -11,7 +11,7 @@ jobs:
       matrix:
         node-version: [18, 20]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       - name: 'Handle coverage cache'
         uses: actions/cache@v3
@@ -43,7 +43,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       - uses: myparcelnl/actions/yarn-install@v3
         with:

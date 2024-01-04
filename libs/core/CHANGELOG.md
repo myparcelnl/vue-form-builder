@@ -2,6 +2,17 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.33](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.32...@myparcel-vfb/core@1.0.0-beta.33) "@myparcel-vfb/core" (2024-01-04)
+
+
+### Bug Fixes
+
+* allow falsy values to be used for initial values ([c6d6539](https://github/myparcelnl/vue-form-builder/commit/c6d6539eb6ae3d3c93932032cb4eccbeb0df7c6b))
+* **types:** make CreatedForm parameter optional ([4d1f080](https://github/myparcelnl/vue-form-builder/commit/4d1f080ec92c05f66f9dc7ba9431b96934d7d4b2))
+
+
+
+
 ## [1.0.0-beta.32](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.31...@myparcel-vfb/core@1.0.0-beta.32) "@myparcel-vfb/core" (2023-12-22)
 
 

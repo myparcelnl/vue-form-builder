@@ -56,7 +56,7 @@ export class InteractiveElement<
 
     this.ref = config.ref;
 
-    if (form.config.initialValues?.[name]) {
+    if (form.config.initialValues?.hasOwnProperty(name)) {
       this.ref.value = form.config.initialValues[name];
     }
 

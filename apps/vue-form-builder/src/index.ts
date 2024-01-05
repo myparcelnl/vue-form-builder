@@ -2,6 +2,7 @@ export type {
   AnyElementConfiguration,
   AnyElementInstance,
   ComponentOrHtmlElement,
+  ComponentProps,
   CreatedElement,
   CreatedField,
   CreatedForm,

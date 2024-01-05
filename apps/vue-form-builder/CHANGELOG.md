@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.35](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.34...@myparcel/vue-form-builder@1.0.0-beta.35) "@myparcel/vue-form-builder" (2024-01-05)
+
+
+### Features
+
+* **types:** export ComponentProps type ([02e27f4](https://github/myparcelnl/vue-form-builder/commit/02e27f4f9cf6921d2d5489b638bbaf9b7dd7a8d3))
+
+
+
+
 ## [1.0.0-beta.29](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.28...@myparcel/vue-form-builder@1.0.0-beta.29) "@myparcel/vue-form-builder" (2023-12-07)
 
 

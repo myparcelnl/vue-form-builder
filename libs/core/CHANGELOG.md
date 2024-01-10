@@ -2,6 +2,17 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.35](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.34...@myparcel-vfb/core@1.0.0-beta.35) "@myparcel-vfb/core" (2024-01-10)
+
+
+### Bug Fixes
+
+* **field:** remove the need for wrapper:false in createField ([#229](https://github/myparcelnl/vue-form-builder/issues/229)) ([86aa72c](https://github/myparcelnl/vue-form-builder/commit/86aa72cf33d1e81b816c9e30fcc30539778651c6))
+* **form:** fix setValue not working occasionally ([#228](https://github/myparcelnl/vue-form-builder/issues/228)) ([bf2d9c5](https://github/myparcelnl/vue-form-builder/commit/bf2d9c59adeede43529c9dc946c4cdb8070839d5))
+
+
+
+
 ## [1.0.0-beta.34](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.33...@myparcel-vfb/core@1.0.0-beta.34) "@myparcel-vfb/core" (2024-01-10)
 
 

@@ -95,7 +95,7 @@ const createErrorComponent = (field: AnyElementConfiguration): Component => {
 };
 
 const createAsyncComponent = <C extends Component>(cb: () => C) => {
-  return markRaw(defineAsyncComponent(() => Promise.resolve(markRaw(cb()))));
+  return markRaw(defineAsyncComponent(() => Promise.resolve(cb())));
 };
 
 export const createField = <Type = unknown, Props extends ComponentProps = ComponentProps>(

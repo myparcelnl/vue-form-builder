@@ -2,9 +2,8 @@
   <div>
     <h1>Form without fields array</h1>
     <p>
-      These forms are defined entirely in the template. The components can be placed anywhere in the template. When
-      <code>wrapper: false</code> is passed when creating the component, you need to manually place the Label and Errors
-      component as well.
+      These forms are defined entirely in the template. The components can be placed anywhere in the template. You can
+      even choose to manually place the Label and Errors components as well.
     </p>
 
     <div class="gap-2 grid grid-cols-2 grid-flow-row mt-4">
@@ -184,6 +183,7 @@ const Email = createField({
   name: 'email',
   label: 'Email',
   component: TTextInput,
+  // This is necessary because there's a global wrapper defined in the form options.
   wrapper: false,
   props: {
     type: 'email',

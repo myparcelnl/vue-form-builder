@@ -2,10 +2,10 @@
 import {ref, watch} from 'vue';
 import {get} from '@vueuse/core';
 import {isOfType, asyncEvery} from '@myparcel/ts-utils';
-import {isRequired} from '../validators/isRequired';
+import {isRequired} from '../validators';
 import {useDynamicWatcher} from '../utils';
-import {type ToRecord} from '../types/common.types';
 import {
+  type ToRecord,
   type InteractiveElementConfiguration,
   type InteractiveElementHooks,
   type InteractiveElementInstance,

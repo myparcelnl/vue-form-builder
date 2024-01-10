@@ -25,7 +25,9 @@ describe('createField', () => {
     const field = createField({name: 'test', ref: ref('value'), component: 'input'});
 
     expect(field).toStrictEqual({
-      Component: expect.any(Object),
+      Component: expect.objectContaining({render: expect.any(Function)}),
+      Errors: expect.objectContaining({__asyncLoader: expect.any(Function)}),
+      Label: expect.objectContaining({__asyncLoader: expect.any(Function)}),
       field: {name: 'test', ref: 'value', component: 'input'},
       ref: 'value',
     });
@@ -35,21 +37,11 @@ describe('createField', () => {
     const field = createField({name: 'test', ref: ref('value2'), component: testComponent});
 
     expect(field).toStrictEqual({
-      Component: expect.any(Object),
+      Component: expect.objectContaining({render: expect.any(Function)}),
+      Errors: expect.objectContaining({__asyncLoader: expect.any(Function)}),
+      Label: expect.objectContaining({__asyncLoader: expect.any(Function)}),
       field: {name: 'test', ref: 'value2', component: testComponent},
       ref: 'value2',
-    });
-  });
-
-  it('creates a modular field if wrapper is false', () => {
-    const field = createField({name: 'test', ref: ref('value'), component: 'input', wrapper: false});
-
-    expect(field).toStrictEqual({
-      Component: expect.any(Object),
-      Errors: expect.any(Object),
-      Label: expect.any(Object),
-      field: {name: 'test', ref: 'value', component: 'input', wrapper: false},
-      ref: 'value',
     });
   });
 
@@ -88,7 +80,6 @@ describe('createField', () => {
         label: 'fieldLabel',
         ref: ref('value2'),
         component: testComponent,
-        wrapper: false,
       });
 
       const wrapper = render(form.Component, {

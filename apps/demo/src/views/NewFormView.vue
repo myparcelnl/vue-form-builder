@@ -183,6 +183,8 @@ const Email = createField({
   name: 'email',
   label: 'Email',
   component: TTextInput,
+  // This is necessary because there's a global wrapper defined in the form options.
+  wrapper: false,
   props: {
     type: 'email',
   },

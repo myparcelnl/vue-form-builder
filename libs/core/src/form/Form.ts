@@ -198,7 +198,7 @@ export class Form<V extends FormValues = FormValues> {
       string,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       InteractiveElementConfiguration<any>
-    >(form, elementConfig.name, elementConfig);
+    >(form, elementConfig);
 
     watch(instance.ref, async (value: unknown) => {
       await this.hooks.execute(FormHook.ElementChange, this, instance, value);

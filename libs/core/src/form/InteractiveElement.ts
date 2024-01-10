@@ -10,7 +10,6 @@ import {
   type InteractiveElementHooks,
   type InteractiveElementInstance,
   type FormInstance,
-  type ElementName,
   type AnyElementInstance,
   type ValidatorWithPrecedence,
   type Validator,
@@ -51,13 +50,13 @@ export class InteractiveElement<
   protected readonly initialValue: Type;
 
   // eslint-disable-next-line max-lines-per-function
-  public constructor(form: FormInstance, name: NonNullable<ElementName>, config: ToRecord<Config>) {
+  public constructor(form: FormInstance, config: ToRecord<Config>) {
     super(form, {...config, hookNames: INTERACTIVE_ELEMENT_HOOKS});
 
     this.ref = config.ref;
 
-    if (form.config.initialValues?.hasOwnProperty(name)) {
-      this.ref.value = form.config.initialValues[name];
+    if (form.config.initialValues?.hasOwnProperty(config.name)) {
+      this.ref.value = form.config.initialValues[config.name];
     }
 
     this.initialValue = get(this.ref);

@@ -1,10 +1,10 @@
 import {computed, ref, watch, reactive, unref} from 'vue';
-import {get, isDefined} from '@vueuse/core';
+import {get, isDefined, useMemoize} from '@vueuse/core';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
-import {type ToRecord} from '../types/common.types';
 import {
+  type ToRecord,
   type AnyElementConfiguration,
   type AnyElementInstance,
   type ElementName,
@@ -33,6 +33,12 @@ export class Form<V extends FormValues = FormValues> {
   public readonly on: FormInstance<V>['on'];
   public readonly stable: FormInstance<V>['stable'] = ref(false);
   public readonly values: FormInstance<V>['values'];
+
+  private getFieldMemoized = useMemoize((name: string): AnyElementInstance | null => {
+    const found = get(this.fields).find((field) => field.name === name);
+
+    return found ?? null;
+  });
 
   public constructor(name: FormInstance<V>['name'], formConfig: ToRecord<InstanceFormConfiguration<V> & FormHooks>) {
     const {fields, ...config} = formConfig;
@@ -97,7 +103,7 @@ export class Form<V extends FormValues = FormValues> {
   }
 
   public getField<F extends AnyElementInstance | null = AnyElementInstance | null>(name: string): F {
-    return (this.model[name] ?? get(this.fields).find((field) => field.name === name) ?? null) as F;
+    return this.getFieldMemoized(name) as F;
   }
 
   public getValue<T = unknown>(fieldName: string): T {
@@ -114,6 +120,7 @@ export class Form<V extends FormValues = FormValues> {
     const index = get(this.fields).findIndex((field) => field.name === name);
 
     get(this.fields).splice(index, 1);
+    this.getFieldMemoized.delete(name);
   }
 
   public async reset(): Promise<void> {
@@ -225,6 +232,7 @@ export class Form<V extends FormValues = FormValues> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     this.model[name] = instance;
+    this.getFieldMemoized.delete(name);
 
     return instance;
   }

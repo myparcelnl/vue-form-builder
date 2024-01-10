@@ -11,6 +11,7 @@ import {
   reactive,
   type ComputedRef,
   type Component,
+  defineAsyncComponent,
 } from 'vue';
 import {isOfType} from '@myparcel/ts-utils';
 import {
@@ -53,8 +54,8 @@ const createMainComponent = <Type = unknown, Props extends ComponentProps = Comp
   });
 };
 
-const createLabelComponent = (field: AnyElementConfiguration): Component =>
-  defineComponent({
+const createLabelComponent = (field: AnyElementConfiguration): Component => {
+  return defineComponent({
     setup() {
       const form = useForm();
       const element = computed(() => field.name && form.getField(field.name));
@@ -70,6 +71,7 @@ const createLabelComponent = (field: AnyElementConfiguration): Component =>
       return this.element && h('label', {for: this.element.attributes.id ?? this.element.name}, [this.element.label]);
     },
   });
+};
 
 const createErrorComponent = (field: AnyElementConfiguration): Component => {
   return defineComponent({
@@ -92,6 +94,10 @@ const createErrorComponent = (field: AnyElementConfiguration): Component => {
   });
 };
 
+const createAsyncComponent = <C extends Component>(cb: () => C) => {
+  return markRaw(defineAsyncComponent(() => Promise.resolve(markRaw(cb()))));
+};
+
 export const createField = <Type = unknown, Props extends ComponentProps = ComponentProps>(
   field: AnyElementConfiguration<Type, Props>,
 ): ModularCreatedElement<Type, Props> => {
@@ -103,10 +109,8 @@ export const createField = <Type = unknown, Props extends ComponentProps = Compo
     ...(isOfType<InteractiveElementConfiguration>(field, 'ref') && {
       ref: (field.ref ?? ref<Type>()) as Type extends undefined ? undefined : Ref<Type>,
 
-      ...(field.wrapper === false && {
-        Label: markRaw(createLabelComponent(field)),
-        Errors: markRaw(createErrorComponent(field)),
-      }),
+      Label: createAsyncComponent(() => createLabelComponent(field)),
+      Errors: createAsyncComponent(() => createErrorComponent(field)),
     }),
   });
 };

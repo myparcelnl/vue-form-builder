@@ -2,6 +2,17 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.36](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.35...@myparcel-vfb/core@1.0.0-beta.36) "@myparcel-vfb/core" (2024-01-11)
+
+
+### Bug Fixes
+
+* **field:** fix errors not being unwrapped before passing through slots ([b5d06b4](https://github/myparcelnl/vue-form-builder/commit/b5d06b49c9364ecd30f3eafbebd13d0c0b691fec))
+* **field:** fix not all default validators being executed ([a1f8c85](https://github/myparcelnl/vue-form-builder/commit/a1f8c8538c01eadcb81ec3b1131faf094af665e1))
+
+
+
+
 ## [1.0.0-beta.35](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.34...@myparcel-vfb/core@1.0.0-beta.35) "@myparcel-vfb/core" (2024-01-10)
 
 

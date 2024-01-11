@@ -13,6 +13,7 @@ import {
   type Component,
   defineAsyncComponent,
 } from 'vue';
+import {get} from '@vueuse/core';
 import {isOfType} from '@myparcel/ts-utils';
 import {
   type AnyElementConfiguration,
@@ -89,7 +90,7 @@ const createErrorComponent = (field: AnyElementConfiguration): Component => {
         this.$options.name = generateFieldName(this.element, 'errors');
       }
 
-      return this.element?.errors && this.$slots.default?.({errors: this.element.errors});
+      return get(this.element?.errors) && this.$slots.default?.({errors: get(this.element.errors)});
     },
   });
 };

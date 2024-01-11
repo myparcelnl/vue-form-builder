@@ -85,14 +85,15 @@
             </div>
 
             <div class="border border-purple-500 flex-col inline-flex p-2">
-              <Email.Errors v-slot="errors">
+              <Email.Errors v-slot="{errors}">
                 <template v-if="errors.length">
-                  Some errors have occurred
-                  <ul>
+                  <b class="my-2">One or more errors have occurred:</b>
+
+                  <ul class="border p-5 rounded-xl">
                     <li
                       v-for="(error, index) in errors"
-                      :key="error.message">
-                      Error {{ index + 1 }}: {{ error.message }}
+                      :key="error">
+                      {{ index + 1 }}: {{ error }}
                     </li>
                   </ul>
                 </template>
@@ -189,7 +190,7 @@ const Email = createField({
     type: 'email',
   },
   ref: ref(''),
-  validators: [stringLengthValidator(5, 30), emailValidator()],
+  validators: [stringLengthValidator(5, 30), emailValidator(), stringNotContainsValidator(['x', 'y', 'z', 'q', 'w'])],
 });
 
 const SubmitButton = createField({

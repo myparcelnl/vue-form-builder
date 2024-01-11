@@ -181,8 +181,9 @@ export class InteractiveElement<
       withoutPrecedence.push(isRequired<Type, Props>(this.form.config.validationMessages?.required ?? ''));
     }
 
-    const validatedWithoutPrecedence = await asyncEvery(withoutPrecedence, doValidate);
+    const validatedWithoutPrecedence = (await Promise.all(withoutPrecedence.map(doValidate))).every(Boolean);
     const validatedWithPrecedence = await asyncEvery(withPrecedence, doValidate);
+
     this.isValid.value = validatedWithoutPrecedence && validatedWithPrecedence;
 
     await this.hooks.execute('afterValidate', this, get(this.ref), get(this.isValid));

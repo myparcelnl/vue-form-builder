@@ -1,9 +1,9 @@
 <template>
-  <component
-    :is="component"
-    v-if="component">
-    <slot />
-  </component>
+  <template v-if="component">
+    <component :is="component">
+      <slot />
+    </component>
+  </template>
   <slot v-else />
 </template>
 

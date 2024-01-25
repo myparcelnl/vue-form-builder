@@ -93,5 +93,39 @@ describe('createField', () => {
       expect(wrapper.html()).toMatchSnapshot();
       expect((await wrapper.findByRole<HTMLInputElement>('textbox')).value).toBe('value2');
     });
+
+    it('should remove the field from the form when unmounted', async () => {
+      expect.assertions(2);
+
+      const form = createForm('renderModular', {});
+      const field = createField({
+        name: 'modularTest',
+        label: 'fieldLabel',
+        ref: ref('value2'),
+        component: testComponent,
+      });
+
+      const wrapper = render(form.Component, {
+        slots: {
+          default: () => h('div', [h(field.Component), h(field.Label), h(field.Errors)]),
+        },
+      });
+
+      await flushPromises();
+
+      expect(form.instance.fields.value).toHaveLength(1);
+
+      await wrapper.unmount();
+
+      const wrapper2 = render(form.Component, {
+        slots: {
+          default: () => h('div', [h(field.Component), h(field.Label), h(field.Errors)]),
+        },
+      });
+
+      await flushPromises();
+
+      expect(form.instance.fields.value).toHaveLength(1);
+    });
   });
 });

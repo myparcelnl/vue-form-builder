@@ -23,7 +23,7 @@ export default defineConfig((env) => {
       customTsConfig(),
     ],
     build: {
-      minify: isProd,
+      minify: false,
       sourcemap: !isProd,
       lib: {
         entry: 'src/index.ts',

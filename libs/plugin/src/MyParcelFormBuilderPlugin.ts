@@ -21,7 +21,7 @@ export const MyParcelFormBuilderPlugin: MyParcelFormBuilderPlugin = {
       formBuilder.setDefaults(options);
     }
 
-    if (process.env.NODE_ENV === 'development' || __VUE_PROD_DEVTOOLS__) {
+    if (import.meta.env.DEV || __VUE_PROD_DEVTOOLS__) {
       setupDevtools(app);
     }
   },

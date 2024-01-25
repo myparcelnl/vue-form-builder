@@ -10,7 +10,7 @@ export const createForm = <V extends FormValues = FormValues>(
   const form = defineForm(name, config as FormConfiguration<V>);
 
   return {
-    Component: markRaw((_, ctx) => h<{form: FormInstance<V>}>(MagicForm, {form}, ctx.slots)),
+    Component: markRaw((_, ctx) => h<{form: FormInstance<V>}>(MagicForm, {...ctx.attrs, form}, ctx.slots)),
     instance: form,
   };
 };

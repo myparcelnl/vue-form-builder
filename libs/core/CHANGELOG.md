@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.37](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.36...@myparcel-vfb/core@1.0.0-beta.37) "@myparcel-vfb/core" (2024-01-25)
+
+
+### Bug Fixes
+
+* **form:** fix form attributes not being passed through ([b9bc187](https://github/myparcelnl/vue-form-builder/commit/b9bc1871c9d1716432fe81559f725eb19bdc65e7))
+
+
+
+
 ## [1.0.0-beta.36](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.35...@myparcel-vfb/core@1.0.0-beta.36) "@myparcel-vfb/core" (2024-01-11)
 
 

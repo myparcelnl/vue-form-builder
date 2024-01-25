@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.39](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.38...@myparcel/vue-form-builder@1.0.0-beta.39) "@myparcel/vue-form-builder" (2024-01-25)
+
+
+### Bug Fixes
+
+* **bundle:** improve tree-shaking ([be1ae30](https://github/myparcelnl/vue-form-builder/commit/be1ae3089cdad141a6b7f65fa0dfc4dcc0720876))
+
+
+
+
 ## [1.0.0-beta.36](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.35...@myparcel/vue-form-builder@1.0.0-beta.36) "@myparcel/vue-form-builder" (2024-01-10)
 
 

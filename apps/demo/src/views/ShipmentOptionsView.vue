@@ -20,8 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, ref, watch} from 'vue';
-import {get} from '@vueuse/core';
+import {computed, ref, watch, toValue} from 'vue';
 import {type FormInstance} from '@myparcel-vfb/core';
 import {MagicForm} from '@myparcel/vue-form-builder/ts';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';
@@ -29,7 +28,7 @@ import FormDiagnostics from '../components/FormDiagnostics.vue';
 
 const formClasses = ref<string[]>([]);
 
-const dirty = computed(() => get(shipmentOptionsForm.isDirty));
+const dirty = computed(() => toValue(shipmentOptionsForm.isDirty));
 
 // Ask an user to confirm leaving the page when the form is dirty
 // TODO: Should this be a built-in option?
@@ -45,6 +44,6 @@ watch(dirty, (isDirty) => {
 });
 
 const afterValidate = (form: FormInstance) => {
-  formClasses.value = get(form.isValid) ? ['border-green-500'] : ['border-red-500'];
+  formClasses.value = toValue(form.isValid) ? ['border-green-500'] : ['border-red-500'];
 };
 </script>

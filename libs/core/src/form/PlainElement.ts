@@ -1,5 +1,4 @@
-import {ref, reactive, type UnwrapNestedRefs, computed, markRaw} from 'vue';
-import {get} from '@vueuse/core';
+import {ref, reactive, type UnwrapNestedRefs, computed, markRaw, toValue} from 'vue';
 import {type HookManagerInstance, createHookManager} from '@myparcel-vfb/hook-manager';
 import {useDynamicWatcher} from '../utils';
 import {type ToRecord} from '../types/common.types';
@@ -64,7 +63,7 @@ export class PlainElement<
     this.setVisible(config.visible ?? true);
 
     this.formattedErrors = computed(() => {
-      return get(this.errors).map((error) => (typeof error === 'function' ? error() : error));
+      return toValue(this.errors).map((error) => (typeof error === 'function' ? error() : error));
     });
 
     if ('visibleWhen' in config) {

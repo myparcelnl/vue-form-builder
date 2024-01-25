@@ -12,8 +12,8 @@ import {
   type ComputedRef,
   type Component,
   defineAsyncComponent,
+  toValue,
 } from 'vue';
-import {get} from '@vueuse/core';
 import {isOfType} from '@myparcel/ts-utils';
 import {
   type AnyElementConfiguration,
@@ -90,7 +90,7 @@ const createErrorComponent = (field: AnyElementConfiguration): Component => {
         this.$options.name = generateFieldName(this.element, 'errors');
       }
 
-      return get(this.element?.errors) && this.$slots.default?.({errors: get(this.element.errors)});
+      return toValue(this.element?.errors) && this.$slots.default?.({errors: toValue(this.element.errors)});
     },
   });
 };

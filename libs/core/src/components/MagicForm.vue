@@ -23,8 +23,7 @@
 </template>
 
 <script generic="V extends FormValues = FormValues" lang="ts" setup>
-import {onMounted, provide, ref, toRefs} from 'vue';
-import {get} from '@vueuse/core';
+import {onMounted, provide, ref, toRefs, toValue} from 'vue';
 import {type FormInstance, type FormValues, type FormHooks} from '../types';
 import {INJECT_FORM} from '../symbols';
 import {FORM_HOOKS, type FormHook} from '../data';
@@ -42,7 +41,7 @@ const propRefs = toRefs(props);
 const propsForm = propRefs.form.value;
 
 onMounted(() => {
-  const value = get(formElement);
+  const value = toValue(formElement);
 
   if (!value) {
     return;

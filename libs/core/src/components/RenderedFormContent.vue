@@ -23,8 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, ref} from 'vue';
-import {get} from '@vueuse/core';
+import {computed, ref, toValue} from 'vue';
 import {useForm} from '../composables';
 import FormElementWrapper from './FormElementWrapper';
 
@@ -36,6 +35,6 @@ if (!form) {
   throw new Error('Form not found');
 }
 
-const plainFields = computed(() => get(form.fields).filter((element) => !element.teleportSelector));
-const teleportFields = computed(() => get(form.fields).filter((element) => Boolean(element.teleportSelector)));
+const plainFields = computed(() => toValue(form.fields).filter((element) => !element.teleportSelector));
+const teleportFields = computed(() => toValue(form.fields).filter((element) => Boolean(element.teleportSelector)));
 </script>

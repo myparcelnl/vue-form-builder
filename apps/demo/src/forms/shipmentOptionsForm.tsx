@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import {ref} from 'vue';
-import {get} from '@vueuse/core';
+import {ref, toValue} from 'vue';
 import {defineField, defineForm, type InteractiveElementInstance} from '@myparcel/vue-form-builder/ts';
 import {isOfType} from '@myparcel/ts-utils';
 import {type CarrierName, PACKAGE_TYPE_IDS_TO_NAMES, PackageTypeName} from '@myparcel/constants';
@@ -18,7 +17,7 @@ import FormGroup from '../components/template/FormGroup.vue';
 import Heading from '../components/Heading.vue';
 import Bonnetje from '../components/Bonnetje.vue';
 
-// eslint-disable-next-line id-length
+// eslint-disable-next-line id-length,@typescript-eslint/consistent-type-imports
 declare const h: typeof import('vue').h;
 
 const firstName = ref('');
@@ -33,7 +32,7 @@ const validateName = <Type = unknown,>(field: InteractiveElementInstance<Type>) 
     return;
   }
 
-  nameField.props.errors = [...(get(firstNameField?.errors) ?? []), ...(get(lastNameField?.errors) ?? [])];
+  nameField.props.errors = [...(toValue(firstNameField?.errors) ?? []), ...(toValue(lastNameField?.errors) ?? [])];
 };
 
 export const shipmentOptionsForm = defineForm('shipmentOptions', {
@@ -345,7 +344,7 @@ export const shipmentOptionsForm = defineForm('shipmentOptions', {
       visibleWhen: ({form}: InteractiveElementInstance) => {
         const {packageType, carrier} = form.model;
 
-        return packageType.ref.value === PackageTypeName.Package && ['dhlforyou'].includes(get(carrier.ref));
+        return packageType.ref.value === PackageTypeName.Package && ['dhlforyou'].includes(toValue(carrier.ref));
       },
     }),
 

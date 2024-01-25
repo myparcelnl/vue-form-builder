@@ -1,5 +1,5 @@
-import {computed, ref, watch, reactive, unref} from 'vue';
-import {get, isDefined, useMemoize} from '@vueuse/core';
+import {computed, ref, watch, reactive, unref, toValue} from 'vue';
+import {isDefined, useMemoize} from '@vueuse/core';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
@@ -35,7 +35,7 @@ export class Form<V extends FormValues = FormValues> {
   public readonly values: FormInstance<V>['values'];
 
   private getFieldMemoized = useMemoize((name: string): AnyElementInstance | null => {
-    const found = get(this.fields).find((field) => field.name === name);
+    const found = toValue(this.fields).find((field) => field.name === name);
 
     return found ?? null;
   });
@@ -59,18 +59,18 @@ export class Form<V extends FormValues = FormValues> {
     fields.forEach((field) => {
       const instance = this.createFieldInstance(field as AnyElementConfiguration, this as unknown as FormInstance<V>);
 
-      get(this.fields).push(instance);
+      toValue(this.fields).push(instance);
     });
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     this.interactiveFields = computed(() => {
-      return get(this.fields).filter((field) => {
+      return toValue(this.fields).filter((field) => {
         return isOfType<InteractiveElementInstance>(field, 'ref');
       });
     });
 
-    this.isDirty = computed(() => get(this.interactiveFields).some((field) => get(field.isDirty)));
+    this.isDirty = computed(() => toValue(this.interactiveFields).some((field) => toValue(field.isDirty)));
 
     this.stable.value = true;
   }
@@ -84,7 +84,9 @@ export class Form<V extends FormValues = FormValues> {
     position: 'before' | 'after' = 'after',
   ): Promise<S extends string ? undefined | AnyElementInstance : AnyElementInstance> {
     await this.hooks.execute(FormHook.BeforeAddElement, this, element);
-    const newIndex = sibling ? get(this.fields).findIndex((field) => field.name === sibling) : get(this.fields).length;
+    const newIndex = sibling
+      ? toValue(this.fields).findIndex((field) => field.name === sibling)
+      : toValue(this.fields).length;
 
     if (sibling && newIndex === -1) {
       // eslint-disable-next-line no-console
@@ -96,7 +98,7 @@ export class Form<V extends FormValues = FormValues> {
 
     const newElement = this.createFieldInstance(element, this as unknown as FormInstance<V>);
 
-    get(this.fields).splice(index, 0, newElement);
+    toValue(this.fields).splice(index, 0, newElement);
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
 
     return newElement;
@@ -109,23 +111,23 @@ export class Form<V extends FormValues = FormValues> {
   public getValue<T = unknown>(fieldName: string): T {
     const fieldInstance = this.ensureGetField<InteractiveElementInstance>(fieldName);
 
-    return get(fieldInstance.ref) as T;
+    return toValue(fieldInstance.ref) as T;
   }
 
   public getValues(): V {
-    return get(this.values) as V;
+    return toValue(this.values) as V;
   }
 
   public removeElement(name: string): void {
-    const index = get(this.fields).findIndex((field) => field.name === name);
+    const index = toValue(this.fields).findIndex((field) => field.name === name);
 
-    get(this.fields).splice(index, 1);
+    toValue(this.fields).splice(index, 1);
     this.getFieldMemoized.delete(name);
   }
 
   public async reset(): Promise<void> {
     await this.hooks.execute(FormHook.BeforeReset, this);
-    await Promise.all(get(this.interactiveFields).map((field) => field.reset()));
+    await Promise.all(toValue(this.interactiveFields).map((field) => field.reset()));
     await this.hooks.execute(FormHook.AfterReset, this);
   }
 
@@ -153,7 +155,7 @@ export class Form<V extends FormValues = FormValues> {
     await this.hooks.execute(FormHook.BeforeValidate, this);
 
     const result = await Promise.all(
-      get(this.fields).map((field) => {
+      toValue(this.fields).map((field) => {
         if (!isOfType<InteractiveElementInstance>(field, 'ref')) {
           field.resetValidation();
           return true;
@@ -167,7 +169,7 @@ export class Form<V extends FormValues = FormValues> {
 
     await this.hooks.execute(FormHook.AfterValidate, this);
 
-    return get(this.isValid);
+    return toValue(this.isValid);
   }
 
   protected ensureGetField<I extends AnyElementInstance>(name: string): I {
@@ -210,13 +212,13 @@ export class Form<V extends FormValues = FormValues> {
     watch(instance.ref, async (value: unknown) => {
       await this.hooks.execute(FormHook.ElementChange, this, instance, value);
 
-      if (!get(instance.isDisabled)) {
+      if (!toValue(instance.isDisabled)) {
         // @ts-expect-error todo
         this.values[elementConfig.name] = value as V[keyof V];
       }
     });
 
-    if (!get(instance.isDisabled)) {
+    if (!toValue(instance.isDisabled)) {
       // @ts-expect-error todo
       this.values[elementConfig.name] = unref(instance.ref) as V[keyof V];
     }

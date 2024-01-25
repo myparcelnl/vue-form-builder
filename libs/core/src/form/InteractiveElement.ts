@@ -1,6 +1,5 @@
 // noinspection JSUnusedGlobalSymbols
-import {ref, watch} from 'vue';
-import {get} from '@vueuse/core';
+import {ref, watch, toValue} from 'vue';
 import {isOfType, asyncEvery} from '@myparcel/ts-utils';
 import {isRequired} from '../validators';
 import {useDynamicWatcher} from '../utils';
@@ -59,7 +58,7 @@ export class InteractiveElement<
       this.ref.value = form.config.initialValues[config.name];
     }
 
-    this.initialValue = get(this.ref);
+    this.initialValue = toValue(this.ref);
 
     this.lazy = config.lazy ?? false;
     this.errorsTarget = config.errorsTarget;
@@ -104,19 +103,19 @@ export class InteractiveElement<
   }
 
   public blur = async (): Promise<void> => {
-    await this.hooks.execute('beforeBlur', this, get(this.ref));
+    await this.hooks.execute('beforeBlur', this, toValue(this.ref));
 
     this.isSuspended.value = true;
-    this.ref.value = ((await this.hooks.execute('sanitize', this, get(this.ref))) as Type) ?? get(this.ref);
+    this.ref.value = ((await this.hooks.execute('sanitize', this, toValue(this.ref))) as Type) ?? toValue(this.ref);
 
-    if (get(this.isDirty)) {
+    if (toValue(this.isDirty)) {
       await this.validate();
     }
 
     this.isTouched.value = true;
     this.isSuspended.value = false;
 
-    await this.hooks.execute('afterBlur', this, get(this.ref));
+    await this.hooks.execute('afterBlur', this, toValue(this.ref));
   };
 
   public focus: InteractiveElementConfiguration<Type, Props>['focus'] = async (_, event) => {
@@ -146,23 +145,25 @@ export class InteractiveElement<
 
   public validate = async (): Promise<boolean> => {
     this.resetValidation();
-    await this.hooks.execute('beforeValidate', this, get(this.ref));
+    await this.hooks.execute('beforeValidate', this, toValue(this.ref));
 
-    if (get(this.isDisabled)) {
+    if (toValue(this.isDisabled)) {
       this.isValid.value = true;
-      return get(this.isValid);
+      return toValue(this.isValid);
     }
 
     const doValidate = async (validator: Validator<Type, Props>) => {
-      const valid = await validator.validate(this, get(this.ref));
+      const valid = await validator.validate(this, toValue(this.ref));
 
       if (!valid && validator.errorMessage) {
         if (this.errorsTarget) {
-          const target = get(this.form.fields).find((field: AnyElementInstance) => field.name === this.errorsTarget);
+          const target = toValue(this.form.fields).find(
+            (field: AnyElementInstance) => field.name === this.errorsTarget,
+          );
 
-          get(target?.errors)?.push(validator.errorMessage);
+          toValue(target?.errors)?.push(validator.errorMessage);
         } else {
-          get(this.errors).push(validator.errorMessage);
+          toValue(this.errors).push(validator.errorMessage);
         }
       }
 
@@ -171,13 +172,13 @@ export class InteractiveElement<
 
     // validation schema: 1) validators without precedence 2) validators with precedence
     // if a validator with precedence fails, the rest of the validators are not executed.
-    const withoutPrecedence = get(this.validators).filter((validator) => !validator.precedence);
-    const withPrecedence = get(this.validators)
+    const withoutPrecedence = toValue(this.validators).filter((validator) => !validator.precedence);
+    const withPrecedence = toValue(this.validators)
       .filter((validator) => isOfType<ValidatorWithPrecedence<Type, Props>>(validator, 'precedence'))
       .sort((validatorA, validatorB) => (validatorA.precedence ?? 0) - (validatorB.precedence ?? 0));
 
     // add the isRequired validator in-line when the field is not optional
-    if (!get(this.isOptional)) {
+    if (!toValue(this.isOptional)) {
       withoutPrecedence.push(isRequired<Type, Props>(this.form.config.validationMessages?.required ?? ''));
     }
 
@@ -186,9 +187,9 @@ export class InteractiveElement<
 
     this.isValid.value = validatedWithoutPrecedence && validatedWithPrecedence;
 
-    await this.hooks.execute('afterValidate', this, get(this.ref), get(this.isValid));
+    await this.hooks.execute('afterValidate', this, toValue(this.ref), toValue(this.isValid));
 
-    return get(this.isValid);
+    return toValue(this.isValid);
   };
 
   private createValidators(config: InteractiveElementConfiguration<Type, Props>): void {

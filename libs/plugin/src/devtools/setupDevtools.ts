@@ -1,6 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import {type UnwrapNestedRefs} from 'vue';
-import {get} from '@vueuse/core';
+import {type UnwrapNestedRefs, toValue} from 'vue';
 import {type StateBase} from '@vue/devtools-api/lib/esm/api/component';
 import {type App, setupDevtoolsPlugin} from '@vue/devtools-api';
 import {type FormInstance, useFormBuilder} from '@myparcel-vfb/core';
@@ -53,7 +52,7 @@ export const setupDevtools = (app: App): void => {
           const payload = activePayload;
           const data = useFormBuilder();
 
-          payload.rootNodes = Object.entries(get(data.forms)).map(([name, form]) => {
+          payload.rootNodes = Object.entries(toValue(data.forms)).map(([name, form]) => {
             return createFormNode(name, form as unknown as UnwrapNestedRefs<FormInstance>);
           });
         }
@@ -81,7 +80,7 @@ export const setupDevtools = (app: App): void => {
           }
 
           const formBuilder = useFormBuilder();
-          const form = get(formBuilder.forms)[formName];
+          const form = toValue(formBuilder.forms)[formName];
 
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error

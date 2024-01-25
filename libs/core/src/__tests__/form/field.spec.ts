@@ -1,6 +1,5 @@
-import {h, markRaw, ref, nextTick} from 'vue';
+import {h, markRaw, ref, nextTick, toValue} from 'vue';
 import {describe, expect, it, vi} from 'vitest';
-import {get} from '@vueuse/core';
 import {flushPromises, mount} from '@vue/test-utils';
 import {generateForm, optionData} from '../utils';
 import {firstNameNotDuane} from '../examples/validators';
@@ -186,8 +185,8 @@ describe('Form fields', () => {
       initialValues: {element: 'hello', toggle: false},
     });
 
-    expect(get(form.model.element.ref)).toBe('hello');
-    expect(get(form.model.toggle.ref)).toBe(false);
+    expect(toValue(form.model.element.ref)).toBe('hello');
+    expect(toValue(form.model.toggle.ref)).toBe(false);
   });
 
   it.skip('can pass through slots', async () => {

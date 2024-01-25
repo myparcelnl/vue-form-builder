@@ -1,5 +1,4 @@
-import {type Ref, ref} from 'vue';
-import {get} from '@vueuse/core';
+import {type Ref, ref, toValue} from 'vue';
 import {HookManager} from '@myparcel-vfb/hook-manager';
 import {markComponentAsRaw} from '../utils';
 import {
@@ -41,16 +40,16 @@ export const useFormBuilder = (): FormBuilder => {
     },
 
     getForm(name) {
-      return get(forms)[name];
+      return toValue(forms)[name];
     },
 
     // @ts-expect-error todo
     register(name, config) {
       void hookManager.execute('beforeRegister');
-      const instance = new Form(name, mergeDefaults(get(defaults), config as FormConfiguration));
+      const instance = new Form(name, mergeDefaults(toValue(defaults), config as FormConfiguration));
 
       // @ts-expect-error todo
-      get(forms)[name] = instance;
+      toValue(forms)[name] = instance;
 
       void hookManager.execute('afterRegister', instance);
 
@@ -58,7 +57,7 @@ export const useFormBuilder = (): FormBuilder => {
     },
 
     setDefaults(options) {
-      defaults.value = mergeDefaults(get(defaults), options);
+      defaults.value = mergeDefaults(toValue(defaults), options);
     },
   };
 };

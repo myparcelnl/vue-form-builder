@@ -31,7 +31,7 @@ export default defineConfig((env) => {
         formats: ['es', 'cjs'],
       },
       rollupOptions: {
-        external: ['vue', '@myparcel/ts-utils'],
+        external: ['vue', '@myparcel/ts-utils', '@vueuse/core'],
         output: {
           globals: {
             vue: 'Vue',

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.38](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.37...@myparcel-vfb/core@1.0.0-beta.38) "@myparcel-vfb/core" (2024-01-26)
+
+
+### Performance Improvements
+
+* replace get with toValue ([2185f6f](https://github/myparcelnl/vue-form-builder/commit/2185f6f15cf8169879d64a9ac122380557f17a29))
+
+
+
+
 ## [1.0.0-beta.37](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.36...@myparcel-vfb/core@1.0.0-beta.37) "@myparcel-vfb/core" (2024-01-25)
 
 

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.40](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.39...@myparcel/vue-form-builder@1.0.0-beta.40) "@myparcel/vue-form-builder" (2024-01-26)
+
+
+### Performance Improvements
+
+* **bundle:** do not bundle @vueuse/core ([84ed058](https://github/myparcelnl/vue-form-builder/commit/84ed058bb420733daecf03bcc3cd2603cfd028b6))
+
+
+
+
 ## [1.0.0-beta.39](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.38...@myparcel/vue-form-builder@1.0.0-beta.39) "@myparcel/vue-form-builder" (2024-01-25)
 
 

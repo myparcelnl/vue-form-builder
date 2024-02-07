@@ -6,6 +6,7 @@ import {
   h,
   markRaw,
   onMounted,
+  onUnmounted,
   type Ref,
   ref,
   reactive,
@@ -35,6 +36,13 @@ const createMainComponent = <Type = unknown, Props extends ComponentProps = Comp
 
       onMounted(async () => {
         element.value = await form.addElement(field);
+      });
+
+      onUnmounted(() => {
+        if (element.value) {
+          form.removeElement(element.value.name);
+          element.value = undefined;
+        }
       });
 
       return {

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.39](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.38...@myparcel-vfb/core@1.0.0-beta.39) "@myparcel-vfb/core" (2024-02-07)
+
+
+### Bug Fixes
+
+* **field:** remove fields from the form when unmounted ([#233](https://github/myparcelnl/vue-form-builder/issues/233)) ([8aa462c](https://github/myparcelnl/vue-form-builder/commit/8aa462cdfa70cf9934982bada0160c5b097273ce))
+
+
+
+
 ## [1.0.0-beta.38](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.37...@myparcel-vfb/core@1.0.0-beta.38) "@myparcel-vfb/core" (2024-01-26)
 
 

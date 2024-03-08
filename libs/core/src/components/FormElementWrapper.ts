@@ -1,37 +1,8 @@
-import {type Component, defineComponent, h, type PropType, provide, Teleport, type VNode} from 'vue';
-import {isOfType} from '@myparcel/ts-utils';
-import {type AnyElementInstance, type ComponentOrHtmlElement, type FormInstance} from '../types';
+import {type Component, defineComponent, h, type PropType, provide} from 'vue';
+import {type FormInstance, type FieldInstance} from '../types';
 import {INJECT_ELEMENT} from '../symbols';
 import {useTestAttributes} from '../composables';
 import FormElement from './FormElement.vue';
-
-// noinspection JSUnusedGlobalSymbols
-type RawSlots = {
-  [name: string]: unknown;
-  $stable?: boolean;
-};
-
-/**
- * @TODO: check if this can be removed before releasing 1.0.0
- */
-const convertSlots = (component: ComponentOrHtmlElement): RawSlots => {
-  const slotList = [];
-  let slotMap: RawSlots = {};
-
-  if (isOfType<VNode>(component, 'children')) {
-    if (Array.isArray(component.children)) {
-      component.children.forEach((child: unknown) => {
-        slotList.push(typeof child === 'function' ? child : () => child);
-      });
-    } else if (isOfType<RawSlots>(component, 'children')) {
-      slotMap = component.children as RawSlots;
-    } else {
-      slotList.push(component.children);
-    }
-  }
-
-  return {...slotList, ...slotMap};
-};
 
 export default defineComponent({
   name: 'FormElementWrapper',
@@ -41,7 +12,7 @@ export default defineComponent({
       required: true,
     },
     element: {
-      type: Object as PropType<AnyElementInstance>,
+      type: Object as PropType<FieldInstance>,
       required: true,
     },
   },
@@ -51,8 +22,6 @@ export default defineComponent({
   },
 
   render() {
-    const childrenSlots = convertSlots(this.element.component);
-
     let component: Component = h(
       FormElement,
       {
@@ -60,11 +29,7 @@ export default defineComponent({
         ...useTestAttributes(this.element),
         element: this.element,
       },
-      {
-        ...childrenSlots,
-        ...this.element.slots,
-        ...this.$slots,
-      },
+      this.$slots,
     );
 
     const hasOwnWrapper = typeof this.element.wrapper !== 'boolean';
@@ -80,13 +45,8 @@ export default defineComponent({
           ...this.form.config.fieldDefaults?.attributes,
           element: this.element,
         },
-        {...this.element.slots, default: () => childComponent},
+        {default: () => childComponent},
       );
-    }
-
-    if (this.element.teleportSelector) {
-      // @ts-expect-error Teleport has an extra property which doesn't fit in the Component type
-      return h(Teleport, {to: this.element.teleportSelector}, [component]);
     }
 
     return component;

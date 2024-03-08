@@ -1,6 +1,6 @@
 // noinspection SuspiciousTypeOfGuard
-import {type BaseElementInstance} from '@myparcel-vfb/core';
+import {type BaseFieldInstance} from '@myparcel-vfb/core';
 
-export const getComponentName = (field: BaseElementInstance): string => {
+export const getComponentName = (field: BaseFieldInstance): string => {
   return (typeof field.component === 'string' ? field.component : field.component.name) ?? '?';
 };

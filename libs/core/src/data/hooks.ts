@@ -16,7 +16,7 @@ export enum FormHook {
 
 export const FORM_HOOKS = Object.freeze(Object.values(FormHook)) as readonly FormHook[];
 
-export const COMPONENT_LIFECYCLE_HOOKS = [
+export const COMPONENT_LIFECYCLE_HOOKS = Object.freeze([
   'onCreated',
   'onActivated',
   'onBeforeMount',
@@ -26,15 +26,15 @@ export const COMPONENT_LIFECYCLE_HOOKS = [
   'onMounted',
   'onUnmounted',
   'onUpdated',
-] as const;
+] as const);
 
-export const PLAIN_ELEMENT_HOOKS = ['blur', 'click', 'focus', ...COMPONENT_LIFECYCLE_HOOKS] as const;
-
-export const INTERACTIVE_ELEMENT_HOOKS = [
+export const FIELD_HOOKS = Object.freeze([
+  ...COMPONENT_LIFECYCLE_HOOKS,
   'blur',
+  'click',
+  'focus',
   'focus',
   'sanitize',
   'update',
   'validate',
-  ...PLAIN_ELEMENT_HOOKS,
-] as const;
+] as const);

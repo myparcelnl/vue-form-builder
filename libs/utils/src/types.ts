@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {type HTMLAttributes} from 'vue';
 
-export interface SelectOption {
+export interface SelectOption<Type = string> {
   label: string;
-  value: string;
+  value: Type;
 }
 
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;

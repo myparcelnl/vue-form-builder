@@ -4,8 +4,8 @@ import {flushPromises} from '@vue/test-utils';
 import {generateForm} from '../utils';
 import TextInput from '../elements/TextInput.vue';
 import {defineField} from '../../utils';
-import {type FormConfiguration, type InteractiveElementConfiguration} from '../../types';
-import {PlainElement, InteractiveElement} from '../../form';
+import {type FormConfiguration, type FieldConfiguration} from '../../types';
+import {PlainElement, Field} from '../../form';
 
 describe('Form instance', () => {
   it('creates a reactive model from named elements', () => {
@@ -26,7 +26,7 @@ describe('Form instance', () => {
 
     expect(Object.keys(form.model)).toEqual(['test', 'test2']);
     expect(form.model.test).toBeInstanceOf(PlainElement);
-    expect(form.model.test2).toBeInstanceOf(InteractiveElement);
+    expect(form.model.test2).toBeInstanceOf(Field);
     expect(form.model.test2.ref.value).toBe('');
     form.model.test2.ref.value = 'changed';
     expect(form.model.test2.ref.value).toBe('changed');
@@ -117,8 +117,7 @@ describe('Form instance', () => {
     let expectation: boolean;
     const newFormConfig = createFormConfig();
     // specifically make the predicate rely on a field further down the form:
-    (newFormConfig.fields as InteractiveElementConfiguration[])[0].optionalWhen = (field) =>
-      field.form.getValue('val') === 24;
+    (newFormConfig.fields as FieldConfiguration[])[0].optionalWhen = (field) => field.form.getValue('val') === 24;
 
     newFormConfig.afterSubmit = (form) => {
       expect(form.fields.value[0].isOptional).toBe(expectation);

@@ -1,5 +1,6 @@
 import {mount} from '@vue/test-utils';
-import {type AnyElementConfiguration, type FormConfiguration, type FormValues} from '../../types';
+import {type AnyElementConfiguration} from '../../types/deprecated.types';
+import {type FormConfiguration, type FormValues} from '../../types';
 import MagicForm from '../../components/MagicForm.vue';
 import {generateForm} from './generateForm';
 

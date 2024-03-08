@@ -6,7 +6,6 @@ export const useFormEventLog = (form: MaybeUnwrapNestedRefs<FormInstance>): Ref<
   const eventLog = ref<string>('');
 
   Object.values(FormHook).forEach((hook) => {
-    form.off(hook);
     form.on(hook, (_, ...args) => {
       const additionalArgs = args as unknown as [unknown, unknown];
 

@@ -15,15 +15,15 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, toRefs, type Ref, unref} from 'vue';
-import {type AnyElementInstance, type InteractiveElementInstance, type ComponentProps} from '../types';
-import {createElementHooks} from '../composables';
+import {computed, toRefs, unref, isRef, type Ref} from 'vue';
+import {type ComponentProps, type FieldInstance} from '../types';
+import {createFieldHooks} from '../composables';
 
-const props = defineProps<{element: AnyElementInstance}>();
+const props = defineProps<{element: FieldInstance}>();
 
 const propRefs = toRefs(props);
 
-createElementHooks(propRefs.element.value);
+createFieldHooks(propRefs.element.value);
 
 /**
  * Collect attributes. Always adds `element.attributes`, but only adds `element` if element is a Vue component.
@@ -44,11 +44,17 @@ const attributes = computed(() => {
 
 const model = computed({
   get() {
-    return unref((props.element as InteractiveElementInstance).ref);
+    return unref(props.element.ref);
   },
 
   set(value) {
-    (props.element as InteractiveElementInstance).ref = value as Ref;
+    if (isRef(props.element.ref)) {
+      // eslint-disable-next-line vue/no-mutating-props
+      props.element.ref.value = value;
+    } else {
+      // eslint-disable-next-line vue/no-mutating-props
+      props.element.ref = value as Ref;
+    }
   },
 });
 </script>

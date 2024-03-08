@@ -1,8 +1,8 @@
 import {type Component} from 'vue';
 import {type PromiseOr} from '@myparcel/ts-utils';
-import {type BaseElementInstance} from './element.types';
+import {type FieldInstance} from './field.types';
 
-export interface ComponentLifecycleHooks<I extends BaseElementInstance = BaseElementInstance> {
+export interface ComponentLifecycleHooks<I extends FieldInstance = FieldInstance> {
   onActivated?(instance: I): PromiseOr<void>;
 
   onBeforeMount?(instance: I): PromiseOr<void>;

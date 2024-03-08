@@ -9,23 +9,8 @@
         </NLink>
         <NLink
           class="hover:text-pink-200 transition-colors"
-          to="/shipment-options">
-          Shipment options
-        </NLink>
-        <NLink
-          class="hover:text-pink-200 transition-colors"
-          to="/addresses/new">
-          Create address
-        </NLink>
-        <NLink
-          class="hover:text-pink-200 transition-colors"
           to="/forms/no-prop">
           Form without element props
-        </NLink>
-        <NLink
-          class="hover:text-pink-200 transition-colors"
-          to="/forms/new-form">
-          New form structure
         </NLink>
       </nav>
     </div>

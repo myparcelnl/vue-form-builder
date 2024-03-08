@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Form without fields array</h1>
+    <h1>Form demo</h1>
     <p>
       These forms are defined entirely in the template. The components can be placed anywhere in the template. You can
       even choose to manually place the Label and Errors components as well.
@@ -44,7 +44,7 @@
 
               <div class="gap-4 grid grid-cols-2">
                 <div>
-                  <SubmitButton.Component @click="onSubmitClick" />
+                  <TSubmitButton @click="onSubmitClick" />
                 </div>
 
                 <button
@@ -102,7 +102,7 @@
               <small>This is the email Errors component. You won't see it if there are no errors.</small>
             </div>
 
-            <SubmitButton.Component outline>
+            <TSubmitButton outline>
               <template #icon="{icon}">
                 <span class="inline-flex">
                   <span class="inline-flex relative">
@@ -117,7 +117,7 @@
               </template>
 
               <template #default> Default slot! </template>
-            </SubmitButton.Component>
+            </TSubmitButton>
           </div>
         </Form2.Component>
 
@@ -129,13 +129,13 @@
 
 <script lang="ts" setup>
 /* eslint-disable @typescript-eslint/naming-convention */
-import {computed, h, ref, type Component} from 'vue';
+import {computed, h, ref} from 'vue';
 import {createField, createForm} from '@myparcel-vfb/core';
 import {regexValidator, stringLengthValidator, stringNotContainsValidator, emailValidator} from '../validation';
 import TTextInput from '../components/template/TTextInput.vue';
+import TSubmitButton from '../components/template/TResetButton.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import ErrorBox from '../components/template/ErrorBox.vue';
-import StandaloneSubmitButton from '../components/StandAloneSubmitButton.vue';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
 
 const Form = createForm<{
@@ -193,15 +193,6 @@ const Email = createField({
   validators: [stringLengthValidator(5, 30), emailValidator(), stringNotContainsValidator(['x', 'y', 'z', 'q', 'w'])],
 });
 
-const SubmitButton = createField({
-  component: StandaloneSubmitButton,
-  props: {
-    onClick(...args) {
-      console.log('click from prop!', {args});
-    },
-  },
-});
-
 const Description = createField({
   name: 'description',
   component: TTextInput,
@@ -230,7 +221,11 @@ const form2Classes = computed(() => {
   };
 });
 
-const onSubmitClick = (...args) => {
-  console.log('submit', args);
+const onSubmitClick = () => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const field = Form2.instance.getField('description')!;
+
+  field.errors.value.push('This is an error from afterSubmit');
+  field.isValid.value = false;
 };
 </script>

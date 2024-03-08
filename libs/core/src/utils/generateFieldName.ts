@@ -1,4 +1,5 @@
-import {type MaybeUnwrapNestedRefs, type AnyElementInstance} from '../types';
+import {type AnyElementInstance} from '../types/deprecated.types';
+import {type MaybeUnwrapNestedRefs} from '../types';
 
 export const generateFieldName = (
   field?: MaybeUnwrapNestedRefs<AnyElementInstance> | null,

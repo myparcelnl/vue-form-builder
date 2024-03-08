@@ -15,19 +15,12 @@ import {
   defineAsyncComponent,
   toValue,
 } from 'vue';
-import {isOfType} from '@myparcel/ts-utils';
-import {
-  type AnyElementConfiguration,
-  type InteractiveElementInstance,
-  type InteractiveElementConfiguration,
-  type ModularCreatedElement,
-  type ComponentProps,
-} from '../types';
+import {type ModularCreatedField, type ComponentProps, type FieldConfiguration, type FieldInstance} from '../types';
 import {useForm} from '../composables';
 import FormElementWrapper from '../components/FormElementWrapper';
 
 const createMainComponent = <Type = unknown, Props extends ComponentProps = ComponentProps>(
-  field: AnyElementConfiguration<Type, Props>,
+  field: FieldConfiguration<Type, Props>,
 ): Component => {
   return defineComponent({
     setup() {
@@ -51,6 +44,18 @@ const createMainComponent = <Type = unknown, Props extends ComponentProps = Comp
       };
     },
 
+    emits: [
+      'afterBlur',
+      'afterSanitize',
+      'afterUpdate',
+      'afterValidate',
+      'beforeBlur',
+      'beforeSanitize',
+      'beforeUpdate',
+      'beforeValidate',
+      'blur',
+    ],
+
     render() {
       if (import.meta.env.DEV && !this.$options.name && this.element) {
         this.$options.name = generateFieldName(this.element);
@@ -63,7 +68,9 @@ const createMainComponent = <Type = unknown, Props extends ComponentProps = Comp
   });
 };
 
-const createLabelComponent = (field: AnyElementConfiguration): Component => {
+const createLabelComponent = <Type = unknown, Props extends ComponentProps = ComponentProps>(
+  field: FieldConfiguration<Type, Props>,
+): Component => {
   return defineComponent({
     setup() {
       const form = useForm();
@@ -82,13 +89,15 @@ const createLabelComponent = (field: AnyElementConfiguration): Component => {
   });
 };
 
-const createErrorComponent = (field: AnyElementConfiguration): Component => {
+const createErrorComponent = <Type = unknown, Props extends ComponentProps = ComponentProps>(
+  field: FieldConfiguration<Type, Props>,
+): Component => {
   return defineComponent({
     setup(): {
-      element: ComputedRef<InteractiveElementInstance | undefined>;
+      element: ComputedRef;
     } {
       const form = useForm();
-      const element = computed(() => (field.name ? form.getField<InteractiveElementInstance>(field.name) : undefined));
+      const element = computed(() => (field.name ? form.getField<FieldInstance>(field.name) : undefined));
 
       return {element};
     },
@@ -108,18 +117,14 @@ const createAsyncComponent = <C extends Component>(cb: () => C) => {
 };
 
 export const createField = <Type = unknown, Props extends ComponentProps = ComponentProps>(
-  field: AnyElementConfiguration<Type, Props>,
-): ModularCreatedElement<Type, Props> => {
+  field: FieldConfiguration<Type, Props>,
+): ModularCreatedField<Type, Props> => {
   // @ts-expect-error todo
   return reactive({
     field,
+    ref: (field.ref ?? ref<Type>()) as Type extends undefined ? undefined : Ref<Type>,
     Component: markRaw(createMainComponent(field)),
-
-    ...(isOfType<InteractiveElementConfiguration>(field, 'ref') && {
-      ref: (field.ref ?? ref<Type>()) as Type extends undefined ? undefined : Ref<Type>,
-
-      Label: createAsyncComponent(() => createLabelComponent(field)),
-      Errors: createAsyncComponent(() => createErrorComponent(field)),
-    }),
+    Errors: createAsyncComponent(() => createErrorComponent(field)),
+    Label: createAsyncComponent(() => createLabelComponent(field)),
   });
 };

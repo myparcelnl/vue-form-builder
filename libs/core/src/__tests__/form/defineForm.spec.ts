@@ -1,7 +1,7 @@
 import {type PropType, defineComponent, h, isVNode, ref, vModelText, withDirectives} from 'vue';
 import {afterEach, describe, expect, it} from 'vitest';
 import {defineForm} from '../../utils';
-import {type AnyElementConfiguration, type InteractiveElementInstance} from '../../types';
+import {type FieldConfiguration, type ElementProp} from '../../types';
 import {Form} from '../../form';
 import {getDefaultFormConfiguration} from '../../data';
 import {useFormBuilder} from '../../composables';
@@ -12,13 +12,13 @@ const mockComponent = defineComponent({
       type: String,
     },
     element: {
-      type: Object as PropType<InteractiveElementInstance>,
+      type: Object as PropType<ElementProp>,
     },
   },
   render: () => withDirectives(h('div'), [[vModelText]]),
 });
 
-const commonFields: AnyElementConfiguration[] = [
+const commonFields: FieldConfiguration[] = [
   {
     name: 'field',
     component: mockComponent,
@@ -29,9 +29,6 @@ const commonFields: AnyElementConfiguration[] = [
     name: 'named',
     component: 'input',
     label: 'my_label_2',
-  },
-  {
-    component: 'br',
   },
 ];
 

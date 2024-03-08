@@ -5,3 +5,4 @@ export * from './defineForm';
 export * from './generateFieldName';
 export * from './markComponentAsRaw';
 export * from './useDynamicWatcher';
+export {normalizeFormConfiguration} from './normalizeFormConfiguration';

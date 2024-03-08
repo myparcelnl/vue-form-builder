@@ -1,5 +1,6 @@
 export * from './composables';
 export * from './data';
+export * from './deprecated';
 export * from './form';
 export * from './types';
 export * from './utils';

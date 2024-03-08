@@ -2,8 +2,8 @@ import {type PropType, defineComponent, h, ref, vModelText, withDirectives, reac
 import {afterEach, describe, expect, it, vi} from 'vitest';
 import {mount, flushPromises} from '@vue/test-utils';
 import {generateForm, mountForm} from '../utils';
-import {type InteractiveElementInstance} from '../../types';
-import {InteractiveElement} from '../../form';
+import {type ElementProp} from '../../types';
+import {Field} from '../../form';
 import {getDefaultFormConfiguration} from '../../data';
 import {useFormBuilder} from '../../composables';
 import MagicForm from '../../components/MagicForm.vue';
@@ -14,7 +14,7 @@ const mockComponent = defineComponent({
       type: String,
     },
     element: {
-      type: Object as PropType<InteractiveElementInstance>,
+      type: Object as PropType<ElementProp>,
     },
   },
   render: () => withDirectives(h('div'), [[vModelText]]),
@@ -155,7 +155,7 @@ describe('rendering a form', () => {
 
     const input = wrapper.findComponent(mockComponent);
 
-    expect(input.props('element')).toBeInstanceOf(InteractiveElement);
+    expect(input.props('element')).toBeInstanceOf(Field);
   });
 
   it('does not render element prop if it is turned off', () => {

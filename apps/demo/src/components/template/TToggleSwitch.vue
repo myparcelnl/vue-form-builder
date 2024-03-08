@@ -16,30 +16,13 @@
   </label>
 </template>
 
-<script lang="ts">
-/* eslint-disable vue/no-unused-properties */
-import {defineComponent, type PropType} from 'vue';
+<script lang="ts" setup generic="Type extends boolean">
 import {useVModel} from '@vueuse/core';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+import {type FieldEmits, type FieldProps} from '@myparcel-vfb/core';
 
-export default defineComponent({
-  name: 'TToggleSwitch',
-  props: {
-    element: {
-      type: Object as PropType<InteractiveElementInstance>,
-      required: true,
-    },
+// eslint-disable-next-line vue/no-unused-properties
+const props = defineProps<FieldProps<Type>>();
+const emit = defineEmits<FieldEmits<Type>>();
 
-    // eslint-disable-next-line vue/no-unused-properties
-    modelValue: {
-      type: Boolean,
-    },
-  },
-
-  emits: ['update:modelValue'],
-
-  setup: (props) => ({
-    model: useVModel(props, 'modelValue'),
-  }),
-});
+const model = useVModel(props, undefined, emit);
 </script>

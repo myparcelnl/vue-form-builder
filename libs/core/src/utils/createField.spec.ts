@@ -3,7 +3,7 @@ import {defineComponent, ref, h, markRaw, type PropType} from 'vue';
 import {describe, it, expect, afterEach} from 'vitest';
 import {flushPromises} from '@vue/test-utils';
 import {render, cleanup} from '@testing-library/vue';
-import {type AnyElementInstance} from '../types';
+import {type FieldInstance} from '../types';
 import {createForm} from './createForm';
 import {createField} from './createField';
 
@@ -12,7 +12,7 @@ describe('createField', () => {
     defineComponent({
       name: 'test',
       props: {
-        element: {type: Object as PropType<AnyElementInstance>, required: true},
+        element: {type: Object as PropType<FieldInstance>, required: true},
         modelValue: {type: String, required: true},
       },
       render() {

@@ -19,26 +19,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import {defineComponent, type PropType, type UnwrapNestedRefs} from 'vue';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+<script lang="ts" setup>
+import {type FieldWrapperProps} from '@myparcel-vfb/core';
 import {translate} from '../../translate';
 import ErrorBox from './ErrorBox.vue';
 
-export default defineComponent({
-  name: 'FormGroup',
-  components: {ErrorBox},
-  props: {
-    element: {
-      type: Object as PropType<UnwrapNestedRefs<InteractiveElementInstance>>,
-      required: true,
-    },
-  },
-
-  setup: () => {
-    return {
-      translate,
-    };
-  },
-});
+defineProps<FieldWrapperProps>();
 </script>

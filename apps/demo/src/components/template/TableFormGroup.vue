@@ -28,24 +28,9 @@
   </tr>
 </template>
 
-<script lang="ts">
-import {type PropType, defineComponent} from 'vue';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+<script lang="ts" setup>
+import {type FieldWrapperProps} from '@myparcel-vfb/core';
 import {translate} from '../../translate';
 
-export default defineComponent({
-  name: 'TableFormGroup',
-  props: {
-    element: {
-      type: Object as PropType<InteractiveElementInstance>,
-      required: true,
-    },
-  },
-
-  setup: () => {
-    return {
-      translate,
-    };
-  },
-});
+defineProps<FieldWrapperProps>();
 </script>

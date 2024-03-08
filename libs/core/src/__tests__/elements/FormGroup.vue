@@ -24,19 +24,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import {type PropType, defineComponent} from 'vue';
+<script lang="ts" setup>
+import {type FieldWrapperProps} from '../../types';
 
-import type {InteractiveElementInstance} from '../../types';
-
-export default defineComponent({
-  name: 'FormGroup',
-
-  props: {
-    element: {
-      type: Object as PropType<InteractiveElementInstance>,
-      required: true,
-    },
-  },
-});
+defineProps<FieldWrapperProps>();
 </script>

@@ -1,5 +1,5 @@
 import {inject} from 'vue';
-import {type AnyElementInstance} from '../types';
+import {type AnyElementInstance} from '../types/deprecated.types';
 import {INJECT_ELEMENT} from '../symbols';
 
 export const useElement = <I extends AnyElementInstance>(): I => {

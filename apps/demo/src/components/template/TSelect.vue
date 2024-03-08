@@ -16,49 +16,29 @@
   </select>
 </template>
 
-<script lang="ts">
-import {computed, type ComputedRef, defineComponent, type PropType, watch} from 'vue';
+<script lang="ts" setup generic="Type extends string">
+/* eslint-disable @typescript-eslint/no-unnecessary-type-arguments */
+import {type ComputedRef, computed, watch, onUnmounted} from 'vue';
 import {useVModel} from '@vueuse/core';
-import {type InteractiveElementInstance, type SelectOption} from '@myparcel/vue-form-builder';
+import {type FieldEmits, type FieldProps} from '@myparcel-vfb/core';
+import {type SelectOption} from '@myparcel/vue-form-builder';
 
-export default defineComponent({
-  name: 'TSelect',
-  props: {
-    element: {
-      type: Object as PropType<InteractiveElementInstance>,
-      required: true,
-    },
+// eslint-disable-next-line vue/no-unused-properties
+const props = defineProps<FieldProps<Type>>();
+const emit = defineEmits<FieldEmits<Type>>();
 
-    // eslint-disable-next-line vue/no-unused-properties
-    modelValue: {
-      type: String,
-      default: null,
-    },
-  },
+const model = useVModel(props, undefined, emit);
 
-  emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
-
-  setup: (props) => {
-    const model = useVModel(props, 'modelValue');
-
-    const options: ComputedRef<SelectOption[]> = computed(() => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      return props.element.props.options as SelectOption[];
-    });
-
-    // Set the model value to the first option if no value is set
-    watch(options, () => {
-      if (!model.value) {
-        model.value = options.value[0].value;
-      }
-    });
-
-    return {
-      model,
-
-      options,
-    };
-  },
+const options: ComputedRef<SelectOption<Type>[]> = computed(() => {
+  return props.element.props.options as SelectOption<Type>[];
 });
+
+// Set the model value to the first option if no value is set
+onUnmounted(
+  watch(options, () => {
+    if (!model.value) {
+      model.value = options.value[0].value;
+    }
+  }),
+);
 </script>

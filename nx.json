@@ -8,6 +8,7 @@
   "npmScope": "myparcel-vfb",
   "namedInputs": {
     "default": [
+      "{workspaceRoot}/libs/build-vite/*",
       "{workspaceRoot}/tsconfig.build.json",
       "{workspaceRoot}/yarn.lock",
       "{workspaceRoot}/package.json",
@@ -38,10 +39,6 @@
       "inputs": ["prod"],
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
-    },
-    "serve": {
-      "dependsOn": ["^build:dev"],
-      "outputs": ["{projectRoot}/dist"]
     },
     "test:run": {
       "inputs": ["test"]

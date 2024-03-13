@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import {type PropType, defineComponent} from 'vue';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder/ts';
+import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
 import {translate} from '../../translate';
 
 export default defineComponent({

@@ -12,7 +12,7 @@
     "build": "nx build --runner=cloud --output-style=stream",
     "build:demo": "nx build demo --runner=cloud --output-style=stream",
     "build:dev": "run build:dev:default --output-style=stream",
-    "build:dev:default": "nx build:dev --output-style=stream",
+    "build:dev:default": "nx run-many --target=build:dev --output-style=stream",
     "clean": "nx run-many --target=clean",
     "prepare": "is-ci || husky install",
     "serve": "run build:dev:default && npx concurrently yarn:serve:demo yarn:serve:watch",
@@ -26,10 +26,10 @@
     "ws:test": "cd $0 && vitest",
     "ws:test:coverage": "cd $0 && vitest run --coverage",
     "ws:test:run": "cd $0 && vitest run",
-    "ws:ts:build": "cd $0 && tsc -p tsconfig.build.json --declaration --emitDeclarationOnly --declarationDir dist && (cp -r src/**/*.d.ts dist || true)",
-    "ws:ts:typecheck": "cd $0 && tsc -p tsconfig.build.json --noEmit",
-    "ws:vue:build": "cd $0 && vue-tsc -p tsconfig.build.json --declaration --emitDeclarationOnly --declarationDir dist && (cp -r src/**/*.d.ts dist || true)",
-    "ws:vue:typecheck": "cd $0 && vue-tsc -p tsconfig.build.json --noEmit"
+    "ws:test:update": "cd $0 && vitest run -u",
+    "ws:vite:build": "cd $0 && vite build",
+    "ws:vite:build:dev": "cd $0 && vite build --mode development",
+    "ws:vite:typecheck": "cd $0 && vue-tsc -p tsconfig.build.json --noEmit"
   },
   "lint-staged": {
     "*.{json,md,html}": "prettier --write",

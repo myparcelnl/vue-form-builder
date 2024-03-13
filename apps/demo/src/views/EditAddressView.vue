@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import {MagicForm} from '@myparcel/vue-form-builder/ts';
+import {MagicForm} from '@myparcel/vue-form-builder';
 import {useAddressForm} from '../composables/useAddressForm';
 
 const form = useAddressForm();

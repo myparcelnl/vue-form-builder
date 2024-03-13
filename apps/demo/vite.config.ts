@@ -1,8 +1,9 @@
-import {defineConfig} from 'vite';
-import vue from '@vitejs/plugin-vue';
+import {createViteConfig} from '@myparcel-vfb/build-vite';
 
-export default defineConfig({
-  plugins: [vue()],
+export default createViteConfig({
+  build: {
+    lib: false,
+  },
 
   esbuild: {
     jsxFactory: 'h',

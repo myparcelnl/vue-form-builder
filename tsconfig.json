@@ -8,12 +8,5 @@
     "./**/*.js",
     "./**/*.cjs",
     "./**/*.mjs"
-  ],
-  "compilerOptions": {
-    "noEmit": true,
-    "paths": {
-      "@myparcel/vue-form-builder": ["./apps/vue-form-builder/src"],
-      "@myparcel-vfb/*": ["./libs/*/src"]
-    }
-  }
+  ]
 }

@@ -19,7 +19,7 @@
 <script lang="ts">
 import {computed, type ComputedRef, defineComponent, type PropType, watch} from 'vue';
 import {useVModel} from '@vueuse/core';
-import {type InteractiveElementInstance, type SelectOption} from '@myparcel/vue-form-builder/ts';
+import {type InteractiveElementInstance, type SelectOption} from '@myparcel/vue-form-builder';
 
 export default defineComponent({
   name: 'TSelect',

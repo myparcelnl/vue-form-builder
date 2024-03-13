@@ -1,5 +1,5 @@
 import {ref} from 'vue';
-import {defineField, defineForm} from '@myparcel/vue-form-builder/ts';
+import {defineField, defineForm} from '@myparcel/vue-form-builder';
 import FormGroupWithoutElementProp from '../components/FormGroupWithoutElementProp.vue';
 import ComponentWithoutElementProp from '../components/ComponentWithoutElementProp.vue';
 

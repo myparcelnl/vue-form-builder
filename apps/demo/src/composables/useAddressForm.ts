@@ -1,8 +1,8 @@
 /* eslint-disable */
 // @ts-nocheck
-import {defineForm, Form, SelectOption} from '@myparcel/vue-form-builder/ts';
+import {defineForm, SelectOption, FormInstance} from '@myparcel/vue-form-builder';
 
-const postcodeHousenumberValidation = async (form: Form) => {
+const postcodeHousenumberValidation = async (form: FormInstance) => {
   form.model.postcodeHousenumberValidation.visible = false;
 
   if (form.model.postcode && form.model.housenumber && form.model.country === 'NL') {

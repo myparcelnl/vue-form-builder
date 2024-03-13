@@ -1,4 +1,4 @@
-import {type UnwrapNestedRefs} from 'vue';
+import {type UnwrapNestedRefs, toValue} from 'vue';
 import {type CustomInspectorNode} from '@vue/devtools-api';
 import {type FormInstance} from '@myparcel-vfb/core';
 import {CYAN_400} from './types';
@@ -7,7 +7,9 @@ import {getComponentName} from './getComponentName';
 export const createFieldsNodes = (form: UnwrapNestedRefs<FormInstance>): CustomInspectorNode[] => {
   let anonymousIndex = 0;
 
-  return form.fields.map((field) => {
+  const fields = toValue(form.fields);
+
+  return fields.map((field) => {
     const fieldName = field.name ?? `anonymous#${anonymousIndex++}`;
 
     return {

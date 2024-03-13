@@ -19,6 +19,7 @@ vite.config.ts.timestamp-*
 *.sln
 *.suo
 *.sw?
+*.tgz
 .AppleDouble
 .DS_Store
 .LSOverride

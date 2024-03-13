@@ -2,6 +2,20 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.42](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.41...@myparcel/vue-form-builder@1.0.0-beta.42) "@myparcel/vue-form-builder" (2024-03-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **npm:** may break imports and/or cause new build errors
+
+### Bug Fixes
+
+* **npm:** fix builds and exports ([3aa81f2](https://github/myparcelnl/vue-form-builder/commit/3aa81f2d3fc0017693e8b279af7211d45cd5b479))
+
+
+
+
 ## [1.0.0-beta.40](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.39...@myparcel/vue-form-builder@1.0.0-beta.40) "@myparcel/vue-form-builder" (2024-01-26)
 
 

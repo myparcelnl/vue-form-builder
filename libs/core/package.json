@@ -1,6 +1,6 @@
 {
   "name": "@myparcel-vfb/core",
-  "version": "1.0.0-beta.39",
+  "version": "1.0.0-beta.40",
   "license": "MIT",
   "type": "module",
   "exports": "./dist/index.js",
@@ -19,8 +19,8 @@
     "typecheck": "run ws:vite:typecheck \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.11",
-    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.6",
+    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.12",
+    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.7",
     "@myparcel/ts-utils": "^1.6.0"
   },
   "devDependencies": {

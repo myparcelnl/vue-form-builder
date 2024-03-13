@@ -2,6 +2,20 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.40](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-beta.39...@myparcel-vfb/plugin@1.0.0-beta.40) "@myparcel-vfb/plugin" (2024-03-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **npm:** may break imports and/or cause new build errors
+
+### Bug Fixes
+
+* **npm:** fix builds and exports ([3aa81f2](https://github/myparcelnl/vue-form-builder/commit/3aa81f2d3fc0017693e8b279af7211d45cd5b479))
+
+
+
+
 ## [1.0.0-beta.38](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/plugin@1.0.0-beta.37...@myparcel-vfb/plugin@1.0.0-beta.38) "@myparcel-vfb/plugin" (2024-01-26)
 
 

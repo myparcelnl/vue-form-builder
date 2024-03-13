@@ -20,7 +20,7 @@ jobs:
           path: coverage/clover.xml
           key: coverage-${{ matrix.node-version}}-${{ hashFiles('package.json', 'yarn.lock', 'tsconfig.json', 'src/**/*', 'test/**/*') }}
 
-      - uses: myparcelnl/actions/yarn-install@v3
+      - uses: myparcelnl/actions/yarn-install@v4
         if: steps.coverage-cache.outputs.cache-hit != 'true'
         with:
           node-version: ${{ matrix.node-version }}
@@ -45,12 +45,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: myparcelnl/actions/yarn-install@v3
+      - uses: myparcelnl/actions/yarn-install@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - uses: ./.github/actions/build
 
-      - uses: myparcelnl/actions/bundlewatch@v3
+      - uses: myparcelnl/actions/bundlewatch@v4
         with:
           token: ${{ secrets.BUNDLEWATCH_TOKEN }}

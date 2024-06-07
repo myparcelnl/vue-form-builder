@@ -44,7 +44,7 @@
 
               <div class="gap-4 grid grid-cols-2">
                 <div>
-                  <TSubmitButton @click="onSubmitClick" />
+                  <TResetButton @click="onSubmitClick" />
                 </div>
 
                 <button
@@ -102,7 +102,7 @@
               <small>This is the email Errors component. You won't see it if there are no errors.</small>
             </div>
 
-            <TSubmitButton outline>
+            <TResetButton outline>
               <template #icon="{icon}">
                 <span class="inline-flex">
                   <span class="inline-flex relative">
@@ -117,7 +117,7 @@
               </template>
 
               <template #default> Default slot! </template>
-            </TSubmitButton>
+            </TResetButton>
           </div>
         </Form2.Component>
 
@@ -133,7 +133,7 @@ import {computed, h, ref} from 'vue';
 import {createField, createForm} from '@myparcel-vfb/core';
 import {regexValidator, stringLengthValidator, stringNotContainsValidator, emailValidator} from '../validation';
 import TTextInput from '../components/template/TTextInput.vue';
-import TSubmitButton from '../components/template/TResetButton.vue';
+import TResetButton from '../components/template/TResetButton.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import ErrorBox from '../components/template/ErrorBox.vue';
 import FormDiagnostics from '../components/FormDiagnostics.vue';

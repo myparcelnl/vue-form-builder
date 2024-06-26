@@ -235,7 +235,7 @@ export interface InstanceFormConfiguration<V extends FormValues = FormValues> ex
     wrapper?: ComponentOrHtmlElement;
   };
 
-  fieldDefaults: {
+  fieldDefaults: Partial<FieldConfiguration> & {
     attributes: AnyAttributes;
     wrapper: boolean;
   };

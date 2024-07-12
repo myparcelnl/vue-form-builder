@@ -69,7 +69,8 @@
     "monodeploy": "^5.0.1",
     "nx": "^16.2.1",
     "prettier": "^2.8.4",
-    "rimraf": "^6.0.0"
+    "rimraf": "^6.0.0",
+    "vitest": "^2.0.0"
   },
   "packageManager": "yarn@4.3.1",
   "engines": {

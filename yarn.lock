@@ -1040,6 +1040,7 @@ __metadata:
     nx: "npm:^16.2.1"
     prettier: "npm:^2.8.4"
     rimraf: "npm:^6.0.0"
+    vitest: "npm:^2.0.0"
   languageName: unknown
   linkType: soft
 

@@ -1,5 +1,4 @@
 import path from 'node:path';
-import dts from 'vite-plugin-dts';
 import customTsConfig from 'vite-plugin-custom-tsconfig';
 import {mergeConfig} from 'vite';
 import vue from '@vitejs/plugin-vue';
@@ -12,11 +11,7 @@ const createCommonViteConfig = (env) => {
   const isProd = env.mode === 'production';
 
   return {
-    plugins: [
-      vue(),
-      isProd && dts({entryRoot: 'src', aliasesExclude: [/@myparcel-vfb\/(.+)/, '@myparcel/vue-form-builder']}),
-      customTsConfig({tsConfigPath: 'tsconfig.build.json'}),
-    ],
+    plugins: [vue(), customTsConfig({tsConfigPath: 'tsconfig.build.json'})],
 
     resolve: {
       alias: [

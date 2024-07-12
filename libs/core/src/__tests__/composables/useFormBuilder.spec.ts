@@ -1,9 +1,10 @@
 import {describe, expect, it} from 'vitest';
-import {getDefaultFormConfiguration} from '../../data';
+import {getDefaultFormConfiguration} from '../../utils';
+import {type FormConfiguration} from '../../types';
 import {useFormBuilder} from '../../composables';
 
 describe('useFormBuilder', () => {
-  const form = {fields: []};
+  const form = {} satisfies FormConfiguration;
 
   it('should register a form', () => {
     const formBuilder = useFormBuilder();

@@ -1,9 +1,8 @@
 import {h, ref, reactive} from 'vue';
 import {afterEach, describe, expect, it, vi} from 'vitest';
 import {flushPromises} from '@vue/test-utils';
-import {createField} from '../../utils';
+import {createField, getDefaultFormConfiguration} from '../../utils';
 import {Field} from '../../form';
-import {getDefaultFormConfiguration} from '../../data';
 import {useFormBuilder} from '../../composables';
 import {renderTestForm} from './renderTestForm';
 import {mockComponent} from './mockComponent';

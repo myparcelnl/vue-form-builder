@@ -26,7 +26,7 @@
 import {onMounted, provide, ref, toRefs, toValue} from 'vue';
 import {type FormInstance, type FormValues} from '../types';
 import {INJECT_FORM} from '../symbols';
-import {FORM_HOOKS, type FormHook} from '../data';
+import {type FormHook, FORM_HOOKS} from '../data';
 import {useLifecycleHooks} from '../composables';
 import RenderedFormContent from './RenderedFormContent.vue';
 import Fragment from './Fragment.vue';

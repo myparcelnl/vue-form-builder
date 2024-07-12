@@ -11,7 +11,7 @@ import {
   type FieldInstance,
   type ComponentProps,
 } from '../types';
-import {FORM_HOOKS, FormHook} from '../data';
+import {FormHook, FORM_HOOKS} from '../data';
 import {Field} from './Field';
 
 // noinspection JSUnusedGlobalSymbols

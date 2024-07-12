@@ -1,9 +1,8 @@
 import {type Ref, ref, toValue} from 'vue';
 import {HookManager} from '@myparcel-vfb/hook-manager';
-import {normalizeFormConfiguration} from '../utils';
+import {normalizeFormConfiguration, getDefaultFormConfiguration} from '../utils';
 import {type FormInstance, type InstanceFormConfiguration, type FormConfiguration, type FormBuilder} from '../types';
 import {Form} from '../form';
-import {getDefaultFormConfiguration} from '../data';
 
 let forms: Ref<Record<string, FormInstance>>;
 

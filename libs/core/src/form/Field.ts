@@ -65,7 +65,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     ]);
   }
 
-  // eslint-disable-next-line max-lines-per-function
+  // eslint-disable-next-line max-lines-per-function, complexity
   public constructor(form: FormInstance, config: ToRecord<FieldConfiguration<Type, Props>>) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore todo: throws error in build
@@ -90,6 +90,9 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     this.lazy = resolvedConfig.lazy;
 
     this.setVisible(resolvedConfig.visible ?? true);
+    this.setDisabled(resolvedConfig.disabled ?? false);
+    this.setOptional(resolvedConfig.optional ?? false);
+    this.setReadOnly(resolvedConfig.readOnly ?? false);
 
     this.component =
       typeof resolvedConfig.component === 'string' ? resolvedConfig.component : markRaw(resolvedConfig.component);

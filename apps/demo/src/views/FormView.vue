@@ -36,15 +36,21 @@
             </Email.Errors>
           </div>
 
-          <div
-            v-if="FirstName.ref && LastName.ref"
-            class="flex">
+          <div class="flex">
             <div class="border-2 flex-col inline-flex mx-auto my-3 px-6 py-3 rounded-lg text-center">
               <h4>Are you ready, {{ `${FirstName.ref} ${LastName.ref}`.trim() }}?</h4>
 
               <div class="gap-4 grid grid-cols-2">
                 <div>
-                  <TResetButton @click="onSubmitClick" />
+                  <TSubmitButton />
+                </div>
+
+                <div>
+                  <TButton @click="onSubmitClick"> Fake submit </TButton>
+                </div>
+
+                <div>
+                  <TButton @click="switchOptional"> Switch optional </TButton>
                 </div>
 
                 <button
@@ -133,7 +139,9 @@ import {computed, h, ref} from 'vue';
 import {createField, createForm} from '@myparcel-vfb/core';
 import {regexValidator, stringLengthValidator, stringNotContainsValidator, emailValidator} from '../validation';
 import TTextInput from '../components/template/TTextInput.vue';
+import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TResetButton from '../components/template/TResetButton.vue';
+import TButton from '../components/template/TButton.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import ErrorBox from '../components/template/ErrorBox.vue';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
@@ -149,6 +157,10 @@ const Form = createForm<{
 
   field: {
     wrapper: FormGroup,
+  },
+
+  afterSubmit: (form: FormInstance) => {
+    console.log('submit!', form);
   },
 });
 
@@ -178,6 +190,7 @@ const LastName = createField({
   label: 'Last name',
   component: TTextInput,
   ref: ref('Krabs'),
+  optional: true,
 });
 
 const Email = createField({
@@ -223,9 +236,14 @@ const form2Classes = computed(() => {
 
 const onSubmitClick = () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const field = Form2.instance.getField('description')!;
+  const field = Form2.instance.getField('description');
 
   field.errors.value.push('This is an error from afterSubmit');
   field.isValid.value = false;
+};
+
+const switchOptional = () => {
+  const field = Form.instance.getField('lastName');
+  field.setOptional(!field.isOptional.value);
 };
 </script>

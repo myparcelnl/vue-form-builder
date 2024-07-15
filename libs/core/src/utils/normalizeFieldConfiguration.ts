@@ -19,7 +19,7 @@ export const normalizeFieldConfiguration = <Type = unknown, Props extends Compon
   return {
     disabled: false,
     lazy: false,
-    optional: true,
+    optional: false,
     readOnly: false,
     visible: true,
     wrapper: true,

@@ -64,6 +64,7 @@ export class Form<Values extends FormValues = FormValues> {
   ): Promise<S extends string ? undefined | FieldInstance : FieldInstance> {
     await this.hooks.execute(FormHook.BeforeAddElement, this, element);
     const newElement = this.createFieldInstance(element, this as unknown as FormInstance<Values>);
+    toValue(this.fields).push(newElement);
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
 
     return newElement;
@@ -111,16 +112,10 @@ export class Form<Values extends FormValues = FormValues> {
     await this.hooks.execute(FormHook.AfterSubmit, this);
   }
 
-  public async validate(): Promise<boolean> {
+  public async validate(): Promise<void> {
     await this.hooks.execute(FormHook.BeforeValidate, this);
-
-    const result = await Promise.all(toValue(this.fields).map((field) => field.validate()));
-
-    this.isValid.value = result.every(Boolean);
-
+    await Promise.all(toValue(this.fields).map((field) => field.validate()));
     await this.hooks.execute(FormHook.AfterValidate, this);
-
-    return toValue(this.isValid);
   }
 
   public removeElement(name: string): void {

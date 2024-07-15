@@ -2,7 +2,7 @@
   <TButton
     outline
     type="reset">
-    {{ translate('form_reset') }}
+    <slot>{{ translate('form_reset') }}</slot>
   </TButton>
 </template>
 

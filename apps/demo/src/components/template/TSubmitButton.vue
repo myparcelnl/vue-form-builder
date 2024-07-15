@@ -19,7 +19,7 @@ import TButton from './TButton.vue';
 
 withDefaults(
   defineProps<{
-    icon: string;
+    icon?: string;
     outline?: boolean;
   }>(),
   {

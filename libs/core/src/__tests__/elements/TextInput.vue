@@ -18,10 +18,11 @@
 </template>
 
 <script lang="ts" setup generic="Type extends string">
-/* eslint-disable @typescript-eslint/unified-signatures */
 import {type FocusEvent} from 'happy-dom';
 import {useVModel} from '@vueuse/core';
-import {type FieldProps, type FieldEmits} from '@myparcel-vfb/core';
+import {type FieldProps, type FieldEmits} from '../../types';
+
+/* eslint-disable @typescript-eslint/unified-signatures */
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<FieldProps<Type>>();

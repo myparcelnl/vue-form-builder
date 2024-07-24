@@ -13,34 +13,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 'Handle coverage cache'
-        uses: actions/cache@v3
-        id: coverage-cache
-        with:
-          path: coverage/clover.xml
-          key: coverage-${{ matrix.node-version }}-${{ hashFiles('package.json', 'yarn.lock', 'tsconfig.json', 'src/**/*', 'test/**/*') }}
+      - uses: myparcelnl/actions/yarn-install@v4
+        if: matrix.node-version == 'current'
 
       - uses: myparcelnl/actions/yarn-install@v4
-        if: matrix.node-version == 'current' && steps.coverage-cache.outputs.cache-hit != 'true'
-
-      - uses: myparcelnl/actions/yarn-install@v4
-        if: matrix.node-version != 'current' && steps.coverage-cache.outputs.cache-hit != 'true'
+        if: matrix.node-version != 'current'
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: 'Run tests'
-        if: steps.coverage-cache.outputs.cache-hit != 'true'
-        #language=sh
+      - uses: myparcelnl/actions/nx-run-many@v4
+        with:
+          target: 'test:coverage'
+          args: '--parallel=false'
+
+      - name: 'Move coverage files'
+        if: matrix.node-version == 'current'
+        shell: bash
+        #language=bash
         run: |
-          yarn nx run-many \
-            --target=test:coverage \
-            --parallel=false \
-            --output-style=static
+          yarn workspaces foreach -Apv \
+            --exclude=. \
+            exec \
+            bash -c 'if [ -f coverage/clover.xml ]; then mv coverage/clover.xml coverage/${npm_package_name//\//-}.xml; fi' -- {}
+
+          mkdir -p ./coverage
+          cp ./apps/*/coverage/*.xml ./coverage/
+          cp ./libs/*/coverage/*.xml ./coverage/
 
       - uses: codecov/codecov-action@v3
         if: matrix.node-version == 'current'
         with:
-          files: coverage/clover.xml
+          files: coverage/*.xml
+          flags: unit
           token: ${{ secrets.CODECOV_TOKEN }}
 
   build:

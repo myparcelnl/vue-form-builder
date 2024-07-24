@@ -36,7 +36,9 @@
             </Email.Errors>
           </div>
 
-          <div class="flex">
+          <div
+            v-show="FirstName.ref && LastName.ref"
+            class="flex">
             <div class="border-2 flex-col inline-flex mx-auto my-3 px-6 py-3 rounded-lg text-center">
               <h4>Are you ready, {{ `${FirstName.ref} ${LastName.ref}`.trim() }}?</h4>
 

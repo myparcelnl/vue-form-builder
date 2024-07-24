@@ -2,6 +2,7 @@ import path from 'node:path';
 import customTsConfig from 'vite-plugin-custom-tsconfig';
 import {mergeConfig} from 'vite';
 import vue from '@vitejs/plugin-vue';
+import {codecovVitePlugin} from '@codecov/vite-plugin';
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
@@ -11,7 +12,15 @@ const createCommonViteConfig = (env) => {
   const isProd = env.mode === 'production';
 
   return {
-    plugins: [vue(), customTsConfig({tsConfigPath: 'tsconfig.build.json'})],
+    plugins: [
+      codecovVitePlugin({
+        enableBundleAnalysis: process.env.CODECOV_TOKEN !== undefined,
+        bundleName: 'vue-form-builder',
+        uploadToken: process.env.CODECOV_TOKEN,
+      }),
+      vue(),
+      customTsConfig({tsConfigPath: 'tsconfig.build.json'}),
+    ],
 
     resolve: {
       alias: [

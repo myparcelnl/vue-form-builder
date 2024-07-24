@@ -1,6 +1,7 @@
 .idea/
 logs/
 node_modules/
+.nx/
 
 apps/**/tsconfig.json
 libs/**/tsconfig.json

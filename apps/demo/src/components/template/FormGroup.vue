@@ -4,6 +4,7 @@
     class="flex flex-col">
     <label
       v-if="element.label"
+      :for="element.name"
       v-text="element.label" />
     <slot name="info-before" />
     <span

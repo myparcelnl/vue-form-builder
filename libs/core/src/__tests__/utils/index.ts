@@ -1,4 +1,6 @@
 export * from './externalData';
 export * from './formIsValid';
-export * from './generateForm';
+export * from './generateTestForm';
+export * from './generateTestFormAsync';
 export * from './mountForm';
+export {resolveConfigAndFields} from './resolveConfigAndFields';

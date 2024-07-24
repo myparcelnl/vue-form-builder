@@ -17,7 +17,7 @@ describe('rendering a form', () => {
   });
 
   it('renders html elements', async () => {
-    const {wrapper} = await renderTestForm();
+    const {wrapper} = await renderTestForm({}, 'test');
     const formElement = wrapper.find('form');
 
     expect(formElement.exists()).toBe(true);
@@ -126,7 +126,7 @@ describe('rendering a form', () => {
   });
 
   it('does not render element prop if it is turned off', async () => {
-    const {wrapper} = await renderTestForm({field: {elementProp: false}}, getCommonFields());
+    const {wrapper} = await renderTestForm({field: {elementProp: false}});
 
     const input = wrapper.findComponent(mockComponent);
 
@@ -137,10 +137,11 @@ describe('rendering a form', () => {
     it('sets the value of a single field', async () => {
       expect.assertions(1);
       const {form} = await renderTestForm();
-      form.instance.setValue('field', '12345');
+
+      form.instance.setValue('field1', '12345');
       await flushPromises();
 
-      expect(reactive(form.instance.values)).toEqual({field: '12345', field2: ''});
+      expect(form.instance.values).toEqual({field1: '12345', field2: '', field3: ''});
     });
 
     it('does nothing if field does not exist', async () => {
@@ -149,7 +150,7 @@ describe('rendering a form', () => {
       form.instance.setValue('does-not-exist', 'boo');
       await flushPromises();
 
-      expect(reactive(form.instance.values)).toEqual({field: '', field2: ''});
+      expect(reactive(form.instance.values)).toEqual({field1: '', field2: '', field3: ''});
     });
   });
 
@@ -160,7 +161,7 @@ describe('rendering a form', () => {
       form.instance.setValues({field1: 'bye', field2: 'hello'});
       await flushPromises();
 
-      expect(reactive(form.instance.values)).toEqual({field1: 'bye', field2: 'hello'});
+      expect(reactive(form.instance.values)).toEqual({field1: 'bye', field2: 'hello', field3: ''});
     });
 
     it('ignores fields that do not exist', async () => {

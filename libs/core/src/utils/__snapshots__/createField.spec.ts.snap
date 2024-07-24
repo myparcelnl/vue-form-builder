@@ -2,10 +2,10 @@
 
 exports[`createField > rendering inside forms > renders a modular field 1`] = `
 "<form id="renderModular">
-  <div><input id="modularTest" data-test-id="modularTest" data-test-type="interactive" value="value2"><label for="modularTest">fieldLabel</label>
+  <div><input id="modularTest" data-test-id="modularTest" value="value2"><label for="modularTest">fieldLabel</label>
     <!---->
   </div>
 </form>"
 `;
 
-exports[`createField > rendering inside forms > renders a simple field 1`] = `"<form id="renderSimple"><input id="test" data-test-id="test" data-test-type="interactive" value="value2"></form>"`;
+exports[`createField > rendering inside forms > renders a simple field 1`] = `"<form id="renderSimple"><input id="test" data-test-id="test" value="value2"></form>"`;

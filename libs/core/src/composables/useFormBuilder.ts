@@ -39,7 +39,7 @@ export const useFormBuilder = (): FormBuilder => {
     // @ts-expect-error todo
     register(name, config) {
       void hookManager.execute('beforeRegister');
-      const instance = new Form(name, normalizeFormConfiguration(toValue(defaults), config as FormConfiguration));
+      const instance = new Form(name, normalizeFormConfiguration(toValue(defaults), {...config} as FormConfiguration));
 
       // @ts-expect-error todo
       toValue(forms)[name] = instance;

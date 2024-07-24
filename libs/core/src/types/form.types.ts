@@ -248,13 +248,13 @@ export interface InstanceFormConfiguration<V extends FormValues = FormValues> ex
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type FormInstance<V extends FormValues = any> = BaseFormInstance<V>;
+export type FormInstance<Values extends FormValues = FormValues> = BaseFormInstance<Values>;
 
-export type FieldsToModel<V extends FormValues> = {
-  [K in keyof V]: K extends string ? FieldInstance<ComponentProps, V[K]> : never;
+export type FieldsToModel<Values extends FormValues> = {
+  [K in keyof Values]: FieldInstance<ComponentProps, Values[K]>;
 };
 
-export interface CreatedForm<V extends FormValues = FormValues> {
+export interface CreatedForm<Values extends FormValues = FormValues> {
   Component: Component;
-  instance: FormInstance<V>;
+  instance: FormInstance<Values>;
 }

@@ -1,6 +1,7 @@
 import {type PropType, defineComponent, h, isVNode, ref, vModelText, withDirectives} from 'vue';
 import {afterEach, describe, expect, it} from 'vitest';
-import {defineForm, getDefaultFormConfiguration} from '../../utils';
+import {generateTestForm} from '../utils';
+import {getDefaultFormConfiguration} from '../../utils';
 import {type FieldConfiguration, type ElementProp} from '../../types';
 import {Form} from '../../form';
 import {useFormBuilder} from '../../composables';
@@ -42,7 +43,7 @@ describe('defining a form', () => {
   it('registers form in the form builder', () => {
     expect(formBuilder.forms.value).toEqual({});
 
-    const form = defineForm('myForm', {fields: commonFields});
+    const {instance: form} = generateTestForm(commonFields, 'myForm');
 
     expect(formBuilder.forms.value).toHaveProperty('myForm');
     expect(formBuilder.forms.value.myForm).toBeInstanceOf(Form);
@@ -50,7 +51,7 @@ describe('defining a form', () => {
   });
 
   it('has default values', () => {
-    const form = defineForm('myForm', {fields: commonFields});
+    const {instance: form} = generateTestForm(commonFields);
     const defaults = getDefaultFormConfiguration();
 
     expect(form.config.form).toEqual(defaults.form);
@@ -81,7 +82,7 @@ describe('defining a form', () => {
       },
     });
 
-    const form = defineForm('myForm', {fields: commonFields});
+    const {instance: form} = generateTestForm(commonFields);
 
     for (const field of form.fields.value) {
       expect(field.lazy).toBe(true);

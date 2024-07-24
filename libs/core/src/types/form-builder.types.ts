@@ -20,7 +20,7 @@ export type FormBuilder = {
    */
   register<V extends FormValues = FormValues, N extends string = string>(
     name: N,
-    config: FormConfiguration<V>,
+    config?: FormConfiguration<V>,
   ): FormInstance<V>;
 
   /**

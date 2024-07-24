@@ -1,20 +1,31 @@
 import {h} from 'vue';
 import {type VueWrapper, mount, flushPromises} from '@vue/test-utils';
-import {createForm} from '../../utils';
-import {type FormConfiguration, type ModularCreatedField, type CreatedForm, type FormValues} from '../../types';
-import {getCommonFields} from './getCommonFields';
+import {generateTestFormAsync, resolveConfigAndFields} from '../utils';
+import {type TestFormConfig} from '../types';
+import {createField} from '../../utils';
+import {type CreatedForm, type FormValues} from '../../types';
 
-export const renderTestForm = async <Values extends FormValues>(
-  config: FormConfiguration<Values> = {},
-  fields: ModularCreatedField[] = getCommonFields(),
+export interface CommonFieldValues {
+  field1: string;
+  field2: string;
+  field3: string;
+}
+
+export const renderTestForm = async <Values extends FormValues = CommonFieldValues>(
+  config?: TestFormConfig<Values>,
+  name: string | undefined = undefined,
 ): Promise<{
   wrapper: VueWrapper;
   form: CreatedForm<Values>;
 }> => {
-  const form = createForm<Values>('test', config);
+  const {fields, config: resolvedConfig} = resolveConfigAndFields(config);
+  const form = await generateTestFormAsync<Values>(resolvedConfig, name);
+
+  const resolvedFields = fields.map(createField);
+
   const wrapper = mount(form.Component, {
     slots: {
-      default: fields.map((field) => h(field.Component)),
+      default: resolvedFields.map((field) => h(field.Component)),
     },
   });
 

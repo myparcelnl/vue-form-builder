@@ -1,11 +1,10 @@
 import {ref} from 'vue';
 import {describe, expect, it} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
-import {formIsInvalid, formIsValid, generateForm} from '../utils';
+import {formIsInvalid, formIsValid, generateTestForm, generateTestFormAsync} from '../utils';
 import {canNotContainX, firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
-import SubmitButton from '../elements/SubmitButton.vue';
-import {defineField, defineForm} from '../../utils';
+import {defineField} from '../../utils';
 import MagicForm from '../../components/MagicForm.vue';
 import {
   canNotContainLetterValidator,
@@ -19,8 +18,8 @@ describe('Form and field validation', () => {
     expect.assertions(11);
     const firstName = ref('');
     const lastName = ref('');
-    const validationForm = defineForm('validationForm', {
-      fields: [
+    const {instance: validationForm} = generateTestForm(
+      [
         defineField({
           name: 'firstName',
           component: TextInput,
@@ -33,11 +32,9 @@ describe('Form and field validation', () => {
           component: TextInput,
           ref: lastName,
         }),
-        defineField({
-          component: SubmitButton,
-        }),
       ],
-    });
+      'validationForm',
+    );
 
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
@@ -66,8 +63,8 @@ describe('Form and field validation', () => {
   it.skip('can determine if a text input is valid based on previous inputs and predicates', async () => {
     const firstName = ref('');
     const lastName = ref('');
-    const validationForm = defineForm('validationForm', {
-      fields: [
+    const {instance: validationForm} = generateTestForm(
+      [
         defineField({
           name: 'firstName',
           component: TextInput,
@@ -82,11 +79,10 @@ describe('Form and field validation', () => {
           validate: (field, value) => !(field.form.model.firstName.ref.value === 'Jack' && String(value) === 'McGill'),
           errorMessage: 'Last name cannot be "McGill" if first name is "Jack"',
         }),
-        defineField({
-          component: SubmitButton,
-        }),
       ],
-    });
+      'validationForm',
+    );
+
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
     formIsValid(validationForm);
@@ -110,7 +106,7 @@ describe('Form and field validation', () => {
   it('validates using a single function', async () => {
     expect.assertions(4);
 
-    const form = generateForm([
+    const {instance: form} = await generateTestFormAsync([
       defineField({
         component: 'input',
         name: 'element',
@@ -134,7 +130,7 @@ describe('Form and field validation', () => {
   it.skip('moves the error message to another field', async () => {
     expect.assertions(6);
 
-    const form = generateForm([
+    const {instance: form} = await generateTestFormAsync([
       defineField({
         component: 'div',
         name: 'target',
@@ -167,7 +163,7 @@ describe('Form and field validation', () => {
   it('validates using an array of validators', async () => {
     expect.assertions(1);
 
-    const form = generateForm({
+    const {instance: form} = await generateTestFormAsync({
       fields: [
         defineField({
           component: 'input',
@@ -185,7 +181,7 @@ describe('Form and field validation', () => {
   it('validates using a computed validator', async () => {
     expect.assertions(1);
 
-    const form = generateForm({
+    const {instance: form} = generateTestForm({
       fields: [
         defineField({
           component: 'input',
@@ -203,7 +199,7 @@ describe('Form and field validation', () => {
   it('validates using an array of validators, with precedence', async () => {
     expect.assertions(3);
 
-    const form = generateForm({
+    const {instance: form} = generateTestForm({
       fields: [
         defineField({
           component: 'input',

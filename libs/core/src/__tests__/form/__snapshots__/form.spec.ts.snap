@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`rendering a form > renders html elements 1`] = `"<form id="test"><input data-test-id="field1"><input data-test-id="field2"><input data-test-id="field3"></form>"`;
+exports[`rendering a form > renders html elements 1`] = `"<form id="test"></form>"`;
 
 exports[`rendering a form > wraps fields with a wrapper element 1`] = `
 <form

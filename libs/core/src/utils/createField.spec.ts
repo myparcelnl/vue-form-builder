@@ -4,6 +4,7 @@ import {describe, it, expect, afterEach} from 'vitest';
 import {flushPromises} from '@vue/test-utils';
 import {render, cleanup} from '@testing-library/vue';
 import {type FieldInstance} from '../types';
+import {generateTestFormAsync} from '../__tests__/utils';
 import {createForm} from './createForm';
 import {createField} from './createField';
 
@@ -52,7 +53,8 @@ describe('createField', () => {
 
     it('renders a simple field', async () => {
       expect.assertions(2);
-      const form = createForm('renderSimple', {});
+      const form = await generateTestFormAsync({}, 'renderSimple');
+
       const field = createField({
         name: 'test',
         ref: ref('value2'),
@@ -74,7 +76,7 @@ describe('createField', () => {
     it('renders a modular field', async () => {
       expect.assertions(2);
 
-      const form = createForm('renderModular', {});
+      const form = createForm('renderModular');
       const field = createField({
         name: 'modularTest',
         label: 'fieldLabel',
@@ -97,7 +99,7 @@ describe('createField', () => {
     it('should remove the field from the form when unmounted', async () => {
       expect.assertions(2);
 
-      const form = createForm('renderModular', {});
+      const form = createForm('renderModular');
       const field = createField({
         name: 'modularTest',
         label: 'fieldLabel',
@@ -115,17 +117,11 @@ describe('createField', () => {
 
       expect(form.instance.fields.value).toHaveLength(1);
 
-      await wrapper.unmount();
-
-      const wrapper2 = render(form.Component, {
-        slots: {
-          default: () => h('div', [h(field.Component), h(field.Label), h(field.Errors)]),
-        },
-      });
+      wrapper.unmount();
 
       await flushPromises();
 
-      expect(form.instance.fields.value).toHaveLength(1);
+      expect(form.instance.fields.value).toHaveLength(0);
     });
   });
 });

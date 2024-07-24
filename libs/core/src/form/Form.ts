@@ -63,8 +63,7 @@ export class Form<Values extends FormValues = FormValues> {
     element: EC,
   ): Promise<S extends string ? undefined | FieldInstance : FieldInstance> {
     await this.hooks.execute(FormHook.BeforeAddElement, this, element);
-    const newElement = this.createFieldInstance(element, this as unknown as FormInstance<Values>);
-    toValue(this.fields).push(newElement);
+    const newElement = this.addFieldInstance(element, this as unknown as FormInstance<Values>);
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
 
     return newElement;
@@ -144,7 +143,7 @@ export class Form<Values extends FormValues = FormValues> {
     return field;
   }
 
-  private createFieldInstance<Type = unknown, Props extends ComponentProps = ComponentProps>(
+  private addFieldInstance<Type = unknown, Props extends ComponentProps = ComponentProps>(
     field: FieldConfiguration<Type, Props>,
     form: FormInstance<Values>,
   ): FieldInstance<Type, Props> {
@@ -166,7 +165,6 @@ export class Form<Values extends FormValues = FormValues> {
       await this.hooks.execute(FormHook.ElementChange, this, instance, value);
 
       if (!toValue(instance.isDisabled)) {
-        // @ts-expect-error todo
         this.values[elementConfig.name] = value;
       }
     });
@@ -174,13 +172,13 @@ export class Form<Values extends FormValues = FormValues> {
     this.stopHandles.value.push(stop);
 
     if (!toValue(instance.isDisabled)) {
-      // @ts-expect-error todo
       this.values[elementConfig.name] = toValue(instance.ref);
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     this.model[elementConfig.name] = instance;
+    toValue(this.fields).push(instance);
     this.getFieldMemoized.delete(elementConfig.name);
 
     return instance;

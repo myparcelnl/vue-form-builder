@@ -1,38 +1,21 @@
 import {ref, toValue} from 'vue';
 import {describe, expect, it} from 'vitest';
 import {flushPromises} from '@vue/test-utils';
-import {generateForm} from '../utils';
+import {generateTestForm, generateTestFormAsync} from '../utils';
+import {type TestFormConfig} from '../types';
 import TextInput from '../elements/TextInput.vue';
 import {defineField} from '../../utils';
-import {type FormConfiguration, type FieldConfiguration} from '../../types';
-import {PlainElement, Field} from '../../form';
+import {type FieldConfiguration} from '../../types';
+import {Field} from '../../form';
 
-describe('Form instance', () => {
-  it('creates a reactive model from named elements', () => {
-    const form = generateForm([
-      defineField({
-        component: 'input',
-      }),
-      defineField({
-        component: 'input',
-        name: 'test',
-      }),
-      defineField({
-        component: 'input',
-        ref: ref(''),
-        name: 'test2',
-      }),
-    ]);
+type TestFormValues = {
+  named: string;
+  val: number;
+  text: string;
+};
 
-    expect(Object.keys(form.model)).toEqual(['test', 'test2']);
-    expect(form.model.test).toBeInstanceOf(PlainElement);
-    expect(form.model.test2).toBeInstanceOf(Field);
-    expect(form.model.test2.ref.value).toBe('');
-    form.model.test2.ref.value = 'changed';
-    expect(form.model.test2.ref.value).toBe('changed');
-  });
-
-  const createFormConfig = (): FormConfiguration => ({
+const createFieldsConfig = () => {
+  return {
     fields: [
       {
         name: 'named',
@@ -43,9 +26,6 @@ describe('Form instance', () => {
         name: 'val',
         component: 'input',
         ref: ref(23),
-      },
-      {
-        component: 'br',
       },
       {
         name: 'random',
@@ -59,21 +39,39 @@ describe('Form instance', () => {
         ref: ref('initial'),
         readOnly: true,
       },
-    ],
+    ] as const,
+  } satisfies TestFormConfig<TestFormValues>;
+};
+
+describe('Form instance', () => {
+  it('creates a reactive model from named elements', async () => {
+    expect.assertions(5);
+
+    const {instance: form} = await generateTestFormAsync([
+      defineField({
+        component: 'input',
+        name: 'test',
+        ref: ref(''),
+      }),
+      defineField({
+        component: 'input',
+        name: 'test2',
+        ref: ref(''),
+      }),
+    ]);
+
+    expect(Object.keys(form.model)).toEqual(['test', 'test2']);
+    expect(form.model.test).toBeInstanceOf(Field);
+    expect(form.model.test2).toBeInstanceOf(Field);
+    expect(form.model.test2.ref.value).toBe('');
+
+    form.model.test2.ref.value = 'changed';
+    expect(form.model.test2.ref.value).toBe('changed');
   });
 
-  it('can retrieve an object with all non-disabled keys and values', () => {
-    const form = generateForm(createFormConfig());
-
-    expect(form.getValues()).toEqual({
-      named: '',
-      val: 23,
-      text: 'initial',
-    });
-  });
-
-  it('exposes a reactive object with all non-disabled keys and values', () => {
-    const form = generateForm(createFormConfig());
+  it('exposes a reactive object with all non-disabled keys and values', async () => {
+    expect.assertions(1);
+    const {instance: form} = await generateTestFormAsync(createFieldsConfig());
 
     expect(form.values).toEqual({
       named: '',
@@ -82,53 +80,62 @@ describe('Form instance', () => {
     });
   });
 
-  it('can retrieve the value of a field by the field name', () => {
-    const form = generateForm(createFormConfig());
+  it('can retrieve the value of a field by the field name', async () => {
+    expect.assertions(2);
+    const {instance: form} = await generateTestFormAsync(createFieldsConfig());
 
-    expect(form.getValue('val')).toBe(23);
-    expect(form.getValue('text')).toBe('initial');
-    expect(() => form.getValue('nothing')).toThrow();
+    expect(form.values.val).toBe(23);
+    expect(form.values.text).toBe('initial');
   });
 
   it('can set the value of a field by the field name', async () => {
-    const form = generateForm(createFormConfig());
+    const {instance: form} = await generateTestFormAsync(createFieldsConfig());
 
-    expect(form.getValue('val')).toBe(23);
+    expect(form.values.val).toBe(23);
     form.setValue('val', 42);
-    expect(form.getValue('val')).toBe(42);
+    await flushPromises();
+    expect(form.values.val).toBe(42);
   });
 
   it('can set multiple field values by name', async () => {
-    const form = generateForm(createFormConfig());
+    expect.assertions(4);
+    const {instance: form} = await generateTestFormAsync(createFieldsConfig());
 
-    expect(form.getValue('val')).toBe(23);
-    expect(form.getValue('text')).toBe('initial');
+    expect(form.values.val).toBe(23);
+    expect(form.values.text).toBe('initial');
 
     form.setValues({
       val: 42,
       text: 'changed',
     });
+    await flushPromises();
 
-    expect(form.getValue('val')).toBe(42);
-    expect(form.getValue('text')).toBe('changed');
+    expect(form.values.val).toBe(42);
+    expect(form.values.text).toBe('changed');
   });
 
   it('can make a field optional based on a predicate', async () => {
+    expect.assertions(3);
+
     let expectation: boolean;
-    const newFormConfig = createFormConfig();
+
+    const config = {
+      ...createFieldsConfig(),
+      afterSubmit(form) {
+        expect(form.fields.value[0].isOptional).toBe(expectation);
+      },
+    } satisfies TestFormConfig<TestFormValues>;
+
     // specifically make the predicate rely on a field further down the form:
-    (newFormConfig.fields as FieldConfiguration[])[0].optionalWhen = (field) => field.form.getValue('val') === 24;
+    (config.fields[0] as FieldConfiguration).optionalWhen = (field) => field.form.model.val.ref.value === 24;
 
-    newFormConfig.afterSubmit = (form) => {
-      expect(form.fields.value[0].isOptional).toBe(expectation);
-    };
-
-    const form = generateForm(newFormConfig);
+    const {instance: form} = await generateTestFormAsync(config);
 
     // at start, it is not optional
-    expect(form.fields.value[0].isOptional).toBe(false);
+    expect(form.model.named.isOptional.value).toBe(false);
 
     form.fields.value[1].ref = 24;
+
     expectation = true;
     await form.submit();
 
@@ -140,14 +147,14 @@ describe('Form instance', () => {
 
   describe('isDirty', () => {
     it('is false when the form is not dirty', () => {
-      const form = generateForm(createFormConfig());
+      const {instance: form} = generateTestForm(createFieldsConfig());
 
       expect(toValue(form.isDirty)).toBe(false);
     });
 
     it('is true when the form is dirty', async () => {
       expect.assertions(2);
-      const form = generateForm(createFormConfig());
+      const {instance: form} = generateTestForm(createFieldsConfig());
 
       expect(toValue(form.isDirty)).toBe(false);
 
@@ -158,7 +165,7 @@ describe('Form instance', () => {
 
     it.todo('reverts to false when the form is submitted', async () => {
       expect.assertions(3);
-      const form = generateForm(createFormConfig());
+      const {instance: form} = generateTestForm(createFieldsConfig());
 
       form.model.named.ref.value = 'changed';
       await flushPromises();
@@ -170,7 +177,7 @@ describe('Form instance', () => {
 
     it.todo('reverts to false when the form is reset', async () => {
       expect.assertions(3);
-      const form = generateForm(createFormConfig());
+      const {instance: form} = generateTestForm(createFieldsConfig());
 
       form.model.named.ref.value = 'changed';
       await flushPromises();

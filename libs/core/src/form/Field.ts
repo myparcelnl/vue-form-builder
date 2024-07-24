@@ -16,7 +16,7 @@ import {
   type WithMultiValidator,
   type ComponentProps,
 } from '../types';
-import {FIELD_HOOKS} from '../data';
+import {FIELD_HOOKS, FormHook} from '../data';
 
 export class Field<Type = unknown, Props extends ComponentProps = ComponentProps> {
   public readonly name: FieldInstance<Type, Props>['name'];
@@ -114,13 +114,37 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
       return toValue(this.errors).map((error) => (typeof error === 'function' ? error() : error));
     });
 
+    const initializeCallback = () => {
+      this.initializeWatchers(config, resolvedConfig);
+    };
+
+    initializeCallback();
+    form.on(FormHook.AfterAddElement, initializeCallback);
+
+    const stopRefWatcher = watch(this.ref, async (value: Type, oldValue: Type) => {
+      await this.hooks.execute('beforeUpdate', this, value, oldValue);
+      this.isDirty.value = true;
+      await this.hooks.execute('afterUpdate', this, value, oldValue);
+    });
+
+    this.destroyHandles.value.push(stopRefWatcher);
+  }
+
+  private initializeWatchers(
+    config: FieldConfiguration<Type, Props>,
+    resolvedConfig: FieldConfiguration<Type, Props>,
+  ): void {
     (
       [
         [config.visibleWhen, this.isVisible, resolvedConfig.visible],
         [config.disabledWhen, this.isDisabled, resolvedConfig.disabled],
         [config.optionalWhen, this.isOptional, resolvedConfig.optional],
         [config.readOnlyWhen, this.isReadOnly, resolvedConfig.readOnly],
-      ] satisfies [undefined | ((instance: FieldInstance<Type, Props>) => PromiseOr<boolean>), Ref<boolean>, boolean][]
+      ] satisfies [
+        undefined | ((instance: FieldInstance<Type, Props>) => PromiseOr<boolean>),
+        Ref<boolean>,
+        boolean | undefined,
+      ][]
     ).forEach(([configProperty, computedProperty, staticProperty]) => {
       if (!isDefined(configProperty)) {
         return;
@@ -133,14 +157,6 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
 
       this.destroyHandles.value.push(stopHandler);
     });
-
-    const stopRefWatcher = watch(this.ref, async (value: Type, oldValue: Type) => {
-      await this.hooks.execute('beforeUpdate', this, value, oldValue);
-      this.isDirty.value = true;
-      await this.hooks.execute('afterUpdate', this, value, oldValue);
-    });
-
-    this.destroyHandles.value.push(stopRefWatcher);
   }
 
   public blur = async (): Promise<void> => {

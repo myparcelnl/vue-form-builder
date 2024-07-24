@@ -1,6 +1,6 @@
 import {describe, afterEach, it, expect} from 'vitest';
 import {useFormBuilder} from '../composables';
-import {generateTestFormAsync} from '../__tests__/utils';
+import {generateTestForm} from '../__tests__/utils';
 import {generateFieldName} from './generateFieldName';
 import {defineField} from './defineField';
 
@@ -18,10 +18,7 @@ describe('generateFieldName', () => {
     it('generates a field name from form name + field name', async () => {
       expect.assertions(1);
 
-      const {instance: form} = await generateTestFormAsync(
-        [defineField({name: 'testField', component: 'input'})],
-        'myForm',
-      );
+      const {instance: form} = await generateTestForm([defineField({name: 'testField', component: 'input'})], 'myForm');
 
       const name = generateFieldName(form.fields.value[0], suffix);
 

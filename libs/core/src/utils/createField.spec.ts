@@ -4,7 +4,7 @@ import {describe, it, expect, afterEach} from 'vitest';
 import {flushPromises} from '@vue/test-utils';
 import {render, cleanup} from '@testing-library/vue';
 import {type FieldInstance} from '../types';
-import {generateTestFormAsync} from '../__tests__/utils';
+import {generateTestForm} from '../__tests__/utils';
 import {createForm} from './createForm';
 import {createField} from './createField';
 
@@ -53,7 +53,7 @@ describe('createField', () => {
 
     it('renders a simple field', async () => {
       expect.assertions(2);
-      const form = await generateTestFormAsync({}, 'renderSimple');
+      const form = await generateTestForm({}, 'renderSimple');
 
       const field = createField({
         name: 'test',

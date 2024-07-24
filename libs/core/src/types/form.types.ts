@@ -77,18 +77,22 @@ export interface FormConfiguration<Values extends FormValues = FormValues> exten
 
 export interface FormHooks<Values extends FormValues = FormValues> {
   beforeSubmit?(form: FormInstance<Values>): PromiseOr<void>;
+
   afterSubmit?(form: FormInstance<Values>): PromiseOr<void>;
 
   beforeReset?(form: FormInstance<Values>): PromiseOr<void>;
+
   afterReset?(form: FormInstance<Values>): PromiseOr<void>;
 
   beforeValidate?(form: FormInstance<Values>): PromiseOr<void>;
+
   afterValidate?(form: FormInstance<Values>): PromiseOr<void>;
 
   beforeAddElement?<T extends keyof Values, Props extends ComponentProps = ComponentProps>(
     form: FormInstance<Values>,
     field: FieldInstance<Values[T], Props>,
   ): PromiseOr<void>;
+
   afterAddElement?<T extends keyof Values, Props extends ComponentProps = ComponentProps>(
     form: FormInstance<Values>,
     field: FieldInstance<Values[T], Props>,

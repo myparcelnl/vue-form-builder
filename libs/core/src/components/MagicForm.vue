@@ -33,8 +33,8 @@ import Fragment from './Fragment.vue';
 
 const formElement = ref<HTMLFormElement | null>(null);
 
-const props = defineProps<{form: FormInstance<V>}>();
-const emit = defineEmits<(event: FormHook, form: FormInstance<V>) => void>();
+const props = defineProps<{form: FormInstance}>();
+const emit = defineEmits<(event: FormHook, form: FormInstance) => void>();
 
 const propRefs = toRefs(props);
 

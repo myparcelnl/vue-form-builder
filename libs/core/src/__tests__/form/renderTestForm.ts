@@ -1,6 +1,6 @@
 import {h} from 'vue';
 import {type VueWrapper, mount, flushPromises} from '@vue/test-utils';
-import {generateTestFormAsync, resolveConfigAndFields} from '../utils';
+import {generateTestForm, resolveConfigAndFields} from '../utils';
 import {type TestFormConfig} from '../types';
 import {createField} from '../../utils';
 import {type CreatedForm, type FormValues} from '../../types';
@@ -19,7 +19,7 @@ export const renderTestForm = async <Values extends FormValues = CommonFieldValu
   form: CreatedForm<Values>;
 }> => {
   const {fields, config: resolvedConfig} = resolveConfigAndFields(config);
-  const form = await generateTestFormAsync<Values>(resolvedConfig, name);
+  const form = await generateTestForm<Values>(resolvedConfig, name);
 
   const resolvedFields = fields.map(createField);
 

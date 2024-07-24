@@ -1,7 +1,7 @@
 import {ref} from 'vue';
 import {describe, expect, it} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
-import {formIsInvalid, formIsValid, generateTestForm, generateTestFormAsync} from '../utils';
+import {formIsInvalid, formIsValid, generateTestForm} from '../utils';
 import {canNotContainX, firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
 import {defineField} from '../../utils';
@@ -18,7 +18,7 @@ describe('Form and field validation', () => {
     expect.assertions(11);
     const firstName = ref('');
     const lastName = ref('');
-    const {instance: validationForm} = generateTestForm(
+    const {instance: validationForm} = await generateTestForm(
       [
         defineField({
           name: 'firstName',
@@ -63,7 +63,7 @@ describe('Form and field validation', () => {
   it.skip('can determine if a text input is valid based on previous inputs and predicates', async () => {
     const firstName = ref('');
     const lastName = ref('');
-    const {instance: validationForm} = generateTestForm(
+    const {instance: validationForm} = await generateTestForm(
       [
         defineField({
           name: 'firstName',
@@ -106,7 +106,7 @@ describe('Form and field validation', () => {
   it('validates using a single function', async () => {
     expect.assertions(4);
 
-    const {instance: form} = await generateTestFormAsync([
+    const {instance: form} = await generateTestForm([
       defineField({
         component: 'input',
         name: 'element',
@@ -130,7 +130,7 @@ describe('Form and field validation', () => {
   it.skip('moves the error message to another field', async () => {
     expect.assertions(6);
 
-    const {instance: form} = await generateTestFormAsync([
+    const {instance: form} = await generateTestForm([
       defineField({
         component: 'div',
         name: 'target',
@@ -163,7 +163,7 @@ describe('Form and field validation', () => {
   it('validates using an array of validators', async () => {
     expect.assertions(1);
 
-    const {instance: form} = await generateTestFormAsync({
+    const {instance: form} = await generateTestForm({
       fields: [
         defineField({
           component: 'input',
@@ -181,7 +181,7 @@ describe('Form and field validation', () => {
   it('validates using a computed validator', async () => {
     expect.assertions(1);
 
-    const {instance: form} = generateTestForm({
+    const {instance: form} = await generateTestForm({
       fields: [
         defineField({
           component: 'input',
@@ -199,7 +199,7 @@ describe('Form and field validation', () => {
   it('validates using an array of validators, with precedence', async () => {
     expect.assertions(3);
 
-    const {instance: form} = generateTestForm({
+    const {instance: form} = await generateTestForm({
       fields: [
         defineField({
           component: 'input',

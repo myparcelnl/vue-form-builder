@@ -1,5 +1,5 @@
 import {type ComponentSlots} from 'vue-component-type-helpers';
-import {type Ref, type ComputedRef, type Component, type Slots, type UnwrapRef} from 'vue';
+import {type Ref, type ComputedRef, type Component, type Slots} from 'vue';
 import {type UnwrapNestedRefs} from '@vue/reactivity';
 import {type FunctionOr, type AnyAttributes} from '@myparcel-vfb/utils';
 import {type HookManagerInstance} from '@myparcel-vfb/hook-manager';
@@ -183,7 +183,7 @@ export interface FieldHooks<
 
 export interface FieldInstance<Type = unknown, Props extends ComponentProps = ComponentProps>
   extends FieldHooks<Type, Props> {
-  ref: UnwrapRef<Ref<Type>>;
+  ref: Ref<Type>;
 
   readonly name: FieldName;
   readonly form: FormInstance;

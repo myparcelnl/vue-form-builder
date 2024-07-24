@@ -1,7 +1,7 @@
 import {h, markRaw, ref, nextTick, toValue} from 'vue';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
-import {generateTestForm, optionData, generateTestFormAsync} from '../utils';
+import {optionData, generateTestForm} from '../utils';
 import {firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
 import FormGroup from '../elements/FormGroup.vue';
@@ -51,7 +51,7 @@ describe('Form fields', () => {
     const firstName = ref('');
     const price = ref('0');
 
-    const {instance: validationForm} = await generateTestFormAsync([
+    const {instance: validationForm} = await generateTestForm([
       defineField({
         name: 'firstName',
         component: TextInput,
@@ -89,7 +89,7 @@ describe('Form fields', () => {
     const firstName = ref('');
     const price = ref('0');
 
-    const {instance: validationForm} = await generateTestFormAsync(
+    const {instance: validationForm} = await generateTestForm(
       [
         defineField({
           name: 'firstName',
@@ -122,7 +122,7 @@ describe('Form fields', () => {
       validators: [firstNameNotDuane()],
     });
 
-    const {instance: form} = await generateTestFormAsync<{element: string}>([field]);
+    const {instance: form} = await generateTestForm<{element: string}>([field]);
 
     await form.model.element.reset();
 
@@ -132,7 +132,7 @@ describe('Form fields', () => {
   it('gets filled with initial data from form config', async () => {
     expect.assertions(2);
 
-    const {instance: form} = await generateTestFormAsync({
+    const {instance: form} = await generateTestForm({
       fields: [
         defineField({component: 'input', name: 'element', ref: ref('disregarded')}),
         defineField({component: 'input', name: 'toggle', ref: ref()}),
@@ -156,7 +156,7 @@ describe('Form fields', () => {
       },
     });
 
-    const {instance: form} = generateTestForm({fields: [field], initialValues: {element: 'hello'}});
+    const {instance: form} = await generateTestForm({fields: [field], initialValues: {element: 'hello'}});
 
     const wrapper = mount(MagicForm, {props: {form}});
 

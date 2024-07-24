@@ -45,12 +45,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: myparcelnl/actions/yarn-install@v3
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
+      - uses: myparcelnl/actions/yarn-install@v4
 
       - uses: ./.github/actions/build
 
-      - uses: myparcelnl/actions/bundlewatch@v3
+      - uses: myparcelnl/actions/bundlewatch@v4
         with:
           token: ${{ secrets.BUNDLEWATCH_TOKEN }}

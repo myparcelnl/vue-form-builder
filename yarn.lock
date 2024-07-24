@@ -1037,6 +1037,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/demo@workspace:apps/demo"
   dependencies:
+    "@myparcel-vfb/utils": "workspace:*"
     "@myparcel/constants": "npm:^2.0.0"
     "@myparcel/sdk": "npm:^4.0.0"
     "@myparcel/ts-utils": "npm:^1.6.0"
@@ -1130,7 +1131,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/utils@workspace:^1.0.0-beta.8, @myparcel-vfb/utils@workspace:libs/utils":
+"@myparcel-vfb/utils@workspace:*, @myparcel-vfb/utils@workspace:^1.0.0-beta.8, @myparcel-vfb/utils@workspace:libs/utils":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/utils@workspace:libs/utils"
   dependencies:

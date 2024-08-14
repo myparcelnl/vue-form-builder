@@ -82,3 +82,13 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v2
+
+  notify-on-failure:
+    needs:
+      - test
+      - release
+      - rebase-prs
+      - deploy
+    if: always() && contains(needs.*.result, 'failure')
+    uses: myparcelnl/actions/.github/workflows/notify-on-failure.yml@v4
+    secrets: inherit

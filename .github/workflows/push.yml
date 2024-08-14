@@ -54,18 +54,12 @@ jobs:
 
   rebase-prs:
     needs: release
-    if: always()
     runs-on: ubuntu-22.04
     steps:
-      - uses: myparcelnl/actions/setup-git-credentials@v4
-        id: credentials
+      - uses: myparcelnl/actions/rebase-prs@v4
         with:
           app-id: ${{ secrets.MYPARCEL_APP_ID }}
           private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
-
-      - uses: peter-evans/rebase@v2
-        with:
-          token: ${{ steps.credentials.outputs.token }}
           base: ${{ github.ref_name }}
           exclude-drafts: true
           exclude-labels: 'dependencies'

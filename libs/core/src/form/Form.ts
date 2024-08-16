@@ -91,17 +91,15 @@ export class Form<Values extends FormValues = FormValues> {
     await this.hooks.execute(FormHook.AfterReset, this);
   }
 
-  public setValue(fieldName: string, value: unknown): void {
-    const fieldInstance = this.getField<FieldInstance>(fieldName);
-
-    if (!fieldInstance) {
-      return;
-    }
-
-    fieldInstance.ref.value = value;
+  public setValue<T = unknown, K extends keyof Values | string = keyof Values>(
+    fieldName: K,
+    value: K extends keyof Values ? Values[K] : T,
+  ): void {
+    // @ts-expect-error todo
+    this.values[fieldName] = value;
   }
 
-  public setValues(values: Record<string, unknown>): void {
+  public setValues<T extends FormValues = Values>(values: T): void {
     Object.entries(values).forEach(([field, value]) => this.setValue(field, value));
   }
 

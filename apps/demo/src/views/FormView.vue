@@ -17,6 +17,8 @@
               <small>Try filling in "Plankton" here</small>
             </div>
 
+            <MiddleName />
+
             <LastName.Component />
           </div>
 
@@ -58,7 +60,7 @@
                 <button
                   class="-skew-x-12 bg-blue-500 hover:bg-blue-700 hover:font-bold hover:skew-x-12 mt-2 p-3 text-white transition-all"
                   type="reset"
-                  @click="() => Form.instance.reset()">
+                  @click="resetForms">
                   Reset!!!
                 </button>
               </div>
@@ -147,6 +149,7 @@ import TButton from '../components/template/TButton.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import ErrorBox from '../components/template/ErrorBox.vue';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
+import MiddleName from './MiddleName.vue';
 
 const Form = createForm<{
   firstName: string;
@@ -161,8 +164,17 @@ const Form = createForm<{
     wrapper: FormGroup,
   },
 
+  afterAddElement(form, field) {
+      if (field.name === 'firstName') {
+        form.setValue(field.name, 'Spongebob');
+      }
+  },
+
   afterSubmit: (form: FormInstance) => {
-    console.log('submit!', form);
+    const lastNameField = form.getField('lastName');
+
+    lastNameField.errors.value.push('Are you kidding me?');
+    lastNameField.isValid.value = false;
   },
 });
 
@@ -185,6 +197,10 @@ const FirstName = createField({
   component: TTextInput,
   ref: ref('Mr.'),
   validators: [stringLengthValidator(2, 12), stringNotContainsValidator(['x', 'y', 'z'])],
+
+  afterUpdate(instance) {
+    const lastNameField = instance.form.getField('firstName');
+  },
 });
 
 const LastName = createField({
@@ -236,12 +252,23 @@ const form2Classes = computed(() => {
   };
 });
 
+const resetForms = () => {
+  Form.instance.reset();
+  Form2.instance.reset();
+}
+
 const onSubmitClick = () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const field = Form2.instance.getField('description');
+  const descriptionField = Form2.instance.getField('description');
 
-  field.errors.value.push('This is an error from afterSubmit');
-  field.isValid.value = false;
+  descriptionField.errors.value.push('This is an error from afterSubmit');
+  descriptionField.isValid.value = false;
+
+  const lastNameField = Form.instance.getField('lastName');
+
+  lastNameField.errors.value.push('This is an error from afterSubmit');
+  lastNameField.isValid.value = false;
+
 };
 
 const switchOptional = () => {

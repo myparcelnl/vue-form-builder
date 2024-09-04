@@ -5,8 +5,8 @@
   "repository": "github:myparcelnl/vue-form-builder",
   "type": "module",
   "workspaces": [
-    "libs/**",
-    "apps/**"
+    "libs/*",
+    "apps/*"
   ],
   "scripts": {
     "build": "nx build --runner=cloud --output-style=stream",

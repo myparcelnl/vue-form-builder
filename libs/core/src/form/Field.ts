@@ -193,6 +193,8 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
   }
 
   public setOptional(value: boolean): void {
+    console.log('yo');
+    console.log(this.isOptional);
     this.isOptional.value = value;
   }
 

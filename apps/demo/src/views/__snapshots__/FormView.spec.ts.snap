@@ -1,81 +1,89 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`FormView > matches the snapshot 1`] = `
-"<div>
-  <h1>Form demo</h1>
-  <p> These forms are defined entirely in the template. The components can be placed anywhere in the template. You can even choose to manually place the Label and Errors components as well. </p>
-  <div class="gap-2 grid grid-cols-2 grid-flow-row mt-4">
-    <div>
-      <form id="newForm" class="border-green-500">
-        <div class="border gap-4 grid grid-auto-rows p-4 rounded-lg">
-          <h1>Form 1</h1>
-          <div class="gap-4 grid grid-cols-2">
-            <div>
-              <div class="flex flex-col"><label for="firstName">First name</label>
-                <!--v-if--><input id="firstName" type="text" name="firstName" class="" data-test-id="firstName">
+"<div id="root">
+  <div>
+    <h1>Form demo</h1>
+    <p> These forms are defined entirely in the template. The components can be placed anywhere in the template. You can even choose to manually place the Label and Errors components as well. </p>
+    <div class="gap-2 grid grid-cols-2 grid-flow-row mt-4">
+      <div>
+        <form id="newForm" class="border-green-500">
+          <div class="border gap-4 grid grid-auto-rows p-4 rounded-lg">
+            <h1>Form 1</h1>
+            <div class="gap-4 grid grid-cols-2">
+              <div>
+                <div class="flex flex-col"><label for="firstName">First name</label>
+                  <!--v-if--><input id="firstName" type="text" name="firstName" class="" data-test-id="firstName">
+                  <!--v-if-->
+                </div><small>Try filling in "Plankton" here</small>
+              </div>
+              <div>
+                <div class="flex flex-col"><label for="middleName">Middle name</label><span> (optioneel)</span><input id="middleName" type="text" name="middleName" class="" data-test-id="middleName">
+                  <!--v-if-->
+                </div>
+              </div>
+              <div class="flex flex-col"><label for="lastName">Last name</label><span> (optioneel)</span><input id="lastName" type="text" name="lastName" class="" data-test-id="lastName">
                 <!--v-if-->
-              </div><small>Try filling in "Plankton" here</small>
+              </div>
             </div>
-            <div class="flex flex-col"><label for="lastName">Last name</label><span> (optioneel)</span><input id="lastName" type="text" name="lastName" class="" data-test-id="lastName">
+            <div style="display: none;"><label for="email">Email</label>
+              <div><input id="email" type="text" name="email" class="" data-test-id="email"></div><pre>[]</pre>
               <!--v-if-->
             </div>
-          </div>
-          <div style="display: none;"><label for="email">Email</label>
-            <div><input id="email" type="text" name="email" class="" data-test-id="email"></div><pre>[]</pre>
-            <!--v-if-->
-          </div>
-          <div class="flex">
-            <div class="border-2 flex-col inline-flex mx-auto my-3 px-6 py-3 rounded-lg text-center">
-              <h4>Are you ready, Mr. Krabs?</h4>
-              <div class="gap-4 grid grid-cols-2">
-                <div><button type="submit" class="inline-flex mt-2 px-5 py-3 rounded-full hover:bg-pink-700 bg-pink-600 text-gray-900 inline-flex mt-2 px-5 py-3 rounded-full transition-colors">
-                    <!--v-if-->🍀Verzenden
-                  </button></div>
-                <div><button type="button" class="inline-flex mt-2 px-5 py-3 rounded-full hover:bg-pink-700 bg-pink-600 text-gray-900">
-                    <!--v-if--> Fake submit
-                  </button></div>
-                <div><button type="button" class="inline-flex mt-2 px-5 py-3 rounded-full hover:bg-pink-700 bg-pink-600 text-gray-900">
-                    <!--v-if--> Switch optional
-                  </button></div><button class="-skew-x-12 bg-blue-500 hover:bg-blue-700 hover:font-bold hover:skew-x-12 mt-2 p-3 text-white transition-all" type="reset"> Reset!!! </button>
+            <div class="flex">
+              <div class="border-2 flex-col inline-flex mx-auto my-3 px-6 py-3 rounded-lg text-center">
+                <h4>Are you ready, Spongebob Krabs?</h4>
+                <div class="gap-4 grid grid-cols-2">
+                  <div><button type="submit" class="inline-flex mt-2 px-5 py-3 rounded-full hover:bg-pink-700 bg-pink-600 text-gray-900 inline-flex mt-2 px-5 py-3 rounded-full transition-colors">
+                      <!--v-if-->🍀Verzenden
+                    </button></div>
+                  <div><button type="button" class="inline-flex mt-2 px-5 py-3 rounded-full hover:bg-pink-700 bg-pink-600 text-gray-900">
+                      <!--v-if--> Fake submit
+                    </button></div>
+                  <div><button type="button" class="inline-flex mt-2 px-5 py-3 rounded-full hover:bg-pink-700 bg-pink-600 text-gray-900">
+                      <!--v-if--> Switch optional
+                    </button></div><button class="-skew-x-12 bg-blue-500 hover:bg-blue-700 hover:font-bold hover:skew-x-12 mt-2 p-3 text-white transition-all" type="reset"> Reset!!! </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </form>
-      <div class="bg-opacity-5 bg-white mt-4 px-8 py-4 rounded-lg">
-        <div class="auto-rows-auto gap-2 grid grid-cols-[1fr_3fr] grid-flow-row"><b>Name</b><span>newForm</span><b>isDirty</b><span>false</span><b>isValid</b><span>true</span><b>values</b><pre>{
-  "firstName": "Mr.",
+        </form>
+        <div class="bg-opacity-5 bg-white mt-4 px-8 py-4 rounded-lg">
+          <div class="auto-rows-auto gap-2 grid grid-cols-[1fr_3fr] grid-flow-row"><b>Name</b><span>newForm</span><b>isDirty</b><span>true</span><b>isValid</b><span>true</span><b>values</b><pre>{
+  "firstName": "Spongebob",
+  "middleName": "Harold",
   "lastName": "Krabs",
   "email": ""
 }</pre><b>Event log</b><textarea class="font-mono w-full" readonly="" rows="10"></textarea></div>
-      </div>
-    </div>
-    <div>
-      <form id="newForm2" class="border-blue-500">
-        <div class="border gap-4 grid grid-auto-rows p-4 rounded-lg">
-          <h1>Form 2</h1>
-          <p>This form reuses the email field from the first form</p>
-          <div class="bg-opacity-5 bg-white gap-2 grid grid-auto-rows rounded-lg shadow-lg">
-            <div class="flex flex-col"><label for="description">Description</label>
-              <!--v-if--><input id="description" type="text" name="description" class="" data-test-id="description">
-              <!--v-if-->
-            </div>
-            <div class="border border-yellow-300 flex-col inline-flex p-2"><label for="email">Email</label><small>This is the email label</small></div>
-            <div class="border p-4"> This is a random div, just to show the field's components can be placed anywhere. </div>
-            <div class="border border-green-500 flex-col inline-flex p-2"><input id="email" type="text" name="email" class="" data-test-id="email"><small>This is the email component itself</small></div>
-            <div class="border border-purple-500 flex-col inline-flex p-2">
-              <!--v-if--><small>This is the email Errors component. You won't see it if there are no errors.</small>
-            </div><button type="reset" class="inline-flex mt-2 px-5 py-3 rounded-full hover:bg-pink-600 border border-pink-600 hover:bg-pink-600 hover:text-white text:pink-600">
-              <!--v-if--> Default slot!
-            </button>
-          </div>
         </div>
-      </form>
-      <div class="bg-opacity-5 bg-white mt-4 px-8 py-4 rounded-lg">
-        <div class="auto-rows-auto gap-2 grid grid-cols-[1fr_3fr] grid-flow-row"><b>Name</b><span>newForm2</span><b>isDirty</b><span>false</span><b>isValid</b><span>true</span><b>values</b><pre>{
+      </div>
+      <div>
+        <form id="newForm2" class="border-blue-500">
+          <div class="border gap-4 grid grid-auto-rows p-4 rounded-lg">
+            <h1>Form 2</h1>
+            <p>This form reuses the email field from the first form</p>
+            <div class="bg-opacity-5 bg-white gap-2 grid grid-auto-rows rounded-lg shadow-lg">
+              <div class="flex flex-col"><label for="description">Description</label>
+                <!--v-if--><input id="description" type="text" name="description" class="" data-test-id="description">
+                <!--v-if-->
+              </div>
+              <div class="border border-yellow-300 flex-col inline-flex p-2"><label for="email">Email</label><small>This is the email label</small></div>
+              <div class="border p-4"> This is a random div, just to show the field's components can be placed anywhere. </div>
+              <div class="border border-green-500 flex-col inline-flex p-2"><input id="email" type="text" name="email" class="" data-test-id="email"><small>This is the email component itself</small></div>
+              <div class="border border-purple-500 flex-col inline-flex p-2">
+                <!--v-if--><small>This is the email Errors component. You won't see it if there are no errors.</small>
+              </div><button type="reset" class="inline-flex mt-2 px-5 py-3 rounded-full hover:bg-pink-600 border border-pink-600 hover:bg-pink-600 hover:text-white text:pink-600">
+                <!--v-if--> Default slot!
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="bg-opacity-5 bg-white mt-4 px-8 py-4 rounded-lg">
+          <div class="auto-rows-auto gap-2 grid grid-cols-[1fr_3fr] grid-flow-row"><b>Name</b><span>newForm2</span><b>isDirty</b><span>false</span><b>isValid</b><span>true</span><b>values</b><pre>{
   "description": "",
   "email": ""
 }</pre><b>Event log</b><textarea class="font-mono w-full" readonly="" rows="10"></textarea></div>
+        </div>
       </div>
     </div>
   </div>

@@ -5,7 +5,7 @@ import {defineForm} from './defineForm';
 
 export const createForm = <V extends FormValues = FormValues>(
   name: string,
-  config: Omit<FormConfiguration<V>, 'fields'>,
+  config?: Omit<FormConfiguration<V>, 'fields'>,
 ): CreatedForm<V> => {
   const form = defineForm(name, config as FormConfiguration<V>);
 

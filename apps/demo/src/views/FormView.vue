@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Form without fields array</h1>
+    <h1>Form demo</h1>
     <p>
       These forms are defined entirely in the template. The components can be placed anywhere in the template. You can
       even choose to manually place the Label and Errors components as well.
@@ -16,6 +16,8 @@
               <FirstName.Component />
               <small>Try filling in "Plankton" here</small>
             </div>
+
+            <MiddleName />
 
             <LastName.Component />
           </div>
@@ -37,20 +39,28 @@
           </div>
 
           <div
-            v-if="FirstName.ref && LastName.ref"
+            v-show="FirstName.ref && LastName.ref"
             class="flex">
             <div class="border-2 flex-col inline-flex mx-auto my-3 px-6 py-3 rounded-lg text-center">
               <h4>Are you ready, {{ `${FirstName.ref} ${LastName.ref}`.trim() }}?</h4>
 
               <div class="gap-4 grid grid-cols-2">
                 <div>
-                  <SubmitButton.Component @click="onSubmitClick" />
+                  <TSubmitButton />
+                </div>
+
+                <div>
+                  <TButton @click="onSubmitClick"> Fake submit </TButton>
+                </div>
+
+                <div>
+                  <TButton @click="switchOptional"> Switch optional </TButton>
                 </div>
 
                 <button
                   class="-skew-x-12 bg-blue-500 hover:bg-blue-700 hover:font-bold hover:skew-x-12 mt-2 p-3 text-white transition-all"
                   type="reset"
-                  @click="() => Form.instance.reset()">
+                  @click="resetForms">
                   Reset!!!
                 </button>
               </div>
@@ -102,7 +112,7 @@
               <small>This is the email Errors component. You won't see it if there are no errors.</small>
             </div>
 
-            <SubmitButton.Component outline>
+            <TResetButton outline>
               <template #icon="{icon}">
                 <span class="inline-flex">
                   <span class="inline-flex relative">
@@ -117,7 +127,7 @@
               </template>
 
               <template #default> Default slot! </template>
-            </SubmitButton.Component>
+            </TResetButton>
           </div>
         </Form2.Component>
 
@@ -129,14 +139,17 @@
 
 <script lang="ts" setup>
 /* eslint-disable @typescript-eslint/naming-convention */
-import {computed, h, ref, type Component} from 'vue';
+import {computed, h, ref} from 'vue';
 import {createField, createForm} from '@myparcel-vfb/core';
 import {regexValidator, stringLengthValidator, stringNotContainsValidator, emailValidator} from '../validation';
 import TTextInput from '../components/template/TTextInput.vue';
+import TSubmitButton from '../components/template/TSubmitButton.vue';
+import TResetButton from '../components/template/TResetButton.vue';
+import TButton from '../components/template/TButton.vue';
 import FormGroup from '../components/template/FormGroup.vue';
 import ErrorBox from '../components/template/ErrorBox.vue';
-import StandaloneSubmitButton from '../components/StandAloneSubmitButton.vue';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
+import MiddleName from './MiddleName.vue';
 
 const Form = createForm<{
   firstName: string;
@@ -149,6 +162,19 @@ const Form = createForm<{
 
   field: {
     wrapper: FormGroup,
+  },
+
+  afterAddElement(form, field) {
+      if (field.name === 'firstName') {
+        form.setValue(field.name, 'Spongebob');
+      }
+  },
+
+  afterSubmit: (form: FormInstance) => {
+    const lastNameField = form.getField('lastName');
+
+    lastNameField.errors.value.push('Are you kidding me?');
+    lastNameField.isValid.value = false;
   },
 });
 
@@ -171,6 +197,10 @@ const FirstName = createField({
   component: TTextInput,
   ref: ref('Mr.'),
   validators: [stringLengthValidator(2, 12), stringNotContainsValidator(['x', 'y', 'z'])],
+
+  afterUpdate(instance) {
+    const lastNameField = instance.form.getField('firstName');
+  },
 });
 
 const LastName = createField({
@@ -178,6 +208,7 @@ const LastName = createField({
   label: 'Last name',
   component: TTextInput,
   ref: ref('Krabs'),
+  optional: true,
 });
 
 const Email = createField({
@@ -191,15 +222,6 @@ const Email = createField({
   },
   ref: ref(''),
   validators: [stringLengthValidator(5, 30), emailValidator(), stringNotContainsValidator(['x', 'y', 'z', 'q', 'w'])],
-});
-
-const SubmitButton = createField({
-  component: StandaloneSubmitButton,
-  props: {
-    onClick(...args) {
-      console.log('click from prop!', {args});
-    },
-  },
 });
 
 const Description = createField({
@@ -230,7 +252,27 @@ const form2Classes = computed(() => {
   };
 });
 
-const onSubmitClick = (...args) => {
-  console.log('submit', args);
+const resetForms = () => {
+  Form.instance.reset();
+  Form2.instance.reset();
+}
+
+const onSubmitClick = () => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const descriptionField = Form2.instance.getField('description');
+
+  descriptionField.errors.value.push('This is an error from afterSubmit');
+  descriptionField.isValid.value = false;
+
+  const lastNameField = Form.instance.getField('lastName');
+
+  lastNameField.errors.value.push('This is an error from afterSubmit');
+  lastNameField.isValid.value = false;
+
+};
+
+const switchOptional = () => {
+  const field = Form.instance.getField('lastName');
+  field.setOptional(!field.isOptional.value);
 };
 </script>

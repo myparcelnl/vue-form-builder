@@ -1,49 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`rendering a form > defaults to no inner wrapper 1`] = `
-<form
-  id="form"
->
-  
-  
-  
-  <div
-    data-test-id="field"
-    data-test-type="interactive"
-  />
-  <input
-    data-test-id="named"
-    data-test-type="plain"
-  />
-  <div
-    data-test-id="field2"
-    data-test-type="interactive"
-  />
-  <br
-    data-test-type="plain"
-  />
-  
-  <!--v-if-->
-  
-  
-</form>
-`;
-
-exports[`rendering a form > renders html elements 1`] = `
-"<form id="form">
-  <div data-test-id="field" data-test-type="interactive"></div><input data-test-id="named" data-test-type="plain">
-  <div data-test-id="field2" data-test-type="interactive"></div><br data-test-type="plain">
-  <!--v-if-->
-</form>"
-`;
+exports[`rendering a form > renders html elements 1`] = `"<form id="test"><input data-test-id="field1"><input data-test-id="field2"><input data-test-id="field3"></form>"`;
 
 exports[`rendering a form > wraps fields with a wrapper element 1`] = `
 <form
-  id="form"
+  id="test"
 >
   
   
-  
   <span
     class="inner-wrapper"
     element="[object Object]"
@@ -56,12 +20,6 @@ exports[`rendering a form > wraps fields with a wrapper element 1`] = `
     class="inner-wrapper"
     element="[object Object]"
   />
-  <span
-    class="inner-wrapper"
-    element="[object Object]"
-  />
-  
-  <!--v-if-->
   
   
 </form>

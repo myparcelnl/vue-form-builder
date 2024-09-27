@@ -1,7 +1,7 @@
 import {h, markRaw, ref, nextTick, toValue} from 'vue';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
-import {generateForm, optionData} from '../utils';
+import {optionData, generateTestForm} from '../utils';
 import {firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
 import FormGroup from '../elements/FormGroup.vue';
@@ -51,25 +51,23 @@ describe('Form fields', () => {
     const firstName = ref('');
     const price = ref('0');
 
-    const validationForm = defineForm('validationForm', {
-      fields: [
-        defineField({
-          name: 'firstName',
-          component: TextInput,
-          ref: firstName,
-          afterUpdate: async (field, newValue) => {
-            const remote = await optionData(newValue);
+    const {instance: validationForm} = await generateTestForm([
+      defineField({
+        name: 'firstName',
+        component: TextInput,
+        ref: firstName,
+        afterUpdate: async (field, newValue) => {
+          const remote = await optionData(newValue);
 
-            field.form.model.price.ref.value = remote.price;
-          },
-        }),
-        defineField({
-          name: 'price',
-          component: TextInput,
-          ref: price,
-        }),
-      ],
-    });
+          field.form.model.price.ref.value = remote.price;
+        },
+      }),
+      defineField({
+        name: 'price',
+        component: TextInput,
+        ref: price,
+      }),
+    ]);
 
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
@@ -91,8 +89,8 @@ describe('Form fields', () => {
     const firstName = ref('');
     const price = ref('0');
 
-    const validationForm = defineForm('validationForm', {
-      fields: [
+    const {instance: validationForm} = await generateTestForm(
+      [
         defineField({
           name: 'firstName',
           component: TextInput,
@@ -104,57 +102,14 @@ describe('Form fields', () => {
           ref: price,
         }),
       ],
-    });
+      'validationForm',
+    );
+
     const wrapper = mount(MagicForm, {props: {form: validationForm}});
     await flushPromises();
 
     await wrapper.find('input[name="firstName"]').setValue('Hank');
     // figure out how to reverse calculate the price when firstName is updated.
-  });
-
-  it.skip('can teleport a field in the same form', async () => {
-    // expect.assertions(2);
-    const form = generateForm({
-      fields: [
-        defineField({
-          name: 'name',
-          component: h('div', {class: 'flex flex-row gap-2'}, [
-            h('div', {id: 'teleport--firstname'}),
-            h('div', {id: 'teleport--lastname'}),
-          ]),
-          label: 'name',
-          props: {
-            label: 'Naam',
-          },
-        }),
-        defineField({
-          name: 'firstname',
-          component: 'input',
-          ref: ref(''),
-          label: 'firstname',
-          teleportSelector: '#teleport--firstname',
-        }),
-
-        defineField({
-          name: 'lastname',
-          component: 'input',
-          ref: ref(''),
-          label: 'lastname',
-          teleportSelector: '#teleport--lastname',
-        }),
-      ],
-    });
-    const wrapper = mount(MagicForm, {
-      global: {
-        stubs: {
-          teleport: true,
-        },
-      },
-      props: {
-        form,
-      },
-    });
-    await flushPromises();
   });
 
   it('can be reset', async () => {
@@ -167,17 +122,17 @@ describe('Form fields', () => {
       validators: [firstNameNotDuane()],
     });
 
-    const form = generateForm({fields: [field]});
+    const {instance: form} = await generateTestForm<{element: string}>([field]);
 
     await form.model.element.reset();
 
     expect(form.isValid.value).toBe(true);
   });
 
-  it('gets filled with initial data from form config', () => {
+  it('gets filled with initial data from form config', async () => {
     expect.assertions(2);
 
-    const form = generateForm({
+    const {instance: form} = await generateTestForm({
       fields: [
         defineField({component: 'input', name: 'element', ref: ref('disregarded')}),
         defineField({component: 'input', name: 'toggle', ref: ref()}),
@@ -201,7 +156,7 @@ describe('Form fields', () => {
       },
     });
 
-    const form = generateForm({fields: [field], initialValues: {element: 'hello'}});
+    const {instance: form} = await generateTestForm({fields: [field], initialValues: {element: 'hello'}});
 
     const wrapper = mount(MagicForm, {props: {form}});
 

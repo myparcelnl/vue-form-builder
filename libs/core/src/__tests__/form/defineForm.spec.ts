@@ -1,9 +1,9 @@
 import {type PropType, defineComponent, h, isVNode, ref, vModelText, withDirectives} from 'vue';
 import {afterEach, describe, expect, it} from 'vitest';
-import {defineForm} from '../../utils';
-import {type AnyElementConfiguration, type InteractiveElementInstance} from '../../types';
+import {generateTestForm} from '../utils';
+import {getDefaultFormConfiguration} from '../../utils';
+import {type FieldConfiguration, type ElementProp} from '../../types';
 import {Form} from '../../form';
-import {getDefaultFormConfiguration} from '../../data';
 import {useFormBuilder} from '../../composables';
 
 const mockComponent = defineComponent({
@@ -12,13 +12,13 @@ const mockComponent = defineComponent({
       type: String,
     },
     element: {
-      type: Object as PropType<InteractiveElementInstance>,
+      type: Object as PropType<ElementProp>,
     },
   },
   render: () => withDirectives(h('div'), [[vModelText]]),
 });
 
-const commonFields: AnyElementConfiguration[] = [
+const commonFields: FieldConfiguration[] = [
   {
     name: 'field',
     component: mockComponent,
@@ -30,9 +30,6 @@ const commonFields: AnyElementConfiguration[] = [
     component: 'input',
     label: 'my_label_2',
   },
-  {
-    component: 'br',
-  },
 ];
 
 describe('defining a form', () => {
@@ -43,18 +40,20 @@ describe('defining a form', () => {
     formBuilder.defaults.value = getDefaultFormConfiguration();
   });
 
-  it('registers form in the form builder', () => {
+  it('registers form in the form builder', async () => {
+    expect.assertions(4);
     expect(formBuilder.forms.value).toEqual({});
 
-    const form = defineForm('myForm', {fields: commonFields});
+    const {instance: form} = await generateTestForm(commonFields, 'myForm');
 
     expect(formBuilder.forms.value).toHaveProperty('myForm');
     expect(formBuilder.forms.value.myForm).toBeInstanceOf(Form);
     expect(formBuilder.forms.value.myForm.fields).toHaveLength(form.fields.value.length);
   });
 
-  it('has default values', () => {
-    const form = defineForm('myForm', {fields: commonFields});
+  it('has default values', async () => {
+    expect.assertions(3);
+    const {instance: form} = await generateTestForm(commonFields);
     const defaults = getDefaultFormConfiguration();
 
     expect(form.config.form).toEqual(defaults.form);
@@ -62,7 +61,8 @@ describe('defining a form', () => {
     expect(form.config.fieldDefaults).toEqual(defaults.fieldDefaults);
   });
 
-  it('can set default values', () => {
+  it('can set default values', async () => {
+    expect.assertions(9);
     expect(formBuilder.forms.value).toEqual({});
 
     formBuilder.setDefaults({
@@ -85,7 +85,7 @@ describe('defining a form', () => {
       },
     });
 
-    const form = defineForm('myForm', {fields: commonFields});
+    const {instance: form} = await generateTestForm(commonFields);
 
     for (const field of form.fields.value) {
       expect(field.lazy).toBe(true);

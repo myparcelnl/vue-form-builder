@@ -23,6 +23,7 @@
     ],
     "test": [
       "default",
+      "{projectRoot}/dist/**/*",
       "{projectRoot}/**/*.spec.*",
       "{projectRoot}/**/__tests__/**",
       "{projectRoot}/**/__mocks__/**",

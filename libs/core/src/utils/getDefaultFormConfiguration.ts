@@ -10,8 +10,6 @@ export const getDefaultFormConfiguration = (): InstanceFormConfiguration => ({
     wrapper: true,
   },
 
-  fields: [],
-
   form: {
     attributes: {},
     tag: 'form',

@@ -1,11 +1,11 @@
 import {type ComputedRef} from 'vue';
 import {type FunctionOr} from '@myparcel-vfb/utils';
 import {type PromiseOr} from '@myparcel/ts-utils';
-import {type InteractiveElementInstance} from './interactive-element.types';
+import {type FieldInstance} from './field.types';
 import {type ComponentProps} from './component.types';
 
 export type ValidateFunction<Type = unknown, Props extends ComponentProps = ComponentProps> = (
-  field: InteractiveElementInstance<Type, Props>,
+  field: FieldInstance<Type, Props>,
   value: Type,
 ) => PromiseOr<boolean>;
 

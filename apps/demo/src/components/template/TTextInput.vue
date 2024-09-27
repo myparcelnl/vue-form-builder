@@ -12,32 +12,13 @@
     }" />
 </template>
 
-<script lang="ts">
-import {defineComponent, type PropType} from 'vue';
+<script lang="ts" setup generic="Type extends string">
 import {useVModel} from '@vueuse/core';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+import {type FieldEmits, type FieldProps} from '@myparcel-vfb/core';
 
-export default defineComponent({
-  name: 'TTextInput',
-  props: {
-    element: {
-      type: Object as PropType<InteractiveElementInstance>,
-      required: true,
-    },
+// eslint-disable-next-line vue/no-unused-properties
+const props = defineProps<FieldProps<Type>>();
+const emit = defineEmits<FieldEmits<Type>>();
 
-    // eslint-disable-next-line vue/no-unused-properties
-    modelValue: {
-      type: [String, Number],
-      default: null,
-    },
-  },
-
-  emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
-
-  setup: (props) => {
-    return {
-      model: useVModel(props, 'modelValue'),
-    };
-  },
-});
+const model = useVModel(props, undefined, emit);
 </script>

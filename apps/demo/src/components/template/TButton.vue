@@ -1,36 +1,30 @@
 <template>
   <button
-    type="submit"
-    class="bg-pink-600 inline-flex mt-2 px-5 py-3 rounded-full text-gray-900"
-    :disabled="element.isDisabled || element.isSuspended"
+    type="button"
+    class="inline-flex mt-2 px-5 py-3 rounded-full"
+    :disabled="disabled || loading"
     :class="{
-      'opacity-50 cursor-not-allowed': element.isDisabled,
-      'cursor-wait': element.isSuspended,
-      'hover:bg-pink-700': !element.isDisabled,
+      'opacity-50 cursor-not-allowed': loading,
+      'cursor-wait': loading,
+      'hover:bg-pink-700': !outline && !disabled && !loading,
+      'hover:bg-pink-600': outline && !disabled,
+      'bg-pink-600 text-gray-900': !outline,
+      'border border-pink-600 hover:bg-pink-600 hover:text-white text:pink-600': outline,
     }">
-    <LoadingOverlay v-if="element.isSuspended" />
+    <LoadingOverlay v-if="loading" />
+
+    <slot name="icon" />
+
     <slot />
   </button>
 </template>
 
-<script lang="ts">
-import {defineComponent, type PropType} from 'vue';
-import {type PlainElementInstance} from '@myparcel/vue-form-builder';
+<script lang="ts" setup>
 import LoadingOverlay from '../LoadingOverlay.vue';
-import {translate} from '../../translate';
 
-export default defineComponent({
-  name: 'TButton',
-  components: {LoadingOverlay},
-  props: {
-    element: {
-      type: Object as PropType<PlainElementInstance>,
-      required: true,
-    },
-  },
-
-  setup: () => ({
-    translate,
-  }),
-});
+defineProps<{
+  loading?: boolean;
+  disabled?: boolean;
+  outline?: boolean;
+}>();
 </script>

@@ -17,38 +17,25 @@
     @change="$emit('change', $event)" />
 </template>
 
-<script lang="ts">
-import {type PropType, computed, defineComponent} from 'vue';
+<script lang="ts" setup generic="Type extends string">
+import {type FocusEvent} from 'happy-dom';
+import {useVModel} from '@vueuse/core';
+import {type FieldProps, type FieldEmits} from '../../types';
 
-import type {InteractiveElementInstance} from '../../types';
+/* eslint-disable @typescript-eslint/unified-signatures */
 
-export default defineComponent({
-  name: 'TextInput',
-  props: {
-    element: {
-      type: Object as PropType<InteractiveElementInstance>,
-      required: true,
-    },
+// eslint-disable-next-line vue/no-unused-properties
+const props = defineProps<FieldProps<Type>>();
+const emit = defineEmits<
+  FieldEmits<Type> & {
+    (event: 'change', data: Event): void;
+    (event: 'blur', data: Event): void;
+    (event: 'focus', data: FocusEvent): void;
+    (event: 'focusin', data: FocusEvent): void;
+    (event: 'focusout', data: FocusEvent): void;
+    (event: 'click', data: Event): void;
+  }
+>();
 
-    modelValue: {
-      type: String,
-      default: null,
-    },
-  },
-
-  emits: ['update:modelValue', 'change', 'blur', 'focus', 'focusin', 'focusout', 'click'],
-
-  setup: (props, {emit}) => {
-    return {
-      model: computed({
-        get() {
-          return props.modelValue;
-        },
-        set(value) {
-          emit('update:modelValue', value);
-        },
-      }),
-    };
-  },
-});
+const model = useVModel(props, undefined, emit);
 </script>

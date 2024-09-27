@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Middle Name > should render a pre-populated form, transform inserted form fields 1`] = `
+"<form id="middle-name-form">
+  <div><input id="middleName" type="text" name="middleName" class="" data-test-id="middleName"></div>
+</form>"
+`;

@@ -21,6 +21,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - uses: ./.github/actions/build
+
       - uses: myparcelnl/actions/nx-run-many@v4
         with:
           target: 'test:coverage'

@@ -1,147 +1,111 @@
-import {computed, ref, watch, reactive, unref, toValue} from 'vue';
-import {isDefined, useMemoize} from '@vueuse/core';
+import {computed, ref, watch, reactive, toValue, type Ref} from 'vue';
+import {useMemoize} from '@vueuse/core';
 import {createHookManager} from '@myparcel-vfb/hook-manager';
-import {isOfType} from '@myparcel/ts-utils';
 import {markComponentAsRaw} from '../utils';
 import {
   type ToRecord,
-  type AnyElementConfiguration,
-  type AnyElementInstance,
-  type ElementName,
-  type InteractiveElementInstance,
-  type InteractiveElementConfiguration,
+  type FieldConfiguration,
   type FormInstance,
   type InstanceFormConfiguration,
-  type FormHooks,
   type FormValues,
+  type FieldInstance,
+  type ComponentProps,
 } from '../types';
-import {FORM_HOOKS, FormHook} from '../data';
-import {PlainElement} from './PlainElement';
-import {InteractiveElement} from './InteractiveElement';
+import {FormHook, FORM_HOOKS} from '../data';
+import {Field} from './Field';
 
 // noinspection JSUnusedGlobalSymbols
-export class Form<V extends FormValues = FormValues> {
-  public readonly config: FormInstance<V>['config'];
-  public readonly fields: FormInstance<V>['fields'] = ref([]);
-  public readonly hooks: FormInstance<V>['hooks'];
-  public readonly interactiveFields: FormInstance<V>['interactiveFields'];
-  public isDirty: FormInstance<V>['isDirty'];
-  public isValid: FormInstance<V>['isValid'] = ref(true);
-  public readonly model = {} as FormInstance<V>['model'];
-  public readonly name: FormInstance<V>['name'];
-  public readonly off: FormInstance<V>['off'];
-  public readonly on: FormInstance<V>['on'];
-  public readonly stable: FormInstance<V>['stable'] = ref(false);
-  public readonly values: FormInstance<V>['values'];
+export class Form<Values extends FormValues = FormValues> {
+  public readonly config: FormInstance<Values>['config'];
+  public readonly fields: FormInstance<Values>['fields'] = ref([]);
+  public readonly hooks: FormInstance<Values>['hooks'];
+  public readonly isDirty: FormInstance<Values>['isDirty'];
+  public readonly isValid: FormInstance<Values>['isValid'];
+  public readonly model = {} as FormInstance<Values>['model'];
+  public readonly name: FormInstance<Values>['name'];
+  public readonly off: FormInstance<Values>['off'];
+  public readonly on: FormInstance<Values>['on'];
+  public readonly values: FormInstance<Values>['values'];
 
-  private getFieldMemoized = useMemoize((name: string): AnyElementInstance | null => {
+  protected readonly stopHandles: Ref<(() => void)[]> = ref([]);
+
+  private getFieldMemoized = useMemoize((name: string): FieldInstance | null => {
     const found = toValue(this.fields).find((field) => field.name === name);
 
     return found ?? null;
   });
 
-  public constructor(name: FormInstance<V>['name'], formConfig: ToRecord<InstanceFormConfiguration<V> & FormHooks>) {
-    const {fields, ...config} = formConfig;
+  public async destroy(): Promise<void> {
+    this.stopHandles.value.forEach((handler) => handler());
 
+    await Promise.all(this.fields.value.map((field) => field.destroy()));
+  }
+
+  public constructor(name: FormInstance<Values>['name'], formConfig: ToRecord<InstanceFormConfiguration<Values>>) {
     formConfig.hookNames = [...FORM_HOOKS, ...(formConfig.hookNames ?? [])];
-    this.hooks = createHookManager(formConfig);
+    this.hooks = createHookManager(formConfig) as FormInstance<Values>['hooks'];
 
     this.on = this.hooks.register.bind(this.hooks);
     this.off = this.hooks.unregister.bind(this.hooks);
 
     this.name = name;
-    this.config = config;
-    this.values = reactive<V>({} as V);
+    this.config = formConfig;
+    this.values = reactive<Values>({} as Values);
 
     markComponentAsRaw(this.config.field.wrapper);
     markComponentAsRaw(this.config.fieldDefaults.wrapper);
 
-    fields.forEach((field) => {
-      const instance = this.createFieldInstance(field as AnyElementConfiguration, this as unknown as FormInstance<V>);
-
-      toValue(this.fields).push(instance);
-    });
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    this.interactiveFields = computed(() => {
-      return toValue(this.fields).filter((field) => {
-        return isOfType<InteractiveElementInstance>(field, 'ref');
-      });
-    });
-
-    this.isDirty = computed(() => toValue(this.interactiveFields).some((field) => toValue(field.isDirty)));
-
-    this.stable.value = true;
+    this.isDirty = computed(() => toValue(this.fields).some((field) => toValue(field.isDirty)));
+    this.isValid = computed(() => toValue(this.fields).every((field) => toValue(field.isValid)));
   }
 
-  public async addElement<
-    EC extends AnyElementConfiguration = AnyElementConfiguration,
-    S extends string | undefined = undefined,
-  >(
+  public async addElement<EC extends FieldConfiguration = FieldConfiguration, S extends string | undefined = undefined>(
     element: EC,
-    sibling?: S,
-    position: 'before' | 'after' = 'after',
-  ): Promise<S extends string ? undefined | AnyElementInstance : AnyElementInstance> {
+  ): Promise<S extends string ? undefined | FieldInstance : FieldInstance> {
     await this.hooks.execute(FormHook.BeforeAddElement, this, element);
-    const newIndex = sibling
-      ? toValue(this.fields).findIndex((field) => field.name === sibling)
-      : toValue(this.fields).length;
-
-    if (sibling && newIndex === -1) {
-      // eslint-disable-next-line no-console
-      console.error(`Field ${sibling} not found in form ${this.name}`);
-      return undefined as S extends string ? undefined : AnyElementInstance;
-    }
-
-    const index = position === 'after' ? newIndex + 1 : newIndex;
-
-    const newElement = this.createFieldInstance(element, this as unknown as FormInstance<V>);
-
-    toValue(this.fields).splice(index, 0, newElement);
+    const newElement = this.addFieldInstance(element, this as unknown as FormInstance<Values>);
     await this.hooks.execute(FormHook.AfterAddElement, this, element);
 
     return newElement;
   }
 
-  public getField<F extends AnyElementInstance | null = AnyElementInstance | null>(name: string): F {
+  public getField<F extends FieldInstance | null = FieldInstance | null>(name: string): F {
     return this.getFieldMemoized(name) as F;
   }
 
+  /** @deprecated use computed values */
   public getValue<T = unknown>(fieldName: string): T {
-    const fieldInstance = this.ensureGetField<InteractiveElementInstance>(fieldName);
+    const fieldInstance = this.ensureGetField<FieldInstance>(fieldName);
 
     return toValue(fieldInstance.ref) as T;
   }
 
-  public getValues(): V {
-    return toValue(this.values) as V;
-  }
-
-  public removeElement(name: string): void {
-    const index = toValue(this.fields).findIndex((field) => field.name === name);
-
-    toValue(this.fields).splice(index, 1);
-    this.getFieldMemoized.delete(name);
+  /** @deprecated use computed values */
+  public getValues(): Values {
+    return toValue(this.values) as Values;
   }
 
   public async reset(): Promise<void> {
     await this.hooks.execute(FormHook.BeforeReset, this);
-    await Promise.all(toValue(this.interactiveFields).map((field) => field.reset()));
+    await Promise.all(toValue(this.fields).map((field) => field.reset()));
     await this.hooks.execute(FormHook.AfterReset, this);
   }
 
-  public setValue(fieldName: string, value: unknown): void {
-    const fieldInstance = this.getField<InteractiveElementInstance>(fieldName);
+  public setValue<T = unknown, K extends keyof Values | string = keyof Values>(
+    fieldName: K,
+    value: K extends keyof Values ? Values[K] : T,
+  ): void {
+    // @ts-expect-error todo
+    const field = this.getField(fieldName);
 
-    if (!fieldInstance) {
+    if (!field) {
       return;
     }
 
-    fieldInstance.ref.value = value;
+    field.setValue(value);
   }
 
-  public setValues(values: Record<string, unknown>): void {
+  public setValues<T extends FormValues = Values>(values: T): void {
     Object.entries(values).forEach(([field, value]) => this.setValue(field, value));
   }
 
@@ -151,28 +115,29 @@ export class Form<V extends FormValues = FormValues> {
     await this.hooks.execute(FormHook.AfterSubmit, this);
   }
 
-  public async validate(): Promise<boolean> {
+  public async validate(): Promise<void> {
     await this.hooks.execute(FormHook.BeforeValidate, this);
-
-    const result = await Promise.all(
-      toValue(this.fields).map((field) => {
-        if (!isOfType<InteractiveElementInstance>(field, 'ref')) {
-          field.resetValidation();
-          return true;
-        }
-
-        return field.validate();
-      }),
-    );
-
-    this.isValid.value = result.every(Boolean);
-
+    await Promise.all(toValue(this.fields).map((field) => field.validate()));
     await this.hooks.execute(FormHook.AfterValidate, this);
-
-    return toValue(this.isValid);
   }
 
-  protected ensureGetField<I extends AnyElementInstance>(name: string): I {
+  public removeElement(name: string): void {
+    const field = this.getField<FieldInstance>(name);
+
+    if (!field) {
+      return;
+    }
+
+    const index = toValue(this.fields).indexOf(field);
+
+    if (index === -1) {
+      return;
+    }
+
+    toValue(this.fields).splice(index, 1);
+  }
+
+  protected ensureGetField<I extends FieldInstance>(name: string): I {
     const field = this.getField<I>(name);
 
     if (!field) {
@@ -182,7 +147,10 @@ export class Form<V extends FormValues = FormValues> {
     return field;
   }
 
-  private createFieldInstance(field: AnyElementConfiguration, form: FormInstance<V>): AnyElementInstance {
+  private addFieldInstance<Type = unknown, Props extends ComponentProps = ComponentProps>(
+    field: FieldConfiguration<Type, Props>,
+    form: FormInstance<Values>,
+  ): FieldInstance<Type, Props> {
     const elementConfig = {
       ...form.config.fieldDefaults,
       ...field,
@@ -190,51 +158,32 @@ export class Form<V extends FormValues = FormValues> {
         ...form.config.fieldDefaults?.attributes,
         ...field.attributes,
       },
-    };
+    } satisfies FieldConfiguration<Type, Props>;
 
     markComponentAsRaw(elementConfig.component);
     markComponentAsRaw(elementConfig.wrapper);
 
-    if (!isOfType<InteractiveElementConfiguration>(elementConfig, 'ref')) {
-      const instance = new PlainElement(form as FormInstance, elementConfig);
+    const instance: FieldInstance<Type, Props> = new Field<Type, Props>(form, elementConfig);
 
-      return this.registerElement(elementConfig.name, instance);
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const instance: InteractiveElementInstance<any> = new InteractiveElement<
-      FormInstance,
-      string,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      InteractiveElementConfiguration<any>
-    >(form, elementConfig);
-
-    watch(instance.ref, async (value: unknown) => {
+    const stop = watch(instance.ref, async (value: Type) => {
       await this.hooks.execute(FormHook.ElementChange, this, instance, value);
 
       if (!toValue(instance.isDisabled)) {
-        // @ts-expect-error todo
-        this.values[elementConfig.name] = value as V[keyof V];
+        this.values[elementConfig.name] = value;
       }
     });
 
+    this.stopHandles.value.push(stop);
+
     if (!toValue(instance.isDisabled)) {
-      // @ts-expect-error todo
-      this.values[elementConfig.name] = unref(instance.ref) as V[keyof V];
-    }
-
-    return this.registerElement(elementConfig.name, instance);
-  }
-
-  private registerElement<I extends AnyElementInstance>(name: ElementName, instance: I): I {
-    if (!isDefined(name)) {
-      return instance;
+      this.values[elementConfig.name] = toValue(instance.ref);
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    this.model[name] = instance;
-    this.getFieldMemoized.delete(name);
+    this.model[elementConfig.name] = instance;
+    toValue(this.fields).push(instance);
+    this.getFieldMemoized.delete(elementConfig.name);
 
     return instance;
   }

@@ -1,7 +1,7 @@
-import {type MaybeUnwrapNestedRefs, type AnyElementInstance} from '../types';
+import {type MaybeUnwrapNestedRefs, type FieldInstance} from '../types';
 
 export const generateFieldName = (
-  field?: MaybeUnwrapNestedRefs<AnyElementInstance> | null,
+  field?: MaybeUnwrapNestedRefs<FieldInstance> | null,
   suffix?: string,
 ): string | undefined => {
   if (!field) {

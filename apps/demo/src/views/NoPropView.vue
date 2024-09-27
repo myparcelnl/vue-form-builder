@@ -1,15 +1,32 @@
 <template>
   <h1>Form without element props</h1>
 
-  <MagicForm :form="form" />
+  <Form.Component>
+    <Field.Component />
+  </Form.Component>
 
-  <FormDiagnostics :form="form" />
+  <FormDiagnostics :form="Form.instance" />
 </template>
 
 <script lang="ts" setup>
-import {MagicForm} from '@myparcel/vue-form-builder';
-import {noPropForm} from '../forms/noPropForm';
+import {ref} from 'vue';
+import {createField, createForm} from '@myparcel-vfb/core';
+import FormGroupWithoutElementProp from '../components/FormGroupWithoutElementProp.vue';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
+import ComponentWithoutElementProp from '../components/ComponentWithoutElementProp.vue';
 
-const form = noPropForm;
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const Form = createForm('noProps', {
+  field: {
+    elementProp: false,
+    wrapper: FormGroupWithoutElementProp,
+  },
+});
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const Field = createField({
+  name: 'noPropsHere',
+  component: ComponentWithoutElementProp,
+  ref: ref('propless life'),
+});
 </script>

@@ -2,17 +2,8 @@
   <component :is="`h${element.props.level}`">{{ element.props.text }}</component>
 </template>
 
-<script lang="ts">
-import {type PropType, defineComponent} from 'vue';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+<script lang="ts" setup>
+import {type FieldInstance} from '@myparcel-vfb/core';
 
-export default defineComponent({
-  name: 'Heading',
-  props: {
-    element: {
-      type: Object as PropType<InteractiveElementInstance>,
-      required: true,
-    },
-  },
-});
+defineProps<{element: FieldInstance}>();
 </script>

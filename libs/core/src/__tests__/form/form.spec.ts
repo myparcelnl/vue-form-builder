@@ -1,225 +1,214 @@
-import {type PropType, defineComponent, h, ref, vModelText, withDirectives, reactive} from 'vue';
+import {h, ref, reactive, nextTick} from 'vue';
 import {afterEach, describe, expect, it, vi} from 'vitest';
-import {mount, flushPromises} from '@vue/test-utils';
-import {generateForm, mountForm} from '../utils';
-import {type InteractiveElementInstance} from '../../types';
-import {InteractiveElement} from '../../form';
-import {getDefaultFormConfiguration} from '../../data';
+import {flushPromises, mount} from '@vue/test-utils';
+import {createField, createForm, getDefaultFormConfiguration} from '../../utils';
+import {Field} from '../../form';
 import {useFormBuilder} from '../../composables';
-import MagicForm from '../../components/MagicForm.vue';
+import {mockComponent} from './mockComponent';
 
-const mockComponent = defineComponent({
-  props: {
-    modelValue: {
-      type: String,
-    },
-    element: {
-      type: Object as PropType<InteractiveElementInstance>,
-    },
+interface TestFormValues {
+  field1: string;
+  field2: string;
+  field3: string;
+}
+
+const renderTestForm = async (config = {
+  afterAddElement(form, field) {
+    if (field.name === 'field2') {
+      form.setValue(field.name, '');
+    }
   },
-  render: () => withDirectives(h('div'), [[vModelText]]),
-});
-
-type CommonFieldsValues = {
-  field: string;
-  named: string;
-};
-
-const getCommonFields = () => {
-  return [
+}) => {
+  const fields = [
     {
-      name: 'field',
+      name: 'field1',
+      label: 'field 1',
       component: mockComponent,
       ref: ref(''),
-      label: 'my_label_1',
-    },
-    {
-      name: 'named',
-      component: 'input',
-      label: 'my_label_2',
     },
     {
       name: 'field2',
+      label: 'field 2',
+      component: mockComponent,
+      ref: ref('test'),
+    },
+    {
+      name: 'field3',
+      label: 'field 3',
       component: mockComponent,
       ref: ref(''),
-      label: 'my_label_2',
-    },
-
-    {
-      component: 'br',
     },
   ];
+
+  const form = createForm<TestFormValues>('test', config);
+  const resolvedFields = fields.map(createField);
+  const wrapper = mount(form.Component, {
+    slots: {
+      default: resolvedFields.map((field) => h(field.Component)),
+    },
+  });
+
+  await flushPromises();
+
+  return {wrapper, form};
 };
 
 describe('rendering a form', () => {
   const formBuilder = useFormBuilder();
 
   afterEach(() => {
-    formBuilder.defaults.value = getDefaultFormConfiguration();
+    formBuilder.setDefaults(getDefaultFormConfiguration());
     formBuilder.forms.value = Object.create(null);
   });
 
-  it('renders html elements', () => {
-    const wrapper = mountForm<CommonFieldsValues>(getCommonFields());
+  it('renders html elements', async () => {
+    const {wrapper, form} = await renderTestForm();
     const formElement = wrapper.find('form');
 
     expect(formElement.exists()).toBe(true);
-
-    expect(formElement.attributes('id')).toBe('form');
-    expect(formElement.findComponent(mockComponent).exists()).toBe(true);
-    expect(formElement.find('input').exists()).toBe(true);
-    expect(formElement.find('br').exists()).toBe(true);
-
+    await flushPromises();
     expect(wrapper.html()).toMatchSnapshot();
+
+    expect(formElement.attributes('id')).toBe('test');
+    expect(formElement.find('input').exists()).toBe(true);
+    expect(formElement.findComponent(mockComponent).exists()).toBe(true);
   });
 
-  it('adds class to form', () => {
-    formBuilder.defaults.value.form.attributes.class = 'form-class';
-
-    const wrapper = mountForm<CommonFieldsValues>(getCommonFields());
+  it('adds class to form', async () => {
+    const {wrapper} = await renderTestForm({
+      form: {
+        attributes: {
+          class: 'form-class',
+          'data-test': 'test',
+        },
+      },
+    });
     const formElement = wrapper.find('form');
+
+    expect(formElement.exists()).toBe(true);
     expect(formElement.classes()).toContain('form-class');
+    expect(formElement.attributes('data-test')).toBe('test');
   });
 
-  it('has form as default outer wrapper', () => {
-    const wrapper = mountForm<CommonFieldsValues>(getCommonFields());
+  it('has form as default outer wrapper', async () => {
+    const {wrapper} = await renderTestForm();
     const firstElement = wrapper.find('*');
 
     expect(firstElement.element.tagName).toBe('FORM');
   });
 
-  it('outer wrapper can be changed', () => {
-    formBuilder.defaults.value.form.tag = 'div';
-
-    const wrapper = mountForm<CommonFieldsValues>(getCommonFields());
+  it('has customizable outer wrapper tag', async () => {
+    const {wrapper} = await renderTestForm({
+      form: {
+        tag: 'div',
+      },
+    });
     const firstElement = wrapper.find('*');
 
     expect(firstElement.element.tagName).toBe('DIV');
   });
 
-  it('wraps fields with a wrapper element', () => {
-    formBuilder.defaults.value.field.wrapper = h('span', {class: 'inner-wrapper'});
+  it('wraps fields with a wrapper element', async () => {
+    const {wrapper} = await renderTestForm(
+      {
+        field: {
+          wrapper: h('span', {class: 'inner-wrapper'}),
+        },
+      },
+    );
 
-    const wrapper = mountForm<CommonFieldsValues>(getCommonFields());
     const wrapperElements = wrapper.findAll('span.inner-wrapper');
 
-    expect(wrapperElements).toHaveLength(4);
+    expect(wrapperElements).toHaveLength(3);
     expect(wrapper.element).toMatchSnapshot();
   });
 
-  it('defaults to no inner wrapper', () => {
-    const wrapper = mountForm<CommonFieldsValues>(getCommonFields());
-
-    expect(wrapper.element).toMatchSnapshot();
-  });
-
-  it('adds attributes to each field', () => {
+  it('adds attributes to each field', async () => {
     formBuilder.defaults.value.fieldDefaults.attributes.class = 'default-field-class';
     formBuilder.defaults.value.fieldDefaults.attributes['aria-label'] = 'test';
 
-    const wrapper = mountForm<CommonFieldsValues>(getCommonFields());
+    const {wrapper} = await renderTestForm();
     const formElement = wrapper.find('form');
 
-    expect(formElement.findAll('.default-field-class')).toHaveLength(4);
-    expect(formElement.findAll('[aria-label="test"]')).toHaveLength(4);
+    expect(formElement.findAll('.default-field-class')).toHaveLength(3);
+    expect(formElement.findAll('[aria-label="test"]')).toHaveLength(3);
   });
 
-  it('makes fields lazy by default', () => {
-    formBuilder.defaults.value.fieldDefaults.lazy = true;
+  it('makes fields lazy by default', async () => {
+    const {form} = await renderTestForm({fieldDefaults: {lazy: true}});
 
-    const form = generateForm<CommonFieldsValues>(getCommonFields());
-    expect(form.model.field.lazy).toBe(true);
+    expect(form.instance.model.field1.lazy).toBe(true);
   });
 
-  it('makes fields optional by default', () => {
-    formBuilder.defaults.value.fieldDefaults.optional = true;
+  it('makes fields optional by default', async () => {
+    const {form} = await renderTestForm({fieldDefaults: {optional: true}});
 
-    const form = generateForm<CommonFieldsValues>(getCommonFields());
-    expect(form.model.field.isOptional.value).toBe(true);
+    expect(form.instance.model.field1.isOptional.value).toBe(true);
   });
 
-  it('calls renderLabel if defined when rendering a label', () => {
+  it('calls renderLabel if defined when rendering a label', async () => {
     expect.assertions(1);
     const renderLabel = vi.fn((value: string): string => value.toUpperCase());
 
-    formBuilder.defaults.value.renderLabel = renderLabel;
+    await renderTestForm({renderLabel});
 
-    const form = generateForm<CommonFieldsValues>(getCommonFields());
-    mount(MagicForm, {props: {form}});
-
-    expect(renderLabel).toHaveBeenCalledTimes(2);
+    expect(renderLabel).toHaveBeenCalledTimes(3);
   });
 
-  it('renders element prop if it is turned on', () => {
-    const wrapper = mountForm<CommonFieldsValues>(getCommonFields());
+  it('renders element prop if it is turned on', async () => {
+    const {wrapper} = await renderTestForm();
 
     const input = wrapper.findComponent(mockComponent);
 
-    expect(input.props('element')).toBeInstanceOf(InteractiveElement);
+    expect(input.props('element')).toBeInstanceOf(Field);
   });
 
-  it('does not render element prop if it is turned off', () => {
-    formBuilder.defaults.value.field.elementProp = false;
-
-    const wrapper = mountForm<CommonFieldsValues>(getCommonFields());
+  it('does not render element prop if it is turned off', async () => {
+    const {wrapper} = await renderTestForm({field: {elementProp: false}});
 
     const input = wrapper.findComponent(mockComponent);
 
     expect(input.props('element')).toBeUndefined();
   });
 
-  it('renders content in slot of element', () => {
-    const wrapper = mountForm([
-      {
-        component: h('div'),
-        slots: {
-          default: () => h('p', 'appelboom'),
-        },
-      },
-    ]);
-
-    const paragraph = wrapper.find('p');
-
-    expect(paragraph.text()).toBe('appelboom');
-  });
-
   describe('setValue', () => {
     it('sets the value of a single field', async () => {
       expect.assertions(1);
-      const form = generateForm<CommonFieldsValues>(getCommonFields());
-      form.setValue('field', '12345');
+      const {form} = await renderTestForm();
+      await flushPromises();
+      form.instance.setValue('field1', '12345');
       await flushPromises();
 
-      expect(reactive(form.values)).toEqual({field: '12345', field2: ''});
+      expect(form.instance.values).toEqual({field1: '12345', field2: '', field3: ''});
     });
 
     it('does nothing if field does not exist', async () => {
       expect.assertions(1);
-      const form = generateForm<CommonFieldsValues>(getCommonFields());
-      form.setValue('does-not-exist', 'boo');
+      const {form} = await renderTestForm();
+      form.instance.setValue('does-not-exist', 'boo');
       await flushPromises();
 
-      expect(reactive(form.values)).toEqual({field: '', field2: ''});
+      expect(reactive(form.instance.values)).toEqual({field1: '', field2: '', field3: ''});
     });
   });
 
   describe('setValues', () => {
     it('sets the value of multiple fields', async () => {
       expect.assertions(1);
-      const form = generateForm<CommonFieldsValues>(getCommonFields());
-      form.setValues({field: 'bye', field2: 'hello'});
+      const {form} = await renderTestForm();
+      form.instance.setValues({field1: 'bye', field2: 'hello'});
       await flushPromises();
 
-      expect(reactive(form.values)).toEqual({field: 'bye', field2: 'hello'});
+      expect(reactive(form.instance.values)).toEqual({field1: 'bye', field2: 'hello', field3: ''});
     });
 
     it('ignores fields that do not exist', async () => {
       expect.assertions(1);
-      const form = generateForm<CommonFieldsValues>(getCommonFields());
-      form.setValues({field: 'value', wee: '3', field2: 'hi'});
+      const {form} = await renderTestForm();
+      form.instance.setValues({field1: 'value', wee: '3', field2: 'hi'});
       await flushPromises();
 
-      expect(reactive(form.values)).toEqual({field: 'value', field2: 'hi'});
+      expect(form.instance.values).toEqual({field1: 'value', field2: 'hi', field3: ''});
     });
   });
 });

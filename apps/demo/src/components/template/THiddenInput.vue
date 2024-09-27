@@ -4,28 +4,12 @@
     type="hidden" />
 </template>
 
-<script lang="ts">
-import {defineComponent, type PropType} from 'vue';
+<script lang="ts" setup generic="Type extends string | number">
 import {useVModel} from '@vueuse/core';
-import {type InteractiveElementInstance} from '@myparcel/vue-form-builder';
+import {type FieldProps} from '@myparcel-vfb/core';
 
-export default defineComponent({
-  name: 'TTextInput',
-  props: {
-    element: {
-      type: Object as PropType<InteractiveElementInstance>,
-      required: true,
-    },
+// eslint-disable-next-line vue/no-unused-properties
+const props = defineProps<FieldProps<Type>>();
 
-    // eslint-disable-next-line vue/no-unused-properties
-    modelValue: {
-      type: [String, Number],
-      default: null,
-    },
-  },
-
-  setup: (props) => ({
-    model: useVModel(props, 'modelValue'),
-  }),
-});
+const model = useVModel(props, undefined);
 </script>

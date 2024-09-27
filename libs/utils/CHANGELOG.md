@@ -2,6 +2,20 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.9](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/utils@1.0.0-beta.8...@myparcel-vfb/utils@1.0.0-beta.9) "@myparcel-vfb/utils" (2024-09-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* simplify forms (#238)
+
+### Code Refactoring
+
+* simplify forms ([#238](https://github/myparcelnl/vue-form-builder/issues/238)) ([1b5225e](https://github/myparcelnl/vue-form-builder/commit/1b5225eeb26b9126be0f7fe39197f35ea7929b4b))
+
+
+
+
 ## [1.0.0-beta.8](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/utils@1.0.0-beta.7...@myparcel-vfb/utils@1.0.0-beta.8) "@myparcel-vfb/utils" (2024-07-12)
 
 

@@ -1,12 +1,57 @@
-import {h, ref, reactive} from 'vue';
+import {h, ref, reactive, nextTick} from 'vue';
 import {afterEach, describe, expect, it, vi} from 'vitest';
-import {flushPromises} from '@vue/test-utils';
-import {createField, getDefaultFormConfiguration} from '../../utils';
+import {flushPromises, mount} from '@vue/test-utils';
+import {createField, createForm, getDefaultFormConfiguration} from '../../utils';
 import {Field} from '../../form';
 import {useFormBuilder} from '../../composables';
-import {renderTestForm} from './renderTestForm';
 import {mockComponent} from './mockComponent';
-import {getCommonFields} from './getCommonFields';
+
+interface TestFormValues {
+  field1: string;
+  field2: string;
+  field3: string;
+}
+
+const renderTestForm = async (config = {
+  afterAddElement(form, field) {
+    if (field.name === 'field2') {
+      form.setValue(field.name, '');
+    }
+  },
+}) => {
+  const fields = [
+    {
+      name: 'field1',
+      label: 'field 1',
+      component: mockComponent,
+      ref: ref(''),
+    },
+    {
+      name: 'field2',
+      label: 'field 2',
+      component: mockComponent,
+      ref: ref('test'),
+    },
+    {
+      name: 'field3',
+      label: 'field 3',
+      component: mockComponent,
+      ref: ref(''),
+    },
+  ];
+
+  const form = createForm<TestFormValues>('test', config);
+  const resolvedFields = fields.map(createField);
+  const wrapper = mount(form.Component, {
+    slots: {
+      default: resolvedFields.map((field) => h(field.Component)),
+    },
+  });
+
+  await flushPromises();
+
+  return {wrapper, form};
+};
 
 describe('rendering a form', () => {
   const formBuilder = useFormBuilder();
@@ -17,11 +62,11 @@ describe('rendering a form', () => {
   });
 
   it('renders html elements', async () => {
-    const {wrapper} = await renderTestForm({}, 'test');
+    const {wrapper, form} = await renderTestForm();
     const formElement = wrapper.find('form');
 
     expect(formElement.exists()).toBe(true);
-
+    await flushPromises();
     expect(wrapper.html()).toMatchSnapshot();
 
     expect(formElement.attributes('id')).toBe('test');
@@ -70,18 +115,11 @@ describe('rendering a form', () => {
           wrapper: h('span', {class: 'inner-wrapper'}),
         },
       },
-      [
-        createField({
-          name: 'field',
-          component: mockComponent,
-          ref: ref(''),
-        }),
-      ],
     );
 
     const wrapperElements = wrapper.findAll('span.inner-wrapper');
 
-    expect(wrapperElements).toHaveLength(1);
+    expect(wrapperElements).toHaveLength(3);
     expect(wrapper.element).toMatchSnapshot();
   });
 
@@ -112,7 +150,7 @@ describe('rendering a form', () => {
     expect.assertions(1);
     const renderLabel = vi.fn((value: string): string => value.toUpperCase());
 
-    await renderTestForm({renderLabel}, getCommonFields());
+    await renderTestForm({renderLabel});
 
     expect(renderLabel).toHaveBeenCalledTimes(3);
   });
@@ -137,7 +175,7 @@ describe('rendering a form', () => {
     it('sets the value of a single field', async () => {
       expect.assertions(1);
       const {form} = await renderTestForm();
-
+      await flushPromises();
       form.instance.setValue('field1', '12345');
       await flushPromises();
 

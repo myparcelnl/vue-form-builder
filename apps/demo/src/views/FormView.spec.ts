@@ -1,6 +1,6 @@
-import {defineComponent, h, Suspense, type DefineComponent} from 'vue';
+import {defineComponent, h, nextTick, Suspense, type DefineComponent} from 'vue';
 import {describe, it, expect, afterEach} from 'vitest';
-import {render, within} from '@testing-library/vue';
+import {render, within, waitFor} from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
 import FormView from './FormView.vue';
 

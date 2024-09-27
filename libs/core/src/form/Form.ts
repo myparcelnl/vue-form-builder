@@ -96,7 +96,13 @@ export class Form<Values extends FormValues = FormValues> {
     value: K extends keyof Values ? Values[K] : T,
   ): void {
     // @ts-expect-error todo
-    this.values[fieldName] = value;
+    const field = this.getField(fieldName);
+
+    if (!field) {
+      return;
+    }
+
+    field.setValue(value);
   }
 
   public setValues<T extends FormValues = Values>(values: T): void {

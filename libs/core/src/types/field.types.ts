@@ -241,6 +241,8 @@ export interface FieldInstance<Type = unknown, Props extends ComponentProps = Co
 
   resetValidation(): void;
 
+  setValue(value: Type): void;
+
   setDisabled(disabled: boolean): void;
 
   setOptional(optional: boolean): void;

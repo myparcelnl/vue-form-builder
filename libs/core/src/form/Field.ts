@@ -188,13 +188,15 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     this.ref.value = this.initialValue;
   };
 
+  public setValue(value: Type): void {
+    this.ref.value = value;
+  }
+
   public setDisabled(value: boolean): void {
     this.isDisabled.value = value;
   }
 
   public setOptional(value: boolean): void {
-    console.log('yo');
-    console.log(this.isOptional);
     this.isOptional.value = value;
   }
 

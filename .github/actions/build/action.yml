@@ -7,5 +7,4 @@ runs:
     - uses: myparcelnl/actions/nx-run-many@v4
       with:
         target: 'build'
-        args: |
-          --runner=cloud
+        args: '--runner=cloud'

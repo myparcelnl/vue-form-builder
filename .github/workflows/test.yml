@@ -26,9 +26,7 @@ jobs:
       - uses: myparcelnl/actions/nx-run-many@v4
         with:
           target: 'test:coverage'
-          args: |
-            --runner=cloud
-            --parallel=false
+          args: '--runner=cloud --parallel=false'
 
       - name: 'Move coverage files'
         if: matrix.node-version == 'current'

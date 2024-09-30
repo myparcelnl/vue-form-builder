@@ -1,5 +1,5 @@
 // noinspection JSUnusedGlobalSymbols
-import {ref, watch, toValue, reactive, type UnwrapNestedRefs, computed, markRaw, type Ref} from 'vue';
+import {ref, watch, toValue, reactive, type UnwrapNestedRefs, computed, markRaw, type Ref, isRef} from 'vue';
 import {isDefined} from '@vueuse/core';
 import {type CustomHookItem, createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType, asyncEvery, type PromiseOr} from '@myparcel/ts-utils';
@@ -189,19 +189,43 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
   };
 
   public setValue(value: Type): void {
-    this.ref.value = value;
+    if (isRef(this.ref)) {
+      this.ref.value = value;
+    } else {
+      this.ref = value;
+    }
   }
 
   public setDisabled(value: boolean): void {
-    this.isDisabled.value = value;
+    if (isRef(this.isDisabled)) {
+      this.isDisabled.value = value;
+    } else {
+      this.isDisabled = value;
+    }
   }
 
   public setOptional(value: boolean): void {
-    this.isOptional.value = value;
+    if (isRef(this.isOptional)) {
+      this.isOptional.value = value;
+    } else {
+      this.isOptional = value;
+    }
   }
 
   public setReadOnly(value: boolean): void {
-    this.isReadOnly.value = value;
+    if (isRef(this.isReadOnly)) {
+      this.isReadOnly.value = value;
+    } else {
+      this.isReadOnly = value;
+    }
+  }
+
+  public addError(error: string): void {
+    if (isRef(this.errors)) {
+      this.errors.value.push(error);
+    } else {
+      this.errors.push(error);
+    }
   }
 
   public validate = async (): Promise<boolean> => {

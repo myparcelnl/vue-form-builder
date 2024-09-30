@@ -21,6 +21,7 @@ import FormElementWrapper from '../components/FormElementWrapper';
 
 const createMainComponent = <Type = unknown, Props extends ComponentProps = ComponentProps>(
   field: FieldConfiguration<Type, Props>,
+  attrs: Record<string, unknown>,
 ): Component => {
   return defineComponent({
     setup() {
@@ -62,7 +63,16 @@ const createMainComponent = <Type = unknown, Props extends ComponentProps = Comp
       }
 
       return (
-        this.element && h(FormElementWrapper, {...this.$attrs, form: this.form, element: this.element}, this.$slots)
+        this.element && h(
+          FormElementWrapper,
+          {
+            ...attrs,
+            ...this.$attrs,
+            form: this.form,
+            element: this.element
+          },
+          this.$slots
+        )
       );
     },
   });
@@ -123,7 +133,7 @@ export const createField = <Type = unknown, Props extends ComponentProps = Compo
   return reactive({
     field,
     ref: (field.ref ?? ref<Type>()) as Type extends undefined ? undefined : Ref<Type>,
-    Component: markRaw(createMainComponent(field)),
+    Component: markRaw((_, ctx) => h(createMainComponent(field, ctx.attrs))),
     Errors: createAsyncComponent(() => createErrorComponent(field)),
     Label: createAsyncComponent(() => createLabelComponent(field)),
   });

@@ -228,6 +228,14 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     }
   }
 
+  public setInvalid(): void {
+    if (isRef(this.isValid)) {
+      this.isValid.value = false;
+    } else {
+      this.isValid = false;
+    }
+  }
+
   public validate = async (): Promise<boolean> => {
     this.resetValidation();
     await this.hooks.execute('beforeValidate', this, toValue(this.ref));

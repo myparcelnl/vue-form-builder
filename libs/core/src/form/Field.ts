@@ -130,35 +130,6 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     this.destroyHandles.value.push(stopRefWatcher);
   }
 
-  private initializeWatchers(
-    config: FieldConfiguration<Type, Props>,
-    resolvedConfig: FieldConfiguration<Type, Props>,
-  ): void {
-    (
-      [
-        [config.visibleWhen, this.isVisible, resolvedConfig.visible],
-        [config.disabledWhen, this.isDisabled, resolvedConfig.disabled],
-        [config.optionalWhen, this.isOptional, resolvedConfig.optional],
-        [config.readOnlyWhen, this.isReadOnly, resolvedConfig.readOnly],
-      ] satisfies [
-        undefined | ((instance: FieldInstance<Type, Props>) => PromiseOr<boolean>),
-        Ref<boolean>,
-        boolean | undefined,
-      ][]
-    ).forEach(([configProperty, computedProperty, staticProperty]) => {
-      if (!isDefined(configProperty)) {
-        return;
-      }
-
-      computedProperty.value = staticProperty;
-
-      // @ts-expect-erro todo
-      const stopHandler = useDynamicWatcher(() => configProperty(this), computedProperty);
-
-      this.destroyHandles.value.push(stopHandler);
-    });
-  }
-
   public blur = async (): Promise<void> => {
     await this.hooks.execute('beforeBlur', this, toValue(this.ref));
 
@@ -192,6 +163,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     if (isRef(this.ref)) {
       this.ref.value = value;
     } else {
+      // @ts-expect-error todo
       this.ref = value;
     }
   }
@@ -200,6 +172,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     if (isRef(this.isDisabled)) {
       this.isDisabled.value = value;
     } else {
+      // @ts-expect-error update types to for when the refs are unwrapped
       this.isDisabled = value;
     }
   }
@@ -208,6 +181,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     if (isRef(this.isOptional)) {
       this.isOptional.value = value;
     } else {
+      // @ts-expect-error update types to for when the refs are unwrapped
       this.isOptional = value;
     }
   }
@@ -216,6 +190,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     if (isRef(this.isReadOnly)) {
       this.isReadOnly.value = value;
     } else {
+      // @ts-expect-error update types to for when the refs are unwrapped
       this.isReadOnly = value;
     }
   }
@@ -224,6 +199,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     if (isRef(this.errors)) {
       this.errors.value.push(error);
     } else {
+      // @ts-expect-error update types to for when the refs are unwrapped
       this.errors.push(error);
     }
   }
@@ -232,6 +208,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     if (isRef(this.isValid)) {
       this.isValid.value = false;
     } else {
+      // @ts-expect-error update types to for when the refs are unwrapped
       this.isValid = false;
     }
   }
@@ -282,6 +259,35 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
 
     return toValue(this.isValid);
   };
+
+  private initializeWatchers(
+    config: FieldConfiguration<Type, Props>,
+    resolvedConfig: FieldConfiguration<Type, Props>,
+  ): void {
+    (
+      [
+        [config.visibleWhen, this.isVisible, resolvedConfig.visible],
+        [config.disabledWhen, this.isDisabled, resolvedConfig.disabled],
+        [config.optionalWhen, this.isOptional, resolvedConfig.optional],
+        [config.readOnlyWhen, this.isReadOnly, resolvedConfig.readOnly],
+      ] satisfies [
+        undefined | ((instance: FieldInstance<Type, Props>) => PromiseOr<boolean>),
+        Ref<boolean>,
+        boolean | undefined,
+      ][]
+    ).forEach(([configProperty, computedProperty, staticProperty]) => {
+      if (!isDefined(configProperty)) {
+        return;
+      }
+
+      computedProperty.value = staticProperty;
+
+      // @ts-expect-erro todo
+      const stopHandler = useDynamicWatcher(() => configProperty(this), computedProperty);
+
+      this.destroyHandles.value.push(stopHandler);
+    });
+  }
 
   private createValidators(config: FieldConfiguration<Type, Props>): void {
     let validators: Validator<Type, Props>[] = [];

@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import {type FieldInstance} from '@myparcel-vfb/core';
+import {type FieldInstance} from '@myparcel/vue-form-builder';
 
 defineProps<{element: FieldInstance}>();
 </script>

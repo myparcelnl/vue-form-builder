@@ -20,7 +20,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-arguments */
 import {type ComputedRef, computed, watch, onUnmounted} from 'vue';
 import {useVModel} from '@vueuse/core';
-import {type FieldEmits, type FieldProps} from '@myparcel-vfb/core';
+import {type FieldEmits, type FieldProps} from '@myparcel/vue-form-builder';
 import {type SelectOption} from '@myparcel/vue-form-builder';
 
 // eslint-disable-next-line vue/no-unused-properties

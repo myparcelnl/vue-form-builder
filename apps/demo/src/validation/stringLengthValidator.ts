@@ -1,4 +1,4 @@
-import {type Validator} from '@myparcel-vfb/core';
+import {type Validator} from '@myparcel/vue-form-builder';
 
 export const stringLengthValidator = (minLength: number, maxLength?: number): Validator<string> => {
   return {

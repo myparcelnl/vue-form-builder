@@ -1,5 +1,10 @@
 import {type Ref, ref} from 'vue';
-import {type FormInstance, type MaybeUnwrapNestedRefs, FORM_HOOKS, type FieldInstance} from '@myparcel-vfb/core';
+import {
+  type FormInstance,
+  type MaybeUnwrapNestedRefs,
+  FORM_HOOKS,
+  type FieldInstance,
+} from '@myparcel/vue-form-builder';
 import {isOfType} from '@myparcel/ts-utils';
 
 export const useFormEventLog = (form: MaybeUnwrapNestedRefs<FormInstance>): Ref<string> => {

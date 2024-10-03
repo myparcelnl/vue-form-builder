@@ -1,39 +1,37 @@
+// noinspection JSUnusedGlobalSymbols
+
 export type {
   ComponentOrHtmlElement,
   ComponentProps,
-  CreatedElement,
   CreatedField,
   CreatedForm,
-  ElementName,
   FieldConfiguration,
+  FieldEmits,
   FieldHooks,
   FieldInstance,
   FieldName,
+  FieldProps,
   FieldSlots,
+  FieldWrapperProps,
   FormConfiguration,
   FormInstance,
-  InteractiveElementConfiguration,
-  InteractiveElementInstance,
-  ModularCreatedElement,
+  FormValues,
+  MaybeUnwrapNestedRefs,
   ModularCreatedField,
-  PlainElementConfiguration,
-  PlainElementInstance,
-  ResolvedElementConfiguration,
+  SelectOption,
   Validator,
-} from '@myparcel-vfb/core';
+} from './types';
 
-export type {SelectOption} from '@myparcel-vfb/utils';
+export * from './deprecated';
 
-export {
-  FormHook,
-  MagicForm,
-  createField,
-  createForm,
-  defineField,
-  defineForm,
-  useElement,
-  useForm,
-  useFormBuilder,
-} from '@myparcel-vfb/core';
+export * from './types/deprecated.types';
 
-export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from '@myparcel-vfb/plugin';
+export {FORM_HOOKS, FormHook} from './data';
+
+export {default as MagicForm} from './components/MagicForm.vue';
+
+export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from './plugin';
+
+export {createField, createForm, defineField, defineForm} from './utils';
+
+export {useElement, useForm, useFormBuilder} from './composables';

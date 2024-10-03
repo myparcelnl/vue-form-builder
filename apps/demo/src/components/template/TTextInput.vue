@@ -14,7 +14,7 @@
 
 <script lang="ts" setup generic="Type extends string">
 import {useVModel} from '@vueuse/core';
-import {type FieldEmits, type FieldProps} from '@myparcel-vfb/core';
+import {type FieldEmits, type FieldProps} from '@myparcel/vue-form-builder';
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<FieldProps<Type>>();

@@ -7,7 +7,7 @@ export default createViteConfig(() => {
 
     build: {
       rollupOptions: {
-        external: ['vue', '@myparcel/ts-utils', '@vueuse/core'],
+        external: ['vue', 'vue-component-type-helpers', '@myparcel/ts-utils', '@vueuse/core', /@myparcel-vfb\/.*/],
         output: {
           globals: {
             vue: 'Vue',

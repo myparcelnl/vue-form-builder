@@ -13,9 +13,8 @@
 import {computed} from 'vue';
 // eslint-disable-next-line vue/prefer-import-from-vue
 import {isFunction} from '@vue/shared';
-import {type FunctionOr} from '@myparcel-vfb/utils';
 
-const props = defineProps<{errors: FunctionOr<string>[]}>();
+const props = defineProps<{errors: ((() => string) | string)[]}>();
 
 const resolvedErrors = computed(() => props.errors.map((error) => (isFunction(error) ? error() : error)));
 </script>

@@ -1,4 +1,4 @@
-import {type ComponentSlots} from 'vue-component-type-helpers';
+import type {ComponentSlots} from 'vue-component-type-helpers';
 import {type Ref, type ComputedRef, type Component, type Slots} from 'vue';
 import {type UnwrapNestedRefs} from '@vue/reactivity';
 import {type PromiseOr, type ReadonlyOr} from '@myparcel/ts-utils';

@@ -141,7 +141,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {computed, h, ref} from 'vue';
 import {createField, createForm, type FormInstance} from '@myparcel/vue-form-builder';
-import {regexValidator, stringLengthValidator, stringNotContainsValidator, emailValidator} from '../validation';
+import {stringNotContainsValidator} from '../validation/stringNotContainsValidator';
+import {stringLengthValidator} from '../validation/stringLengthValidator';
+import {regexValidator} from '../validation/regexValidator';
+import {emailValidator} from '../validation/emailValidator';
 import TTextInput from '../components/template/TTextInput.vue';
 import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TResetButton from '../components/template/TResetButton.vue';

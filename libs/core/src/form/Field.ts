@@ -280,9 +280,9 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
         return;
       }
 
+      // @ts-expect-error todo
       computedProperty.value = staticProperty;
 
-      // @ts-expect-erro todo
       const stopHandler = useDynamicWatcher(() => configProperty(this), computedProperty);
 
       this.destroyHandles.value.push(stopHandler);

@@ -2,6 +2,7 @@ import {h, ref, reactive} from 'vue';
 import {afterEach, describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {createField, createForm, getDefaultFormConfiguration} from '../../utils';
+import {type FormConfiguration, type FieldConfiguration} from '../../types';
 import {Field} from '../../form';
 import {useFormBuilder} from '../../composables';
 import {mockComponent} from './mockComponent';
@@ -12,16 +13,8 @@ interface TestFormValues {
   field3: string;
 }
 
-const renderTestForm = async (
-  config = {
-    afterAddElement(form, field) {
-      if (field.name === 'field2') {
-        form.setValue(field.name, '');
-      }
-    },
-  },
-) => {
-  const fields = [
+const renderTestForm = async (config?: FormConfiguration) => {
+  const fields: FieldConfiguration[] = [
     {
       name: 'field1',
       label: 'field 1',
@@ -42,7 +35,16 @@ const renderTestForm = async (
     },
   ];
 
-  const form = createForm<TestFormValues>('test', config);
+  const form = createForm<TestFormValues>(
+    'test',
+    config ?? {
+      afterAddElement(form, field) {
+        if (field.name === 'field2') {
+          form.setValue(field.name, '');
+        }
+      },
+    },
+  );
   const resolvedFields = fields.map(createField);
   const wrapper = mount(form.Component, {
     slots: {
@@ -64,7 +66,7 @@ describe('rendering a form', () => {
   });
 
   it('renders html elements', async () => {
-    const {wrapper, form} = await renderTestForm();
+    const {wrapper} = await renderTestForm();
     const formElement = wrapper.find('form');
 
     expect(formElement.exists()).toBe(true);

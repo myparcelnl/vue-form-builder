@@ -1,15 +1,15 @@
 // noinspection JSUnusedGlobalSymbols
 
 import {
+  type FieldName,
+  type FieldSlots,
+  type FieldConfiguration,
   type FieldInstance,
   type FieldHooks,
-  type FieldConfiguration,
-  type FieldName,
-  type ComponentProps,
-  type FieldSlots,
   type CreatedField,
   type ModularCreatedField,
-} from './index';
+} from './field.types';
+import {type ComponentProps} from './component.types';
 
 /**  @deprecated use FieldName */
 export type ElementName = FieldName;

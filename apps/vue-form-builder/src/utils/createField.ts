@@ -1,23 +1,24 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import {generateFieldName} from './index';
+
 import {
-  computed,
   defineComponent,
-  h,
-  markRaw,
+  type Component,
+  ref,
   onMounted,
   onUnmounted,
-  type Ref,
-  ref,
-  reactive,
+  h,
+  computed,
   type ComputedRef,
-  type Component,
-  defineAsyncComponent,
   toValue,
+  markRaw,
+  defineAsyncComponent,
+  reactive,
+  type Ref,
 } from 'vue';
-import {type ModularCreatedField, type ComponentProps, type FieldConfiguration, type FieldInstance} from '../types';
+import {type ComponentProps, type FieldConfiguration, type FieldInstance, type ModularCreatedField} from '../types';
 import {useForm} from '../composables';
 import FormElementWrapper from '../components/FormElementWrapper';
+import {generateFieldName} from './generateFieldName';
 
 const createMainComponent = <Type = unknown, Props extends ComponentProps = ComponentProps>(
   field: FieldConfiguration<Type, Props>,
@@ -64,18 +65,19 @@ const createMainComponent = <Type = unknown, Props extends ComponentProps = Comp
       }
 
       return (
-        this.element && h(
+        this.element &&
+        h(
           FormElementWrapper,
           {
             ...attrs,
             ...this.$attrs,
             form: this.form,
-            element: this.element
+            element: this.element,
           },
           {
             ...this.$slots,
             ...slots,
-          }
+          },
         )
       );
     },

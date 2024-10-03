@@ -54,7 +54,8 @@ export const setupDevtools = (app: App): void => {
           const data = useFormBuilder();
 
           payload.rootNodes = Object.entries(toValue(data.forms)).map(([name, form]) => {
-            return createFormNode(name, form as UnwrapNestedRefs<FormInstance>);
+            // TODO: fix types
+            return createFormNode(name, form as unknown as UnwrapNestedRefs<FormInstance>);
           });
         }
       });

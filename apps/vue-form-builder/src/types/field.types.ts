@@ -189,6 +189,8 @@ export interface FieldInstance<Type = unknown, Props extends ComponentProps = Co
   readonly form: FormInstance;
   readonly component: ComponentOrHtmlElement<Props>;
 
+  readonly config: FieldConfiguration<Type, Props>;
+
   readonly hooks: HookManagerInstance<ToRecord<FieldHooks<Type, Props>>>;
 
   readonly lazy: boolean;

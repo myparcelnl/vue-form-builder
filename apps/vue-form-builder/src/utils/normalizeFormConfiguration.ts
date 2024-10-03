@@ -8,7 +8,6 @@ export const normalizeFormConfiguration = <V extends FormValues, FC extends Part
   return {
     ...defaults,
     ...config,
-    fields: [...(defaults.fields ?? []), ...(config.fields ?? [])],
     form: {
       ...defaults.form,
       ...config.form,

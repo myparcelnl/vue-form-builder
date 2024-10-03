@@ -27,5 +27,5 @@ export const normalizeFieldConfiguration = <Type = unknown, Props extends Compon
     wrapper: true,
     ...form?.config.fieldDefaults,
     ...input,
-  } satisfies NormalizedFieldConfiguration<Type, Props>;
+  } as NormalizedFieldConfiguration<Type, Props>;
 };

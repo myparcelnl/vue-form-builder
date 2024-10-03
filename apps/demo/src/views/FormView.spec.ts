@@ -1,6 +1,5 @@
-import {defineComponent, h, nextTick, Suspense, type DefineComponent} from 'vue';
-import {describe, it, expect, afterEach} from 'vitest';
-import {render, within, waitFor} from '@testing-library/vue';
+import {describe, it, expect} from 'vitest';
+import {render, within} from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
 import FormView from './FormView.vue';
 
@@ -18,40 +17,9 @@ export const flushPromises = (): Promise<void> => {
   });
 };
 
-const capitalize = (string: string): string => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-const suspenseWrapper = (componentToWrap: any): DefineComponent => {
-  return defineComponent({
-    name: 'SuspenseWrapper',
-    props: componentToWrap.props,
-    emits: componentToWrap.emits,
-    render() {
-      const props = {
-        ...this.$props,
-      };
-      componentToWrap.emits?.forEach((emit: string) => {
-        props[`on${capitalize(emit)}`] = (...args: any[]) => this.$emit(emit, ...args);
-      });
-      const slots = this.$slots;
-      return h(
-        'div',
-        {id: 'root'},
-        h(Suspense, null, {
-          default() {
-            return h(componentToWrap, props, slots);
-          },
-          fallback: () => h('div', 'fallback'),
-        }),
-      );
-    },
-  });
-};
-
 describe('FormView', () => {
   const renderComponent = async () => {
-    const component = render(suspenseWrapper(FormView));
+    const component = render(FormView);
     await flushPromises();
     return component;
   };
@@ -74,7 +42,8 @@ describe('FormView', () => {
     const descriptionFields = getAllByLabelText('Description');
     const descriptionField = descriptionFields[0];
 
-    const errors = within(descriptionField.parentElement).getByRole('list');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const errors = within(descriptionField.parentElement!).getByRole('list');
     const error = within(errors).getByRole('listitem');
     expect(error.innerText).toBe('This is an error from afterSubmit');
 
@@ -95,7 +64,8 @@ describe('FormView', () => {
     const lastNameFields = getAllByLabelText('Last name');
     const lastNameField = lastNameFields[0];
 
-    const errors = within(lastNameField.parentElement).getByRole('list');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const errors = within(lastNameField.parentElement!).getByRole('list');
     const error = within(errors).getByRole('listitem');
     expect(error.innerText).toBe('This is an error from afterSubmit');
 
@@ -116,7 +86,8 @@ describe('FormView', () => {
     const lastNameFields = getAllByLabelText('Last name');
     const lastNameField = lastNameFields[0];
 
-    const errors = within(lastNameField.parentElement).getByRole('list');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const errors = within(lastNameField.parentElement!).getByRole('list');
     const error = within(errors).getByRole('listitem');
     expect(error.innerText).toBe('Are you kidding me?');
   });

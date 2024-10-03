@@ -48,5 +48,13 @@ module.exports = {
         'vue/no-bare-strings-in-template': 'off',
       },
     },
+    {
+      files: ['./apps/demo/**/*'],
+      rules: {
+        '@typescript-eslint/no-magic-numbers': 'off',
+        'no-magic-numbers': 'off',
+        'vue/no-bare-strings-in-template': 'off',
+      },
+    },
   ],
 };

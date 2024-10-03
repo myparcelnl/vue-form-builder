@@ -1,4 +1,4 @@
-import {h, markRaw, ref, nextTick, toValue} from 'vue';
+import {markRaw, ref, toValue} from 'vue';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {generateTestForm} from '../utils/generateTestForm';
@@ -19,6 +19,7 @@ describe('Form fields', () => {
       field: {
         wrapper: markRaw(FormGroup),
       },
+      // @ts-expect-error todo
       fields: [
         defineField({
           name: 'firstName',
@@ -40,10 +41,10 @@ describe('Form fields', () => {
     await flushPromises();
 
     await wrapper.find('input[name="firstName"]').setValue('Hank');
-    expect(price.value).toBe('50');
+    expect(toValue(price)).toBe('50');
 
     await wrapper.find('input[name="firstName"]').setValue('Jack');
-    expect(price.value).toBe('100');
+    expect(toValue(price)).toBe('100');
   });
 
   it('can calculate forwards based on primary input, out of a promise', async () => {
@@ -58,7 +59,7 @@ describe('Form fields', () => {
         name: 'firstName',
         component: TextInput,
         ref: firstName,
-        afterUpdate: async (field, newValue) => {
+        afterUpdate: async (field, newValue: string) => {
           const remote = await optionData(newValue);
 
           field.form.model.price.ref.value = remote.price;
@@ -77,12 +78,12 @@ describe('Form fields', () => {
     vi.advanceTimersByTime(1000);
 
     await flushPromises();
-    expect(price.value).toBe('50');
+    expect(toValue(price)).toBe('50');
     await wrapper.find('input[name="firstName"]').setValue('John');
 
     vi.advanceTimersByTime(1000);
     await flushPromises();
-    expect(price.value).toBe('100');
+    expect(toValue(price)).toBe('100');
     vi.useRealTimers();
   });
 
@@ -128,7 +129,7 @@ describe('Form fields', () => {
 
     await form.model.element.reset();
 
-    expect(form.isValid.value).toBe(true);
+    expect(toValue(form.isValid)).toBe(true);
   });
 
   it('gets filled with initial data from form config', async () => {
@@ -146,27 +147,6 @@ describe('Form fields', () => {
     expect(toValue(form.model.toggle.ref)).toBe(false);
   });
 
-  it.skip('can pass through slots', async () => {
-    expect.assertions(1);
-
-    const field = defineField({
-      component: h('div', () => ['this.$slots']),
-      name: 'element',
-      ref: ref(''),
-      slots: {
-        default: () => ['this.element.slots 1', h('div', () => ['this.element.slots 2'])],
-      },
-    });
-
-    const {instance: form} = await generateTestForm({fields: [field], initialValues: {element: 'hello'}});
-
-    const wrapper = mount(MagicForm, {props: {form}});
-
-    await nextTick();
-
-    expect(wrapper.html()).toMatchSnapshot();
-  });
-
   it('it can invalidate a field', async () => {
     expect.assertions(1);
 
@@ -177,10 +157,11 @@ describe('Form fields', () => {
     });
 
     const {instance: form} = await generateTestForm<{element: string}>([field]);
-    const fieldInstance = form.getField('element');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const fieldInstance = form.getField('element')!;
     fieldInstance.setInvalid();
 
-    expect(fieldInstance?.isValid.value).toBe(false);
+    expect(toValue(fieldInstance?.isValid)).toBe(false);
   });
 
   it('can add an error to a field', async () => {
@@ -193,9 +174,10 @@ describe('Form fields', () => {
     });
 
     const {instance: form} = await generateTestForm<{element: string}>([field]);
-    const fieldInstance = form.getField('element');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const fieldInstance = form.getField('element')!;
     fieldInstance.addError('error message');
 
-    expect(fieldInstance?.errors.value).toEqual(['error message']);
+    expect(toValue(fieldInstance?.errors)).toEqual(['error message']);
   });
 });

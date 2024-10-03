@@ -139,7 +139,7 @@
 
 <script lang="ts" setup>
 /* eslint-disable @typescript-eslint/naming-convention */
-import {computed, h, ref} from 'vue';
+import {computed, h, ref, toValue} from 'vue';
 import {createField, createForm, type FormInstance} from '@myparcel/vue-form-builder';
 import {stringNotContainsValidator} from '../validation/stringNotContainsValidator';
 import {stringLengthValidator} from '../validation/stringLengthValidator';
@@ -168,16 +168,18 @@ const Form = createForm<{
   },
 
   afterAddElement(form, field) {
-    if (field.name === 'firstName') {
-      form.setValue(field.name, 'Spongebob');
+    if (field.name !== 'firstName') {
+      return;
     }
+
+    form.setValue(field.name, 'Spongebob');
   },
 
   afterSubmit: (form: FormInstance) => {
     const lastNameField = form.getField('lastName');
 
-    lastNameField.errors.value.push('Are you kidding me?');
-    lastNameField.isValid.value = false;
+    lastNameField?.addError('Are you kidding me?');
+    lastNameField?.setInvalid();
   },
 });
 
@@ -200,10 +202,6 @@ const FirstName = createField({
   component: TTextInput,
   ref: ref('Mr.'),
   validators: [stringLengthValidator(2, 12), stringNotContainsValidator(['x', 'y', 'z'])],
-
-  afterUpdate(instance) {
-    const lastNameField = instance.form.getField('firstName');
-  },
 });
 
 const LastName = createField({
@@ -256,27 +254,27 @@ const form2Classes = computed(() => {
 });
 
 const resetForms = () => {
-  Form.instance.reset();
-  Form2.instance.reset();
+  void Form.instance.reset();
+  void Form2.instance.reset();
 };
 
 const onSubmitClick = () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const descriptionField = Form2.instance.getField('description')!;
 
-  descriptionField.errors.value.push('This is an error from afterSubmit');
-  descriptionField.isValid.value = false;
+  descriptionField.addError('This is an error from afterSubmit');
+  descriptionField.setInvalid();
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const lastNameField = Form.instance.getField('lastName')!;
 
-  lastNameField.errors.value.push('This is an error from afterSubmit');
-  lastNameField.isValid.value = false;
+  lastNameField.addError('This is an error from afterSubmit');
+  lastNameField.setInvalid();
 };
 
 const switchOptional = () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const field = Form.instance.getField('lastName')!;
-  field.setOptional(!field.isOptional.value);
+  field.setOptional(!toValue(field.isOptional));
 };
 </script>

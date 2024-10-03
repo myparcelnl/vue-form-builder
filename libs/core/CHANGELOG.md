@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.43](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.42...@myparcel-vfb/core@1.0.0-beta.43) "@myparcel-vfb/core" (2024-10-03)
+
+
+### Bug Fixes
+
+* fix setting ref values and pass down slots and attrs ([#250](https://github/myparcelnl/vue-form-builder/issues/250)) ([2ada725](https://github/myparcelnl/vue-form-builder/commit/2ada725513ef4eaa4855bba4af2a7e73743c570b))
+
+
+
+
 ## [1.0.0-beta.42](https://github/myparcelnl/vue-form-builder/compare/@myparcel-vfb/core@1.0.0-beta.41...@myparcel-vfb/core@1.0.0-beta.42) "@myparcel-vfb/core" (2024-09-27)
 
 

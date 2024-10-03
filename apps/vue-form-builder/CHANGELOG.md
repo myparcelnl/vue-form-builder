@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.48](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.47...@myparcel/vue-form-builder@1.0.0-beta.48) "@myparcel/vue-form-builder" (2024-10-03)
+
+
+### Bug Fixes
+
+* import vue helpers as type ([#252](https://github/myparcelnl/vue-form-builder/issues/252)) ([9934177](https://github/myparcelnl/vue-form-builder/commit/9934177e87872de00c8cd80d094f012869a5c159))
+
+
+
+
 ## [1.0.0-beta.47](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.46...@myparcel/vue-form-builder@1.0.0-beta.47) "@myparcel/vue-form-builder" (2024-10-03)
 
 

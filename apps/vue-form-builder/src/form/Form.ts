@@ -1,6 +1,7 @@
 import {computed, ref, watch, reactive, toValue, type Ref} from 'vue';
 import {useMemoize} from '@vueuse/core';
 import {markComponentAsRaw} from '../utils/markComponentAsRaw';
+import {type StringKey} from '../types/utils.types';
 import {type FormInstance, type FormValues, type InstanceFormConfiguration} from '../types/form.types';
 import {type FieldConfiguration, type FieldInstance} from '../types/field.types';
 import {type ComponentProps} from '../types/component.types';
@@ -86,11 +87,10 @@ export class Form<Values extends FormValues = FormValues> {
     await this.hooks.execute(FormHook.AfterReset, this);
   }
 
-  public setValue<T = unknown, K extends keyof Values | string = keyof Values>(
-    fieldName: K,
-    value: K extends keyof Values ? Values[K] : T,
+  public setValue<Type = unknown, Key extends StringKey<Values> | string = StringKey<Values>>(
+    fieldName: Key,
+    value: Key extends keyof Values ? Values[Key] : Type,
   ): void {
-    // @ts-expect-error todo
     const field = this.getField(fieldName);
 
     if (!field) {
@@ -177,7 +177,7 @@ export class Form<Values extends FormValues = FormValues> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     this.model[elementConfig.name] = instance;
-    toValue(this.fields).push(instance);
+    toValue(this.fields).push(instance as FieldInstance);
     this.getFieldMemoized.delete(elementConfig.name);
 
     return instance;

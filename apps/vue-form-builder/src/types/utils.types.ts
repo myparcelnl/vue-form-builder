@@ -21,3 +21,5 @@ export type UnionToArray<T, A extends unknown[] = []> = IsUnion<T> extends true
 export type FunctionOr<T> = (() => T) | T;
 
 export type AnyAttributes = HTMLAttributes & Record<string, unknown>;
+
+export type StringKey<T> = Extract<keyof T, string>;

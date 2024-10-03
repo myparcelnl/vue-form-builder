@@ -72,7 +72,7 @@ export interface FieldConfiguration<Type = unknown, Props extends ComponentProps
   /**
    * Slot content to be passed to the component.
    */
-  slots?: ComponentSlots<any>;
+  slots?: ComponentSlots<never>;
 
   /**
    * Selector to render the field in.

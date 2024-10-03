@@ -20,6 +20,7 @@ import {useForm} from '../composables';
 import FormElementWrapper from '../components/FormElementWrapper';
 import {generateFieldName} from './generateFieldName';
 
+// eslint-disable-next-line max-lines-per-function
 const createMainComponent = <Type = unknown, Props extends ComponentProps = ComponentProps>(
   field: FieldConfiguration<Type, Props>,
   attrs: Record<string, unknown>,

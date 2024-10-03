@@ -16,7 +16,6 @@
     "typecheck": "run ws:vite:typecheck \"$(pwd)\""
   },
   "dependencies": {
-    "@myparcel-vfb/utils": "workspace:*",
     "@myparcel/constants": "^2.0.0",
     "@myparcel/sdk": "^4.0.0",
     "@myparcel/ts-utils": "^1.6.0",

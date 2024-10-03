@@ -1,4 +1,4 @@
-import {type Validator} from '@myparcel-vfb/core';
+import {type Validator} from '@myparcel/vue-form-builder';
 
 export const emailValidator = (): Validator<string> => ({
   validate: (_, value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),

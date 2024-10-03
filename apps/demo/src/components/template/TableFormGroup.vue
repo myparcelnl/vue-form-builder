@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import {type FieldWrapperProps} from '@myparcel-vfb/core';
+import {type FieldWrapperProps} from '@myparcel/vue-form-builder';
 import {translate} from '../../translate';
 
 defineProps<FieldWrapperProps>();

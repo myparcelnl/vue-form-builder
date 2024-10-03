@@ -140,8 +140,11 @@
 <script lang="ts" setup>
 /* eslint-disable @typescript-eslint/naming-convention */
 import {computed, h, ref} from 'vue';
-import {createField, createForm} from '@myparcel-vfb/core';
-import {regexValidator, stringLengthValidator, stringNotContainsValidator, emailValidator} from '../validation';
+import {createField, createForm, type FormInstance} from '@myparcel/vue-form-builder';
+import {stringNotContainsValidator} from '../validation/stringNotContainsValidator';
+import {stringLengthValidator} from '../validation/stringLengthValidator';
+import {regexValidator} from '../validation/regexValidator';
+import {emailValidator} from '../validation/emailValidator';
 import TTextInput from '../components/template/TTextInput.vue';
 import TSubmitButton from '../components/template/TSubmitButton.vue';
 import TResetButton from '../components/template/TResetButton.vue';
@@ -165,9 +168,9 @@ const Form = createForm<{
   },
 
   afterAddElement(form, field) {
-      if (field.name === 'firstName') {
-        form.setValue(field.name, 'Spongebob');
-      }
+    if (field.name === 'firstName') {
+      form.setValue(field.name, 'Spongebob');
+    }
   },
 
   afterSubmit: (form: FormInstance) => {
@@ -255,24 +258,25 @@ const form2Classes = computed(() => {
 const resetForms = () => {
   Form.instance.reset();
   Form2.instance.reset();
-}
+};
 
 const onSubmitClick = () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const descriptionField = Form2.instance.getField('description');
+  const descriptionField = Form2.instance.getField('description')!;
 
   descriptionField.errors.value.push('This is an error from afterSubmit');
   descriptionField.isValid.value = false;
 
-  const lastNameField = Form.instance.getField('lastName');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const lastNameField = Form.instance.getField('lastName')!;
 
   lastNameField.errors.value.push('This is an error from afterSubmit');
   lastNameField.isValid.value = false;
-
 };
 
 const switchOptional = () => {
-  const field = Form.instance.getField('lastName');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const field = Form.instance.getField('lastName')!;
   field.setOptional(!field.isOptional.value);
 };
 </script>

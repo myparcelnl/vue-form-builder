@@ -39,8 +39,8 @@ jobs:
             bash -c 'if [ -f coverage/clover.xml ]; then mv coverage/clover.xml coverage/${npm_package_name//\//-}.xml; fi' -- {}
 
           mkdir -p ./coverage
-          cp ./apps/*/coverage/*.xml ./coverage/
-          cp ./libs/*/coverage/*.xml ./coverage/
+          cp ./apps/*/coverage/*.xml ./coverage/ || true
+          cp ./libs/*/coverage/*.xml ./coverage/ || true
 
       - uses: codecov/codecov-action@v3
         if: matrix.node-version == 'current'

@@ -1,39 +1,42 @@
+export type {ComponentOrHtmlElement, ComponentProps} from './types/component.types';
+
 export type {
-  ComponentOrHtmlElement,
-  ComponentProps,
-  CreatedElement,
   CreatedField,
-  CreatedForm,
-  ElementName,
   FieldConfiguration,
+  FieldEmits,
   FieldHooks,
   FieldInstance,
   FieldName,
+  FieldProps,
   FieldSlots,
-  FormConfiguration,
-  FormInstance,
-  InteractiveElementConfiguration,
-  InteractiveElementInstance,
-  ModularCreatedElement,
+  FieldWrapperProps,
   ModularCreatedField,
-  PlainElementConfiguration,
-  PlainElementInstance,
-  ResolvedElementConfiguration,
-  Validator,
-} from '@myparcel-vfb/core';
+} from './types/field.types';
 
-export type {SelectOption} from '@myparcel-vfb/utils';
+export type {CreatedForm, FormConfiguration, FormInstance, FormValues} from './types/form.types';
 
-export {
-  FormHook,
-  MagicForm,
-  createField,
-  createForm,
-  defineField,
-  defineForm,
-  useElement,
-  useForm,
-  useFormBuilder,
-} from '@myparcel-vfb/core';
+export type {MaybeUnwrapNestedRefs} from './types/common.types';
 
-export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from '@myparcel-vfb/plugin';
+export type {SelectOption} from './types/utils.types';
+
+export type {Validator} from './types/validator.types';
+
+export {FORM_HOOKS, FormHook} from './data/hooks';
+
+export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from './plugin/MyParcelFormBuilderPlugin';
+
+export {createField} from './utils/createField';
+
+export {createForm} from './utils/createForm';
+
+export {default} from './components/MagicForm.vue';
+
+export {defineField} from './utils/defineField';
+
+export {defineForm} from './utils/defineForm';
+
+export {useElement} from './composables/useElement';
+
+export {useForm} from './composables/useForm';
+
+export {useFormBuilder} from './composables/useFormBuilder';

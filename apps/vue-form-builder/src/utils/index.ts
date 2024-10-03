@@ -8,5 +8,4 @@ export * from './markComponentAsRaw';
 export * from './normalizeFieldConfiguration';
 export * from './normalizeFormConfiguration';
 export * from './toPromise';
-export * from './updateMaybeRef';
 export * from './useDynamicWatcher';

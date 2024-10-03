@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
-import {ref, watch, toValue, reactive, type UnwrapNestedRefs, computed, markRaw, type Ref} from 'vue';
+import {ref, watch, toValue, reactive, type UnwrapNestedRefs, computed, markRaw, type Ref, isRef} from 'vue';
 import {isDefined} from '@vueuse/core';
 import {isOfType, asyncEvery, type PromiseOr} from '@myparcel/ts-utils';
 import {isRequired} from '../validators';
-import {normalizeFieldConfiguration, useDynamicWatcher, updateMaybeRef} from '../utils';
+import {normalizeFieldConfiguration, useDynamicWatcher} from '../utils';
 import {
   type ToRecord,
   type FieldConfiguration,
@@ -20,25 +20,14 @@ import {FIELD_HOOKS, FormHook} from '../data';
 
 // noinspection JSUnusedGlobalSymbols
 export class Field<Type = unknown, Props extends ComponentProps = ComponentProps> {
-  public readonly name: FieldInstance<Type, Props>['name'];
-  public readonly component: FieldInstance<Type, Props>['component'];
-  public readonly form: FieldInstance<Type, Props>['form'];
-  public readonly wrapper: FieldInstance<Type, Props>['wrapper'];
-  public readonly ref: FieldInstance<Type, Props>['ref'];
-  public readonly config: FieldConfiguration<Type, Props>;
-
-  public readonly errors: FieldInstance<Type, Props>['errors'] = ref([]);
-  public readonly formattedErrors: FieldInstance<Type, Props>['formattedErrors'];
-  public readonly errorsTarget?: FieldInstance<Type, Props>['errorsTarget'];
-
-  public readonly hooks: FieldInstance<Type, Props>['hooks'];
   public readonly attributes: FieldInstance<Type, Props>['attributes'];
-  public readonly props: FieldInstance<Type, Props>['props'];
-
-  public readonly label?: FieldInstance<Type, Props>['label'];
-  public readonly lazy: FieldInstance<Type, Props>['lazy'] = false;
-  public readonly validators: FieldInstance<Type, Props>['validators'] = ref([]);
-
+  public readonly component: FieldInstance<Type, Props>['component'];
+  public readonly config: FieldConfiguration<Type, Props>;
+  public readonly errors: FieldInstance<Type, Props>['errors'] = ref([]);
+  public readonly errorsTarget?: FieldInstance<Type, Props>['errorsTarget'];
+  public readonly form: FieldInstance<Type, Props>['form'];
+  public readonly formattedErrors: FieldInstance<Type, Props>['formattedErrors'];
+  public readonly hooks: FieldInstance<Type, Props>['hooks'];
   public readonly isDirty: FieldInstance<Type, Props>['isDirty'] = ref(false);
   public readonly isDisabled: FieldInstance<Type, Props>['isDisabled'] = ref(false);
   public readonly isOptional: FieldInstance<Type, Props>['isOptional'] = ref(false);
@@ -47,24 +36,15 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
   public readonly isTouched: FieldInstance<Type, Props>['isTouched'] = ref(false);
   public readonly isValid: FieldInstance<Type, Props>['isValid'] = ref(true);
   public readonly isVisible: FieldInstance<Props>['isVisible'] = ref(true);
-
+  public readonly label?: FieldInstance<Type, Props>['label'];
+  public readonly lazy: FieldInstance<Type, Props>['lazy'] = false;
+  public readonly name: FieldInstance<Type, Props>['name'];
+  public readonly props: FieldInstance<Type, Props>['props'];
+  public readonly ref: FieldInstance<Type, Props>['ref'];
+  public readonly validators: FieldInstance<Type, Props>['validators'] = ref([]);
+  public readonly wrapper: FieldInstance<Type, Props>['wrapper'];
   protected readonly destroyHandles: Ref<(() => void)[]> = ref([]);
   protected readonly initialValue: Type;
-
-  public setVisible(value: boolean): void {
-    this.isVisible.value = value;
-  }
-
-  public resetValidation(): void {
-    this.errors.value = [];
-  }
-
-  public async destroy(): Promise<void> {
-    await Promise.all([
-      ...this.destroyHandles.value.map((handle) => handle()),
-      ...this.hooks.getRegisteredHooks().map((hook: CustomHookItem) => this.hooks.unregister(hook.name)),
-    ]);
-  }
 
   // eslint-disable-next-line max-lines-per-function, complexity
   public constructor(form: FormInstance, config: ToRecord<FieldConfiguration<Type, Props>>) {
@@ -99,7 +79,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
       typeof resolvedConfig.component === 'string' ? resolvedConfig.component : markRaw(resolvedConfig.component);
 
     if (form.config.initialValues?.hasOwnProperty(resolvedConfig.name)) {
-      this.ref.value = form.config.initialValues[resolvedConfig.name];
+      this.setValue(form.config.initialValues[resolvedConfig.name]);
     }
 
     this.initialValue = toValue(this.ref);
@@ -124,28 +104,44 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
 
     const stopRefWatcher = watch(this.ref, async (value: Type, oldValue: Type) => {
       await this.hooks.execute('beforeUpdate', this, value, oldValue);
-      this.isDirty.value = true;
+      this.setIsDirty(true);
       await this.hooks.execute('afterUpdate', this, value, oldValue);
     });
 
     this.destroyHandles.value.push(stopRefWatcher);
   }
 
+  public addError(error: string): void {
+    if (isRef(this.errors)) {
+      this.errors.value.push(error);
+    } else {
+      // @ts-expect-error todo
+      this.errors.push(error);
+    }
+  }
+
   public blur = async (): Promise<void> => {
     await this.hooks.execute('beforeBlur', this, toValue(this.ref));
 
-    this.isSuspended.value = true;
-    this.ref.value = ((await this.hooks.execute('sanitize', this, toValue(this.ref))) as Type) ?? toValue(this.ref);
+    this.setIsSuspended(true);
+    this.setValue(((await this.hooks.execute('sanitize', this, toValue(this.ref))) as Type) ?? toValue(this.ref));
 
     if (toValue(this.isDirty)) {
       await this.validate();
     }
 
-    this.isTouched.value = true;
-    this.isSuspended.value = false;
+    this.setIsTouched(true);
+    this.setIsSuspended(false);
 
     await this.hooks.execute('afterBlur', this, toValue(this.ref));
   };
+
+  public async destroy(): Promise<void> {
+    await Promise.all([
+      ...this.destroyHandles.value.map((handle) => handle()),
+      ...this.hooks.getRegisteredHooks().map((hook: CustomHookItem) => this.hooks.unregister(hook.name)),
+    ]);
+  }
 
   public focus: FieldConfiguration<Type, Props>['focus'] = async (_, event) => {
     await this.hooks.execute('beforeFocus', this, event);
@@ -155,33 +151,67 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
 
   public reset = (): void => {
     this.resetValidation();
-    this.isDirty.value = false;
-    this.isTouched.value = false;
-    this.ref.value = this.initialValue;
+    this.setIsDirty(false);
+    this.setIsTouched(false);
+    this.setValue(this.initialValue);
   };
 
-  public setValue(value: Type): void {
-    updateMaybeRef(this.ref, value);
+  public resetValidation(): void {
+    this.setErrors([]);
   }
 
   public setDisabled(value: boolean): void {
-    updateMaybeRef(this.isDisabled, value);
-  }
-
-  public setOptional(value: boolean): void {
-    updateMaybeRef(this.isOptional, value);
-  }
-
-  public setReadOnly(value: boolean): void {
-    updateMaybeRef(this.isReadOnly, value);
-  }
-
-  public addError(error: string): void {
-    updateMaybeRef(this.errors, [...toValue(this.errors), error]);
+    if (isRef(this.isDisabled)) {
+      this.isDisabled.value = value;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.isDisabled = value;
+    }
   }
 
   public setInvalid(): void {
-    updateMaybeRef(this.isValid, false);
+    this.setValid(false);
+  }
+
+  public setOptional(value: boolean): void {
+    if (isRef(this.isOptional)) {
+      this.isOptional.value = value;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.isOptional = value;
+    }
+  }
+
+  public setReadOnly(value: boolean): void {
+    if (isRef(this.isReadOnly)) {
+      this.isReadOnly.value = value;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.isReadOnly = value;
+    }
+  }
+
+  public setValue(value: Type): void {
+    if (isRef(this.ref)) {
+      this.ref.value = value;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.ref = value;
+    }
+  }
+
+  public setVisible(value: boolean): void {
+    if (isRef(this.isVisible)) {
+      this.isVisible.value = value;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.isVisible = value;
+    }
   }
 
   public validate = async (): Promise<boolean> => {
@@ -189,7 +219,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     await this.hooks.execute('beforeValidate', this, toValue(this.ref));
 
     if (toValue(this.isDisabled)) {
-      this.isValid.value = true;
+      this.setValid(true);
       return toValue(this.isValid);
     }
 
@@ -224,12 +254,31 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     const validatedWithoutPrecedence = (await Promise.all(withoutPrecedence.map(doValidate))).every(Boolean);
     const validatedWithPrecedence = await asyncEvery(withPrecedence, doValidate);
 
-    this.isValid.value = validatedWithoutPrecedence && validatedWithPrecedence;
+    this.setValid(validatedWithoutPrecedence && validatedWithPrecedence);
 
     await this.hooks.execute('afterValidate', this, toValue(this.ref), toValue(this.isValid));
 
     return toValue(this.isValid);
   };
+
+  private createValidators(config: FieldConfiguration<Type, Props>): void {
+    let validators: Validator<Type, Props>[] = [];
+
+    if (isOfType<Validator<Type, Props>>(config, 'validate')) {
+      validators = [
+        {
+          validate: config.validate,
+          errorMessage: config.errorMessage,
+        },
+      ];
+    }
+
+    if (isOfType<WithMultiValidator<Type, Props>>(config, 'validators')) {
+      validators = config.validators ?? [];
+    }
+
+    this.setValidators(validators);
+  }
 
   private initializeWatchers(
     config: FieldConfiguration<Type, Props>,
@@ -260,22 +309,63 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     });
   }
 
-  private createValidators(config: FieldConfiguration<Type, Props>): void {
-    let validators: Validator<Type, Props>[] = [];
-
-    if (isOfType<Validator<Type, Props>>(config, 'validate')) {
-      validators = [
-        {
-          validate: config.validate,
-          errorMessage: config.errorMessage,
-        },
-      ];
+  private setErrors(errors: string[]): void {
+    if (isRef(this.errors)) {
+      this.errors.value = errors;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.errors = errors;
     }
+  }
 
-    if (isOfType<WithMultiValidator<Type, Props>>(config, 'validators')) {
-      validators = config.validators ?? [];
+  private setIsDirty(value: boolean): void {
+    if (isRef(this.isDirty)) {
+      this.isDirty.value = value;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.isDirty = value;
     }
+  }
 
-    this.validators.value = validators;
+  private setIsSuspended(value: boolean): void {
+    if (isRef(this.isSuspended)) {
+      this.isSuspended.value = value;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.isSuspended = value;
+    }
+  }
+
+  private setIsTouched(value: boolean): void {
+    if (isRef(this.isTouched)) {
+      this.isTouched.value = value;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.isTouched = value;
+    }
+  }
+
+  private setValid(valid: boolean): void {
+    if (isRef(this.isValid)) {
+      this.isValid.value = valid;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.isValid = valid;
+    }
+  }
+
+  private setValidators(validators: Validator<Type, Props>[]): void {
+    if (isRef(this.validators)) {
+      this.validators.value = validators;
+    } else {
+      // @ts-expect-error todo
+      // noinspection JSConstantReassignment
+      this.validators = validators;
+    }
   }
 }

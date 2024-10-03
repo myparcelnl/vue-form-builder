@@ -36,9 +36,9 @@ export class Form<Values extends FormValues = FormValues> {
   });
 
   public async destroy(): Promise<void> {
-    this.stopHandles.value.forEach((handler) => handler());
+    toValue(this.stopHandles).forEach((handler) => handler());
 
-    await Promise.all(this.fields.value.map((field) => field.destroy()));
+    await Promise.all(toValue(this.fields).map((field) => field.destroy()));
   }
 
   public constructor(name: FormInstance<Values>['name'], formConfig: ToRecord<InstanceFormConfiguration<Values>>) {

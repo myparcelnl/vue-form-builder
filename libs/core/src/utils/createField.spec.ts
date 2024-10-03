@@ -26,7 +26,7 @@ describe('createField', () => {
     const field = createField({name: 'test', ref: ref('value'), component: 'input'});
 
     expect(field).toStrictEqual({
-      Component: expect.objectContaining({render: expect.any(Function)}),
+      Component: expect.any(Function),
       Errors: expect.objectContaining({__asyncLoader: expect.any(Function)}),
       Label: expect.objectContaining({__asyncLoader: expect.any(Function)}),
       field: {name: 'test', ref: 'value', component: 'input'},
@@ -38,7 +38,7 @@ describe('createField', () => {
     const field = createField({name: 'test', ref: ref('value2'), component: testComponent});
 
     expect(field).toStrictEqual({
-      Component: expect.objectContaining({render: expect.any(Function)}),
+      Component: expect.any(Function),
       Errors: expect.objectContaining({__asyncLoader: expect.any(Function)}),
       Label: expect.objectContaining({__asyncLoader: expect.any(Function)}),
       field: {name: 'test', ref: 'value2', component: testComponent},

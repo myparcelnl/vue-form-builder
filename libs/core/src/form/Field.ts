@@ -1,11 +1,11 @@
 // noinspection JSUnusedGlobalSymbols
-import {ref, watch, toValue, reactive, type UnwrapNestedRefs, computed, markRaw, type Ref} from 'vue';
+import {ref, watch, toValue, reactive, type UnwrapNestedRefs, computed, markRaw, type Ref, isRef} from 'vue';
 import {isDefined} from '@vueuse/core';
 import {type CustomHookItem, createHookManager} from '@myparcel-vfb/hook-manager';
 import {isOfType, asyncEvery, type PromiseOr} from '@myparcel/ts-utils';
 import {isRequired} from '../validators';
 import {normalizeFieldConfiguration} from '../utils/normalizeFieldConfiguration';
-import {useDynamicWatcher} from '../utils';
+import {useDynamicWatcher, updateMaybeRef} from '../utils';
 import {
   type ToRecord,
   type FieldConfiguration,
@@ -130,35 +130,6 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
     this.destroyHandles.value.push(stopRefWatcher);
   }
 
-  private initializeWatchers(
-    config: FieldConfiguration<Type, Props>,
-    resolvedConfig: FieldConfiguration<Type, Props>,
-  ): void {
-    (
-      [
-        [config.visibleWhen, this.isVisible, resolvedConfig.visible],
-        [config.disabledWhen, this.isDisabled, resolvedConfig.disabled],
-        [config.optionalWhen, this.isOptional, resolvedConfig.optional],
-        [config.readOnlyWhen, this.isReadOnly, resolvedConfig.readOnly],
-      ] satisfies [
-        undefined | ((instance: FieldInstance<Type, Props>) => PromiseOr<boolean>),
-        Ref<boolean>,
-        boolean | undefined,
-      ][]
-    ).forEach(([configProperty, computedProperty, staticProperty]) => {
-      if (!isDefined(configProperty)) {
-        return;
-      }
-
-      computedProperty.value = staticProperty;
-
-      // @ts-expect-erro todo
-      const stopHandler = useDynamicWatcher(() => configProperty(this), computedProperty);
-
-      this.destroyHandles.value.push(stopHandler);
-    });
-  }
-
   public blur = async (): Promise<void> => {
     await this.hooks.execute('beforeBlur', this, toValue(this.ref));
 
@@ -189,19 +160,27 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
   };
 
   public setValue(value: Type): void {
-    this.ref.value = value;
+    updateMaybeRef(this.ref, value);
   }
 
   public setDisabled(value: boolean): void {
-    this.isDisabled.value = value;
+    updateMaybeRef(this.isDisabled, value);
   }
 
   public setOptional(value: boolean): void {
-    this.isOptional.value = value;
+    updateMaybeRef(this.isOptional, value);
   }
 
   public setReadOnly(value: boolean): void {
-    this.isReadOnly.value = value;
+    updateMaybeRef(this.isReadOnly, value);
+  }
+
+  public addError(error: string): void {
+    updateMaybeRef(this.errors, [...toValue(this.errors), error]);
+  }
+
+  public setInvalid(): void {
+    updateMaybeRef(this.isValid, false);
   }
 
   public validate = async (): Promise<boolean> => {
@@ -250,6 +229,35 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
 
     return toValue(this.isValid);
   };
+
+  private initializeWatchers(
+    config: FieldConfiguration<Type, Props>,
+    resolvedConfig: FieldConfiguration<Type, Props>,
+  ): void {
+    (
+      [
+        [config.visibleWhen, this.isVisible, resolvedConfig.visible],
+        [config.disabledWhen, this.isDisabled, resolvedConfig.disabled],
+        [config.optionalWhen, this.isOptional, resolvedConfig.optional],
+        [config.readOnlyWhen, this.isReadOnly, resolvedConfig.readOnly],
+      ] satisfies [
+        undefined | ((instance: FieldInstance<Type, Props>) => PromiseOr<boolean>),
+        Ref<boolean>,
+        boolean | undefined,
+      ][]
+    ).forEach(([configProperty, computedProperty, staticProperty]) => {
+      if (!isDefined(configProperty)) {
+        return;
+      }
+
+      // @ts-expect-error todo
+      computedProperty.value = staticProperty;
+
+      const stopHandler = useDynamicWatcher(() => configProperty(this), computedProperty);
+
+      this.destroyHandles.value.push(stopHandler);
+    });
+  }
 
   private createValidators(config: FieldConfiguration<Type, Props>): void {
     let validators: Validator<Type, Props>[] = [];

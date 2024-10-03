@@ -249,7 +249,11 @@ export interface FieldInstance<Type = unknown, Props extends ComponentProps = Co
 
   setReadOnly(optional: boolean): void;
 
+  addError(error: string): void;
+
   setVisible(value: boolean): void;
+
+  setInvalid(): void;
 }
 
 export type ElementProp<Type = unknown, Props = ComponentProps> = UnwrapNestedRefs<FieldInstance<Type, Props>>;

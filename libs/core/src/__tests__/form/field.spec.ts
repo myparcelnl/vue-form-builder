@@ -164,4 +164,36 @@ describe('Form fields', () => {
 
     expect(wrapper.html()).toMatchSnapshot();
   });
+
+  it('it can invalidate a field', async () => {
+    expect.assertions(1);
+
+    const field = defineField({
+      component: 'input',
+      name: 'element',
+      ref: ref(''),
+    });
+
+    const {instance: form} = await generateTestForm<{element: string}>([field]);
+    const fieldInstance = form.getField('element');
+    fieldInstance.setInvalid();
+
+    expect(fieldInstance?.isValid.value).toBe(false);
+  });
+
+  it('can add an error to a field', async () => {
+    expect.assertions(1);
+
+    const field = defineField({
+      component: 'input',
+      name: 'element',
+      ref: ref(''),
+    });
+
+    const {instance: form} = await generateTestForm<{element: string}>([field]);
+    const fieldInstance = form.getField('element');
+    fieldInstance.addError('error message');
+
+    expect(fieldInstance?.errors.value).toEqual(['error message']);
+  });
 });

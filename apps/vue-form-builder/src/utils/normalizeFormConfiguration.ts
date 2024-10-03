@@ -1,4 +1,4 @@
-import {type FormValues, type FormConfiguration, type InstanceFormConfiguration} from '../types';
+import {type FormConfiguration, type FormValues, type InstanceFormConfiguration} from '../types/form.types';
 import {markComponentAsRaw} from './markComponentAsRaw';
 
 export const normalizeFormConfiguration = <V extends FormValues, FC extends Partial<FormConfiguration<V>>>(

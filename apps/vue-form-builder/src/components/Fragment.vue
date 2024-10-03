@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import {type PropType, defineComponent} from 'vue';
-import {type ComponentOrHtmlElement} from '../types';
+import type {ComponentOrHtmlElement} from '../types/component.types';
 
 export default defineComponent({
   name: 'Fragment',

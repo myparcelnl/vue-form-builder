@@ -1,7 +1,8 @@
 import {type Component, defineComponent, h, type PropType, provide} from 'vue';
-import {type FormInstance, type FieldInstance} from '../types';
+import {type FormInstance} from '../types/form.types';
+import {type FieldInstance} from '../types/field.types';
 import {INJECT_ELEMENT} from '../symbols';
-import {useTestAttributes} from '../composables';
+import {useTestAttributes} from '../composables/useTestAttributes';
 import FormElement from './FormElement.vue';
 
 export default defineComponent({

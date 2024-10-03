@@ -1,7 +1,5 @@
-// noinspection JSUnusedGlobalSymbols
-
 import {type ReadonlyOr, type ResolvePromise} from '@myparcel/ts-utils';
-import {type HookManagerConfiguration, type CustomHookItem, type HookCallback} from '../types';
+import {type CustomHookItem, type HookCallback, type HookManagerConfiguration} from '../types/hooks.types';
 import {filterMatchingHooks} from './filterMatchingHooks';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

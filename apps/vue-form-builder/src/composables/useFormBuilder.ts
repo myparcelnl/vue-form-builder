@@ -1,8 +1,10 @@
 import {type Ref, ref, toValue} from 'vue';
-import {normalizeFormConfiguration, getDefaultFormConfiguration} from '../utils';
-import {type FormInstance, type InstanceFormConfiguration, type FormConfiguration, type FormBuilder} from '../types';
-import {HookManager} from '../hooks';
-import {Form} from '../form';
+import {normalizeFormConfiguration} from '../utils/normalizeFormConfiguration';
+import {getDefaultFormConfiguration} from '../utils/getDefaultFormConfiguration';
+import {type FormConfiguration, type FormInstance, type InstanceFormConfiguration} from '../types/form.types';
+import {type FormBuilder} from '../types/form-builder.types';
+import {HookManager} from '../hooks/HookManager';
+import {Form} from '../form/Form';
 
 let forms: Ref<Record<string, FormInstance>>;
 

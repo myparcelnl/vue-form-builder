@@ -1,22 +1,17 @@
-// noinspection JSUnusedGlobalSymbols
 import {ref, watch, toValue, reactive, type UnwrapNestedRefs, computed, markRaw, type Ref, isRef} from 'vue';
 import {isDefined} from '@vueuse/core';
 import {isOfType, asyncEvery, type PromiseOr} from '@myparcel/ts-utils';
-import {isRequired} from '../validators';
-import {normalizeFieldConfiguration, useDynamicWatcher} from '../utils';
-import {
-  type ToRecord,
-  type FieldConfiguration,
-  type FormInstance,
-  type FieldInstance,
-  type ValidatorWithPrecedence,
-  type Validator,
-  type WithMultiValidator,
-  type ComponentProps,
-  type CustomHookItem,
-} from '../types';
-import {createHookManager} from '../hooks';
-import {FIELD_HOOKS, FormHook} from '../data';
+import {isRequired} from '../validators/isRequired';
+import {useDynamicWatcher} from '../utils/useDynamicWatcher';
+import {normalizeFieldConfiguration} from '../utils/normalizeFieldConfiguration';
+import {type Validator, type ValidatorWithPrecedence, type WithMultiValidator} from '../types/validator.types';
+import {type CustomHookItem} from '../types/hooks.types';
+import {type FormInstance} from '../types/form.types';
+import {type FieldConfiguration, type FieldInstance} from '../types/field.types';
+import {type ComponentProps} from '../types/component.types';
+import {type ToRecord} from '../types/common.types';
+import {createHookManager} from '../hooks/createHookManager';
+import {FIELD_HOOKS, FormHook} from '../data/hooks';
 
 // noinspection JSUnusedGlobalSymbols
 export class Field<Type = unknown, Props extends ComponentProps = ComponentProps> {

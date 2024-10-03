@@ -1,5 +1,5 @@
 import {inject} from 'vue';
-import {type FormInstance, type FormValues} from '../types';
+import {type FormInstance, type FormValues} from '../types/form.types';
 import {INJECT_FORM} from '../symbols';
 
 export const useForm = <V extends FormValues>(): FormInstance<V> => {

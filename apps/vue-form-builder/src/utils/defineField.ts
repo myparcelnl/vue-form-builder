@@ -1,4 +1,5 @@
-import {type ComponentProps, type FieldConfiguration} from '../types';
+import {type FieldConfiguration} from '../types/field.types';
+import {type ComponentProps} from '../types/component.types';
 
 /**
  * Define a field for use in a form with fields array.

@@ -1,10 +1,13 @@
 import {h, ref, reactive} from 'vue';
 import {afterEach, describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
-import {createField, createForm, getDefaultFormConfiguration} from '../../utils';
-import {type FormConfiguration, type FieldConfiguration} from '../../types';
-import {Field} from '../../form';
-import {useFormBuilder} from '../../composables';
+import {getDefaultFormConfiguration} from '../../utils/getDefaultFormConfiguration';
+import {createForm} from '../../utils/createForm';
+import {createField} from '../../utils/createField';
+import {type FormConfiguration} from '../../types/form.types';
+import {type FieldConfiguration} from '../../types/field.types';
+import {Field} from '../../form/Field';
+import {useFormBuilder} from '../../composables/useFormBuilder';
 import {mockComponent} from './mockComponent';
 
 interface TestFormValues {

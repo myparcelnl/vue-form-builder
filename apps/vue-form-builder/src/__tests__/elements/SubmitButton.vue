@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import {type FieldInstance} from '../../types';
+import type {FieldInstance} from '../../types/field.types';
 
 // eslint-disable-next-line vue/no-unused-properties
 defineProps<{element: FieldInstance}>();

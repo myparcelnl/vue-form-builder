@@ -1,6 +1,6 @@
 import {ref} from 'vue';
-import {createField} from '../../utils';
-import {type ModularCreatedField} from '../../types';
+import {createField} from '../../utils/createField';
+import {type ModularCreatedField} from '../../types/field.types';
 import {mockComponent} from './mockComponent';
 
 export const getCommonFields = (): ModularCreatedField[] => {

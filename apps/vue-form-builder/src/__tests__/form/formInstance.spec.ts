@@ -1,11 +1,11 @@
 import {ref, toValue} from 'vue';
 import {describe, expect, it} from 'vitest';
 import {flushPromises} from '@vue/test-utils';
-import {generateTestForm} from '../utils';
+import {generateTestForm} from '../utils/generateTestForm';
 import {type TestFormConfig} from '../types';
 import TextInput from '../elements/TextInput.vue';
-import {defineField} from '../../utils';
-import {Field} from '../../form';
+import {defineField} from '../../utils/defineField';
+import {Field} from '../../form/Field';
 
 interface TestFormValues {
   named: string;

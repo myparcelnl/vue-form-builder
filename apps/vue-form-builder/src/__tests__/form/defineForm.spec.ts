@@ -1,10 +1,10 @@
 import {type PropType, defineComponent, h, isVNode, ref, vModelText, withDirectives} from 'vue';
 import {afterEach, describe, expect, it} from 'vitest';
-import {generateTestForm} from '../utils';
-import {getDefaultFormConfiguration} from '../../utils';
-import {type FieldConfiguration, type ElementProp} from '../../types';
-import {Form} from '../../form';
-import {useFormBuilder} from '../../composables';
+import {generateTestForm} from '../utils/generateTestForm';
+import {getDefaultFormConfiguration} from '../../utils/getDefaultFormConfiguration';
+import {type ElementProp, type FieldConfiguration} from '../../types/field.types';
+import {Form} from '../../form/Form';
+import {useFormBuilder} from '../../composables/useFormBuilder';
 
 const mockComponent = defineComponent({
   props: {

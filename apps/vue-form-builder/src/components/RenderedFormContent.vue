@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 import {computed, ref, toValue} from 'vue';
-import {useForm} from '../composables';
+import {useForm} from '../composables/useForm';
 import FormElementWrapper from './FormElementWrapper';
 
 const elementsAreResolved = ref(false);

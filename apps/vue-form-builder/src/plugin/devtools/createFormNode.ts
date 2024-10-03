@@ -1,6 +1,6 @@
 import {type UnwrapNestedRefs} from 'vue';
 import {type CustomInspectorNode} from '@vue/devtools-api';
-import {type FormInstance} from '../../types';
+import {type FormInstance} from '../../types/form.types';
 import {LIME_500} from './types';
 import {createFieldsNodes} from './createFieldsNodes';
 

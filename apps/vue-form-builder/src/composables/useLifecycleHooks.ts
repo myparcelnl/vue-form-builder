@@ -1,7 +1,7 @@
 import * as Vue from 'vue';
-import {type ComponentLifecycleHooks} from '../types';
-import {type HookManagerInstance} from '../hooks';
-import {COMPONENT_LIFECYCLE_HOOKS} from '../data';
+import {type ComponentLifecycleHooks} from '../types/component.types';
+import {type HookManagerInstance} from '../hooks/HookManager';
+import {COMPONENT_LIFECYCLE_HOOKS} from '../data/hooks';
 
 type UseLifeCycleHooks = () => {
   hooks: typeof COMPONENT_LIFECYCLE_HOOKS;

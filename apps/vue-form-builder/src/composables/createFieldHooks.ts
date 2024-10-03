@@ -1,4 +1,4 @@
-import {type FieldInstance} from '../types';
+import {type FieldInstance} from '../types/field.types';
 import {useLifecycleHooks} from './useLifecycleHooks';
 
 type UseFieldHooks = (element: FieldInstance) => void;

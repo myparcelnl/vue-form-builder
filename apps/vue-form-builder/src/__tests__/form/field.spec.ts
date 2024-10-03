@@ -1,11 +1,13 @@
 import {h, markRaw, ref, nextTick, toValue} from 'vue';
 import {describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
-import {optionData, generateTestForm} from '../utils';
+import {generateTestForm} from '../utils/generateTestForm';
+import {optionData} from '../utils/externalData';
 import {firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
 import FormGroup from '../elements/FormGroup.vue';
-import {defineField, defineForm} from '../../utils';
+import {defineForm} from '../../utils/defineForm';
+import {defineField} from '../../utils/defineField';
 import MagicForm from '../../components/MagicForm.vue';
 
 describe('Form fields', () => {

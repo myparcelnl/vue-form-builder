@@ -1,4 +1,7 @@
-import {type Validator, type ComponentProps, type FunctionOr, type FieldInstance} from '../types';
+import {type Validator} from '../types/validator.types';
+import {type FunctionOr} from '../types/utils.types';
+import {type FieldInstance} from '../types/field.types';
+import {type ComponentProps} from '../types/component.types';
 
 export const isRequired = <Type = unknown, Props extends ComponentProps = ComponentProps>(
   errorMessage: FunctionOr<string>,

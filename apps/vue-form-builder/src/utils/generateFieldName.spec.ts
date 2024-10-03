@@ -1,6 +1,6 @@
 import {describe, afterEach, it, expect} from 'vitest';
-import {useFormBuilder} from '../composables';
-import {generateTestForm} from '../__tests__/utils';
+import {useFormBuilder} from '../composables/useFormBuilder';
+import {generateTestForm} from '../__tests__/utils/generateTestForm';
 import {generateFieldName} from './generateFieldName';
 import {defineField} from './defineField';
 

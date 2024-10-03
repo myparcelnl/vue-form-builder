@@ -1,4 +1,4 @@
-import {type Validator} from '../../types';
+import {type Validator} from '../../types/validator.types';
 
 export const firstNameNotDuane = (): Validator<string> => ({
   validate: (_, value) => !String(value).startsWith('Duane'),

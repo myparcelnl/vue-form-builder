@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import {defineComponent, ref, h, markRaw, type PropType} from 'vue';
 import {describe, it, expect, afterEach} from 'vitest';
 import {flushPromises} from '@vue/test-utils';
 import {render, cleanup} from '@testing-library/vue';
-import {type FieldInstance} from '../types';
-import {generateTestForm} from '../__tests__/utils';
+import {type FieldInstance} from '../types/field.types';
+import {generateTestForm} from '../__tests__/utils/generateTestForm';
 import {createForm} from './createForm';
 import {createField} from './createField';
 

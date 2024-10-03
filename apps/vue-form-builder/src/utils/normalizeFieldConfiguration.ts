@@ -1,4 +1,6 @@
-import {type FieldConfiguration, type ComponentProps, type FormInstance} from '../types';
+import {type FormInstance} from '../types/form.types';
+import {type FieldConfiguration} from '../types/field.types';
+import {type ComponentProps} from '../types/component.types';
 
 type PropsWithDefault = 'visible' | 'wrapper' | 'optional' | 'lazy' | 'disabled' | 'readOnly';
 

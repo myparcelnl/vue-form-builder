@@ -1,4 +1,4 @@
-import {type InstanceFormConfiguration} from '../types';
+import {type InstanceFormConfiguration} from '../types/form.types';
 
 export const getDefaultFormConfiguration = (): InstanceFormConfiguration => ({
   field: {

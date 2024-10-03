@@ -1,9 +1,10 @@
 import {h} from 'vue';
 import {type VueWrapper, mount, flushPromises} from '@vue/test-utils';
-import {generateTestForm, resolveConfigAndFields} from '../utils';
+import {resolveConfigAndFields} from '../utils/resolveConfigAndFields';
+import {generateTestForm} from '../utils/generateTestForm';
 import {type TestFormConfig} from '../types';
-import {createField} from '../../utils';
-import {type CreatedForm, type FormValues} from '../../types';
+import {createField} from '../../utils/createField';
+import {type CreatedForm, type FormValues} from '../../types/form.types';
 
 export interface CommonFieldValues {
   field1: string;

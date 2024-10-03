@@ -1,8 +1,8 @@
 import {h} from 'vue';
 import {flushPromises, mount, type VueWrapper} from '@vue/test-utils';
 import {type TestFormConfig} from '../types';
-import {createForm} from '../../utils';
-import {type FormValues, type CreatedForm} from '../../types';
+import {createForm} from '../../utils/createForm';
+import {type CreatedForm, type FormValues} from '../../types/form.types';
 import {resolveConfigAndFields} from './resolveConfigAndFields';
 
 type GeneratedTestForm<Values extends FormValues> = CreatedForm<Values> & {wrapper: VueWrapper};

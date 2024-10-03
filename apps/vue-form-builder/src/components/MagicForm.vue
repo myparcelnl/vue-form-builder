@@ -24,10 +24,10 @@
 
 <script generic="V extends FormValues = FormValues" lang="ts" setup>
 import {onMounted, provide, ref, toRefs, toValue} from 'vue';
-import {type FormInstance, type FormValues} from '../types';
+import type {FormInstance, FormValues} from '../types/form.types';
 import {INJECT_FORM} from '../symbols';
-import {type FormHook, FORM_HOOKS} from '../data';
-import {useLifecycleHooks} from '../composables';
+import {FORM_HOOKS, type FormHook} from '../data/hooks';
+import {useLifecycleHooks} from '../composables/useLifecycleHooks';
 import RenderedFormContent from './RenderedFormContent.vue';
 import Fragment from './Fragment.vue';
 

@@ -1,8 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 import {type Ref, type ComputedRef, type UnwrapNestedRefs, type Component} from 'vue';
 import {type ReadonlyOr, type PromiseOr} from '@myparcel/ts-utils';
-import {type HookManagerInstance, type HookUnregisterHandler} from '../hooks';
-import {type FormHook} from '../data';
+import {type HookManagerInstance, type HookUnregisterHandler} from '../hooks/HookManager';
+import {type FormHook} from '../data/hooks';
 import {type AnyAttributes, type FunctionOr} from './utils.types';
 import {type FieldConfiguration, type FieldInstance} from './field.types';
 import {type ComponentOrHtmlElement, type ComponentProps} from './component.types';

@@ -1,6 +1,6 @@
 import {type UnwrapNestedRefs, toValue} from 'vue';
 import {type CustomInspectorNode} from '@vue/devtools-api';
-import {type FormInstance} from '../../types';
+import {type FormInstance} from '../../types/form.types';
 import {CYAN_400} from './types';
 import {getComponentName} from './getComponentName';
 

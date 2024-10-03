@@ -1,7 +1,7 @@
 import {describe, expect, it} from 'vitest';
-import {getDefaultFormConfiguration} from '../../utils';
-import {type FormConfiguration} from '../../types';
-import {useFormBuilder} from '../../composables';
+import {getDefaultFormConfiguration} from '../../utils/getDefaultFormConfiguration';
+import {type FormConfiguration} from '../../types/form.types';
+import {useFormBuilder} from '../../composables/useFormBuilder';
 
 describe('useFormBuilder', () => {
   const form = {} satisfies FormConfiguration;

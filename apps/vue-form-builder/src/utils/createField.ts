@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import {
   defineComponent,
   type Component,
@@ -15,8 +13,9 @@ import {
   reactive,
   type Ref,
 } from 'vue';
-import {type ComponentProps, type FieldConfiguration, type FieldInstance, type ModularCreatedField} from '../types';
-import {useForm} from '../composables';
+import {type FieldConfiguration, type FieldInstance, type ModularCreatedField} from '../types/field.types';
+import {type ComponentProps} from '../types/component.types';
+import {useForm} from '../composables/useForm';
 import FormElementWrapper from '../components/FormElementWrapper';
 import {generateFieldName} from './generateFieldName';
 

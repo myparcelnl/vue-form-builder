@@ -1,10 +1,7 @@
-// noinspection JSUnusedGlobalSymbols
+export type {ComponentOrHtmlElement, ComponentProps} from './types/component.types';
 
 export type {
-  ComponentOrHtmlElement,
-  ComponentProps,
   CreatedField,
-  CreatedForm,
   FieldConfiguration,
   FieldEmits,
   FieldHooks,
@@ -13,25 +10,33 @@ export type {
   FieldProps,
   FieldSlots,
   FieldWrapperProps,
-  FormConfiguration,
-  FormInstance,
-  FormValues,
-  MaybeUnwrapNestedRefs,
   ModularCreatedField,
-  SelectOption,
-  Validator,
-} from './types';
+} from './types/field.types';
 
-export * from './deprecated';
+export type {CreatedForm, FormConfiguration, FormInstance, FormValues} from './types/form.types';
 
-export * from './types/deprecated.types';
+export type {MaybeUnwrapNestedRefs} from './types/common.types';
 
-export {FORM_HOOKS, FormHook} from './data';
+export type {SelectOption} from './types/utils.types';
 
-export {default as MagicForm} from './components/MagicForm.vue';
+export type {Validator} from './types/validator.types';
 
-export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from './plugin';
+export {FORM_HOOKS, FormHook} from './data/hooks';
 
-export {createField, createForm, defineField, defineForm} from './utils';
+export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from './plugin/MyParcelFormBuilderPlugin';
 
-export {useElement, useForm, useFormBuilder} from './composables';
+export {createField} from './utils/createField';
+
+export {createForm} from './utils/createForm';
+
+export {default} from './components/MagicForm.vue';
+
+export {defineField} from './utils/defineField';
+
+export {defineForm} from './utils/defineForm';
+
+export {useElement} from './composables/useElement';
+
+export {useForm} from './composables/useForm';
+
+export {useFormBuilder} from './composables/useFormBuilder';

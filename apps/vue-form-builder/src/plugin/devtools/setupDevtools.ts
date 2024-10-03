@@ -1,9 +1,9 @@
-/* eslint-disable max-lines-per-function */
 import {type UnwrapNestedRefs, toValue} from 'vue';
 import {type StateBase} from '@vue/devtools-api/lib/esm/api/component';
 import {type App, setupDevtoolsPlugin} from '@vue/devtools-api';
-import {type FormInstance, type FieldInstance} from '../../types';
-import {useFormBuilder} from '../../composables';
+import {type FormInstance} from '../../types/form.types';
+import {type FieldInstance} from '../../types/field.types';
+import {useFormBuilder} from '../../composables/useFormBuilder';
 import {PINK_500} from './types';
 import {getComponentName} from './getComponentName';
 import {createFormNode} from './createFormNode';

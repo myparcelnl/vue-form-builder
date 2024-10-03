@@ -1,5 +1,5 @@
 import {h, markRaw} from 'vue';
-import {type FormInstance, type FormConfiguration, type FormValues, type CreatedForm} from '../types';
+import {type CreatedForm, type FormConfiguration, type FormInstance, type FormValues} from '../types/form.types';
 import MagicForm from '../components/MagicForm.vue';
 import {defineForm} from './defineForm';
 

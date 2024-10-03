@@ -1,17 +1,12 @@
 import {computed, ref, watch, reactive, toValue, type Ref} from 'vue';
 import {useMemoize} from '@vueuse/core';
-import {markComponentAsRaw} from '../utils';
-import {
-  type ToRecord,
-  type FieldConfiguration,
-  type FormInstance,
-  type InstanceFormConfiguration,
-  type FormValues,
-  type FieldInstance,
-  type ComponentProps,
-} from '../types';
-import {createHookManager} from '../hooks';
-import {FormHook, FORM_HOOKS} from '../data';
+import {markComponentAsRaw} from '../utils/markComponentAsRaw';
+import {type FormInstance, type FormValues, type InstanceFormConfiguration} from '../types/form.types';
+import {type FieldConfiguration, type FieldInstance} from '../types/field.types';
+import {type ComponentProps} from '../types/component.types';
+import {type ToRecord} from '../types/common.types';
+import {createHookManager} from '../hooks/createHookManager';
+import {FORM_HOOKS, FormHook} from '../data/hooks';
 import {Field} from './Field';
 
 // noinspection JSUnusedGlobalSymbols

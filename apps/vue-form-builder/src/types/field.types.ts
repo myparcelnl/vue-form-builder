@@ -2,7 +2,7 @@ import {type ComponentSlots} from 'vue-component-type-helpers';
 import {type Ref, type ComputedRef, type Component, type Slots} from 'vue';
 import {type UnwrapNestedRefs} from '@vue/reactivity';
 import {type PromiseOr, type ReadonlyOr} from '@myparcel/ts-utils';
-import {type HookManagerInstance} from '../hooks';
+import {type HookManagerInstance} from '../hooks/HookManager';
 import {type Validator, type ValidateFunction} from './validator.types';
 import {type AnyAttributes, type FunctionOr} from './utils.types';
 import {type FormInstance} from './form.types';

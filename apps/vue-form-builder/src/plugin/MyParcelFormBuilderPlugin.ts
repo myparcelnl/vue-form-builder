@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import {type App, type Plugin} from 'vue';
-import {type FormConfiguration} from '../types';
-import {useFormBuilder} from '../composables';
-import {setupDevtools} from './devtools';
+import {type FormConfiguration} from '../types/form.types';
+import {useFormBuilder} from '../composables/useFormBuilder';
+import {setupDevtools} from './devtools/setupDevtools';
 
 export type MyParcelFormBuilderPlugin = Plugin;
 

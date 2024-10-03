@@ -1,4 +1,4 @@
-import {type HookManagerConfiguration} from '../types';
+import {type HookManagerConfiguration} from '../types/hooks.types';
 import {HookManager, type HookManagerInstance} from './HookManager';
 
 export const createHookManager = <HC extends HookManagerConfiguration = HookManagerConfiguration>(

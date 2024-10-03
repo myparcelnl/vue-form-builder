@@ -1,5 +1,5 @@
 import {defineComponent, type PropType, withDirectives, h, vModelText} from 'vue';
-import {type ElementProp} from '../../types';
+import {type ElementProp} from '../../types/field.types';
 
 export const mockComponent = defineComponent({
   props: {

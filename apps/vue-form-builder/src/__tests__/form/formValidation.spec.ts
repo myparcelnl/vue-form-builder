@@ -1,10 +1,11 @@
 import {ref} from 'vue';
 import {describe, expect, it} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
-import {formIsInvalid, formIsValid, generateTestForm} from '../utils';
+import {generateTestForm} from '../utils/generateTestForm';
+import {formIsInvalid, formIsValid} from '../utils/formIsValid';
 import {canNotContainX, firstNameNotDuane} from '../examples/validators';
 import TextInput from '../elements/TextInput.vue';
-import {defineField} from '../../utils';
+import {defineField} from '../../utils/defineField';
 import MagicForm from '../../components/MagicForm.vue';
 import {
   canNotContainLetterValidator,

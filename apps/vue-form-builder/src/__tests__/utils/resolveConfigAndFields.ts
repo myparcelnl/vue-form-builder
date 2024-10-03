@@ -1,6 +1,7 @@
 import {type TestFormConfig} from '../types';
-import {createField} from '../../utils';
-import {type FormConfiguration, type FormValues, type ModularCreatedField} from '../../types';
+import {createField} from '../../utils/createField';
+import {type FormConfiguration, type FormValues} from '../../types/form.types';
+import {type ModularCreatedField} from '../../types/field.types';
 
 type ResolvedConfigAndFields<Values extends FormValues> = {
   config: FormConfiguration<Values>;

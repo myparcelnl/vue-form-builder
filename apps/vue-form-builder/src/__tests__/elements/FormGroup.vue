@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import {type FieldWrapperProps} from '../../types';
+import type {FieldWrapperProps} from '../../types/field.types';
 
 defineProps<FieldWrapperProps>();
 </script>

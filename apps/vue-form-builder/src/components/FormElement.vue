@@ -16,8 +16,9 @@
 
 <script lang="ts" setup>
 import {computed, toRefs, unref, isRef, type Ref} from 'vue';
-import {type ComponentProps, type FieldInstance} from '../types';
-import {createFieldHooks} from '../composables';
+import type {ComponentProps} from '../types/component.types';
+import type {FieldInstance} from '../types/field.types';
+import {createFieldHooks} from '../composables/createFieldHooks';
 
 const props = defineProps<{element: FieldInstance}>();
 

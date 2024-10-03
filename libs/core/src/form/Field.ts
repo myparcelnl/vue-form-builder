@@ -5,7 +5,7 @@ import {type CustomHookItem, createHookManager} from '@myparcel-vfb/hook-manager
 import {isOfType, asyncEvery, type PromiseOr} from '@myparcel/ts-utils';
 import {isRequired} from '../validators';
 import {normalizeFieldConfiguration} from '../utils/normalizeFieldConfiguration';
-import {useDynamicWatcher} from '../utils';
+import {useDynamicWatcher, updateMaybeRef} from '../utils';
 import {
   type ToRecord,
   type FieldConfiguration,
@@ -160,57 +160,27 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
   };
 
   public setValue(value: Type): void {
-    if (isRef(this.ref)) {
-      this.ref.value = value;
-    } else {
-      // @ts-expect-error todo
-      this.ref = value;
-    }
+    updateMaybeRef(this.ref, value);
   }
 
   public setDisabled(value: boolean): void {
-    if (isRef(this.isDisabled)) {
-      this.isDisabled.value = value;
-    } else {
-      // @ts-expect-error update types to for when the refs are unwrapped
-      this.isDisabled = value;
-    }
+    updateMaybeRef(this.isDisabled, value);
   }
 
   public setOptional(value: boolean): void {
-    if (isRef(this.isOptional)) {
-      this.isOptional.value = value;
-    } else {
-      // @ts-expect-error update types to for when the refs are unwrapped
-      this.isOptional = value;
-    }
+    updateMaybeRef(this.isOptional, value);
   }
 
   public setReadOnly(value: boolean): void {
-    if (isRef(this.isReadOnly)) {
-      this.isReadOnly.value = value;
-    } else {
-      // @ts-expect-error update types to for when the refs are unwrapped
-      this.isReadOnly = value;
-    }
+    updateMaybeRef(this.isReadOnly, value);
   }
 
   public addError(error: string): void {
-    if (isRef(this.errors)) {
-      this.errors.value.push(error);
-    } else {
-      // @ts-expect-error update types to for when the refs are unwrapped
-      this.errors.push(error);
-    }
+    updateMaybeRef(this.errors, [...toValue(this.errors), error]);
   }
 
   public setInvalid(): void {
-    if (isRef(this.isValid)) {
-      this.isValid.value = false;
-    } else {
-      // @ts-expect-error update types to for when the refs are unwrapped
-      this.isValid = false;
-    }
+    updateMaybeRef(this.isValid, false);
   }
 
   public validate = async (): Promise<boolean> => {

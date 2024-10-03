@@ -25,6 +25,7 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
   public readonly form: FieldInstance<Type, Props>['form'];
   public readonly wrapper: FieldInstance<Type, Props>['wrapper'];
   public readonly ref: FieldInstance<Type, Props>['ref'];
+  public readonly config: FieldConfiguration<Type, Props>;
 
   public readonly errors: FieldInstance<Type, Props>['errors'] = ref([]);
   public readonly formattedErrors: FieldInstance<Type, Props>['formattedErrors'];
@@ -47,7 +48,6 @@ export class Field<Type = unknown, Props extends ComponentProps = ComponentProps
   public readonly isValid: FieldInstance<Type, Props>['isValid'] = ref(true);
   public readonly isVisible: FieldInstance<Props>['isVisible'] = ref(true);
 
-  protected readonly config: FieldConfiguration<Type, Props>;
   protected readonly destroyHandles: Ref<(() => void)[]> = ref([]);
   protected readonly initialValue: Type;
 

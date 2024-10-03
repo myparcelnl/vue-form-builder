@@ -158,7 +158,7 @@ export class Form<Values extends FormValues = FormValues> {
         ...form.config.fieldDefaults?.attributes,
         ...field.attributes,
       },
-    } satisfies FieldConfiguration<Type, Props>;
+    } as FieldConfiguration<Type, Props>;
 
     markComponentAsRaw(elementConfig.component);
     markComponentAsRaw(elementConfig.wrapper);

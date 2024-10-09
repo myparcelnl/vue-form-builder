@@ -6,7 +6,7 @@ on:
 jobs:
   test:
     name: 'Run unit tests'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-arm
     strategy:
       matrix:
         node-version: [18, 'current']
@@ -26,7 +26,7 @@ jobs:
       - uses: myparcelnl/actions/nx-run-many@v4
         with:
           target: 'test:coverage'
-          args: '--parallel=false'
+          args: '--runner=cloud --parallel=false'
 
       - name: 'Move coverage files'
         if: matrix.node-version == 'current'
@@ -50,7 +50,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-arm
     steps:
       - uses: actions/checkout@v4
 

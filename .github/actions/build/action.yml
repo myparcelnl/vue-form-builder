@@ -4,11 +4,7 @@ description: 'Build the project'
 runs:
   using: composite
   steps:
-    - name: 'Build packages'
-      shell: bash
-      #language=sh
-      run: |
-        yarn nx run-many \
-          --runner=cloud \
-          --target=build \
-          --output-style=stream
+    - uses: myparcelnl/actions/nx-run-many@v4
+      with:
+        target: 'build'
+        args: '--runner=cloud'

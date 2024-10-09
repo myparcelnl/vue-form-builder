@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/consistent-type-specifier-style
 import type {ComponentSlots} from 'vue-component-type-helpers';
 import {type Ref, type ComputedRef, type Component, type Slots} from 'vue';
 import {type UnwrapNestedRefs} from '@vue/reactivity';
@@ -91,19 +92,11 @@ export interface FieldConfiguration<Type = unknown, Props extends ComponentProps
   wrapper?: boolean | Component;
 
   /**
-   * Computed visibility of the element.
-   */
-  isVisible?: ComputedRef<boolean>;
-
-  /**
    * The ref of the field. Will be created if not provided.
    */
   ref?: Ref<Type>;
 
   // TODO: figure out a way to have the validator properties exclude each other with the types still working properly
-
-  // Computed validator
-  isValid?: ComputedRef<boolean>;
 
   // Single validator
   validate?: ValidateFunction<Type, Props>;
@@ -132,21 +125,6 @@ export interface FieldConfiguration<Type = unknown, Props extends ComponentProps
    * Whether the element is read-only. Defaults to false.z
    */
   readOnly?: boolean;
-
-  /**
-   * Computed read only state of the element.
-   */
-  isReadOnly?: ComputedRef<boolean>;
-
-  /**
-   * Computed disabled state of the element.
-   */
-  isDisabled?: ComputedRef<boolean>;
-
-  /**
-   * Computed optional state of the element.
-   */
-  isOptional?: ComputedRef<boolean>;
 
   visibleWhen?(instance: FieldInstance<Type, Props>): PromiseOr<boolean>;
   disabledWhen?(instance: FieldInstance<Type, Props>): PromiseOr<boolean>;

@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.49](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.48...@myparcel/vue-form-builder@1.0.0-beta.49) "@myparcel/vue-form-builder" (2024-10-09)
+
+
+### Bug Fixes
+
+* update field configuration type ([#253](https://github/myparcelnl/vue-form-builder/issues/253)) ([19e82a8](https://github/myparcelnl/vue-form-builder/commit/19e82a83218c969be04f2caa97042906f8fc69d6))
+
+
+
+
 ## [1.0.0-beta.48](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.47...@myparcel/vue-form-builder@1.0.0-beta.48) "@myparcel/vue-form-builder" (2024-10-03)
 
 

@@ -2,12 +2,14 @@
 logs/
 node_modules/
 .nx/
+coverage/
+dist/
+
+junit.xml
+clover.xml
 
 apps/**/tsconfig.json
 libs/**/tsconfig.json
-
-coverage
-dist
 
 *.tsbuildinfo
 vite.config.ts.timestamp-*

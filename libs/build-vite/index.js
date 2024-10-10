@@ -53,6 +53,7 @@ const createCommonViteConfig = (env) => {
     },
 
     test: {
+      reporters: ['default', ['junit', {outputFile: './junit.xml'}]],
       coverage: {
         all: true,
         enabled: false,

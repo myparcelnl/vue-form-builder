@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        node-version: [18, 'current']
+        node-version: ['18', 'current']
     steps:
       - uses: actions/checkout@v4
 
@@ -26,27 +26,22 @@ jobs:
       - uses: myparcelnl/actions/nx-run-many@v4
         with:
           target: 'test:coverage'
-          args: '--parallel=false'
+          parallel: '1'
+          cloud: 'true'
+          runner: 'cloud'
 
-      - name: 'Move coverage files'
-        if: matrix.node-version == 'current'
-        shell: bash
-        #language=bash
-        run: |
-          yarn workspaces foreach -Apv \
-            --exclude=. \
-            exec \
-            bash -c 'if [ -f coverage/clover.xml ]; then mv coverage/clover.xml coverage/${npm_package_name//\//-}.xml; fi' -- {}
+      - uses: myparcelnl/actions/collect-test-results@v4
 
-          mkdir -p ./coverage
-          cp ./apps/*/coverage/*.xml ./coverage/ || true
-          cp ./libs/*/coverage/*.xml ./coverage/ || true
-
-      - uses: codecov/codecov-action@v3
+      - uses: myparcelnl/actions/codecov-coverage@v4
         if: matrix.node-version == 'current'
         with:
           files: coverage/*.xml
-          flags: unit
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - uses: myparcelnl/actions/codecov-test-results@v4
+        if: matrix.node-version == 'current'
+        with:
+          files: junit/*.xml
           token: ${{ secrets.CODECOV_TOKEN }}
 
   build:

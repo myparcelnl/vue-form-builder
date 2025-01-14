@@ -247,3 +247,23 @@ export interface FieldProps<Type = unknown, Props = ComponentProps> extends Fiel
 }
 
 export type FieldEmits<Type = unknown> = (event: 'update:modelValue', value: Type) => void;
+
+export const FIELD_INSTANCE_PROPS_KEYS = [
+  'name',
+  'isVisible',
+  'isDirty',
+  'isDisabled',
+  'isOptional',
+  'isReadOnly',
+  'isSuspended',
+  'isTouched',
+  'isValid',
+] as const;
+
+/**
+ * The properties of a field instance that are spread into the component.
+ * This can be aded to the component props definition to make the field instance available in the component.
+ */
+export type FieldInstanceProps = Partial<
+  UnwrapNestedRefs<Pick<FieldInstance, (typeof FIELD_INSTANCE_PROPS_KEYS)[number]>>
+>;

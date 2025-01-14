@@ -1,4 +1,4 @@
-import {h, ref, reactive} from 'vue';
+import {h, ref, reactive, nextTick} from 'vue';
 import {afterEach, describe, expect, it, vi} from 'vitest';
 import {flushPromises, mount} from '@vue/test-utils';
 import {getDefaultFormConfiguration} from '../../utils/getDefaultFormConfiguration';
@@ -214,6 +214,57 @@ describe('rendering a form', () => {
       await flushPromises();
 
       expect(form.instance.values).toEqual({field1: 'value', field2: 'hi', field3: ''});
+    });
+  });
+
+  describe('element props', () => {
+    it('passes down the instance props', async () => {
+      const {wrapper, form} = await renderTestForm( {
+        field: {
+          elementProp: 'spread',
+        }
+      });
+
+      const firstElement = wrapper.findComponent(mockComponent);
+      expect(firstElement.attributes('name')).toBe('field1');
+      expect(firstElement.attributes('isvisible')).toBe('true');
+      expect(firstElement.attributes('isdirty')).toBe('false');
+      expect(firstElement.attributes('isdisabled')).toBe('false');
+      expect(firstElement.attributes('isoptional')).toBe('false');
+      expect(firstElement.attributes('isreadonly')).toBe('false');
+      expect(firstElement.attributes('issuspended')).toBe('false');
+      expect(firstElement.attributes('istouched')).toBe('false');
+      expect(firstElement.attributes('isvalid')).toBe('true');
+    });
+
+    it('can set the isntance props with a field method', async () => {
+      const {wrapper, form} = await renderTestForm( {
+        field: {
+          elementProp: 'spread',
+        }
+      });
+
+      const firstElement = wrapper.findComponent(mockComponent);
+
+      form.instance.getField('field1')?.setVisible(false);
+      await nextTick();
+      expect(firstElement.attributes('isvisible')).toBe('false');
+
+      form.instance.getField('field1')?.setDisabled(true);
+      await nextTick();
+      expect(firstElement.attributes('isdisabled')).toBe('true');
+
+      form.instance.getField('field1')?.setOptional(true);
+      await nextTick();
+      expect(firstElement.attributes('isoptional')).toBe('true');
+
+      form.instance.getField('field1')?.setReadOnly(true);
+      await nextTick();
+      expect(firstElement.attributes('isreadonly')).toBe('true');
+
+      form.instance.getField('field1')?.setInvalid();
+      await nextTick();
+      expect(firstElement.attributes('isvalid')).toBe('false');
     });
   });
 });

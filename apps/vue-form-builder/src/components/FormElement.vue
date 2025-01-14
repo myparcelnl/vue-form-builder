@@ -16,8 +16,8 @@
 
 <script lang="ts" setup>
 import {computed, toRefs, unref, isRef, type Ref} from 'vue';
-import type {ComponentProps} from '../types/component.types';
-import type {FieldInstance} from '../types/field.types';
+import {type FieldInstance, FIELD_INSTANCE_PROPS_KEYS} from '../types/field.types';
+import {type ComponentProps} from '../types/component.types';
 import {createFieldHooks} from '../composables/createFieldHooks';
 
 const props = defineProps<{element: FieldInstance}>();
@@ -38,6 +38,20 @@ const attributes = computed(() => {
 
   if (typeof props.element.component !== 'string' && elementProp !== false) {
     newProps.element = props.element;
+  }
+
+  /**
+   * Spread properties from `elementProp` array to `newProps`
+   * When the prop name is in the FieldInstanceProps
+   */
+  if (elementProp === 'spread') {
+    Object.keys(props.element).forEach((key) => {
+      const keyName = key as (typeof FIELD_INSTANCE_PROPS_KEYS)[number];
+
+      if (FIELD_INSTANCE_PROPS_KEYS.includes(keyName)) {
+        newProps[key] = props.element[keyName];
+      }
+    });
   }
 
   return newProps;

@@ -11,6 +11,7 @@ export type {
   FieldSlots,
   FieldWrapperProps,
   ModularCreatedField,
+  FieldInstanceProps,
 } from './types/field.types';
 
 export type {CreatedForm, FormConfiguration, FormInstance, FormValues} from './types/form.types';

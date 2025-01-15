@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.50](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.49...@myparcel/vue-form-builder@1.0.0-beta.50) "@myparcel/vue-form-builder" (2025-01-15)
+
+
+### Features
+
+* add option to spread element props to the component ([#257](https://github/myparcelnl/vue-form-builder/issues/257)) ([a2e0210](https://github/myparcelnl/vue-form-builder/commit/a2e0210f1e1b06efa5eeac140845f5cacfbbc3c4))
+
+
+
+
 ## [1.0.0-beta.49](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.48...@myparcel/vue-form-builder@1.0.0-beta.49) "@myparcel/vue-form-builder" (2024-10-09)
 
 

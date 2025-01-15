@@ -264,6 +264,14 @@ export const FIELD_INSTANCE_PROPS_KEYS = [
  * The properties of a field instance that are spread into the component.
  * This can be aded to the component props definition to make the field instance available in the component.
  */
-export type FieldInstanceProps = Partial<
-  UnwrapNestedRefs<Pick<FieldInstance, (typeof FIELD_INSTANCE_PROPS_KEYS)[number]>>
->;
+export type FieldInstanceProps = {
+  name?: string;
+  isVisible?: boolean;
+  isDirty?: boolean;
+  isDisabled?: boolean;
+  isOptional?: boolean;
+  isReadOnly?: boolean;
+  isSuspended?: boolean;
+  isTouched?: boolean;
+  isValid?: boolean;
+};

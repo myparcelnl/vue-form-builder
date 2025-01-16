@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.51](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.50...@myparcel/vue-form-builder@1.0.0-beta.51) "@myparcel/vue-form-builder" (2025-01-16)
+
+
+### Bug Fixes
+
+* make the FieldInstanceProps parseble in build steps ([#258](https://github/myparcelnl/vue-form-builder/issues/258)) ([b83d142](https://github/myparcelnl/vue-form-builder/commit/b83d142f0a69ee70fa99a01795d3567b2fa578ae))
+
+
+
+
 ## [1.0.0-beta.50](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.49...@myparcel/vue-form-builder@1.0.0-beta.50) "@myparcel/vue-form-builder" (2025-01-15)
 
 

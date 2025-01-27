@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.52](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.51...@myparcel/vue-form-builder@1.0.0-beta.52) "@myparcel/vue-form-builder" (2025-01-27)
+
+
+### Bug Fixes
+
+* only set the element prop when elementProp is true ([#259](https://github/myparcelnl/vue-form-builder/issues/259)) ([63c37a5](https://github/myparcelnl/vue-form-builder/commit/63c37a512ae12011a2bc1015dce976cb7442125f))
+
+
+
+
 ## [1.0.0-beta.51](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.50...@myparcel/vue-form-builder@1.0.0-beta.51) "@myparcel/vue-form-builder" (2025-01-16)
 
 

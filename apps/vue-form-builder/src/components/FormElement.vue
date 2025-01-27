@@ -36,7 +36,7 @@ const attributes = computed(() => {
     ...props.element.attributes,
   };
 
-  if (typeof props.element.component !== 'string' && elementProp !== false) {
+  if (typeof props.element.component !== 'string' && elementProp === true) {
     newProps.element = props.element;
   }
 

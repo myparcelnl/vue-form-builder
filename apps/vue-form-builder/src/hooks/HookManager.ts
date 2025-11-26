@@ -1,4 +1,4 @@
-import {type ReadonlyOr, type ResolvePromise} from '@myparcel/ts-utils';
+import {type ReadonlyOr, type ResolvePromise} from '@myparcel-dev/ts-utils';
 import {type CustomHookItem, type HookCallback, type HookManagerConfiguration} from '../types/hooks.types';
 import {filterMatchingHooks} from './filterMatchingHooks';
 

@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import {type FieldWrapperProps} from '@myparcel/vue-form-builder';
+import {type FieldWrapperProps} from '@myparcel-dev/vue-form-builder';
 import {translate} from '../../translate';
 import ErrorBox from './ErrorBox.vue';
 

@@ -2,8 +2,8 @@ import {defineComponent, h, nextTick, ref} from 'vue';
 import {describe, it, expect, afterEach} from 'vitest';
 import {render, waitFor} from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
-import {type FormInstance} from '@myparcel/vue-form-builder';
-import {createForm} from '@myparcel/vue-form-builder';
+import {type FormInstance} from '@myparcel-dev/vue-form-builder';
+import {createForm} from '@myparcel-dev/vue-form-builder';
 import MiddleName from './MiddleName.vue';
 
 /* c8 ignore next */

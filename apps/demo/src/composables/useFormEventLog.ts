@@ -4,8 +4,8 @@ import {
   type MaybeUnwrapNestedRefs,
   FORM_HOOKS,
   type FieldInstance,
-} from '@myparcel/vue-form-builder';
-import {isOfType} from '@myparcel/ts-utils';
+} from '@myparcel-dev/vue-form-builder';
+import {isOfType} from '@myparcel-dev/ts-utils';
 
 export const useFormEventLog = (form: MaybeUnwrapNestedRefs<FormInstance>): Ref<string> => {
   const eventLog = ref<string>('');

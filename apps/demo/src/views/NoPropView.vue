@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import {ref} from 'vue';
-import {createField, createForm} from '@myparcel/vue-form-builder';
+import {createField, createForm} from '@myparcel-dev/vue-form-builder';
 import FormGroupWithoutElementProp from '../components/FormGroupWithoutElementProp.vue';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
 import ComponentWithoutElementProp from '../components/ComponentWithoutElementProp.vue';

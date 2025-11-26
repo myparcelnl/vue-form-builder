@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import {type FieldInstance} from '@myparcel/vue-form-builder';
+import {type FieldInstance} from '@myparcel-dev/vue-form-builder';
 
 defineProps<{element: FieldInstance}>();
 </script>

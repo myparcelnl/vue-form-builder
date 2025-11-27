@@ -12,6 +12,6 @@ export default createViteConfig({
   },
 
   test: {
-    testTimeout: 10000, // 10 seconds max per test
+    testTimeout: 10000,
   },
 });

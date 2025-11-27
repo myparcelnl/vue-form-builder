@@ -9,10 +9,6 @@
     "build:dev": "run ws:vite:build:dev \"$(pwd)\"",
     "clean": "run ws:clean \"$(pwd)\"",
     "serve": "vite",
-    "test": "run ws:test \"$(pwd)\"",
-    "test:coverage": "run ws:test:coverage \"$(pwd)\"",
-    "test:run": "run ws:test:run \"$(pwd)\"",
-    "test:update": "run ws:test:update \"$(pwd)\"",
     "typecheck": "run ws:vite:typecheck \"$(pwd)\""
   },
   "dependencies": {

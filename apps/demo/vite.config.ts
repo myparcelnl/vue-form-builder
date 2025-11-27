@@ -10,8 +10,4 @@ export default createViteConfig({
     jsxFragment: 'Fragment',
     jsxInject: `import { h, Fragment } from 'vue'`,
   },
-
-  test: {
-    testTimeout: 10000,
-  },
 });

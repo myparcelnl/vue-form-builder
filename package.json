@@ -1,4 +1,5 @@
 {
+  "$comment": "Cache bust for yarn install state",
   "name": "@myparcel-vfb/monorepo",
   "version": "1.0.0",
   "private": true,

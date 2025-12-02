@@ -41,3 +41,10 @@ export {useElement} from './composables/useElement';
 export {useForm} from './composables/useForm';
 
 export {useFormBuilder} from './composables/useFormBuilder';
+
+// Deprecated type exports for backwards compatibility
+export type {
+  InteractiveElementInstance,
+  InteractiveElementConfiguration,
+  InteractiveElementHooks,
+} from './types/deprecated.types';

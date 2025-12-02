@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import {createField, createForm} from '@myparcel/vue-form-builder';
+import {createField, createForm} from '@myparcel-dev/vue-form-builder';
 import TTextInput from '../components/template/TTextInput.vue';
 import {ref} from 'vue';
 

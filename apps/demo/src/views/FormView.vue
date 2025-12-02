@@ -140,7 +140,7 @@
 <script lang="ts" setup>
 /* eslint-disable @typescript-eslint/naming-convention */
 import {computed, h, ref, toValue} from 'vue';
-import {createField, createForm, type FormInstance} from '@myparcel/vue-form-builder';
+import {createField, createForm, type FormInstance} from '@myparcel-dev/vue-form-builder';
 import {stringNotContainsValidator} from '../validation/stringNotContainsValidator';
 import {stringLengthValidator} from '../validation/stringLengthValidator';
 import {regexValidator} from '../validation/regexValidator';

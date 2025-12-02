@@ -1,5 +1,5 @@
 import {type Ref, type ComputedRef, type UnwrapNestedRefs, type Component} from 'vue';
-import {type ReadonlyOr, type PromiseOr} from '@myparcel/ts-utils';
+import {type ReadonlyOr, type PromiseOr} from '@myparcel-dev/ts-utils';
 import {type HookManagerInstance, type HookUnregisterHandler} from '../hooks/HookManager';
 import {type FormHook} from '../data/hooks';
 import {type AnyAttributes, type FunctionOr} from './utils.types';

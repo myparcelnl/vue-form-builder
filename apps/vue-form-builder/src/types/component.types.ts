@@ -1,5 +1,5 @@
 import {type Component} from 'vue';
-import {type PromiseOr} from '@myparcel/ts-utils';
+import {type PromiseOr} from '@myparcel-dev/ts-utils';
 import {type FieldInstance} from './field.types';
 
 export interface ComponentLifecycleHooks<I extends FieldInstance = FieldInstance> {

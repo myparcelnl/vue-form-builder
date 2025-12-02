@@ -1,5 +1,5 @@
 import {type Ref, watchEffect, type WatchStopHandle} from 'vue';
-import {type PromiseOr} from '@myparcel/ts-utils';
+import {type PromiseOr} from '@myparcel-dev/ts-utils';
 import {toPromise} from './toPromise';
 
 export const useDynamicWatcher = (callback: () => PromiseOr<boolean>, property: Ref): WatchStopHandle => {

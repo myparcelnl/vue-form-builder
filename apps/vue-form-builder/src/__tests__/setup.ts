@@ -1,5 +1,5 @@
 import {type VueWrapper, config} from '@vue/test-utils';
-import {type RequireOnly} from '@myparcel/ts-utils';
+import {type RequireOnly} from '@myparcel-dev/ts-utils';
 
 const resolveSelector = (input: string | Record<string, string>): string => {
   if (typeof input === 'string') {

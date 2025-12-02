@@ -1,6 +1,6 @@
 import {ref, watch, toValue, reactive, type UnwrapNestedRefs, computed, markRaw, type Ref, isRef} from 'vue';
 import {isDefined} from '@vueuse/core';
-import {isOfType, asyncEvery, type PromiseOr} from '@myparcel/ts-utils';
+import {isOfType, asyncEvery, type PromiseOr} from '@myparcel-dev/ts-utils';
 import {isRequired} from '../validators/isRequired';
 import {useDynamicWatcher} from '../utils/useDynamicWatcher';
 import {normalizeFieldConfiguration} from '../utils/normalizeFieldConfiguration';

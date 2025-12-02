@@ -1,5 +1,5 @@
 import {type ComputedRef} from 'vue';
-import {type PromiseOr} from '@myparcel/ts-utils';
+import {type PromiseOr} from '@myparcel-dev/ts-utils';
 import {type FunctionOr} from './utils.types';
 import {type FieldInstance} from './field.types';
 import {type ComponentProps} from './component.types';

@@ -42,7 +42,7 @@ jobs:
       - name: 'Run monodeploy'
         env:
           GH_TOKEN: ${{ steps.credentials.outputs.token }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN_NEW }}
         #language=bash
         run: |
           yarn monodeploy \

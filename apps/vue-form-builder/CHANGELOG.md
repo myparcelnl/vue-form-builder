@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.53](https://github/myparcelnl/vue-form-builder/compare/@myparcel-dev/vue-form-builder@1.0.0-beta.52...@myparcel-dev/vue-form-builder@1.0.0-beta.53) "@myparcel-dev/vue-form-builder" (2025-12-02)
+
+
+### Features
+
+* migrate to [@myparcel-dev](https://github/myparcel-dev) scope ([#261](https://github/myparcelnl/vue-form-builder/issues/261)) ([7b43075](https://github/myparcelnl/vue-form-builder/commit/7b43075df4dab75bd124f33f5ce48d46ef0b63df))
+
+
+
+
 ## [1.0.0-beta.52](https://github/myparcelnl/vue-form-builder/compare/@myparcel/vue-form-builder@1.0.0-beta.51...@myparcel/vue-form-builder@1.0.0-beta.52) "@myparcel/vue-form-builder" (2025-01-27)
 
 

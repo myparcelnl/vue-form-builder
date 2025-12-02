@@ -2,6 +2,16 @@
 
 <!-- MONODEPLOY:BELOW -->
 
+## [1.0.0-beta.54](https://github/myparcelnl/vue-form-builder/compare/@myparcel-dev/vue-form-builder@1.0.0-beta.53...@myparcel-dev/vue-form-builder@1.0.0-beta.54) "@myparcel-dev/vue-form-builder" (2025-12-02)
+
+
+### Bug Fixes
+
+* export deprecated types for backwards compatibility ([c68327c](https://github/myparcelnl/vue-form-builder/commit/c68327c40f1d0d23477577a5de1cceaf97b7fffd))
+
+
+
+
 ## [1.0.0-beta.53](https://github/myparcelnl/vue-form-builder/compare/@myparcel-dev/vue-form-builder@1.0.0-beta.52...@myparcel-dev/vue-form-builder@1.0.0-beta.53) "@myparcel-dev/vue-form-builder" (2025-12-02)
 
 

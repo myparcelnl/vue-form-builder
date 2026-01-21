@@ -33,4 +33,8 @@ export {
   useFormBuilder,
 } from '@myparcel-vfb/core';
 
+// Backwards compatibility: also export MagicForm as default
+import {MagicForm as __MagicForm} from '@myparcel-vfb/core';
+export default __MagicForm;
+
 export {MyParcelFormBuilderPlugin, createMyParcelFormBuilderPlugin} from '@myparcel-vfb/plugin';

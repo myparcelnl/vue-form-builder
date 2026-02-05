@@ -14,7 +14,7 @@ const createCommonViteConfig = (env) => {
   return {
     plugins: [
       vue(),
-      isProd && dts({entryRoot: 'src', aliasesExclude: [/@myparcel-vfb\/(.+)/, '@myparcel/vue-form-builder']}),
+      isProd && dts({entryRoot: 'src', aliasesExclude: [/@myparcel-vfb\/(.+)/, '@myparcel-dev/vue-form-builder']}),
       customTsConfig({tsConfigPath: 'tsconfig.build.json'}),
     ],
 
@@ -25,7 +25,7 @@ const createCommonViteConfig = (env) => {
           replacement: path.resolve(__dirname, '../../libs/$1/src'),
         },
         {
-          find: '@myparcel/vue-form-builder',
+          find: '@myparcel-dev/vue-form-builder',
           replacement: path.resolve(__dirname, '../../apps/vue-form-builder/src'),
         },
       ],

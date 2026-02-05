@@ -18,7 +18,7 @@ export const setupDevtools = (app: App): void => {
     {
       id: `myparcel-form-builder`,
       label: 'MyParcel Form builder',
-      packageName: '@myparcel/vue-form-builder',
+      packageName: '@myparcel-dev/vue-form-builder',
       homepage: 'https://github.com/myparcelnl/vue-form-builder',
       logo: 'https://backoffice.myparcel.nl/static/myparcel-nederland/skin/images/logo-icon.svg',
       app,

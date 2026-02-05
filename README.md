@@ -1,7 +1,7 @@
 # Vue Form builder
 
-[![NPM](https://img.shields.io/npm/v/@myparcel/vue-form-builder?labelColor=27272A&logoColor=FFFFFF&style=for-the-badge&color=CC3534&logo=npm)](https://npmjs.com/package/@myparcel/vue-form-builder/)
-[![Vue version](https://img.shields.io/npm/dependency-version/@myparcel/vue-form-builder/vue?labelColor=27272A&logoColor=FFFFFF&style=for-the-badge)](https://img.shields.io/npm/v/@myparcel/vue-form-builder?labelColor=27272A&logoColor=FFFFFF&style=for-the-badge&color=CC3534&logo=npm)
+[![NPM](https://img.shields.io/npm/v/@myparcel-dev/vue-form-builder?labelColor=27272A&logoColor=FFFFFF&style=for-the-badge&color=CC3534&logo=npm)](https://npmjs.com/package/@myparcel-dev/vue-form-builder/)
+[![Vue version](https://img.shields.io/npm/dependency-version/@myparcel-dev/vue-form-builder/vue?labelColor=27272A&logoColor=FFFFFF&style=for-the-badge)](https://img.shields.io/npm/v/@myparcel-dev/vue-form-builder?labelColor=27272A&logoColor=FFFFFF&style=for-the-badge&color=CC3534&logo=npm)
 [![Issues](https://img.shields.io/github/issues/myparcelnl/vue-form-builder?labelColor=27272A&logoColor=FFFFFF&style=for-the-badge&logo=github)](https://github.com/myparcelnl/vue-form-builder/issues/)
 [![Pull Requests](https://img.shields.io/github/issues-pr/myparcelnl/vue-form-builder?labelColor=27272A&logoColor=FFFFFF&style=for-the-badge&logo=github)](https://github.com/myparcelnl/vue-form-builder/pulls/)
 
@@ -11,32 +11,32 @@
 
 ## Getting Started
 
-Either [install `@myparcel/vue-form-builder` via your favorite package manager](#installation), or include the [CDN script tag](#cdn-usage) in your HTML.
+Either [install `@myparcel-dev/vue-form-builder` via your favorite package manager](#installation), or include the [CDN script tag](#cdn-usage) in your HTML.
 
 ### Installation
 
 **Yarn**
 
 ```bash
-yarn add @myparcel/vue-form-builder
+yarn add @myparcel-dev/vue-form-builder
 ```
 
 **NPM**
 
 ```bash
-npm install @myparcel/vue-form-builder
+npm install @myparcel-dev/vue-form-builder
 ```
 
 **pnpm**
 
 ```bash
-pnpm add @myparcel/vue-form-builder
+pnpm add @myparcel-dev/vue-form-builder
 ```
 
 ### CDN usage
 
 ```html
-<script src="https://unpkg.com/browse/@myparcel/vue-form-builder"></script>
+<script src="https://unpkg.com/browse/@myparcel-dev/vue-form-builder"></script>
 ```
 
 ## Usage
@@ -46,7 +46,7 @@ pnpm add @myparcel/vue-form-builder
 `myForm.js`
 
 ```js
-import {defineForm} from '@myparcel/vue-form-builder';
+import {defineForm} from '@myparcel-dev/vue-form-builder';
 
 export const myForm = defineForm('my-form', {
   fields: [
@@ -67,7 +67,7 @@ See [defining fields](#defining-fields) for more information about fields.
 </template>
 
 <script>
-import {MagicForm} from '@myparcel/vue-form-builder';
+import {MagicForm} from '@myparcel-dev/vue-form-builder';
 import {myForm} from './myForm';
 
 export default defineComponent({
@@ -119,7 +119,7 @@ Fields are categorized into two types based on the passed options:
 - `interactiveElement`: A field with a [name] and a ref to hold a reactive value.
 
 ```js
-import {defineField} from '@myparcel/vue-form-builder';
+import {defineField} from '@myparcel-dev/vue-form-builder';
 
 const emailField = defineField({
   name: 'email',
@@ -182,7 +182,7 @@ Please refer to the [Vue Options Lifecycle documentation](https://vuejs.org/api/
 A [Validator] object looks like this:
 
 ```ts
-import {Validator} from '@myparcel/vue-form-builder';
+import {Validator} from '@myparcel-dev/vue-form-builder';
 
 const validator: Validator = {
   validate: (instance, value) => true,
@@ -207,7 +207,7 @@ You can pass validator(s) in three different ways:
 If you only have one validator, you can choose to pass it directly to the field:
 
 ```ts
-import {defineField} from '@myparcel/vue-form-builder';
+import {defineField} from '@myparcel-dev/vue-form-builder';
 import {ref} from 'vue';
 
 const myField = defineField({
@@ -225,7 +225,7 @@ const myField = defineField({
 Multiple validators can be passed like this, an array of [Validator] objects:
 
 ```ts
-import {defineField} from '@myparcel/vue-form-builder';
+import {defineField} from '@myparcel-dev/vue-form-builder';
 import {ref} from 'vue';
 
 const myField = defineField({
@@ -251,7 +251,7 @@ const myField = defineField({
 In order to define specific validation functions, a `precedence` integer can be passed to a validator function to denote the priority of the validation to trigger, in order. This prevents from showing too many validation warnings at once, when they are not relevant (yet). Best shown in the following example:
 
 ```ts
-import {defineField} from '@myparcel/vue-form-builder';
+import {defineField} from '@myparcel-dev/vue-form-builder';
 import {ref} from 'vue';
 
 const myField = defineField({
@@ -286,7 +286,7 @@ This way, error nr 3 is not shown until error 2 is resolved, which is not shown 
 The `isValid` property accepts a computed ref that returns a boolean. This is useful when you want to use a computed property to determine the validity of the field.
 
 ```ts
-import {defineField} from '@myparcel/vue-form-builder';
+import {defineField} from '@myparcel-dev/vue-form-builder';
 import {computed, ref} from 'vue';
 
 const myField = defineField({
@@ -304,7 +304,7 @@ const myField = defineField({
 This library is written in TypeScript and has full support for it. You can use the types in your own code to get the best possible experience.
 
 ```ts
-import {defineForm, defineField} from '@myparcel/vue-form-builder';
+import {defineForm, defineField} from '@myparcel-dev/vue-form-builder';
 
 defineField({
   name: 'amount',

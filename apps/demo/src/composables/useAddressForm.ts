@@ -1,6 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
-import {defineForm, SelectOption, FormInstance} from '@myparcel/vue-form-builder';
+import {defineForm, SelectOption, FormInstance} from '@myparcel-dev/vue-form-builder';
 
 const postcodeHousenumberValidation = async (form: FormInstance) => {
   form.model.postcodeHousenumberValidation.visible = false;

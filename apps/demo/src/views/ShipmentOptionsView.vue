@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import {computed, ref, watch, toValue} from 'vue';
 import {type FormInstance} from '@myparcel-vfb/core';
-import {MagicForm} from '@myparcel/vue-form-builder';
+import {MagicForm} from '@myparcel-dev/vue-form-builder';
 import {shipmentOptionsForm} from '../forms/shipmentOptionsForm';
 import FormDiagnostics from '../components/FormDiagnostics.vue';
 

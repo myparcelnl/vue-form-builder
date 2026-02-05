@@ -6,7 +6,7 @@ import {
   type PlainElementConfiguration,
   defineField,
   defineForm,
-} from '@myparcel/vue-form-builder';
+} from '@myparcel-dev/vue-form-builder';
 
 const interactiveFieldConfig = {
   name: 'name',

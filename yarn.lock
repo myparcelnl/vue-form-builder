@@ -1079,6 +1079,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@myparcel-dev/vue-form-builder@npm:1.0.0-beta.42.5, @myparcel-dev/vue-form-builder@workspace:apps/vue-form-builder":
+  version: 0.0.0-use.local
+  resolution: "@myparcel-dev/vue-form-builder@workspace:apps/vue-form-builder"
+  dependencies:
+    "@myparcel-vfb/core": "npm:1.0.0-beta.41"
+    "@myparcel-vfb/hook-manager": "npm:1.0.0-beta.12"
+    "@myparcel-vfb/plugin": "npm:1.0.0-beta.41"
+    "@myparcel-vfb/utils": "npm:1.0.0-beta.7"
+    "@myparcel/ts-utils": "npm:>= 1.6.0"
+    "@vitejs/plugin-vue": "npm:^4.0.0"
+    "@vitest/coverage-v8": "npm:^1.0.0"
+    "@vueuse/core": "npm:>= 10.1.0"
+    typescript: "npm:^5.0.0"
+    vite: "npm:^5.0.0"
+    vite-plugin-custom-tsconfig: "npm:^1.0.4"
+    vite-plugin-dts: "npm:^2.1.0"
+    vitest: "npm:^1.0.0"
+    vue: "npm:^3.2.47"
+    vue-tsc: "npm:^1.6.5"
+  peerDependencies:
+    vue: ^3
+  languageName: unknown
+  linkType: soft
+
 "@myparcel-eslint/eslint-config-es6@npm:^1.3.1":
   version: 1.3.1
   resolution: "@myparcel-eslint/eslint-config-es6@npm:1.3.1"
@@ -1267,6 +1291,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@myparcel-vfb/core@npm:1.0.0-beta.41":
+  version: 1.0.0-beta.41
+  resolution: "@myparcel-vfb/core@npm:1.0.0-beta.41"
+  dependencies:
+    "@myparcel-vfb/hook-manager": "npm:^1.0.0-beta.13"
+    "@myparcel-vfb/utils": "npm:^1.0.0-beta.8"
+    "@myparcel/ts-utils": "npm:^1.6.0"
+  checksum: 90b497d080f351a76dbe7ac4c1daf6f54bccfdf6f365880d64733944605836857c03198fc0fac321e0d8cab8e2947ddb6a16395cf3392b144cbfb6fdcb618293
+  languageName: node
+  linkType: hard
+
+"@myparcel-vfb/core@npm:^1.0.0-beta.41":
+  version: 1.0.0-beta.43
+  resolution: "@myparcel-vfb/core@npm:1.0.0-beta.43"
+  dependencies:
+    "@myparcel-vfb/hook-manager": "npm:^1.0.0-beta.13"
+    "@myparcel-vfb/utils": "npm:^1.0.0-beta.9"
+    "@myparcel/ts-utils": "npm:^1.6.0"
+  checksum: 643f86ec05e06a48cb027191fabc6e4e8c1652b101b30e441d7c20daa796a2f9f381178d7c5f56916087783ae7acc3e019e4934390f277a270599403a4f89b49
+  languageName: node
+  linkType: hard
+
 "@myparcel-vfb/core@workspace:^1.0.0-beta.40, @myparcel-vfb/core@workspace:libs/core":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/core@workspace:libs/core"
@@ -1290,10 +1336,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/demo@workspace:apps/demo"
   dependencies:
+    "@myparcel-dev/vue-form-builder": "npm:1.0.0-beta.42.5"
     "@myparcel/constants": "npm:^1.1.0"
     "@myparcel/sdk": "npm:^3.0.0"
     "@myparcel/ts-utils": "npm:^1.6.0"
-    "@myparcel/vue-form-builder": "workspace:*"
     "@tanstack/vue-query": "npm:^4.24.9"
     "@vitejs/plugin-vue": "npm:^4.0.0"
     "@vitejs/plugin-vue-jsx": "npm:^3.0.0"
@@ -1310,7 +1356,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/hook-manager@workspace:^1.0.0-beta.12, @myparcel-vfb/hook-manager@workspace:libs/hook-manager":
+"@myparcel-vfb/hook-manager@npm:1.0.0-beta.12, @myparcel-vfb/hook-manager@workspace:^1.0.0-beta.12, @myparcel-vfb/hook-manager@workspace:libs/hook-manager":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/hook-manager@workspace:libs/hook-manager"
   dependencies:
@@ -1321,6 +1367,15 @@ __metadata:
     vitest: "npm:^1.0.0"
   languageName: unknown
   linkType: soft
+
+"@myparcel-vfb/hook-manager@npm:^1.0.0-beta.13":
+  version: 1.0.0-beta.13
+  resolution: "@myparcel-vfb/hook-manager@npm:1.0.0-beta.13"
+  dependencies:
+    "@myparcel/ts-utils": "npm:^1.6.0"
+  checksum: ab92d67a001ec5c85dbb0e7f2a34fb979202b14b0e46fe939c4392bf39d02be6f10812e22b608ae801062e82c0b4b65dfce30a5276057a8961ade2cf8d0d068c
+  languageName: node
+  linkType: hard
 
 "@myparcel-vfb/monorepo@workspace:.":
   version: 0.0.0-use.local
@@ -1353,7 +1408,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/plugin@workspace:^1.0.0-beta.40, @myparcel-vfb/plugin@workspace:libs/plugin":
+"@myparcel-vfb/plugin@npm:1.0.0-beta.41":
+  version: 1.0.0-beta.41
+  resolution: "@myparcel-vfb/plugin@npm:1.0.0-beta.41"
+  dependencies:
+    "@myparcel-vfb/core": "npm:^1.0.0-beta.41"
+    "@myparcel/ts-utils": "npm:^1.6.0"
+    "@vue/devtools-api": "npm:^6.5.0"
+  checksum: 7ed2fc5a4372a4a1d06f98d733deace3e1d4fe18494bd290c5e21f14d9552dd46c40f7da9ecf14996498eee950915ec52c78c7e9674f72e3c09e607c74a921c0
+  languageName: node
+  linkType: hard
+
+"@myparcel-vfb/plugin@workspace:libs/plugin":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/plugin@workspace:libs/plugin"
   dependencies:
@@ -1366,7 +1432,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@myparcel-vfb/utils@workspace:^1.0.0-beta.7, @myparcel-vfb/utils@workspace:libs/utils":
+"@myparcel-vfb/utils@npm:1.0.0-beta.7, @myparcel-vfb/utils@workspace:^1.0.0-beta.7, @myparcel-vfb/utils@workspace:libs/utils":
   version: 0.0.0-use.local
   resolution: "@myparcel-vfb/utils@workspace:libs/utils"
   dependencies:
@@ -1374,6 +1440,15 @@ __metadata:
     typescript: "npm:^5.0.0"
   languageName: unknown
   linkType: soft
+
+"@myparcel-vfb/utils@npm:^1.0.0-beta.8, @myparcel-vfb/utils@npm:^1.0.0-beta.9":
+  version: 1.0.0-beta.9
+  resolution: "@myparcel-vfb/utils@npm:1.0.0-beta.9"
+  dependencies:
+    "@myparcel/ts-utils": "npm:^1.6.0"
+  checksum: 80cacc435a5915c05714bdd07db91afdafc9995152f48e9c2900af55f4094cae4c59e7a574d7cb1fc70be23348f34ec7382a393d05ab6d0a773fd42c6e76590d
+  languageName: node
+  linkType: hard
 
 "@myparcel/constants@npm:^1.0.0, @myparcel/constants@npm:^1.1.0":
   version: 1.1.3
@@ -1414,30 +1489,6 @@ __metadata:
   checksum: 1d9a6b742dc77a714e0526ee1c9e90305ab9eb2a42b8fd6add7033d4cadfb82eadcb1aef043be190f4e3e150336166db8e75e5482fbab6dbc5d09d47c420a0ec
   languageName: node
   linkType: hard
-
-"@myparcel/vue-form-builder@workspace:*, @myparcel/vue-form-builder@workspace:apps/vue-form-builder":
-  version: 0.0.0-use.local
-  resolution: "@myparcel/vue-form-builder@workspace:apps/vue-form-builder"
-  dependencies:
-    "@myparcel-vfb/core": "workspace:^1.0.0-beta.40"
-    "@myparcel-vfb/hook-manager": "workspace:^1.0.0-beta.12"
-    "@myparcel-vfb/plugin": "workspace:^1.0.0-beta.40"
-    "@myparcel-vfb/utils": "workspace:^1.0.0-beta.7"
-    "@myparcel/ts-utils": "npm:>= 1.6.0"
-    "@vitejs/plugin-vue": "npm:^4.0.0"
-    "@vitest/coverage-v8": "npm:^1.0.0"
-    "@vueuse/core": "npm:>= 10.1.0"
-    typescript: "npm:^5.0.0"
-    vite: "npm:^5.0.0"
-    vite-plugin-custom-tsconfig: "npm:^1.0.4"
-    vite-plugin-dts: "npm:^2.1.0"
-    vitest: "npm:^1.0.0"
-    vue: "npm:^3.2.47"
-    vue-tsc: "npm:^1.6.5"
-  peerDependencies:
-    vue: ^3
-  languageName: unknown
-  linkType: soft
 
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
@@ -9482,17 +9533,17 @@ __metadata:
 
 "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.0.0#optional!builtin<compat/typescript>":
   version: 5.3.3
-  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
+  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1d0a5f4ce496c42caa9a30e659c467c5686eae15d54b027ee7866744952547f1be1262f2d40de911618c242b510029d51d43ff605dba8fb740ec85ca2d3f9500
+  checksum: e22df47df9b2b2f2617b8bf511a29aea3d177f9f7a0756818230a76b01cbd7da988bf55f9463aaa1a4c1ff90b80f8dc5676460d4e9dfc010572cbba59b822b0c
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
   version: 5.4.2
-  resolution: "typescript@patch:typescript@npm%3A5.4.2#optional!builtin<compat/typescript>::version=5.4.2&hash=e012d7"
+  resolution: "typescript@patch:typescript@npm%3A5.4.2#optional!builtin<compat/typescript>::version=5.4.2&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver

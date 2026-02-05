@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import {computed, defineComponent} from 'vue';
-import {useForm} from '@myparcel/vue-form-builder';
+import {useForm} from '@myparcel-dev/vue-form-builder';
 
 export default defineComponent({
   name: 'Bonnetje',

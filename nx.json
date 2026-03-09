@@ -32,21 +32,41 @@
   },
   "targetDefaults": {
     "build:dev": {
-      "inputs": ["prod"],
-      "dependsOn": ["^build:dev"],
-      "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
+      "inputs": [
+        "prod"
+      ],
+      "dependsOn": [
+        "^build:dev"
+      ],
+      "outputs": [
+        "{projectRoot}/dist",
+        "{projectRoot}/*.tsbuildinfo"
+      ]
     },
     "build": {
-      "inputs": ["prod"],
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
+      "inputs": [
+        "prod"
+      ],
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist",
+        "{projectRoot}/*.tsbuildinfo"
+      ]
     },
     "test:run": {
-      "inputs": ["test"]
+      "inputs": [
+        "test"
+      ]
     },
     "test:coverage": {
-      "inputs": ["test"],
-      "outputs": ["{workspaceRoot}/coverage"]
+      "inputs": [
+        "test"
+      ],
+      "outputs": [
+        "{workspaceRoot}/coverage"
+      ]
     }
   },
   "tasksRunnerOptions": {
@@ -76,5 +96,6 @@
         "accessToken": "ODE1MmI4YjctMmFiZC00YzNlLTg5YjUtMGIzNjgyMjI3NjhkfHJlYWQtd3JpdGU="
       }
     }
-  }
+  },
+  "nxCloudAccessToken": "ZGRkYzBjNmMtNDQ3Ni00MmQ2LWExZjctYmYyNDM5MmNlYjk2fHJlYWQtd3JpdGU="
 }

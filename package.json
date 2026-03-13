@@ -43,6 +43,8 @@
   "resolutions": {
     "axios": "1.15.0",
     "eslint-plugin-prettier": "^4.0.0"
+    "eslint-plugin-prettier": "^4.0.0",
+    "tar": "^7.5.11"
   },
   "dependencies": {
     "@nrwl/nx-cloud": "^19.0.0"

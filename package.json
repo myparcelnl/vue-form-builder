@@ -42,7 +42,8 @@
   "prettier": "@myparcel-dev/prettier-config",
   "resolutions": {
     "axios": "1.15.0",
-    "eslint-plugin-prettier": "^4.0.0"
+    "eslint-plugin-prettier": "^4.0.0",
+    "tar": "7.5.11"
   },
   "dependencies": {
     "@nrwl/nx-cloud": "^19.0.0"
@@ -76,13 +77,13 @@
     "vitest": "^2.0.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "20.15.1"
   },
   "volta": {
     "node": "20.15.1",
-    "yarn": "4.3.1"
+    "yarn": "4.12.0"
   },
-  "$comment": "Cache bust 2 - force new yarn install cache",
+  "$comment": "Cache bust 3 - force new yarn install cache",
   "bundlewatch": {
     "ci": {
       "trackBranches": [

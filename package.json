@@ -1,5 +1,4 @@
 {
-  "$comment": "Cache bust 2 - force new yarn install cache",
   "name": "@myparcel-vfb/monorepo",
   "version": "1.0.0",
   "private": true,
@@ -42,6 +41,7 @@
   },
   "prettier": "@myparcel-dev/prettier-config",
   "resolutions": {
+    "axios": "1.15.0",
     "eslint-plugin-prettier": "^4.0.0"
   },
   "dependencies": {
@@ -82,6 +82,7 @@
     "node": "20.15.1",
     "yarn": "4.3.1"
   },
+  "$comment": "Cache bust 2 - force new yarn install cache",
   "bundlewatch": {
     "ci": {
       "trackBranches": [

@@ -1,5 +1,4 @@
 import path from 'node:path';
-import customTsConfig from 'vite-plugin-custom-tsconfig';
 import {mergeConfig} from 'vite';
 import vue from '@vitejs/plugin-vue';
 import {codecovVitePlugin} from '@codecov/vite-plugin';
@@ -19,7 +18,6 @@ const createCommonViteConfig = (env) => {
         uploadToken: process.env.CODECOV_TOKEN,
       }),
       vue(),
-      customTsConfig({tsConfigPath: 'tsconfig.build.json'}),
     ],
 
     resolve: {

@@ -57,7 +57,6 @@
     "@myparcel-dev/eslint-config-prettier-typescript": "^1.4.0",
     "@myparcel-dev/eslint-config-prettier-typescript-vue": "^1.4.0",
     "@myparcel-dev/prettier-config": "^2.0.0",
-    "@nrwl/workspace": "^19.0.0",
     "@tsconfig/recommended": "^1.0.2",
     "@types/node": "^20.19.0",
     "@vitest/ui": "^4.1.11",

@@ -13,32 +13,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: myparcelnl/actions/yarn-install@v4
+      - uses: myparcelnl/actions/yarn-install@v5
         if: matrix.node-version == 'current'
 
-      - uses: myparcelnl/actions/yarn-install@v4
+      - uses: myparcelnl/actions/yarn-install@v5
         if: matrix.node-version != 'current'
         with:
           node-version: ${{ matrix.node-version }}
 
       - uses: ./.github/actions/build
 
-      - uses: myparcelnl/actions/nx-run-many@v4
+      - uses: myparcelnl/actions/nx-run-many@v5
         with:
           target: 'test:coverage'
           parallel: '1'
           cloud: 'true'
           runner: 'cloud'
 
-      - uses: myparcelnl/actions/collect-test-results@v4
+      - uses: myparcelnl/actions/collect-test-results@v5
 
-      - uses: myparcelnl/actions/codecov-coverage@v4
+      - uses: myparcelnl/actions/codecov-coverage@v5
         if: matrix.node-version == 'current'
         with:
           files: coverage/*.xml
           token: ${{ secrets.CODECOV_TOKEN }}
 
-      - uses: myparcelnl/actions/codecov-test-results@v4
+      - uses: myparcelnl/actions/codecov-test-results@v5
         if: matrix.node-version == 'current'
         with:
           files: junit/*.xml
@@ -49,10 +49,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: myparcelnl/actions/yarn-install@v4
+      - uses: myparcelnl/actions/yarn-install@v5
 
       - uses: ./.github/actions/build
 
-      - uses: myparcelnl/actions/bundlewatch@v4
+      - uses: myparcelnl/actions/bundlewatch@v5
         with:
           token: ${{ secrets.BUNDLEWATCH_TOKEN }}

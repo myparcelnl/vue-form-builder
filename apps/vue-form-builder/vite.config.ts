@@ -3,7 +3,7 @@ import {createViteConfig} from '@myparcel-vfb/build-vite';
 
 export default createViteConfig(() => {
   return {
-    plugins: [dts({entryRoot: 'src', tsconfigPath: 'tsconfig.build.json'})],
+    plugins: [dts({entryRoot: 'src', processor: 'vue', tsconfigPath: 'tsconfig.build.json'})],
 
     build: {
       rollupOptions: {

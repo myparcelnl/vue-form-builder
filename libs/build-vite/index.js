@@ -55,7 +55,6 @@ const createCommonViteConfig = (env) => {
     test: {
       reporters: ['default', ['junit', {outputFile: './junit.xml'}]],
       coverage: {
-        all: true,
         enabled: false,
         reporter: ['clover', 'text', ...isProd ? [] : ['html']],
       },

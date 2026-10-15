@@ -8,9 +8,6 @@ dist/
 junit.xml
 clover.xml
 
-apps/**/tsconfig.json
-libs/**/tsconfig.json
-
 *.tsbuildinfo
 vite.config.ts.timestamp-*
 

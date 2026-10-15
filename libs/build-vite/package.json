@@ -19,7 +19,6 @@
     "happy-dom": "^20.8.9",
     "typescript": "^5.2.2",
     "vite": "^6.4.3",
-    "vite-plugin-custom-tsconfig": "^1.0.4",
     "vitest": "^4.1.11",
     "vue": "^3.3.0",
     "vue-tsc": "^2.0.0"

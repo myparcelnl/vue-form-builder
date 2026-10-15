@@ -9,8 +9,8 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "nx build --runner=cloud --output-style=stream",
-    "build:demo": "nx build demo --runner=cloud --output-style=stream",
+    "build": "nx build --output-style=stream",
+    "build:demo": "nx build demo --output-style=stream",
     "build:dev": "run build:dev:default --output-style=stream",
     "build:dev:default": "nx run-many --target=build:dev --output-style=stream",
     "clean": "nx run-many --target=clean",
@@ -19,7 +19,7 @@
     "serve:demo": "nx serve demo",
     "serve:watch": "run build:dev:default --output-style=stream && nx watch --all -d -- nx run \\$NX_PROJECT_NAME:build:dev --output-style=stream",
     "test": "nx run-many --target=test --parallel --output-style=stream",
-    "test:coverage": "nx run-many --target=test:coverage --runner=cloud --parallel=false --output-style=stream",
+    "test:coverage": "nx run-many --target=test:coverage --parallel=false --output-style=stream",
     "test:run": "nx run-many --target=test:run --parallel=false --output-style=stream",
     "typecheck": "nx run-many --target=typecheck",
     "ws:clean": "cd $0 && rimraf dist coverage tsconfig.build.tsbuildinfo",
@@ -44,9 +44,6 @@
     "@yarnpkg/core": "4.9.1",
     "axios": "^1.20.0",
     "eslint-plugin-prettier": "^4.0.0"
-  },
-  "dependencies": {
-    "@nrwl/nx-cloud": "^19.0.0"
   },
   "devDependencies": {
     "@monodeploy/plugin-github": "^2.0.1",

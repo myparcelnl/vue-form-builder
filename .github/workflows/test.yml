@@ -18,8 +18,6 @@ jobs:
         with:
           target: 'test:coverage'
           parallel: '1'
-          cloud: 'true'
-          runner: 'cloud'
 
       - uses: myparcelnl/actions/collect-test-results@v5
 

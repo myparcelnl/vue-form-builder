@@ -78,10 +78,10 @@
     "vitest": "^4.1.11"
   },
   "engines": {
-    "node": "20.15.1"
+    "node": "20.20.2"
   },
   "volta": {
-    "node": "20.15.1",
+    "node": "20.20.2",
     "yarn": "4.12.0"
   },
   "$comment": "Cache bust 3 - force new yarn install cache",

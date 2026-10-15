@@ -56,6 +56,8 @@ const createCommonViteConfig = (env) => {
       reporters: ['default', ['junit', {outputFile: './junit.xml'}]],
       coverage: {
         enabled: false,
+        include: ['src/**/*.{ts,vue}'],
+        exclude: ['src/**/__tests__/**'],
         reporter: ['clover', 'text', ...isProd ? [] : ['html']],
       },
       environment: 'happy-dom',

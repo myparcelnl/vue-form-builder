@@ -41,9 +41,9 @@
   },
   "prettier": "@myparcel-dev/prettier-config",
   "resolutions": {
+    "@yarnpkg/core": "4.9.1",
     "axios": "^1.20.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "tar": "^7.5.22"
+    "eslint-plugin-prettier": "^4.0.0"
   },
   "dependencies": {
     "@nrwl/nx-cloud": "^19.0.0"

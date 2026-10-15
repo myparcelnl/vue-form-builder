@@ -7,19 +7,10 @@ jobs:
   test:
     name: 'Run unit tests'
     runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        node-version: ['18', 'current']
     steps:
       - uses: actions/checkout@v7
 
       - uses: myparcelnl/actions/yarn-install@v5
-        if: matrix.node-version == 'current'
-
-      - uses: myparcelnl/actions/yarn-install@v5
-        if: matrix.node-version != 'current'
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - uses: ./.github/actions/build
 
@@ -33,13 +24,11 @@ jobs:
       - uses: myparcelnl/actions/collect-test-results@v5
 
       - uses: myparcelnl/actions/codecov-coverage@v5
-        if: matrix.node-version == 'current'
         with:
           files: coverage/*.xml
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - uses: myparcelnl/actions/codecov-test-results@v5
-        if: matrix.node-version == 'current'
         with:
           files: junit/*.xml
           token: ${{ secrets.CODECOV_TOKEN }}

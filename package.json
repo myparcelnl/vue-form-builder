@@ -78,7 +78,7 @@
   },
   "volta": {
     "node": "20.20.2",
-    "yarn": "4.12.0"
+    "yarn": "4.18.1"
   },
   "$comment": "Cache bust 3 - force new yarn install cache",
   "bundlewatch": {

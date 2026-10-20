@@ -854,7 +854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@myparcel-dev/constants@npm:^2.0.0":
+"@myparcel-dev/constants@npm:^2.0.0, @myparcel-dev/constants@npm:^2.7.0":
   version: 2.10.5
   resolution: "@myparcel-dev/constants@npm:2.10.5"
   dependencies:
@@ -1030,13 +1030,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@myparcel-dev/sdk@npm:^4.0.0":
-  version: 4.1.1
-  resolution: "@myparcel-dev/sdk@npm:4.1.1"
+"@myparcel-dev/sdk@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "@myparcel-dev/sdk@npm:5.1.7"
   dependencies:
-    "@myparcel-dev/constants": "npm:^2.0.0"
-    "@myparcel-dev/ts-utils": "npm:^1.6.0"
-  checksum: 10c0/c8233a1cada8243a1a08da313e216f5b369fdc6a810a60fe63f72ede5956b3b7e52b97d3838343eca372d8474581d7dd3cebd634615feb56ff1c63187a32c18c
+    "@myparcel-dev/constants": "npm:^2.7.0"
+    "@myparcel-dev/ts-utils": "npm:^1.15.0"
+  checksum: 10c0/06ad94a0ee098ac279206702344dd039b47e0fbd5c886aa07b88dff29b64c80556461674ec9feba70c3a243c639120d4fbef81a5fad6970850220e6323324d3b
   languageName: node
   linkType: hard
 
@@ -1101,7 +1101,7 @@ __metadata:
   resolution: "@myparcel-vfb/demo@workspace:apps/demo"
   dependencies:
     "@myparcel-dev/constants": "npm:^2.0.0"
-    "@myparcel-dev/sdk": "npm:^4.0.0"
+    "@myparcel-dev/sdk": "npm:^5.1.7"
     "@myparcel-dev/ts-utils": "npm:^1.6.0"
     "@myparcel-dev/vue-form-builder": "workspace:*"
     "@tanstack/vue-query": "npm:^4.24.9"

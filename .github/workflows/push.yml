@@ -56,7 +56,7 @@ jobs:
               ;;
           esac
 
-          pnpm nx release --skip-publish --yes "${PREID[@]}"
+          pnpm nx release --skip-publish "${PREID[@]}"
 
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           pnpm -r publish --no-git-checks "${TAG[@]}"

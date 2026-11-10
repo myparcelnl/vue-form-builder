@@ -5,11 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "run ws:vite:build \"$(pwd)\"",
-    "build:dev": "run ws:vite:build:dev \"$(pwd)\"",
-    "clean": "run ws:clean \"$(pwd)\"",
-    "serve": "vite",
-    "typecheck": "run ws:vite:typecheck \"$(pwd)\""
+    "serve": "vite"
   },
   "dependencies": {
     "@myparcel-dev/constants": "^2.0.0",
@@ -22,8 +18,11 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@myparcel-vfb/build-vite": "workspace:*",
     "@testing-library/user-event": "^14.5.2",
+    "@testing-library/vue": "^8.0.0",
     "@vitejs/plugin-vue": "^5.0.0",
+    "@vue/shared": "^3.5.44",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.5.23",
     "sass": "^1.58.3",
@@ -31,5 +30,13 @@
     "vite": "^6.4.3",
     "vue": "^3.2.47",
     "vue-tsc": "^2.0.0"
+  },
+  "nx": {
+    "targets": {
+      "build": {},
+      "build:dev": {},
+      "clean": {},
+      "typecheck": {}
+    }
   }
 }

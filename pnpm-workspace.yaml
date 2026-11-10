@@ -1,0 +1,22 @@
+allowBuilds:
+  '@parcel/watcher': false
+  esbuild: false
+  nx: false
+  vue-demi: false
+
+autoDedupe: true
+
+# Same patterns as the cooldown exclude in .github/dependabot.yml, so a new release of our own packages installs at once.
+minimumReleaseAgeExclude:
+  - '@myparcel/*'
+  - '@myparcel-dev/*'
+  - '@myparcel-eslint/*'
+  - '@myparcel-pdk/*'
+
+overrides:
+  axios: ^1.20.0
+  eslint-plugin-prettier: ^4.0.0
+
+packages:
+  - 'libs/*'
+  - 'apps/*'

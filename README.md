@@ -317,4 +317,22 @@ defineField({
 });
 ```
 
+## Contributing
+
+Requirements:
+
+- Node.js 24, version 24.21 or later
+- pnpm 12, version 12.6 or later
+- No Volta on your machine. Its `yarn` does not go through corepack, so the `packageManager` field in `package.json`
+  does not stop it.
+
+Install the dependencies with `pnpm install`, and build the package with `pnpm build`.
+
+The commands that every package shares (`build`, `build:dev`, `clean`, `typecheck`, `test`, `test:coverage`, `test:run` and
+`test:update`) are nx targets in `targetDefaults` in `nx.json`. Run one in a single package with
+`pnpm nx <target> <package name>`, for example `pnpm nx test:run @myparcel-dev/vue-form-builder`. Inside a package folder, use
+`pnpm nx <target>`: `pnpm <target>` does not find these targets.
+
+Releases run in CI with `nx release`. The branches `next`, `alpha`, `beta` and `rc` release a prerelease named after the branch.
+
 [validator]: #validation

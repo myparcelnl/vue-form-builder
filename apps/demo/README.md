@@ -23,24 +23,20 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
+Run these commands from the repository root. The requirements are in the Contributing section of the root README.
+
 ```sh
-yarn
+pnpm install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-yarn dev
+pnpm serve:demo
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-yarn build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-yarn lint
+pnpm build:demo
 ```

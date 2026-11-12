@@ -1072,7 +1072,7 @@ __metadata:
     vite-plugin-dts: "npm:^5.1.2"
     vitest: "npm:^4.1.11"
     vue: "npm:^3.2.47"
-    vue-component-type-helpers: "npm:^2.1.6"
+    vue-component-type-helpers: "npm:^3.3.13"
     vue-tsc: "npm:^2.0.0"
   peerDependencies:
     vue: ^3
@@ -10394,14 +10394,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-component-type-helpers@npm:^2.1.6":
-  version: 2.2.12
-  resolution: "vue-component-type-helpers@npm:2.2.12"
-  checksum: 10c0/ce15a2cdec4a57262a292ac1565aa18da9be73f3dfbcf28758a8a541199944bfff1aefb75802d6de5d955a5529c9667f1b651c659d14815c075e8965ac05175d
-  languageName: node
-  linkType: hard
-
-"vue-component-type-helpers@npm:^3.0.0":
+"vue-component-type-helpers@npm:^3.0.0, vue-component-type-helpers@npm:^3.3.13":
   version: 3.3.13
   resolution: "vue-component-type-helpers@npm:3.3.13"
   checksum: 10c0/107a19c654afe1839d3cec0673461f4f0778901c6c37b7b86119627002b2f45c4bd2830719a6ea7c14687826dcee0c9c709ad727fdd8a109b7f2730d2cb7bc2e

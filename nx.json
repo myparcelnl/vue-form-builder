@@ -32,6 +32,7 @@
   },
   "targetDefaults": {
     "build:dev": {
+      "cache": true,
       "executor": "nx:run-commands",
       "options": {
         "cwd": "{projectRoot}",
@@ -42,6 +43,7 @@
       "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
     },
     "build": {
+      "cache": true,
       "executor": "nx:run-commands",
       "options": {
         "cwd": "{projectRoot}",
@@ -52,6 +54,7 @@
       "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
     },
     "test:run": {
+      "cache": true,
       "executor": "nx:run-commands",
       "options": {
         "cwd": "{projectRoot}",
@@ -60,6 +63,7 @@
       "inputs": ["test"]
     },
     "test:coverage": {
+      "cache": true,
       "executor": "nx:run-commands",
       "options": {
         "cwd": "{projectRoot}",
@@ -76,6 +80,7 @@
       }
     },
     "typecheck": {
+      "cache": true,
       "executor": "nx:run-commands",
       "options": {
         "cwd": "{projectRoot}",
@@ -97,21 +102,7 @@
       }
     }
   },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "parallel": 10,
-        "cacheableOperations": [
-          "build",
-          "build:dev",
-          "test:coverage",
-          "test:run",
-          "typecheck"
-        ]
-      }
-    }
-  },
+  "parallel": 10,
   "pluginsConfig": {
     "@nx/js": {
       "analyzeSourceFiles": false
@@ -119,6 +110,7 @@
   },
   "release": {
     "projects": ["@myparcel-dev/vue-form-builder"],
+    "projectsRelationship": "independent",
     "releaseTag": {
       "pattern": "{projectName}@{version}"
     },

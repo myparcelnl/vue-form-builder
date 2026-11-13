@@ -32,13 +32,6 @@ yarn-error.log*
 
 .eslintcache
 
-.yarn/*
-!.yarn/releases
-!.yarn/patches
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-
 # and uncomment the following lines
  .pnp.*
 

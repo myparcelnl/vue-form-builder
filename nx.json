@@ -10,7 +10,7 @@
     "default": [
       "{workspaceRoot}/libs/build-vite/*",
       "{workspaceRoot}/tsconfig.build.json",
-      "{workspaceRoot}/yarn.lock",
+      "{workspaceRoot}/pnpm-lock.yaml",
       "{workspaceRoot}/package.json",
       "{projectRoot}/**/*"
     ],
@@ -33,28 +33,102 @@
   "targetDefaults": {
     "build:dev": {
       "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "vite build --mode development"
+      },
       "inputs": ["prod"],
       "dependsOn": ["^build:dev"],
       "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
     },
     "build": {
       "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "vite build"
+      },
       "inputs": ["prod"],
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/dist", "{projectRoot}/*.tsbuildinfo"]
     },
     "test:run": {
       "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "vitest run"
+      },
       "inputs": ["test"]
     },
     "test:coverage": {
       "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "vitest run --coverage"
+      },
       "inputs": ["test"],
       "outputs": ["{workspaceRoot}/coverage"]
     },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "rimraf dist coverage tsconfig.build.tsbuildinfo"
+      }
+    },
     "typecheck": {
-      "cache": true
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "vue-tsc -p tsconfig.build.json --noEmit"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "vitest"
+      }
+    },
+    "test:update": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "vitest run -u"
+      }
     }
   },
-  "parallel": 10
+  "parallel": 10,
+  "pluginsConfig": {
+    "@nx/js": {
+      "analyzeSourceFiles": false
+    }
+  },
+  "release": {
+    "projects": ["@myparcel-dev/vue-form-builder"],
+    "projectsRelationship": "independent",
+    "releaseTag": {
+      "pattern": "{projectName}@{version}"
+    },
+    "version": {
+      "conventionalCommits": true,
+      "applyPreidToDependents": true
+    },
+    "changelog": {
+      "automaticFromRef": true,
+      "workspaceChangelog": false,
+      "projectChangelogs": {
+        "file": "{projectRoot}/CHANGELOG.md",
+        "createRelease": "github"
+      }
+    },
+    "git": {
+      "commitMessage": "chore: release [skip ci]",
+      "push": true
+    }
+  }
 }

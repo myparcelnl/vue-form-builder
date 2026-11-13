@@ -20,7 +20,7 @@ jobs:
     needs: test
     runs-on: ubuntu-22.04
     steps:
-      - uses: myparcelnl/actions/setup-git-credentials@v5
+      - uses: myparcelnl/actions/setup-git-credentials@v6
         id: credentials
         with:
           app-id: ${{ secrets.MYPARCEL_APP_ID }}
@@ -31,7 +31,10 @@ jobs:
           fetch-depth: 0
           token: ${{ steps.credentials.outputs.token }}
 
-      - uses: myparcelnl/actions/yarn-install@v5
+      - uses: pnpm/setup@v3
+        with:
+          cache: true
+          require-lockfile: true
 
       - uses: ./.github/actions/build
 
@@ -39,21 +42,30 @@ jobs:
         with:
           path: ./apps/demo/dist
 
-      - name: 'Run monodeploy'
+      # Not nx release publish: it runs npm view, which npm refuses in a repository whose devEngines names pnpm.
+      - name: 'Release'
         env:
           GH_TOKEN: ${{ steps.credentials.outputs.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         #language=bash
         run: |
-          yarn monodeploy \
-            --config-file monodeploy.config.cjs \
-            --log-level 0
+          case "$GITHUB_REF_NAME" in
+            next|alpha|beta|rc)
+              PREID=(--preid "$GITHUB_REF_NAME")
+              TAG=(--tag "$GITHUB_REF_NAME")
+              ;;
+          esac
+
+          pnpm nx release --skip-publish "${PREID[@]}"
+
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          pnpm -r publish --no-git-checks "${TAG[@]}"
 
   rebase-prs:
     needs: release
     runs-on: ubuntu-22.04
     steps:
-      - uses: myparcelnl/actions/rebase-prs@v5
+      - uses: myparcelnl/actions/rebase-prs@v6
         with:
           app-id: ${{ secrets.MYPARCEL_APP_ID }}
           private-key: ${{ secrets.MYPARCEL_APP_PRIVATE_KEY }}
@@ -80,5 +92,5 @@ jobs:
       - release
       - deploy
     if: always() && contains(needs.*.result, 'failure')
-    uses: myparcelnl/actions/.github/workflows/notify-on-failure.yml@v5
+    uses: myparcelnl/actions/.github/workflows/notify-on-failure.yml@v6
     secrets: inherit

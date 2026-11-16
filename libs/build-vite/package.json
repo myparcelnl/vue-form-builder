@@ -24,9 +24,6 @@
     "vue-tsc": "^2.0.0"
   },
   "engines": {
-    "node": ">=24.22.3"
-  },
-  "volta": {
-    "extends": "../../package.json"
+    "node": "^24.21"
   }
 }

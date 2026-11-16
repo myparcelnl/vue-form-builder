@@ -29,7 +29,7 @@
     "@myparcel-vfb/build-vite": "workspace:*",
     "@testing-library/vue": "^8.0.0",
     "@vitejs/plugin-vue": "^5.0.0",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/coverage-v8": "^5.1.0",
     "@vue/devtools-api": "^6.6.4",
     "@vue/language-core": "^3.3.13",
     "@vue/reactivity": "^3.5.44",

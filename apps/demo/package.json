@@ -21,7 +21,7 @@
     "@myparcel-vfb/build-vite": "workspace:*",
     "@testing-library/user-event": "^14.5.2",
     "@testing-library/vue": "^8.0.0",
-    "@vitejs/plugin-vue": "^5.0.0",
+    "@vitejs/plugin-vue": "^6.0.11",
     "@vue/shared": "^3.5.44",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.5.23",

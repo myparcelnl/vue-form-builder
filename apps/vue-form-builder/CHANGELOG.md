@@ -1,3 +1,13 @@
+## 1.0.0-beta.59 (2026-11-17)
+
+### 🩹 Fixes
+
+- **release:** require npm trusted publishing for vue-form-builder ([#325](https://github.com/myparcelnl/vue-form-builder/pull/325))
+
+### ❤️ Thank You
+
+- Nabil Azahaf
+
 # Changelog
 
 <!-- MONODEPLOY:BELOW -->

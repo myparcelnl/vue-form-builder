@@ -49,7 +49,6 @@ jobs:
       - name: 'Release'
         env:
           GH_TOKEN: ${{ steps.credentials.outputs.token }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         #language=bash
         run: |
           case "$GITHUB_REF_NAME" in
@@ -61,7 +60,6 @@ jobs:
 
           pnpm nx release --skip-publish "${PREID[@]}"
 
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           pnpm -r publish --no-git-checks "${TAG[@]}"
 
   rebase-prs:

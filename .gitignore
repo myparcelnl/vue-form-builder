@@ -31,8 +31,3 @@ yarn-debug.log*
 yarn-error.log*
 
 .eslintcache
-
-# and uncomment the following lines
- .pnp.*
-
-

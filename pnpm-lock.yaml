@@ -248,10 +248,10 @@ importers:
         version: 6.1.3
       vite:
         specifier: ^6.4.3
-        version: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+        version: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
       vitest:
         specifier: ^4.1.11
-        version: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+        version: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
 
   apps/demo:
     dependencies:
@@ -291,7 +291,7 @@ importers:
         version: 8.1.0(@vue/compiler-dom@3.5.44)(@vue/compiler-sfc@3.5.44)(@vue/server-renderer@3.5.44)(vue@3.5.44(typescript@5.9.3))
       '@vitejs/plugin-vue':
         specifier: ^5.0.0
-        version: 5.2.4(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))(vue@3.5.44(typescript@5.9.3))
+        version: 5.2.4(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))(vue@3.5.44(typescript@5.9.3))
       '@vue/shared':
         specifier: ^3.5.44
         version: 3.5.44
@@ -309,7 +309,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: ^6.4.3
-        version: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+        version: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
       vue:
         specifier: ^3.2.47
         version: 3.5.44(typescript@5.9.3)
@@ -337,7 +337,7 @@ importers:
         version: 8.1.0(@vue/compiler-dom@3.5.44)(@vue/compiler-sfc@3.5.44)(@vue/server-renderer@3.5.44)(vue@3.5.44(typescript@5.9.3))
       '@vitejs/plugin-vue':
         specifier: ^5.0.0
-        version: 5.2.4(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))(vue@3.5.44(typescript@5.9.3))
+        version: 5.2.4(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))(vue@3.5.44(typescript@5.9.3))
       '@vitest/coverage-v8':
         specifier: ^4.1.11
         version: 4.1.11(vitest@4.1.11)
@@ -361,13 +361,13 @@ importers:
         version: 5.9.3
       vite:
         specifier: ^6.4.3
-        version: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+        version: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
       vite-plugin-dts:
         specifier: ^5.1.2
-        version: 5.1.2(@vue/language-core@3.3.13)(esbuild@0.25.12)(rolldown@1.2.14)(rollup@4.64.7)(supports-color@7.2.0)(typescript@5.9.3)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+        version: 5.1.2(@vue/language-core@3.3.13)(esbuild@0.25.12)(rolldown@1.2.14)(rollup@4.64.7)(supports-color@7.2.0)(typescript@5.9.3)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
       vitest:
         specifier: ^4.1.11
-        version: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+        version: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
       vue:
         specifier: ^3.2.47
         version: 3.5.44(typescript@5.9.3)
@@ -379,13 +379,13 @@ importers:
     devDependencies:
       '@codecov/vite-plugin':
         specifier: ^2.0.1
-        version: 2.0.1(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+        version: 2.0.1(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
       '@myparcel-dev/ts-utils':
         specifier: ^1.15.0
         version: 1.15.3
       '@vitejs/plugin-vue':
         specifier: ^5.0.0
-        version: 5.2.4(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))(vue@3.5.44(typescript@5.9.3))
+        version: 5.2.4(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))(vue@3.5.44(typescript@5.9.3))
       '@vitest/coverage-v8':
         specifier: ^4.1.11
         version: 4.1.11(vitest@4.1.11)
@@ -397,10 +397,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: ^6.4.3
-        version: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+        version: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
       vitest:
         specifier: ^4.1.11
-        version: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@21.0.4)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+        version: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@21.0.4)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
       vue:
         specifier: ^3.3.0
         version: 3.5.44(typescript@5.9.3)
@@ -1295,6 +1295,7 @@ packages:
 
   '@myparcel-dev/utils@1.4.0':
     resolution: {integrity: sha512-rw2dyMeQsk+Cb99hbP2EsZ6hXKvMrJf9CTjMlMMBUz2w/Nz1XTo6uD3/JmPAlDrfOw7+0vexmGbAqjtehsGXyQ==}
+    deprecated: 'No longer maintained. Removed from myparcelnl/eslint in myparcelnl/eslint#42: the eslint configs do not use it anymore.'
     peerDependencies:
       eslint: 7 - 8
 
@@ -4441,8 +4442,8 @@ packages:
       vite:
         optional: true
 
-  vite@6.4.4:
-    resolution: {integrity: sha512-xGjU/SyjeNyb0E4KxXBvYz/1C+3JXuujvf2hXNOtnlcE+58o5ajd9N2/n2VhkiJvpCP2qQasnUpx5PXNeI+p1Q==}
+  vite@6.4.5:
+    resolution: {integrity: sha512-4enwjFfi4IwtEh0w+jPzpLVOFQiPHmmzPxcHXQOyEur47o6u0jE573DmGpjA+7irXoMLYRZD5ZaFUEneS3abPg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -5465,11 +5466,11 @@ snapshots:
       unplugin: 1.16.1
       zod: 3.25.76
 
-  '@codecov/vite-plugin@2.0.1(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))':
+  '@codecov/vite-plugin@2.0.1(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))':
     dependencies:
       '@codecov/bundler-plugin-core': 2.0.1
       unplugin: 1.16.1
-      vite: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
 
   '@emnapi/core@1.4.5':
     dependencies:
@@ -6274,9 +6275,9 @@ snapshots:
 
   '@ungap/structured-clone@1.4.0': {}
 
-  '@vitejs/plugin-vue@5.2.4(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))(vue@3.5.44(typescript@5.9.3))':
+  '@vitejs/plugin-vue@5.2.4(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))(vue@3.5.44(typescript@5.9.3))':
     dependencies:
-      vite: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
       vue: 3.5.44(typescript@5.9.3)
 
   '@vitest/coverage-v8@4.1.11(vitest@4.1.11)':
@@ -6291,7 +6292,7 @@ snapshots:
       obug: 2.2.1
       std-env: 4.3.0
       tinyrainbow: 3.2.0
-      vitest: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+      vitest: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
 
   '@vitest/expect@4.1.11':
     dependencies:
@@ -6302,13 +6303,13 @@ snapshots:
       chai: 6.3.0
       tinyrainbow: 3.2.0
 
-  '@vitest/mocker@4.1.11(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))':
+  '@vitest/mocker@4.1.11(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))':
     dependencies:
       '@vitest/spy': 4.1.11
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
 
   '@vitest/pretty-format@4.1.11':
     dependencies:
@@ -6337,7 +6338,7 @@ snapshots:
       sirv: 3.0.2
       tinyglobby: 0.2.17
       tinyrainbow: 3.2.0
-      vitest: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+      vitest: 4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
 
   '@vitest/utils@4.1.11':
     dependencies:
@@ -8957,7 +8958,7 @@ snapshots:
 
   universal-user-agent@7.0.3: {}
 
-  unplugin-dts@1.1.2(@vue/language-core@3.3.13)(esbuild@0.25.12)(rolldown@1.2.14)(rollup@4.64.7)(supports-color@7.2.0)(typescript@5.9.3)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)):
+  unplugin-dts@1.1.2(@vue/language-core@3.3.13)(esbuild@0.25.12)(rolldown@1.2.14)(rollup@4.64.7)(supports-color@7.2.0)(typescript@5.9.3)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)):
     dependencies:
       '@rollup/pluginutils': 5.4.0(rollup@4.64.7)
       '@volar/typescript': 2.4.28(typescript@5.9.3)
@@ -8974,7 +8975,7 @@ snapshots:
       esbuild: 0.25.12
       rolldown: 1.2.14
       rollup: 4.64.7
-      vite: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -9007,12 +9008,12 @@ snapshots:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
 
-  vite-plugin-dts@5.1.2(@vue/language-core@3.3.13)(esbuild@0.25.12)(rolldown@1.2.14)(rollup@4.64.7)(supports-color@7.2.0)(typescript@5.9.3)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)):
+  vite-plugin-dts@5.1.2(@vue/language-core@3.3.13)(esbuild@0.25.12)(rolldown@1.2.14)(rollup@4.64.7)(supports-color@7.2.0)(typescript@5.9.3)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)):
     dependencies:
-      unplugin-dts: 1.1.2(@vue/language-core@3.3.13)(esbuild@0.25.12)(rolldown@1.2.14)(rollup@4.64.7)(supports-color@7.2.0)(typescript@5.9.3)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+      unplugin-dts: 1.1.2(@vue/language-core@3.3.13)(esbuild@0.25.12)(rolldown@1.2.14)(rollup@4.64.7)(supports-color@7.2.0)(typescript@5.9.3)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
     optionalDependencies:
       rollup: 4.64.7
-      vite: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
     transitivePeerDependencies:
       - '@rspack/core'
       - '@vue/language-core'
@@ -9022,7 +9023,7 @@ snapshots:
       - typescript
       - webpack
 
-  vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1):
+  vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.7)
@@ -9038,10 +9039,10 @@ snapshots:
       sass: 1.105.1
       yaml: 2.9.1
 
-  vitest@4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)):
+  vitest@4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@20.14.6)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)):
     dependencies:
       '@vitest/expect': 4.1.11
-      '@vitest/mocker': 4.1.11(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+      '@vitest/mocker': 4.1.11(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
       '@vitest/pretty-format': 4.1.11
       '@vitest/runner': 4.1.11
       '@vitest/snapshot': 4.1.11
@@ -9058,7 +9059,7 @@ snapshots:
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
       tinyrainbow: 3.2.0
-      vite: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.19.2
@@ -9068,10 +9069,10 @@ snapshots:
     transitivePeerDependencies:
       - msw
 
-  vitest@4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@21.0.4)(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)):
+  vitest@4.1.11(@types/node@24.19.2)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(happy-dom@21.0.4)(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)):
     dependencies:
       '@vitest/expect': 4.1.11
-      '@vitest/mocker': 4.1.11(vite@6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
+      '@vitest/mocker': 4.1.11(vite@6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1))
       '@vitest/pretty-format': 4.1.11
       '@vitest/runner': 4.1.11
       '@vitest/snapshot': 4.1.11
@@ -9088,7 +9089,7 @@ snapshots:
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
       tinyrainbow: 3.2.0
-      vite: 6.4.4(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@24.19.2)(jiti@1.21.7)(lightningcss@1.33.0)(sass@1.105.1)(yaml@2.9.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.19.2

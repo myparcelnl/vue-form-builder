@@ -167,7 +167,6 @@ settings:
   linkWorkspacePackages: false
 
 overrides:
-  axios: ^1.20.0
   eslint-plugin-prettier: ^4.0.0
 
 importers:
